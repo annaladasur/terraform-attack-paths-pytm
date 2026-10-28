@@ -65,6 +65,7 @@ run_check() {
       else
         result="FAIL"
         evidence="pytest exited $rc, summary: ${summary:-none}"
+        printf '%s\n' "$test_out" >&2
         FAILURES=$((FAILURES + 1))
       fi
       ;;

@@ -36,6 +36,16 @@ jobs:
       - name: Set up virtualenv and dependencies
         run: make setup
 
+      - name: Install pinned gitleaks
+        run: |
+          GITLEAKS_VERSION=8.30.0
+          curl -fsSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          grep "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz\$" "gitleaks_${GITLEAKS_VERSION}_checksums.txt" | sha256sum -c -
+          sudo tar xzf "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -C /usr/local/bin gitleaks
+          rm -f "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" "gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          gitleaks version
+
       - name: Run test suite
         run: make test
 
@@ -52,7 +62,7 @@ jobs:
         run: cat artifacts/006-public-workload-iam-sensitive-bucket/report.md >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload demo artifacts
-        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb99ba8afd # v4.4.0
+        uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
         with:
           name: demo-artifacts
           path: artifacts/006-public-workload-iam-sensitive-bucket

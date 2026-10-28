@@ -137,4 +137,5 @@ def test_no_zero_false_paths_without_denominator():
         has_denom = any(kw in window.lower() for kw in [
             "labeled", "records", "emitted", "denom", "among", "/"
         ])
-        assert has_denom, f"Found '0 false paths' without denominator around line {content[:m.start()].count('\n')+1}: {window}"
+        line_number = content[:m.start()].count("\n") + 1
+        assert has_denom, f"Found '0 false paths' without denominator around line {line_number}: {window}"

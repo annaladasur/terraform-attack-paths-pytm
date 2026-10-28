@@ -18,7 +18,7 @@
     },
     ".github/workflows/ci.yml": {
       "mode": "0o644",
-      "sha256": "6b6d68b7b515c5aed6cd48b78d245c06f243c52425e1b881b1089c568a794668"
+      "sha256": "6f7cb7d2c473aed3662b5ce72ce44779ece5085f859c2a15b8e98052f0b6d879"
     },
     ".github/workflows/critic.yml": {
       "mode": "0o644",
@@ -3514,7 +3514,7 @@
     },
     "scripts/critic.sh": {
       "mode": "0o755",
-      "sha256": "059a45696b717459e53f7adb22f16439239e52628eb31b379e988c5f8ed25441"
+      "sha256": "5afc64f6458c021bc2496889d3a90c27ffc2b52eba9bc1d8efb7877dbc2da08e"
     },
     "scripts/export-public.py": {
       "mode": "0o755",
@@ -4082,7 +4082,7 @@
     },
     "tests/test_false_path_story.py": {
       "mode": "0o644",
-      "sha256": "e98310c9bea52aebd7e09ac44fc05ee5a615e2af2a2123a821e2ba8cb69364b0"
+      "sha256": "caa9952b4dcd7fb31368a02e31a3249311631fff6eaeb506e10064ddc8b82222"
     },
     "tests/test_fresh_clone_replay.py": {
       "mode": "0o644",
@@ -4294,5 +4294,5 @@
   "private_history_included": false,
   "schema_version": 1,
   "source_prefix": "OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm",
-  "source_revision": "3a33c95ff9ac427bc0d9a3b233d783d37baf697a"
+  "source_revision": "17da45e35352b190ded07704c99deec78066f904"
 }
