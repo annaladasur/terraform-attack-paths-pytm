@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/Edge",
+  "title": "Edge",
+  "description": "A typed relationship. Every non-structural edge has a GRAPH id and evidence.",
+  "type": "object",
+  "required": [
+    "type",
+    "src",
+    "dst",
+    "evidence"
+  ],
+  "properties": {
+    "id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "type": {
+      "enum": [
+        "DEPENDS_ON",
+        "CONTAINS",
+        "ATTACHES",
+        "EXPOSES",
+        "ROUTES_TO",
+        "TRUSTS",
+        "ASSUMES",
+        "ALLOWS",
+        "READS",
+        "WRITES",
+        "ESCALATES",
+        "RESOLVES_TO"
+      ]
+    },
+    "src": {
+      "type": "string"
+    },
+    "dst": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "data": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+      }
+    },
+    "precondition": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "conditional": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.KMSRotation",
+        "check_id": "CKV_AWS_7",
+        "check_len": null,
+        "check_name": "Ensure rotation for customer created CMKs is enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "enable_key_rotation"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          25,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "main.tf",
+        "resource": "aws_kms_key.objects",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_64",
+        "check_len": null,
+        "check_name": "Ensure KMS key Policy is defined",
+        "check_result": {
+          "entity": {
+            "aws_kms_key": {
+              "objects": {
+                "__address__": "aws_kms_key.objects",
+                "__end_line__": 28,
+                "__provider_address__": "aws.default",
+                "__start_line__": 25,
+                "deletion_window_in_days": [
+                  7
+                ],
+                "description": [
+                  "KMS key is used to encrypt bucket objects"
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          25,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "main.tf",
+        "resource": "aws_kms_key.objects",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 2,
+    "parsing_errors": 0,
+    "passed": 19,
+    "resource_count": 3,
+    "skipped": 0
+  }
+}

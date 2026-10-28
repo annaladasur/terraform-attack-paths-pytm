@@ -1,0 +1,654 @@
+{
+  "kind": "post-seal comparison of automated blind mapping, not human inter-rater agreement",
+  "candidate_pairs": 63,
+  "reviewed_pairs": 63,
+  "cases": 20,
+  "zero_candidate_cases": [
+    "terragoat-aws"
+  ],
+  "label_counts": {
+    "INVALID": 12,
+    "OUT_OF_SCOPE": 2,
+    "PARTIALLY_VALID": 18,
+    "VALID": 31
+  },
+  "different_labels": 28,
+  "method_caveat": "Reviewers used explicit conditional reachability and scope categories; differing labels require adjudication, not an accuracy score. No gold/result changes, benchmark rerun, kappa, or human agreement claim.",
+  "source_sha256": {
+    "cloudgoat-review.json": "fb0c74e0ce0b72c8b50e16276d6cba29c919160083bc929e174655818dd20478",
+    "iam-review.json": "7d4d0f7ed7735a0ef4bcd30fe45c05f7ab2f747a684d9c90f49ec0b8e4d334bb",
+    "benign-review.json": "2f1d0787a1199b0a21382480687cb4699e01ac9974d90b41e76efb62bb1bbcc5"
+  },
+  "comparisons": [
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "entry": "aws_iam_user.low_priv_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-cloud_breach_s3",
+      "entry": "internet",
+      "target": "aws_s3_bucket.cg-cardholder-data-bucket",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-codebuild_secrets",
+      "entry": "aws_iam_user.cg-solo",
+      "target": "aws_db_instance.cg-psql-rds",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-codebuild_secrets",
+      "entry": "aws_iam_user.cg-calrissian",
+      "target": "aws_db_instance.cg-psql-rds",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "cloudgoat-data_secrets",
+      "entry": "aws_iam_user.start_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "entry": "internet",
+      "target": "aws_s3_bucket.secret_bucket",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "entry": "aws_iam_user.solus",
+      "target": "aws_lambda_function.lambda_function",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_attachment",
+      "entry": "aws_iam_user.kerrigan",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_ec2",
+      "entry": "aws_iam_user.dev_user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_key_rotation",
+      "entry": "aws_iam_user.manager",
+      "target": "aws_secretsmanager_secret.primary_secret",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_rollback",
+      "entry": "aws_iam_user.raynor",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-lambda_privesc",
+      "entry": "aws_iam_user.chris",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "cloudgoat-rds_snapshot",
+      "entry": "internet",
+      "target": "aws_db_instance.cg-rds-db_instance",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "INVALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-rds_snapshot",
+      "entry": "aws_iam_user.cg-david",
+      "target": "aws_db_instance.cg-rds-db_instance",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "cloudgoat-secrets_in_the_cloud",
+      "entry": "aws_iam_user.low_priv_user",
+      "target": "aws_secretsmanager_secret.this",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "VALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-vpc_peering_overexposed",
+      "entry": "internet",
+      "target": "aws_db_instance.customer_db",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "INVALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "cloudgoat-vpc_peering_overexposed",
+      "entry": "aws_iam_user.initial_user",
+      "target": "aws_db_instance.customer_db",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "INVALID",
+      "different": true,
+      "review_file": "cloudgoat-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "INVALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "different": true,
+      "review_file": "iam-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "VALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+      "target": "aws:account-admin",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+      "target": "aws:account-admin",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+      "target": "aws:account-admin",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+      "target": "aws:account-admin",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+      "target": "aws:account-admin",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "iam-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "realworld-iam-role",
+      "entry": "internet",
+      "target": "module.iam_roles[\"admin\"].aws_iam_role.this[0]",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "benign-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "realworld-rds-complete",
+      "entry": "internet",
+      "target": "module.db.module.db_instance.aws_db_instance.this[0]",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "benign-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "realworld-s3-bucket-complete",
+      "entry": "internet",
+      "target": "module.s3_bucket.aws_s3_bucket.this[0]",
+      "original_label": "INVALID",
+      "blind_automated_label": "INVALID",
+      "different": false,
+      "review_file": "benign-review.json",
+      "disposition": "same label; no human review implied"
+    },
+    {
+      "case": "realworld-security-group-complete",
+      "entry": "internet",
+      "target": "module.postgresql.module.security_group.aws_security_group.this[0]",
+      "original_label": "INVALID",
+      "blind_automated_label": "OUT_OF_SCOPE",
+      "different": true,
+      "review_file": "benign-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    },
+    {
+      "case": "realworld-vpc-complete",
+      "entry": "internet",
+      "target": "module.vpc.aws_db_subnet_group.database[0]",
+      "original_label": "INVALID",
+      "blind_automated_label": "OUT_OF_SCOPE",
+      "different": true,
+      "review_file": "benign-review.json",
+      "disposition": "pending adjudication; original gold unchanged"
+    }
+  ]
+}

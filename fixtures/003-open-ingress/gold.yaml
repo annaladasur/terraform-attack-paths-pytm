@@ -1,0 +1,15 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 003-open-ingress
+summary: Internet-exposed SSH bastion with no instance profile and no data. Scanners flag it; there is no path to an asset.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: aws_instance.bastion}
+expected_iam: []
+expected_paths: []
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

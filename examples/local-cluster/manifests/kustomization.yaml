@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - 00-namespaces.yaml
+  - 01-git/configmap.yaml
+  - 01-git/secret.yaml
+  - 01-git/pvc.yaml
+  - 01-git/deployment.yaml
+  - 01-git/service.yaml
+  - 02-tapm/configmap.yaml
+  - 02-tapm/secret.yaml
+  - 02-tapm/deployment.yaml
+  - 02-tapm/service.yaml
+  - 03-ci/configmap.yaml
+  - 03-ci/secret.yaml
+  - 03-ci/rbac.yaml
+  - 03-ci/deployment.yaml

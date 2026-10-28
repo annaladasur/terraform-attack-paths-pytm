@@ -1,0 +1,610 @@
+{
+  "cases": [
+    {
+      "commit": "729f8da62c6a85ce4af5ad3d123de97776d954c4",
+      "id": "terragoat-aws",
+      "license": "Apache-2.0",
+      "modeled": 35,
+      "paths": 0,
+      "repo": "https://github.com/bridgecrewio/terragoat",
+      "resources": 64,
+      "runtime_ms": 310,
+      "scanner_findings": {
+        "checkov": 215,
+        "tfsec": 119,
+        "trivy": 113
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [],
+        "tn": 0,
+        "tp": 0,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 54,
+      "terraform": "legacy",
+      "unresolved_policies": 4
+    },
+    {
+      "commit": "0f298666f9b7cfa01488b86912afdb211773188a",
+      "id": "iam-vulnerable",
+      "license": "MIT",
+      "modeled": 265,
+      "paths": 38,
+      "repo": "https://github.com/BishopFox/iam-vulnerable",
+      "resources": 265,
+      "runtime_ms": 982,
+      "scanner_findings": {
+        "checkov": 269,
+        "tfsec": 59,
+        "trivy": 62
+      },
+      "score": {
+        "fn": 3,
+        "fp": 1,
+        "out_of_scope": 7,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+            "found": true,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 4,
+        "tp": 26,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 554,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-iam_privesc_by_attachment",
+      "license": "BSD-3-Clause",
+      "modeled": 16,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 16,
+      "runtime_ms": 51,
+      "scanner_findings": {
+        "checkov": 27,
+        "tfsec": 19,
+        "trivy": 12
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.kerrigan",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 13,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-iam_privesc_by_key_rotation",
+      "license": "BSD-3-Clause",
+      "modeled": 16,
+      "paths": 2,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 17,
+      "runtime_ms": 49,
+      "scanner_findings": {
+        "checkov": 6,
+        "tfsec": 5,
+        "trivy": 4
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.manager",
+            "found": true,
+            "label": "VALID",
+            "target": "aws_secretsmanager_secret.primary_secret"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": [
+          "aws_iam_user.admin -> aws_secretsmanager_secret.primary_secret"
+        ]
+      },
+      "semantic_edges": 10,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-lambda_privesc",
+      "license": "BSD-3-Clause",
+      "modeled": 9,
+      "paths": 2,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 9,
+      "runtime_ms": 32,
+      "scanner_findings": {
+        "checkov": 9,
+        "tfsec": 5,
+        "trivy": 2
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.chris",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 8,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-iam_privesc_by_ec2",
+      "license": "BSD-3-Clause",
+      "modeled": 13,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 13,
+      "runtime_ms": 57,
+      "scanner_findings": {
+        "checkov": 10,
+        "tfsec": 5,
+        "trivy": 4
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.dev_user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 13,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-cloud_breach_s3",
+      "license": "BSD-3-Clause",
+      "modeled": 13,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 18,
+      "runtime_ms": 52,
+      "scanner_findings": {
+        "checkov": 19,
+        "tfsec": 18,
+        "trivy": 17
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "internet",
+            "found": true,
+            "label": "VALID",
+            "target": "aws_s3_bucket.cg-cardholder-data-bucket"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 15,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-ec2_ssrf",
+      "license": "BSD-3-Clause",
+      "modeled": 25,
+      "paths": 2,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 27,
+      "runtime_ms": 62,
+      "scanner_findings": {
+        "checkov": 37,
+        "tfsec": 29,
+        "trivy": 20
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 1,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "internet",
+            "found": true,
+            "label": "VALID",
+            "target": "aws_s3_bucket.secret_bucket"
+          },
+          {
+            "entry": "aws_iam_user.solus",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_lambda_function.lambda_function"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": [
+          "aws_iam_user.wrex -> aws_s3_bucket.secret_bucket"
+        ]
+      },
+      "semantic_edges": 19,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-data_secrets",
+      "license": "BSD-3-Clause",
+      "modeled": 19,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 21,
+      "runtime_ms": 52,
+      "scanner_findings": {
+        "checkov": 26,
+        "tfsec": 13,
+        "trivy": 11
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 1,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.start_user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_secretsmanager_secret.final_flag"
+          }
+        ],
+        "tn": 0,
+        "tp": 0,
+        "unlabeled_paths": [
+          "aws_iam_user.lambda_user -> aws_secretsmanager_secret.final_flag"
+        ]
+      },
+      "semantic_edges": 14,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-iam_privesc_by_rollback",
+      "license": "BSD-3-Clause",
+      "modeled": 4,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 5,
+      "runtime_ms": 16,
+      "scanner_findings": {
+        "checkov": 1,
+        "tfsec": 0,
+        "trivy": 1
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 0,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.raynor",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 2,
+      "terraform": "current",
+      "unresolved_policies": 0
+    }
+  ],
+  "markdown": "Run `second-run`: 10 cases. Reachability over VALID/INVALID labels: TP 33, FN 3, FP 1, TN 4; precision 0.9706, recall 0.9167.\n\n| Case | Commit | Resources (modeled) | Findings C/tf/T | Paths | TP | FN | FP | TN | Out of scope (found) | Runtime |\n|---|---|---|---|---|---|---|---|---|---|---|\n| terragoat-aws | `729f8da` | 64 (35) | 215/119/113 | 0 | 0 | 0 | 0 | 0 | 0 (0) | 310 ms |\n| iam-vulnerable | `0f29866` | 265 (265) | 269/59/62 | 38 | 26 | 3 | 1 | 4 | 7 (0) | 982 ms |\n| cloudgoat-iam_privesc_by_attachment | `abf1ba8` | 16 (16) | 27/19/12 | 1 | 1 | 0 | 0 | 0 | 0 (0) | 51 ms |\n| cloudgoat-iam_privesc_by_key_rotation | `abf1ba8` | 17 (16) | 6/5/4 | 2 | 1 | 0 | 0 | 0 | 0 (0) | 49 ms |\n| cloudgoat-lambda_privesc | `abf1ba8` | 9 (9) | 9/5/2 | 2 | 1 | 0 | 0 | 0 | 0 (0) | 32 ms |\n| cloudgoat-iam_privesc_by_ec2 | `abf1ba8` | 13 (13) | 10/5/4 | 1 | 1 | 0 | 0 | 0 | 0 (0) | 57 ms |\n| cloudgoat-cloud_breach_s3 | `abf1ba8` | 18 (13) | 19/18/17 | 1 | 1 | 0 | 0 | 0 | 0 (0) | 52 ms |\n| cloudgoat-ec2_ssrf | `abf1ba8` | 27 (25) | 37/29/20 | 2 | 1 | 0 | 0 | 0 | 1 (0) | 62 ms |\n| cloudgoat-data_secrets | `abf1ba8` | 21 (19) | 26/13/11 | 1 | 0 | 0 | 0 | 0 | 1 (0) | 52 ms |\n| cloudgoat-iam_privesc_by_rollback | `abf1ba8` | 5 (4) | 1/0/1 | 1 | 1 | 0 | 0 | 0 | 0 (0) | 16 ms |",
+  "summary": {
+    "cases": 10,
+    "fn": 3,
+    "fp": 1,
+    "reachability_precision": 0.9706,
+    "reachability_recall": 0.9167,
+    "tag": "second-run",
+    "tn": 4,
+    "tp": 33
+  }
+}

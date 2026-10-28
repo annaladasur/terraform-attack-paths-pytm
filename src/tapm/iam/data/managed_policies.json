@@ -1,0 +1,208 @@
+{
+  "_comment": "Summaries of a few AWS managed policies so common attachments can be evaluated offline. These are deliberately coarse summaries of the published documents (marked approximate in evidence); anything not listed here is reported as unresolved rather than guessed.",
+  "arn:aws:iam::aws:policy/AdministratorAccess": {
+    "approximate": false,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": "*",
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/PowerUserAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "NotAction": [
+          "iam:*",
+          "organizations:*",
+          "account:*"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iam:CreateServiceLinkedRole",
+          "iam:DeleteServiceLinkedRole",
+          "iam:ListRoles",
+          "organizations:DescribeOrganization",
+          "account:ListRegions"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/IAMFullAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iam:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AmazonS3FullAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:*",
+          "s3-object-lambda:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:Get*",
+          "s3:List*",
+          "s3:Describe*",
+          "s3-object-lambda:Get*",
+          "s3-object-lambda:List*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/SecretsManagerReadWrite": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "secretsmanager:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AmazonEC2FullAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ec2:*",
+          "elasticloadbalancing:*",
+          "cloudwatch:*",
+          "autoscaling:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AWSLambda_FullAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "lambda:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/ReadOnlyAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "*:Get*",
+          "*:List*",
+          "*:Describe*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole": {
+    "approximate": false,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ssm:UpdateInstanceInformation",
+          "ssm:GetParameter",
+          "ssm:GetParameters",
+          "ssm:DescribeAssociation",
+          "ssmmessages:*",
+          "ec2messages:*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/IAMReadOnlyAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "iam:Get*",
+          "iam:List*",
+          "iam:Generate*",
+          "iam:Simulate*"
+        ],
+        "Resource": "*"
+      }
+    ]
+  },
+  "arn:aws:iam::aws:policy/AmazonSSMFullAccess": {
+    "approximate": true,
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "ssm:*",
+          "ec2messages:*",
+          "logs:*",
+          "cloudwatch:PutMetricData",
+          "ec2:DescribeInstanceStatus",
+          "ds:CreateComputer",
+          "ds:DescribeDirectories"
+        ],
+        "Resource": "*"
+      }
+    ]
+  }
+}

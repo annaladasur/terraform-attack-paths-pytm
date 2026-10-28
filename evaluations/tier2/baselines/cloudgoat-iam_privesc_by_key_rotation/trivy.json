@@ -1,0 +1,387 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-09-29T03:18:38.739354728Z",
+  "ReportID": "01a0eb2b-e993-755c-83c3-81f311a1a30e",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 50
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"admin\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"admin\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name          = \"admin_${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m          = \u001b[38;5;37m\"admin_\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 4,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 4,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.admin",
+            "Service": "iam",
+            "StartLine": 1
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "iam_admin.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"developer\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"developer\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name          = \"developer_${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m          = \u001b[38;5;37m\"developer_\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  tags = {",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mtags\u001b[0m = {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    developer = \"true\"",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mdeveloper\u001b[0m = \u001b[38;5;37m\"true\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  }",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 10,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 10,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.developer",
+            "Service": "iam",
+            "StartLine": 3
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "iam_developer.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"manager\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"manager\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name          = \"manager_${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m          = \u001b[38;5;37m\"manager_\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 4,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 4,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.manager",
+            "Service": "iam",
+            "StartLine": 1
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "iam_manager.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_secretsmanager_secret\" \"primary_secret\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_secretsmanager_secret\"\u001b[0m \u001b[38;5;37m\"primary_secret\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name                    = \"cg_secret_${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m                    = \u001b[38;5;37m\"cg_secret_\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  description             = \"The primary secret for the ${var.scenario-name} scenario\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdescription\u001b[0m             = \u001b[38;5;37m\"The primary secret for the \u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.scenario\u001b[38;5;245m-\u001b[0mname\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m scenario\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  recovery_window_in_days = 0",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mrecovery_window_in_days\u001b[0m = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 6,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 6,
+            "Provider": "AWS",
+            "Resource": "aws_secretsmanager_secret.primary_secret",
+            "Service": "ssm",
+            "StartLine": 2
+          },
+          "Description": "Secrets Manager encrypts secrets by default using a default key created by AWS. To ensure control and granularity of secret encryption, CMK's should be used explicitly.\n",
+          "ID": "AWS-0098",
+          "Message": "Secret explicitly uses the default key.",
+          "Namespace": "builtin.aws.ssm.aws0098",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0098",
+          "Query": "data.builtin.aws.ssm.aws0098.deny",
+          "References": [
+            "https://docs.aws.amazon.com/kms/latest/developerguide/services-secrets-manager.html#asm-encrypt",
+            "https://avd.aquasec.com/misconfig/aws-0098"
+          ],
+          "Resolution": "Use customer managed keys",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Secrets Manager should use customer managed keys",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "secrets.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

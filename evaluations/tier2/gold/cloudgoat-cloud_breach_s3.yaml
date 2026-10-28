@@ -1,0 +1,14 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: cloudgoat-cloud_breach_s3
+documented_by: README.md, Route Walkthrough - Anonymous Attacker
+targets:
+- aws_s3_bucket.cg-cardholder-data-bucket
+expected:
+- entry: internet
+  target: aws_s3_bucket.cg-cardholder-data-bucket
+  label: VALID
+  precondition: attacker's source IP is in cg_whitelist; reverse-proxy SSRF to IMDS
+  route: internet (whitelisted IP) -> misconfigured reverse proxy EC2 -> IMDS -> cg-banking-WAF-Role -> cardholder bucket

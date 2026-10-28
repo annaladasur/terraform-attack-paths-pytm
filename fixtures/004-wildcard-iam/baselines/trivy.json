@@ -1,0 +1,198 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-09-29T03:01:24.907827425Z",
+  "ReportID": "01a0eb1c-232b-7c95-a9d0-7d22dbe0dd55",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 51
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 2,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_lambda_function\" \"deploy\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_lambda_function\"\u001b[0m \u001b[38;5;37m\"deploy\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 21,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  function_name = \"deploy-hook\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mfunction_name\u001b[0m = \u001b[38;5;37m\"deploy-hook\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 22,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  role          = aws_iam_role.deployer.arn",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mrole\u001b[0m          = aws_iam_role.deployer.arn",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 23,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  runtime       = \"python3.12\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mruntime\u001b[0m       = \u001b[38;5;37m\"python3.12\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 24,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  handler       = \"app.handler\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mhandler\u001b[0m       = \u001b[38;5;37m\"app.handler\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 25,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  s3_bucket     = \"artifacts-111122223333\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245ms3_bucket\u001b[0m     = \u001b[38;5;37m\"artifacts-111122223333\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 26,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  s3_key        = \"deploy-hook.zip\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245ms3_key\u001b[0m        = \u001b[38;5;37m\"deploy-hook.zip\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 27,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 28,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 28,
+            "Provider": "AWS",
+            "Resource": "aws_lambda_function.deploy",
+            "Service": "lambda",
+            "StartLine": 21
+          },
+          "Description": "X-Ray tracing enables end-to-end debugging and analysis of all function activity. This will allow for identifying bottlenecks, slow downs and timeouts.\n",
+          "ID": "AWS-0066",
+          "Message": "Function does not have tracing enabled.",
+          "Namespace": "builtin.aws.lambda.aws0066",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0066",
+          "Query": "data.builtin.aws.lambda.aws0066.deny",
+          "References": [
+            "https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html",
+            "https://avd.aquasec.com/misconfig/aws-0066"
+          ],
+          "Resolution": "Enable tracing",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Lambda functions should have X-Ray tracing enabled",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"ci\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"ci\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 30,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name = \"ci-deployer\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m = \u001b[38;5;37m\"ci-deployer\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 31,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 32,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 32,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.ci",
+            "Service": "iam",
+            "StartLine": 30
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "main.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

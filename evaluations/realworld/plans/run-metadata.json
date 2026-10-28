@@ -1,0 +1,27 @@
+{
+  "realworld-iam-role": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "realworld-rds-complete": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "realworld-s3-bucket-complete": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "realworld-security-group-complete": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "realworld-vpc-complete": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  }
+}

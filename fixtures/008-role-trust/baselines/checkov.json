@@ -1,0 +1,341 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaDLQConfigured",
+        "check_id": "CKV_AWS_116",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)",
+        "check_result": {
+          "evaluated_keys": [
+            "dead_letter_config/[0]/target_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          23
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.frontend",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaInVPC",
+        "check_id": "CKV_AWS_117",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured inside a VPC",
+        "check_result": {
+          "evaluated_keys": [
+            "vpc_config"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          23
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.frontend",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaFunctionLevelConcurrentExecutionLimit",
+        "check_id": "CKV_AWS_115",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured for function-level concurrent execution limit",
+        "check_result": {
+          "evaluated_keys": [
+            "reserved_concurrent_executions/[0]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          23
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.frontend",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaCodeSigningConfigured",
+        "check_id": "CKV_AWS_272",
+        "check_len": null,
+        "check_name": "Ensure AWS Lambda function is configured to validate code-signing",
+        "check_result": {
+          "evaluated_keys": [
+            "code_signing_config_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          23
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.frontend",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaXrayEnabled",
+        "check_id": "CKV_AWS_50",
+        "check_len": null,
+        "check_name": "X-Ray tracing is enabled for Lambda",
+        "check_result": {
+          "evaluated_keys": [
+            "tracing_config/[0]/mode"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          23
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.frontend",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "function_name": [
+            {
+              "module_connection": false,
+              "name": "aws_lambda_function.frontend",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaFunctionURLAuth",
+        "check_id": "CKV_AWS_258",
+        "check_len": null,
+        "check_name": "Ensure that Lambda function URLs AuthType is not None",
+        "check_result": {
+          "evaluated_keys": [
+            "authorization_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          25,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function_url.frontend",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecretManagerSecretEncrypted",
+        "check_id": "CKV_AWS_149",
+        "check_len": null,
+        "check_name": "Ensure that Secrets Manager secret is encrypted using KMS CMK",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_key_id"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          77,
+          79
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_secretsmanager_secret.db",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_57",
+        "check_len": null,
+        "check_name": "Ensure Secrets Manager secrets should have automatic rotation enabled",
+        "check_result": {
+          "entity": {
+            "aws_secretsmanager_secret": {
+              "db": {
+                "__address__": "aws_secretsmanager_secret.db",
+                "__end_line__": 79,
+                "__start_line__": 77,
+                "name": [
+                  "prod/orders/db"
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          77,
+          79
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_secretsmanager_secret.db",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 8,
+    "parsing_errors": 0,
+    "passed": 32,
+    "resource_count": 7,
+    "skipped": 0
+  }
+}

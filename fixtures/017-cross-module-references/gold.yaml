@@ -1,0 +1,25 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 017-cross-module-references
+summary: The path crosses three modules through outputs and input variables. The IAM policy only knows var.bucket_arn.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: module.web.aws_instance.this}
+  - {type: ASSUMES, src: module.web.aws_instance.this, dst: module.iam.aws_iam_role.this}
+  - {type: TRUSTS, src: module.iam.aws_iam_role.this, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ALLOWS, src: module.iam.aws_iam_role.this, dst: module.data.aws_s3_bucket.this}
+expected_iam:
+  - {principal: module.iam.aws_iam_role.this, resource: module.data.aws_s3_bucket.this, access: [read]}
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: module.data.aws_s3_bucket.this
+    hops: [internet, module.web.aws_instance.this, module.iam.aws_iam_role.this, module.data.aws_s3_bucket.this]
+    preconditions: [workload_ssrf]
+    priority: high
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

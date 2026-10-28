@@ -1,0 +1,121 @@
+{
+  "Review agent": {
+    "usesExternalTools": {
+      "basis": "tool servers (MCP) for the repository and the cloud",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "validatesToolLaunchConfig": {
+      "basis": "tool servers are configured from files the pull request can change",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": false
+    }
+  },
+  "Review model (hosted)": {
+    "controls.encodesOutput": {
+      "basis": "model text is posted verbatim",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": false
+    },
+    "controls.implementsPOLP": {
+      "basis": "one broad CI token",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": false
+    },
+    "controls.isHardened": {
+      "basis": "commands run on the CI runner",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": false
+    },
+    "controls.providesConfidentiality": {
+      "basis": "the full plan leaves the organisation",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": false
+    },
+    "executesCode": {
+      "basis": "runs the terraform commands it suggests",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "hasAccessToSensitiveSystems": {
+      "basis": "the CI token can write to the repository; cloud credentials are in the runner",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "hasAgentCapabilities": {
+      "basis": "posts comments, approves pull requests, runs commands",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "hasContentFiltering": {
+      "basis": "comments and values reach the model unfiltered",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)",
+        "src/tapm/ai/injection.py (the unsafe stand-in)"
+      ],
+      "value": false
+    },
+    "hasFineTuning": {
+      "basis": "a hosted base model",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": false
+    },
+    "hasRAG": {
+      "basis": "retrieves repository files for context",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "hasSystemPrompt": {
+      "basis": "a reviewer persona prompt",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "isThirdParty": {
+      "basis": "hosted model API",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)"
+      ],
+      "value": true
+    },
+    "processesPersonalData": {
+      "basis": "the full plan output: plans can contain secrets in cleartext",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)",
+        "SECURITY.md"
+      ],
+      "value": true
+    },
+    "processesUntrustedInput": {
+      "basis": "the raw pull-request diff is pasted into the prompt",
+      "evidence": [
+        "hypothetical design (not a measurement of any product)",
+        "src/tapm/ai/injection.py (the unsafe stand-in)"
+      ],
+      "value": true
+    }
+  }
+}

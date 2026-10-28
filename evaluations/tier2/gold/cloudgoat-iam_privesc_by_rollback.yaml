@@ -1,0 +1,14 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: cloudgoat-iam_privesc_by_rollback
+documented_by: README.md
+targets:
+- aws:account-admin
+expected:
+- entry: aws_iam_user.raynor
+  target: aws:account-admin
+  label: VALID
+  route: raynor can iam:SetDefaultPolicyVersion on its own policy; an older version grants admin
+  note: the admin policy versions are created by a null_resource provisioner, so the plan can show the primitive but not the admin version

@@ -1,0 +1,538 @@
+{
+  "backend": "ollama",
+  "canonical_fixtures": [
+    "006-public-workload-iam-sensitive-bucket",
+    "002-public-s3",
+    "013-count"
+  ],
+  "command": ".venv/bin/tapm patch-author --fixtures 006,002,013 --llm ollama --model qwen3-coder:30b --attempts 3 --write-results --tag local",
+  "git_sha": {
+    "code": "cdb5331a42c1487e3ba23e56d42513431eb30cd0",
+    "gold": "0a737ab620fbf2e7a1f957e07eb7665d158b6c4a",
+    "gold_commit": "0a737ab620fbf2e7a1f957e07eb7665d158b6c4a",
+    "gold_files": {
+      "fixtures/002-public-s3/gold.yaml": "45b7e0fa190aebb7402e86b4a9746bd87c97cc0ff034f76fadc4f4ca72a7aaf4",
+      "fixtures/006-public-workload-iam-sensitive-bucket/gold.yaml": "661219926ebb4c751250af2bc42bd39d2b6c459787edad9ab9df4573ab8b436d",
+      "fixtures/013-count/gold.yaml": "7ec39132789777e07f4bc5801ca43908a929498186f692d0f71a953c45e38254"
+    }
+  },
+  "metadata": {
+    "command": ".venv/bin/tapm patch-author --fixtures 006,002,013 --llm ollama --model qwen3-coder:30b --attempts 3 --write-results --tag local",
+    "git_sha": {
+      "code": "cdb5331a42c1487e3ba23e56d42513431eb30cd0",
+      "gold": "0a737ab620fbf2e7a1f957e07eb7665d158b6c4a",
+      "gold_commit": "0a737ab620fbf2e7a1f957e07eb7665d158b6c4a",
+      "gold_files": {
+        "fixtures/002-public-s3/gold.yaml": "45b7e0fa190aebb7402e86b4a9746bd87c97cc0ff034f76fadc4f4ca72a7aaf4",
+        "fixtures/006-public-workload-iam-sensitive-bucket/gold.yaml": "661219926ebb4c751250af2bc42bd39d2b6c459787edad9ab9df4573ab8b436d",
+        "fixtures/013-count/gold.yaml": "7ec39132789777e07f4bc5801ca43908a929498186f692d0f71a953c45e38254"
+      }
+    },
+    "gold_commit": "0a737ab620fbf2e7a1f957e07eb7665d158b6c4a",
+    "gold_files": {
+      "fixtures/002-public-s3/gold.yaml": "45b7e0fa190aebb7402e86b4a9746bd87c97cc0ff034f76fadc4f4ca72a7aaf4",
+      "fixtures/006-public-workload-iam-sensitive-bucket/gold.yaml": "661219926ebb4c751250af2bc42bd39d2b6c459787edad9ab9df4573ab8b436d",
+      "fixtures/013-count/gold.yaml": "7ec39132789777e07f4bc5801ca43908a929498186f692d0f71a953c45e38254"
+    },
+    "tag": "local",
+    "tool_versions": {
+      "checkov": "3.3.20",
+      "terraform": "1.16.4",
+      "tfsec": "v1.28.14",
+      "trivy": "0.74.0"
+    }
+  },
+  "model": "qwen3-coder:30b",
+  "per_fixture": {
+    "002-public-s3": {
+      "fixture": "002-public-s3",
+      "paths": [
+        {
+          "attempts": [
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "input_tokens": 4813,
+              "latency_ms": 5637,
+              "n": 1,
+              "output_tokens": 116,
+              "patch": {
+                "confidence": 0.9,
+                "evidence_refs": [
+                  "IAM-002"
+                ],
+                "file": "main.tf",
+                "find": "        Principal = \"*\"",
+                "hop": 2,
+                "rationale": "Narrow the grant to prevent anonymous access to the S3 bucket by requiring a specific principal type, as indicated by the deterministic remediation for hop 2 [GRAPH-001].",
+                "replace": "        Principal = { AWS = \"*\" }"
+              },
+              "reasons": [
+                "find appears 3 times in main.tf (must be exactly once)"
+              ],
+              "stage": "edit policy",
+              "status": "REJECTED"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "input_tokens": 4902,
+              "latency_ms": 5660,
+              "n": 2,
+              "output_tokens": 118,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-002"
+                ],
+                "file": "main.tf",
+                "find": "        Principal = \"*\"",
+                "hop": 2,
+                "rationale": "Narrowing the wildcard grant in the S3 bucket policy to explicitly scope the principal, which breaks the path by limiting the access to a more specific principal definition [IAM-002].",
+                "replace": "        Principal = { AWS = \"*\" }"
+              },
+              "reasons": [
+                "find appears 3 times in main.tf (must be exactly once)"
+              ],
+              "stage": "edit policy",
+              "status": "REJECTED"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "input_tokens": 4998,
+              "latency_ms": 5956,
+              "n": 3,
+              "output_tokens": 110,
+              "patch": {
+                "confidence": 0.9,
+                "evidence_refs": [
+                  "IAM-002"
+                ],
+                "file": "main.tf",
+                "find": "        Principal = \"*\"",
+                "hop": 2,
+                "rationale": "Narrowing the principal grant to explicitly specify AWS as the principal type, which is a more restrictive form of the wildcard grant [IAM-002].",
+                "replace": "        Principal = { AWS = \"*\" }"
+              },
+              "reasons": [
+                "find appears 3 times in main.tf (must be exactly once)"
+              ],
+              "stage": "edit policy",
+              "status": "REJECTED"
+            }
+          ],
+          "duration_ms": 17269,
+          "fixture": "002-public-s3",
+          "nodes": [
+            "internet",
+            "principal:any",
+            "aws_s3_bucket.exports"
+          ],
+          "path": "PATH-001",
+          "priority": "high",
+          "recommended_attempt": null,
+          "recommended_diff": null,
+          "result": "NO_VERIFIED_FIX"
+        }
+      ],
+      "paths_count": 1
+    },
+    "006-public-workload-iam-sensitive-bucket": {
+      "fixture": "006-public-workload-iam-sensitive-bucket",
+      "paths": [
+        {
+          "attempts": [
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "input_tokens": 9000,
+              "latency_ms": 19198,
+              "n": 1,
+              "output_tokens": 112,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001"
+                ],
+                "file": "iam.tf",
+                "find": "      {",
+                "hop": 4,
+                "rationale": "Narrow the wildcard S3 resource grant in aws_iam_role.app's policy to limit access to only the reports bucket, breaking the path [GRAPH-001, IAM-001].",
+                "replace": "      {"
+              },
+              "reasons": [
+                "find appears 2 times in iam.tf (must be exactly once)"
+              ],
+              "stage": "edit policy",
+              "status": "REJECTED"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.reports.arn, \"${aws_s3_bucket.reports.arn}/*\"]\n       }\n     ]\n   })\n",
+              "effect": "breaks_path",
+              "input_tokens": 9084,
+              "latency_ms": 12030,
+              "n": 2,
+              "new_paths": [],
+              "other_paths_to_target": 0,
+              "output_tokens": 158,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001",
+                  "GRAPH-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrow the S3 bucket wildcard grant to only allow access to the non-sensitive aws_s3_bucket.reports resource, as suggested by deterministic_remediation and candidate_resources [IAM-001, GRAPH-001].",
+                "replace": "        Resource = [aws_s3_bucket.reports.arn, \"${aws_s3_bucket.reports.arn}/*\"]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [],
+              "priority_after": null,
+              "priority_before": "high",
+              "pytm": null,
+              "reasons": [],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "duration_ms": 31300,
+          "fixture": "006-public-workload-iam-sensitive-bucket",
+          "nodes": [
+            "internet",
+            "aws_lb.web",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "path": "PATH-001",
+          "priority": "high",
+          "recommended_attempt": 2,
+          "recommended_diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.reports.arn, \"${aws_s3_bucket.reports.arn}/*\"]\n       }\n     ]\n   })\n",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "paths_count": 1
+    },
+    "013-count": {
+      "fixture": "013-count",
+      "paths": [
+        {
+          "attempts": [
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.customer_data.arn]\n       }\n     ]\n   })\n",
+              "effect": "no_effect",
+              "input_tokens": 8831,
+              "latency_ms": 12124,
+              "n": 1,
+              "new_paths": [],
+              "other_paths_to_target": 1,
+              "output_tokens": 134,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrow the S3 bucket wildcard grant to only the sensitive target aws_s3_bucket.customer_data, as recommended by deterministic_remediation for GRAPH-001 [GRAPH-001, IAM-001]",
+                "replace": "        Resource = [aws_s3_bucket.customer_data.arn]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [
+                "workload_rce"
+              ],
+              "priority_after": "medium",
+              "priority_before": "medium",
+              "pytm": null,
+              "reasons": [
+                "no effect on PATH-001: still medium"
+              ],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "REJECTED",
+              "what_if_predicted": "breaks_path"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.customer_data.arn]\n       }\n     ]\n   })\n",
+              "effect": "no_effect",
+              "input_tokens": 8934,
+              "latency_ms": 12564,
+              "n": 2,
+              "new_paths": [],
+              "other_paths_to_target": 1,
+              "output_tokens": 139,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001",
+                  "GRAPH-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrow the S3 resource grant in aws_iam_role.app's policy from wildcard to the specific confidential bucket to reduce the scope of access [IAM-001, GRAPH-001].",
+                "replace": "        Resource = [aws_s3_bucket.customer_data.arn]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [
+                "workload_rce"
+              ],
+              "priority_after": "medium",
+              "priority_before": "medium",
+              "pytm": null,
+              "reasons": [
+                "no effect on PATH-001: still medium"
+              ],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "REJECTED",
+              "what_if_predicted": "breaks_path"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.customer_data.arn]\n       }\n     ]\n   })\n",
+              "effect": "no_effect",
+              "input_tokens": 9031,
+              "latency_ms": 13142,
+              "n": 3,
+              "new_paths": [],
+              "other_paths_to_target": 1,
+              "output_tokens": 139,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001",
+                  "GRAPH-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrow the S3 resource grant from wildcard to the specific confidential bucket to reduce the scope of access if role is assumed via workload_rce precondition [IAM-001, GRAPH-001]",
+                "replace": "        Resource = [aws_s3_bucket.customer_data.arn]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [
+                "workload_rce"
+              ],
+              "priority_after": "medium",
+              "priority_before": "medium",
+              "pytm": null,
+              "reasons": [
+                "no effect on PATH-001: still medium"
+              ],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "REJECTED",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "duration_ms": 38038,
+          "fixture": "013-count",
+          "nodes": [
+            "internet",
+            "aws_lb.web",
+            "aws_instance.app[0]",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "path": "PATH-001",
+          "priority": "medium",
+          "recommended_attempt": null,
+          "recommended_diff": null,
+          "result": "NO_VERIFIED_FIX"
+        },
+        {
+          "attempts": [
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.customer_data.arn]\n       }\n     ]\n   })\n",
+              "effect": "no_effect",
+              "input_tokens": 8831,
+              "latency_ms": 13350,
+              "n": 1,
+              "new_paths": [],
+              "other_paths_to_target": 1,
+              "output_tokens": 135,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrow the S3 bucket wildcard grant to only the sensitive target aws_s3_bucket.customer_data, as recommended by deterministic_remediation for GRAPH-001 [GRAPH-001, IAM-001].",
+                "replace": "        Resource = [aws_s3_bucket.customer_data.arn]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [
+                "workload_rce"
+              ],
+              "priority_after": "medium",
+              "priority_before": "medium",
+              "pytm": null,
+              "reasons": [
+                "no effect on PATH-002: still medium"
+              ],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "REJECTED",
+              "what_if_predicted": "breaks_path"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.customer_data.arn]\n       }\n     ]\n   })\n",
+              "effect": "no_effect",
+              "input_tokens": 8933,
+              "latency_ms": 13911,
+              "n": 2,
+              "new_paths": [],
+              "other_paths_to_target": 1,
+              "output_tokens": 151,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001",
+                  "GRAPH-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrow the S3 resource grant from wildcard to the specific confidential bucket to reduce the scope of access an attacker can gain if they compromise aws_instance.app[1] and assume aws_iam_role.app [IAM-001, GRAPH-001].",
+                "replace": "        Resource = [aws_s3_bucket.customer_data.arn]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [
+                "workload_rce"
+              ],
+              "priority_after": "medium",
+              "priority_before": "medium",
+              "pytm": null,
+              "reasons": [
+                "no effect on PATH-002: still medium"
+              ],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "REJECTED",
+              "what_if_predicted": "breaks_path"
+            },
+            {
+              "backend": "ollama",
+              "cost_usd": 0.0,
+              "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.customer_data.arn]\n       }\n     ]\n   })\n",
+              "effect": "no_effect",
+              "input_tokens": 9034,
+              "latency_ms": 16253,
+              "n": 3,
+              "new_paths": [],
+              "other_paths_to_target": 1,
+              "output_tokens": 144,
+              "patch": {
+                "confidence": 0.95,
+                "evidence_refs": [
+                  "IAM-001",
+                  "GRAPH-001"
+                ],
+                "file": "iam.tf",
+                "find": "        Resource = [\"arn:aws:s3:::*\"]",
+                "hop": 4,
+                "rationale": "Narrowing the S3 resource grant from wildcard to the specific confidential bucket reduces the attack surface if an attacker achieves RCE on the instance and obtains the role credentials [IAM-001, GRAPH-001].",
+                "replace": "        Resource = [aws_s3_bucket.customer_data.arn]"
+              },
+              "plan_source": "plan-cache",
+              "preconditions_after": [
+                "workload_rce"
+              ],
+              "priority_after": "medium",
+              "priority_before": "medium",
+              "pytm": null,
+              "reasons": [
+                "no effect on PATH-002: still medium"
+              ],
+              "resources_removed": [],
+              "stage": "verification",
+              "status": "REJECTED",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "duration_ms": 43743,
+          "fixture": "013-count",
+          "nodes": [
+            "internet",
+            "aws_lb.web",
+            "aws_instance.app[1]",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "path": "PATH-002",
+          "priority": "medium",
+          "recommended_attempt": null,
+          "recommended_diff": null,
+          "result": "NO_VERIFIED_FIX"
+        }
+      ],
+      "paths_count": 2
+    }
+  },
+  "summary": {
+    "acceptance_rate": "9.1% (1/11, 95% CI [1.6%, 37.7%])",
+    "acceptance_rate_wilson_95": [
+      0.0162,
+      0.3774
+    ],
+    "accepted_proposals": 1,
+    "attempts_total": 11,
+    "cost_usd": 0.0,
+    "edit_policy_rejected": 4,
+    "fixtures_count": 3,
+    "latency_ms": {
+      "max": 19198,
+      "mean": 11802.3,
+      "min": 5637,
+      "p50": 12564.0,
+      "p95": 19198.0
+    },
+    "no_verified_fix": 3,
+    "no_verified_fix_rate": "75.0% (3/4, 95% CI [30.1%, 95.4%])",
+    "paths_attempted": 4,
+    "re_plan_rate": "63.6% (7/11, 95% CI [35.4%, 84.8%])",
+    "re_plan_rate_wilson_95": [
+      0.3538,
+      0.8483
+    ],
+    "re_planned_proposals": 7,
+    "re_planning_progressions": 1,
+    "unverified": 0,
+    "verification_rejected": 6,
+    "verified_break": 1,
+    "verified_break_rate": "25.0% (1/4, 95% CI [4.6%, 69.9%])",
+    "verified_break_wilson_95": [
+      0.0456,
+      0.6994
+    ],
+    "verified_downgrade_only": 0,
+    "verified_downgrade_rate": "0.0% (0/4, 95% CI [0.0%, 49.0%])"
+  },
+  "tag": "local",
+  "tool_versions": {
+    "checkov": "3.3.20",
+    "terraform": "1.16.4",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  }
+}

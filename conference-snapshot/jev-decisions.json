@@ -1,0 +1,68 @@
+{
+  "decisions": [
+    {
+      "backend": "local-rules (Jev stand-in, not calibrated)",
+      "outputs": {
+        "agents": [
+          "path_narrator",
+          "plain_explainer",
+          "finding_explainer",
+          "remediation",
+          "framework_mapper"
+        ],
+        "annotation_required": true,
+        "evidence_sufficiency": "YES",
+        "human_review": false,
+        "route": "NARRATE_PATH"
+      },
+      "raw": {
+        "evidence_sufficiency": {
+          "choice": "YES",
+          "confidence": 1.0,
+          "probabilities": {
+            "NO": 0.0,
+            "REVIEW": 0.0,
+            "YES": 1.0
+          },
+          "type": "choice"
+        },
+        "route": {
+          "choice": "NARRATE_PATH",
+          "confidence": 1.0,
+          "probabilities": {
+            "EXPLAIN": 0.0,
+            "HUMAN_REVIEW": 0.0,
+            "NARRATE_PATH": 1.0,
+            "NO_AI": 0.0
+          },
+          "type": "choice"
+        },
+        "want_framework_mapping": {
+          "noul": 1.0,
+          "type": "noul"
+        },
+        "want_remediation": {
+          "noul": 1.0,
+          "type": "noul"
+        }
+      },
+      "state": {
+        "conditional": false,
+        "hops": 4,
+        "hops_without_source": 0,
+        "preconditions": [
+          "workload_ssrf"
+        ],
+        "priority": "high",
+        "remedies_breaking": 2,
+        "remedies_downgrading": 1,
+        "scanner_findings_on_path": 7,
+        "status": "plausible",
+        "subject": "PATH-001",
+        "symbolic": false,
+        "target_sensitivity": "confidential"
+      },
+      "subject": "PATH-001"
+    }
+  ]
+}

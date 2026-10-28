@@ -1,0 +1,1364 @@
+{
+  "results": [
+    {
+      "description": "Multi-Factor authentication is not enforced for group",
+      "impact": "IAM groups are more vulnerable to compromise without multi factor authentication activated",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/enforce-group-mfa/",
+        "https://registry.terraform.io/modules/terraform-module/enforce-mfa/aws/latest",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html#password-policy-details"
+      ],
+      "location": {
+        "end_line": 55,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 52
+      },
+      "long_id": "aws-iam-enforce-group-mfa",
+      "resolution": "Use terraform-module/enforce-mfa/aws to ensure that MFA is enforced",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM groups should have MFA enforcement activated.",
+      "rule_id": "AVD-AWS-0123",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Multi-Factor authentication is not enforced for group",
+      "impact": "IAM groups are more vulnerable to compromise without multi factor authentication activated",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/enforce-group-mfa/",
+        "https://registry.terraform.io/modules/terraform-module/enforce-mfa/aws/latest",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html#password-policy-details"
+      ],
+      "location": {
+        "end_line": 61,
+        "filename": "modules/free-resources/privesc-paths/privesc8-AttachGroupPolicy.tf",
+        "start_line": 58
+      },
+      "long_id": "aws-iam-enforce-group-mfa",
+      "resolution": "Use terraform-module/enforce-mfa/aws to ensure that MFA is enforced",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM groups should have MFA enforcement activated.",
+      "rule_id": "AVD-AWS-0123",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Multi-Factor authentication is not enforced for group",
+      "impact": "IAM groups are more vulnerable to compromise without multi factor authentication activated",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/enforce-group-mfa/",
+        "https://registry.terraform.io/modules/terraform-module/enforce-mfa/aws/latest",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html#password-policy-details"
+      ],
+      "location": {
+        "end_line": 60,
+        "filename": "modules/free-resources/privesc-paths/privesc11-PutGroupPolicy.tf",
+        "start_line": 57
+      },
+      "long_id": "aws-iam-enforce-group-mfa",
+      "resolution": "Use terraform-module/enforce-mfa/aws to ensure that MFA is enforced",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM groups should have MFA enforcement activated.",
+      "rule_id": "AVD-AWS-0123",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreatePolicyVersion' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 13,
+        "filename": "modules/free-resources/tool-testing/fp5-NonExploitableConditionConstraint.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreatePolicyVersion' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 13,
+        "filename": "modules/free-resources/tool-testing/fp5-NonExploitableConditionConstraint.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreatePolicyVersion' on wildcarded resource 'arn:aws:iam::aws:policy/fp4-*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/tool-testing/fp4-NonExploitableResourceConstraint.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/tool-testing/fp2-allow-and-deny-multiple-policies.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action '*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/tool-testing/fp2-allow-and-deny-multiple-policies.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "modules/free-resources/tool-testing/fp1-allow-and-deny-same-policy.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "modules/free-resources/tool-testing/fp1-allow-and-deny-same-policy.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreatePolicyVersion' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 13,
+        "filename": "modules/free-resources/tool-testing/fn3-ExploitableConditionConstraint.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreatePolicyVersion' on wildcarded resource 'arn:aws:iam::*:policy/fn2-*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/tool-testing/fn2-ExploitableResourceConstraint.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PassRole' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 33,
+        "filename": "modules/free-resources/tool-testing/fn1-privesc3-multiple-policies.tf",
+        "start_line": 33
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'ec2:RunInstances' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "modules/free-resources/tool-testing/fn1-privesc3-multiple-policies.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/sre.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action '*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "modules/free-resources/privesc-paths/service-linked-role-common.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "modules/free-resources/privesc-paths/service-linked-role-common.tf",
+        "start_line": 11
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:AttachRolePolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc9-AttachRolePolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:AttachRolePolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc9-AttachRolePolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:AttachRolePolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc9-AttachRolePolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:AttachGroupPolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc8-AttachGroupPolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:AttachUserPolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc7-AttachUserPolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:UpdateLoginProfile' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc6-UpdateLoginProfile.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreateLoginProfile' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc5-CreateLoginProfile.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreateAccessKey' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc4-CreateAccessKey.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PassRole' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc3-CreateEC2WithExistingIP.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PassRole' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc21-PassExistingRoleToNewDataPipeline.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PassRole' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc20-PassExistingRoleToCloudFormation.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:SetDefaultPolicyVersion' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 14,
+        "filename": "modules/free-resources/privesc-paths/privesc2-SetExistingDefaultPolicyVersion.tf",
+        "start_line": 14
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PassRole' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc18-PassExistingRoleToNewGlueDevEndpoint.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'lambda:UpdateFunctionCode' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc17-EditExistingLambdaFunctionWithRole.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'lambda:CreateFunction' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PassRole' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc15-PassExistingRoleToNewLambdaThenInvoke.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:UpdateAssumeRolePolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc14-UpdatingAssumeRolePolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:AddUserToGroup' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc13-AddUserToGroup.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PutRolePolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc12-PutRolePolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PutGroupPolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc11-PutGroupPolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:PutUserPolicy' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc10-PutUserPolicy.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:CreatePolicyVersion' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc1-CreateNewPolicyVersion.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'ssm:StartSession' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-ssmStartSession.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'ssm:listCommands' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-ssmSendCommand.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'sagemaker:CreateTrainingJob' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-sageMakerCreateTrainingJob.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'sagemaker:CreateProcessingJob' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-sageMakerCreateProcessingJob.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'sagemaker:CreatePresignedNotebookInstanceUrl' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-sageMakerCreatePresignedNotebookURL.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'sagemaker:CreateNotebookInstance' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-sageMakerCreateNotebookPassRole.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'ec2-instance-connect:SendSSHPublicKey' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-ec2InstanceConnect.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'codebuild:CreateProject' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-codeBuildCreateProjectPassRole.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'cloudformation:UpdateStack' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-cloudFormationUpdateStack.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action '*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-AssumeRole.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 9,
+        "filename": "modules/free-resources/privesc-paths/privesc-AssumeRole.tf",
+        "start_line": 9
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 57,
+        "filename": "modules/free-resources/tool-testing/fp5-NonExploitableConditionConstraint.tf",
+        "start_line": 54
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "module.tool-testing",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 40,
+        "filename": "modules/free-resources/privesc-paths/privesc9-AttachRolePolicy.tf",
+        "start_line": 37
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "module.privesc-paths",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

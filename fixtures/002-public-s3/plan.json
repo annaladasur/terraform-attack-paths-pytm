@@ -1,0 +1,757 @@
+{
+ "applyable": true,
+ "complete": true,
+ "configuration": {
+  "provider_config": {
+   "aws": {
+    "expressions": {
+     "region": {
+      "constant_value": "us-east-1"
+     },
+     "skip_credentials_validation": {
+      "constant_value": true
+     },
+     "skip_metadata_api_check": {
+      "constant_value": true
+     },
+     "skip_region_validation": {
+      "constant_value": true
+     },
+     "skip_requesting_account_id": {
+      "constant_value": true
+     }
+    },
+    "full_name": "registry.terraform.io/hashicorp/aws",
+    "name": "aws",
+    "version_constraint": "~> 6.0"
+   }
+  },
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_s3_bucket.backups",
+     "expressions": {
+      "bucket": {
+       "constant_value": "acme-db-backups-111122223333"
+      },
+      "tags": {
+       "constant_value": {
+        "DataClassification": "restricted"
+       }
+      }
+     },
+     "mode": "managed",
+     "name": "backups",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket"
+    },
+    {
+     "address": "aws_s3_bucket.exports",
+     "expressions": {
+      "bucket": {
+       "constant_value": "acme-customer-exports-111122223333"
+      },
+      "tags": {
+       "constant_value": {
+        "DataClassification": "confidential"
+       }
+      }
+     },
+     "mode": "managed",
+     "name": "exports",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket"
+    },
+    {
+     "address": "aws_s3_bucket.site",
+     "expressions": {
+      "bucket": {
+       "constant_value": "acme-marketing-site-111122223333"
+      },
+      "tags": {
+       "constant_value": {
+        "DataClassification": "public"
+       }
+      }
+     },
+     "mode": "managed",
+     "name": "site",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket"
+    },
+    {
+     "address": "aws_s3_bucket_policy.backups",
+     "expressions": {
+      "bucket": {
+       "references": [
+        "aws_s3_bucket.backups.id",
+        "aws_s3_bucket.backups"
+       ]
+      },
+      "policy": {
+       "references": [
+        "aws_s3_bucket.backups.arn",
+        "aws_s3_bucket.backups"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "backups",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket_policy"
+    },
+    {
+     "address": "aws_s3_bucket_policy.exports",
+     "expressions": {
+      "bucket": {
+       "references": [
+        "aws_s3_bucket.exports.id",
+        "aws_s3_bucket.exports"
+       ]
+      },
+      "policy": {
+       "references": [
+        "aws_s3_bucket.exports.arn",
+        "aws_s3_bucket.exports"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "exports",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket_policy"
+    },
+    {
+     "address": "aws_s3_bucket_policy.site",
+     "expressions": {
+      "bucket": {
+       "references": [
+        "aws_s3_bucket.site.id",
+        "aws_s3_bucket.site"
+       ]
+      },
+      "policy": {
+       "references": [
+        "aws_s3_bucket.site.arn",
+        "aws_s3_bucket.site"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "site",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket_policy"
+    },
+    {
+     "address": "aws_s3_bucket_public_access_block.backups",
+     "expressions": {
+      "block_public_acls": {
+       "constant_value": true
+      },
+      "block_public_policy": {
+       "constant_value": true
+      },
+      "bucket": {
+       "references": [
+        "aws_s3_bucket.backups.id",
+        "aws_s3_bucket.backups"
+       ]
+      },
+      "ignore_public_acls": {
+       "constant_value": true
+      },
+      "restrict_public_buckets": {
+       "constant_value": true
+      }
+     },
+     "mode": "managed",
+     "name": "backups",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_s3_bucket_public_access_block"
+    }
+   ]
+  }
+ },
+ "errored": false,
+ "format_version": "1.2",
+ "planned_values": {
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_s3_bucket.backups",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "backups",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "cors_rule": [],
+      "grant": [],
+      "lifecycle_rule": [],
+      "logging": [],
+      "object_lock_configuration": [],
+      "replication_configuration": [],
+      "server_side_encryption_configuration": [],
+      "tags": {},
+      "tags_all": {},
+      "versioning": [],
+      "website": []
+     },
+     "type": "aws_s3_bucket",
+     "values": {
+      "bucket": "acme-db-backups-111122223333",
+      "force_destroy": false,
+      "region": "us-east-1",
+      "tags": {
+       "DataClassification": "restricted"
+      },
+      "tags_all": {
+       "DataClassification": "restricted"
+      },
+      "timeouts": null
+     }
+    },
+    {
+     "address": "aws_s3_bucket.exports",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "exports",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "cors_rule": [],
+      "grant": [],
+      "lifecycle_rule": [],
+      "logging": [],
+      "object_lock_configuration": [],
+      "replication_configuration": [],
+      "server_side_encryption_configuration": [],
+      "tags": {},
+      "tags_all": {},
+      "versioning": [],
+      "website": []
+     },
+     "type": "aws_s3_bucket",
+     "values": {
+      "bucket": "acme-customer-exports-111122223333",
+      "force_destroy": false,
+      "region": "us-east-1",
+      "tags": {
+       "DataClassification": "confidential"
+      },
+      "tags_all": {
+       "DataClassification": "confidential"
+      },
+      "timeouts": null
+     }
+    },
+    {
+     "address": "aws_s3_bucket.site",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "site",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "cors_rule": [],
+      "grant": [],
+      "lifecycle_rule": [],
+      "logging": [],
+      "object_lock_configuration": [],
+      "replication_configuration": [],
+      "server_side_encryption_configuration": [],
+      "tags": {},
+      "tags_all": {},
+      "versioning": [],
+      "website": []
+     },
+     "type": "aws_s3_bucket",
+     "values": {
+      "bucket": "acme-marketing-site-111122223333",
+      "force_destroy": false,
+      "region": "us-east-1",
+      "tags": {
+       "DataClassification": "public"
+      },
+      "tags_all": {
+       "DataClassification": "public"
+      },
+      "timeouts": null
+     }
+    },
+    {
+     "address": "aws_s3_bucket_policy.backups",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "backups",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_s3_bucket_policy",
+     "values": {
+      "region": "us-east-1"
+     }
+    },
+    {
+     "address": "aws_s3_bucket_policy.exports",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "exports",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_s3_bucket_policy",
+     "values": {
+      "region": "us-east-1"
+     }
+    },
+    {
+     "address": "aws_s3_bucket_policy.site",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "site",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_s3_bucket_policy",
+     "values": {
+      "region": "us-east-1"
+     }
+    },
+    {
+     "address": "aws_s3_bucket_public_access_block.backups",
+     "identity": {
+      "account_id": null,
+      "bucket": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "backups",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_s3_bucket_public_access_block",
+     "values": {
+      "block_public_acls": true,
+      "block_public_policy": true,
+      "ignore_public_acls": true,
+      "region": "us-east-1",
+      "restrict_public_buckets": true,
+      "skip_destroy": null
+     }
+    }
+   ]
+  }
+ },
+ "relevant_attributes": [
+  {
+   "attribute": [
+    "arn"
+   ],
+   "resource": "aws_s3_bucket.site"
+  },
+  {
+   "attribute": [
+    "arn"
+   ],
+   "resource": "aws_s3_bucket.exports"
+  },
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_s3_bucket.site"
+  },
+  {
+   "attribute": [
+    "arn"
+   ],
+   "resource": "aws_s3_bucket.backups"
+  },
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_s3_bucket.exports"
+  },
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_s3_bucket.backups"
+  }
+ ],
+ "resource_changes": [
+  {
+   "address": "aws_s3_bucket.backups",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "bucket": "acme-db-backups-111122223333",
+     "force_destroy": false,
+     "region": "us-east-1",
+     "tags": {
+      "DataClassification": "restricted"
+     },
+     "tags_all": {
+      "DataClassification": "restricted"
+     },
+     "timeouts": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "cors_rule": [],
+     "grant": [],
+     "lifecycle_rule": [],
+     "logging": [],
+     "object_lock_configuration": [],
+     "replication_configuration": [],
+     "server_side_encryption_configuration": [],
+     "tags": {},
+     "tags_all": {},
+     "versioning": [],
+     "website": []
+    },
+    "after_unknown": {
+     "acceleration_status": true,
+     "acl": true,
+     "arn": true,
+     "bucket_domain_name": true,
+     "bucket_namespace": true,
+     "bucket_prefix": true,
+     "bucket_region": true,
+     "bucket_regional_domain_name": true,
+     "cors_rule": true,
+     "grant": true,
+     "hosted_zone_id": true,
+     "id": true,
+     "lifecycle_rule": true,
+     "logging": true,
+     "object_lock_configuration": true,
+     "object_lock_enabled": true,
+     "policy": true,
+     "replication_configuration": true,
+     "request_payer": true,
+     "server_side_encryption_configuration": true,
+     "tags": {},
+     "tags_all": {},
+     "versioning": true,
+     "website": true,
+     "website_domain": true,
+     "website_endpoint": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "backups",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket"
+  },
+  {
+   "address": "aws_s3_bucket.exports",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "bucket": "acme-customer-exports-111122223333",
+     "force_destroy": false,
+     "region": "us-east-1",
+     "tags": {
+      "DataClassification": "confidential"
+     },
+     "tags_all": {
+      "DataClassification": "confidential"
+     },
+     "timeouts": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "cors_rule": [],
+     "grant": [],
+     "lifecycle_rule": [],
+     "logging": [],
+     "object_lock_configuration": [],
+     "replication_configuration": [],
+     "server_side_encryption_configuration": [],
+     "tags": {},
+     "tags_all": {},
+     "versioning": [],
+     "website": []
+    },
+    "after_unknown": {
+     "acceleration_status": true,
+     "acl": true,
+     "arn": true,
+     "bucket_domain_name": true,
+     "bucket_namespace": true,
+     "bucket_prefix": true,
+     "bucket_region": true,
+     "bucket_regional_domain_name": true,
+     "cors_rule": true,
+     "grant": true,
+     "hosted_zone_id": true,
+     "id": true,
+     "lifecycle_rule": true,
+     "logging": true,
+     "object_lock_configuration": true,
+     "object_lock_enabled": true,
+     "policy": true,
+     "replication_configuration": true,
+     "request_payer": true,
+     "server_side_encryption_configuration": true,
+     "tags": {},
+     "tags_all": {},
+     "versioning": true,
+     "website": true,
+     "website_domain": true,
+     "website_endpoint": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "exports",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket"
+  },
+  {
+   "address": "aws_s3_bucket.site",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "bucket": "acme-marketing-site-111122223333",
+     "force_destroy": false,
+     "region": "us-east-1",
+     "tags": {
+      "DataClassification": "public"
+     },
+     "tags_all": {
+      "DataClassification": "public"
+     },
+     "timeouts": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "cors_rule": [],
+     "grant": [],
+     "lifecycle_rule": [],
+     "logging": [],
+     "object_lock_configuration": [],
+     "replication_configuration": [],
+     "server_side_encryption_configuration": [],
+     "tags": {},
+     "tags_all": {},
+     "versioning": [],
+     "website": []
+    },
+    "after_unknown": {
+     "acceleration_status": true,
+     "acl": true,
+     "arn": true,
+     "bucket_domain_name": true,
+     "bucket_namespace": true,
+     "bucket_prefix": true,
+     "bucket_region": true,
+     "bucket_regional_domain_name": true,
+     "cors_rule": true,
+     "grant": true,
+     "hosted_zone_id": true,
+     "id": true,
+     "lifecycle_rule": true,
+     "logging": true,
+     "object_lock_configuration": true,
+     "object_lock_enabled": true,
+     "policy": true,
+     "replication_configuration": true,
+     "request_payer": true,
+     "server_side_encryption_configuration": true,
+     "tags": {},
+     "tags_all": {},
+     "versioning": true,
+     "website": true,
+     "website_domain": true,
+     "website_endpoint": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "site",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket"
+  },
+  {
+   "address": "aws_s3_bucket_policy.backups",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "region": "us-east-1"
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "bucket": true,
+     "id": true,
+     "policy": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "backups",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket_policy"
+  },
+  {
+   "address": "aws_s3_bucket_policy.exports",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "region": "us-east-1"
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "bucket": true,
+     "id": true,
+     "policy": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "exports",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket_policy"
+  },
+  {
+   "address": "aws_s3_bucket_policy.site",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "region": "us-east-1"
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "bucket": true,
+     "id": true,
+     "policy": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "site",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket_policy"
+  },
+  {
+   "address": "aws_s3_bucket_public_access_block.backups",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "block_public_acls": true,
+     "block_public_policy": true,
+     "ignore_public_acls": true,
+     "region": "us-east-1",
+     "restrict_public_buckets": true,
+     "skip_destroy": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "bucket": null,
+     "region": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "bucket": true,
+     "id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "backups",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_s3_bucket_public_access_block"
+  }
+ ],
+ "terraform_version": "1.16.4"
+}

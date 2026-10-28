@@ -1,0 +1,284 @@
+{
+  "_comment": "IAM privilege-escalation primitives evaluated deterministically. Families follow the public Rhino Security Labs / Bishop Fox catalogues. 'effect' says which edge is produced: self_admin -> ESCALATES to aws:account-admin; passrole -> ASSUMES the passed role if it trusts 'service'; takeover_user -> ASSUMES the target user; takeover_role_trust -> ASSUMES the target role; takeover_workload -> ASSUMES the role of the target workload.",
+  "rules": [
+    {
+      "id": "PE-CREATE-POLICY-VERSION",
+      "effect": "self_admin",
+      "all": [
+        "iam:CreatePolicyVersion"
+      ],
+      "on": "policy"
+    },
+    {
+      "id": "PE-SET-DEFAULT-POLICY-VERSION",
+      "effect": "self_admin",
+      "all": [
+        "iam:SetDefaultPolicyVersion"
+      ],
+      "on": "policy"
+    },
+    {
+      "id": "PE-ATTACH-USER-POLICY",
+      "effect": "self_admin",
+      "all": [
+        "iam:AttachUserPolicy"
+      ],
+      "on": "self",
+      "principal_types": [
+        "aws_iam_user"
+      ]
+    },
+    {
+      "id": "PE-ATTACH-GROUP-POLICY",
+      "effect": "self_admin",
+      "all": [
+        "iam:AttachGroupPolicy"
+      ],
+      "on": "any",
+      "principal_types": [
+        "aws_iam_user"
+      ]
+    },
+    {
+      "id": "PE-ATTACH-ROLE-POLICY",
+      "effect": "self_admin",
+      "all": [
+        "iam:AttachRolePolicy"
+      ],
+      "on": "self",
+      "principal_types": [
+        "aws_iam_role"
+      ]
+    },
+    {
+      "id": "PE-PUT-USER-POLICY",
+      "effect": "self_admin",
+      "all": [
+        "iam:PutUserPolicy"
+      ],
+      "on": "self",
+      "principal_types": [
+        "aws_iam_user"
+      ]
+    },
+    {
+      "id": "PE-PUT-GROUP-POLICY",
+      "effect": "self_admin",
+      "all": [
+        "iam:PutGroupPolicy"
+      ],
+      "on": "any",
+      "principal_types": [
+        "aws_iam_user"
+      ]
+    },
+    {
+      "id": "PE-PUT-ROLE-POLICY",
+      "effect": "self_admin",
+      "all": [
+        "iam:PutRolePolicy"
+      ],
+      "on": "self",
+      "principal_types": [
+        "aws_iam_role"
+      ]
+    },
+    {
+      "id": "PE-ADD-USER-TO-GROUP",
+      "effect": "self_admin",
+      "all": [
+        "iam:AddUserToGroup"
+      ],
+      "on": "any",
+      "principal_types": [
+        "aws_iam_user"
+      ]
+    },
+    {
+      "id": "PE-CREATE-ACCESS-KEY",
+      "effect": "takeover_user",
+      "all": [
+        "iam:CreateAccessKey"
+      ],
+      "on": "user"
+    },
+    {
+      "id": "PE-CREATE-LOGIN-PROFILE",
+      "effect": "takeover_user",
+      "all": [
+        "iam:CreateLoginProfile"
+      ],
+      "on": "user"
+    },
+    {
+      "id": "PE-UPDATE-LOGIN-PROFILE",
+      "effect": "takeover_user",
+      "all": [
+        "iam:UpdateLoginProfile"
+      ],
+      "on": "user"
+    },
+    {
+      "id": "PE-UPDATE-ASSUME-ROLE-POLICY",
+      "effect": "takeover_role_trust",
+      "all": [
+        "iam:UpdateAssumeRolePolicy"
+      ],
+      "on": "role"
+    },
+    {
+      "id": "PE-PASSROLE-EC2",
+      "effect": "passrole",
+      "all": [
+        "ec2:RunInstances"
+      ],
+      "service": "ec2.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-LAMBDA-INVOKE",
+      "effect": "passrole",
+      "all": [
+        "lambda:CreateFunction",
+        "lambda:InvokeFunction"
+      ],
+      "service": "lambda.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-LAMBDA-ESM",
+      "effect": "passrole",
+      "all": [
+        "lambda:CreateFunction",
+        "lambda:CreateEventSourceMapping"
+      ],
+      "service": "lambda.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-GLUE",
+      "effect": "passrole",
+      "all": [
+        "glue:CreateDevEndpoint"
+      ],
+      "service": "glue.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-GLUE-JOB",
+      "effect": "passrole",
+      "all": [
+        "glue:CreateJob",
+        "glue:StartJobRun"
+      ],
+      "service": "glue.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-GLUE-UPDATE-JOB",
+      "effect": "passrole",
+      "all": [
+        "glue:UpdateJob",
+        "glue:StartJobRun"
+      ],
+      "service": "glue.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-CLOUDFORMATION",
+      "effect": "passrole",
+      "all": [
+        "cloudformation:CreateStack"
+      ],
+      "service": "cloudformation.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-DATAPIPELINE",
+      "effect": "passrole",
+      "all": [
+        "datapipeline:CreatePipeline",
+        "datapipeline:PutPipelineDefinition"
+      ],
+      "service": "datapipeline.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-SAGEMAKER-NOTEBOOK",
+      "effect": "passrole",
+      "all": [
+        "sagemaker:CreateNotebookInstance",
+        "sagemaker:CreatePresignedNotebookInstanceUrl"
+      ],
+      "service": "sagemaker.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-SAGEMAKER-TRAINING",
+      "effect": "passrole",
+      "all": [
+        "sagemaker:CreateTrainingJob"
+      ],
+      "service": "sagemaker.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-SAGEMAKER-PROCESSING",
+      "effect": "passrole",
+      "all": [
+        "sagemaker:CreateProcessingJob"
+      ],
+      "service": "sagemaker.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-CODEBUILD",
+      "effect": "passrole",
+      "all": [
+        "codebuild:CreateProject",
+        "codebuild:StartBuild"
+      ],
+      "service": "codebuild.amazonaws.com"
+    },
+    {
+      "id": "PE-PASSROLE-ECS",
+      "effect": "passrole",
+      "all": [
+        "ecs:RegisterTaskDefinition",
+        "ecs:RunTask"
+      ],
+      "service": "ecs-tasks.amazonaws.com"
+    },
+    {
+      "id": "PE-LAMBDA-UPDATE-CODE",
+      "effect": "takeover_workload",
+      "all": [
+        "lambda:UpdateFunctionCode"
+      ],
+      "on": "function"
+    },
+    {
+      "id": "PE-SSM-SEND-COMMAND",
+      "effect": "takeover_workload",
+      "all": [
+        "ssm:SendCommand"
+      ],
+      "on": "instance"
+    },
+    {
+      "id": "PE-SSM-START-SESSION",
+      "effect": "takeover_workload",
+      "all": [
+        "ssm:StartSession"
+      ],
+      "on": "instance"
+    },
+    {
+      "id": "PE-EC2-INSTANCE-CONNECT",
+      "effect": "takeover_workload",
+      "all": [
+        "ec2-instance-connect:SendSSHPublicKey"
+      ],
+      "on": "instance"
+    },
+    {
+      "id": "PE-EC2-MODIFY-USERDATA",
+      "effect": "takeover_workload",
+      "all": [
+        "ec2:ModifyInstanceAttribute",
+        "ec2:StopInstances",
+        "ec2:StartInstances"
+      ],
+      "on": "instance"
+    }
+  ]
+}

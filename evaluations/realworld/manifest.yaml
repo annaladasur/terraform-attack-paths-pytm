@@ -1,0 +1,56 @@
+# Real-world benign modules evaluation (Plan §6 E6): 5 public module examples.
+# Ground-truth reachability labels committed to git prior to engine run.
+schema_version: 1
+mock_aws: http://127.0.0.1:5055
+repos:
+  terraform-aws-vpc:
+    url: https://github.com/terraform-aws-modules/terraform-aws-vpc
+    commit: b3abd6df2ecf052451a361ed55b8f06f8742a795
+    license: Apache-2.0
+  terraform-aws-security-group:
+    url: https://github.com/terraform-aws-modules/terraform-aws-security-group
+    commit: b3c1b2e8beff9671960f874f5569d77c803b0127
+    license: Apache-2.0
+  terraform-aws-s3-bucket:
+    url: https://github.com/terraform-aws-modules/terraform-aws-s3-bucket
+    commit: 8a0b697adfbc673e6135c70246cff7f8052ad95a
+    license: Apache-2.0
+  terraform-aws-rds:
+    url: https://github.com/terraform-aws-modules/terraform-aws-rds
+    commit: 7c83995e3898fff639c74ce4cc7a72e61e7952c6
+    license: Apache-2.0
+  terraform-aws-iam:
+    url: https://github.com/terraform-aws-modules/terraform-aws-iam
+    commit: da8e6a8673933ee651f0f0fe611d5ac6b9f9bcb9
+    license: Apache-2.0
+cases:
+  - id: realworld-vpc-complete
+    repo: terraform-aws-vpc
+    path: examples/complete
+    terraform: current
+    options: {user_entries: false}
+    gold: gold/realworld-vpc-complete.yaml
+  - id: realworld-security-group-complete
+    repo: terraform-aws-security-group
+    path: examples/complete
+    terraform: current
+    options: {user_entries: false}
+    gold: gold/realworld-security-group-complete.yaml
+  - id: realworld-s3-bucket-complete
+    repo: terraform-aws-s3-bucket
+    path: examples/complete
+    terraform: current
+    options: {user_entries: false}
+    gold: gold/realworld-s3-bucket-complete.yaml
+  - id: realworld-rds-complete
+    repo: terraform-aws-rds
+    path: examples/complete-postgres
+    terraform: current
+    options: {user_entries: false}
+    gold: gold/realworld-rds-complete.yaml
+  - id: realworld-iam-role
+    repo: terraform-aws-iam
+    path: examples/iam-role
+    terraform: current
+    options: {user_entries: false}
+    gold: gold/realworld-iam-role.yaml

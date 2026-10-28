@@ -1,0 +1,13 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: cloudgoat-lambda_privesc
+documented_by: README.md, Walkthrough - IAM User Chris
+targets:
+- aws:account-admin
+expected:
+- entry: aws_iam_user.chris
+  target: aws:account-admin
+  label: VALID
+  route: chris -sts:AssumeRole-> lambdaManager -(iam:PassRole + lambda:CreateFunction + lambda:InvokeFunction)-> debug role (admin)

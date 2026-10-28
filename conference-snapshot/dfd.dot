@@ -1,0 +1,143 @@
+digraph tm {
+    graph [
+        fontname = Arial;
+        fontsize = 14;
+    ]
+    node [
+        fontname = Arial;
+        fontsize = 14;
+        rankdir = lr;
+    ]
+    edge [
+        shape = none;
+        arrowtail = onormal;
+        fontname = Arial;
+        fontsize = 12;
+    ]
+    labelloc = "t";
+    fontsize = 20;
+    nodesep = 1;
+
+    subgraph cluster_boundary_AWSAPIs_3420ca0d57 {
+        graph [
+            fontsize = 10;
+            fontcolor = black;
+            style = dashed;
+            color = firebrick2;
+            label = <<i>AWS APIs</i>>;
+        ]
+
+        datastore_awssbucketcustomerdata_79ecf145f7 [
+            shape = none;
+            fixedsize = shape;
+            image = "pytm/images/datastore_black.png";
+            imagescale = true;
+            color = black;
+            fontcolor = black;
+            xlabel = "aws_s3_bucket.cust\nomer_data";
+            label = "";
+        ]
+
+        datastore_awssbucketreports_6b6e700377 [
+            shape = none;
+            fixedsize = shape;
+            image = "pytm/images/datastore_black.png";
+            imagescale = true;
+            color = black;
+            fontcolor = black;
+            xlabel = "aws_s3_bucket.repo\nrts";
+            label = "";
+        ]
+
+    }
+
+    subgraph cluster_boundary_Internet_f61ee7d863 {
+        graph [
+            fontsize = 10;
+            fontcolor = black;
+            style = dashed;
+            color = firebrick2;
+            label = <<i>Internet</i>>;
+        ]
+
+        actor_Internetclient_9bb2ec1041 [
+            shape = square;
+            color = black;
+            fontcolor = black;
+            label = "Internet client";
+            margin = 0.02;
+        ]
+
+    }
+
+    subgraph cluster_boundary_VPC_095f4231fa {
+        graph [
+            fontsize = 10;
+            fontcolor = black;
+            style = dashed;
+            color = firebrick2;
+            label = <<i>VPC 10.20.0.0/16</i>>;
+        ]
+
+        process_IMDSofawsinstanceapp_35f103beb7 [
+            shape = circle;
+            color = black;
+            fontcolor = black;
+            label = "IMDS of\naws_instance.app";
+            margin = 0.02;
+        ]
+
+        server_awsinstanceapp_b554b0b5a5 [
+            shape = circle;
+            color = black;
+            fontcolor = black;
+            label = "aws_instance.app";
+            margin = 0.02;
+        ]
+
+        server_awslbweb_c9cf0d3ceb [
+            shape = circle;
+            color = black;
+            fontcolor = black;
+            label = "aws_lb.web";
+            margin = 0.02;
+        ]
+
+    }
+
+    actor_Internetclient_9bb2ec1041 -> server_awslbweb_c9cf0d3ceb [
+        color = black;
+        fontcolor = black;
+        dir = forward;
+        label = "(1) HTTPS/443\n(GRAPH-017)";
+    ]
+
+    server_awslbweb_c9cf0d3ceb -> server_awsinstanceapp_b554b0b5a5 [
+        color = black;
+        fontcolor = black;
+        dir = forward;
+        label = "(2) HTTP/8080\n(GRAPH-020)";
+    ]
+
+    server_awsinstanceapp_b554b0b5a5 -> process_IMDSofawsinstanceapp_35f103beb7 [
+        color = black;
+        fontcolor = black;
+        dir = forward;
+        label = "(3) role\ncredentials for\naws_iam_role.app\n(GRAPH-003)";
+    ]
+
+    server_awsinstanceapp_b554b0b5a5 -> datastore_awssbucketcustomerdata_79ecf145f7 [
+        color = black;
+        fontcolor = black;
+        dir = forward;
+        label = "(4) s3:GetObject,s\n3:ListBucket via\naws_iam_role.app\n(GRAPH-018)";
+    ]
+
+    server_awsinstanceapp_b554b0b5a5 -> datastore_awssbucketreports_6b6e700377 [
+        color = black;
+        fontcolor = black;
+        dir = forward;
+        label = "(5) s3:GetObject,s\n3:ListBucket via\naws_iam_role.app\n(GRAPH-019)";
+    ]
+
+}

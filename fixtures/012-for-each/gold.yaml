@@ -1,0 +1,31 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 012-for-each
+summary: Buckets created with for_each; classification comes from each.value. Only the confidential instance is a target.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: aws_lb.web}
+  - {type: ROUTES_TO, src: aws_lb.web, dst: aws_instance.app}
+  - {type: ASSUMES, src: aws_instance.app, dst: aws_iam_role.app}
+  - {type: TRUSTS, src: aws_iam_role.app, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ALLOWS, src: aws_iam_role.app, dst: 'aws_s3_bucket.data["invoices"]'}
+  - {type: ALLOWS, src: aws_iam_role.app, dst: 'aws_s3_bucket.data["public-site"]'}
+  - {type: ALLOWS, src: aws_iam_role.app, dst: 'aws_s3_bucket.data["scratch"]'}
+expected_iam:
+  - {principal: aws_iam_role.app, resource: 'aws_s3_bucket.data["invoices"]', access: [list, read]}
+  - {principal: aws_iam_role.app, resource: 'aws_s3_bucket.data["public-site"]', access: [list, read]}
+  - {principal: aws_iam_role.app, resource: 'aws_s3_bucket.data["scratch"]', access: [list, read]}
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: 'aws_s3_bucket.data["invoices"]'
+    hops: [internet, aws_lb.web, aws_instance.app, aws_iam_role.app, 'aws_s3_bucket.data["invoices"]']
+    preconditions: [workload_ssrf]
+    priority: high
+expected_false_paths:
+  - {reason: public classification, hops: [internet, aws_lb.web, aws_instance.app, aws_iam_role.app, 'aws_s3_bucket.data["public-site"]']}
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

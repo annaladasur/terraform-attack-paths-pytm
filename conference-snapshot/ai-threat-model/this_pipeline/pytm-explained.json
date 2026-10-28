@@ -1,0 +1,614 @@
+[
+  {
+    "condition": "target.processesUntrustedInput is True and target.hasContentFiltering is False",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "comments never reach the model, instruction-like plan values are withheld, and every output sentence must cite evidence or is rejected",
+        "evidence": [
+          "src/tapm/ai/bundle.py: comments withheld, _withhold() for instruction-like plan values",
+          "tests/test_ai_boundary.py::test_instruction_like_plan_values_are_withheld_from_the_model",
+          "src/tapm/ai/validator.py: 14 checks; make security-tests",
+          "make inject"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "processesUntrustedInput": {
+        "basis": "a pull request is attacker-controlled: resource names, tags and values in the bundle come from it",
+        "evidence": [
+          "docs/threat-model.md"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Direct Prompt Injection",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM01",
+    "undecided": []
+  },
+  {
+    "condition": "target.processesUntrustedInput is True and target.hasContentFiltering is False",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "the only input is a typed feature vector",
+        "evidence": [
+          "src/tapm/ai/jev.py: path_state()"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "processesUntrustedInput": {
+        "basis": "sees counts, enums and IDs derived by code, never configuration text",
+        "evidence": [
+          "src/tapm/ai/jev.py: path_state()"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Direct Prompt Injection",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM01",
+    "undecided": []
+  },
+  {
+    "condition": "target.hasRAG is True and target.hasContentFiltering is False",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "comments never reach the model, instruction-like plan values are withheld, and every output sentence must cite evidence or is rejected",
+        "evidence": [
+          "src/tapm/ai/bundle.py: comments withheld, _withhold() for instruction-like plan values",
+          "tests/test_ai_boundary.py::test_instruction_like_plan_values_are_withheld_from_the_model",
+          "src/tapm/ai/validator.py: 14 checks; make security-tests",
+          "make inject"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "hasRAG": {
+        "basis": "the evidence bundle is built by code for each path; no retrieval",
+        "evidence": [
+          "src/tapm/ai/bundle.py: path_bundle()"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Indirect Prompt Injection via Retrieved Content",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM02",
+    "undecided": []
+  },
+  {
+    "condition": "target.hasRAG is True and target.hasContentFiltering is False",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "the only input is a typed feature vector",
+        "evidence": [
+          "src/tapm/ai/jev.py: path_state()"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "hasRAG": {
+        "basis": "no retrieval",
+        "evidence": [
+          "src/tapm/ai/jev.py"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Indirect Prompt Injection via Retrieved Content",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM02",
+    "undecided": []
+  },
+  {
+    "condition": "target.isThirdParty is True and target.processesPersonalData is True and target.controls.providesConfidentiality is False",
+    "decided": {
+      "isThirdParty": {
+        "basis": "anthropic API",
+        "evidence": [
+          "src/tapm/ai/llm.py"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "processesPersonalData": {
+        "basis": "an allowlisted view: addresses, evidence IDs and summaries; never the plan, state or secrets",
+        "evidence": [
+          "src/tapm/ai/bundle.py",
+          "src/tapm/terraform/sanitize.py",
+          "SECURITY.md"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Sensitive Data Leakage to Third-Party Provider",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM03",
+    "undecided": [
+      "controls.providesConfidentiality"
+    ]
+  },
+  {
+    "condition": "target.isThirdParty is True and target.processesPersonalData is True and target.controls.providesConfidentiality is False",
+    "decided": {
+      "isThirdParty": {
+        "basis": "TypeSafe API",
+        "evidence": [
+          "src/tapm/ai/jev.py: TypeSafeJev"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "processesPersonalData": {
+        "basis": "no configuration values",
+        "evidence": [
+          "src/tapm/ai/jev.py: path_state()"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Sensitive Data Leakage to Third-Party Provider",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM03",
+    "undecided": [
+      "controls.providesConfidentiality"
+    ]
+  },
+  {
+    "condition": "target.hasFineTuning is True and target.controls.providesIntegrity is False",
+    "decided": {
+      "hasFineTuning": {
+        "basis": "a hosted base model, no fine-tuning",
+        "evidence": [
+          "src/tapm/ai/llm.py"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Training Data Poisoning",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM04",
+    "undecided": [
+      "controls.providesIntegrity"
+    ]
+  },
+  {
+    "condition": "target.hasFineTuning is True and target.controls.providesIntegrity is False",
+    "decided": {},
+    "description": "Training Data Poisoning",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "depends",
+    "threat_id": "LLM04",
+    "undecided": [
+      "controls.providesIntegrity",
+      "hasFineTuning"
+    ]
+  },
+  {
+    "condition": "target.hasAgentCapabilities is True and target.hasAccessToSensitiveSystems is True and target.controls.implementsPOLP is False",
+    "decided": {
+      "hasAccessToSensitiveSystems": {
+        "basis": "no credentials and no write path: the harness only reads the graph, paths and evidence",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "hasAgentCapabilities": {
+        "basis": "no tools, no function calling, no network or shell",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Excessive Agency via Unauthorized Tool Use",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "Very High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM05",
+    "undecided": [
+      "controls.implementsPOLP"
+    ]
+  },
+  {
+    "condition": "target.hasAgentCapabilities is True and target.hasAccessToSensitiveSystems is True and target.controls.implementsPOLP is False",
+    "decided": {
+      "hasAccessToSensitiveSystems": {
+        "basis": "no credentials",
+        "evidence": [
+          "src/tapm/ai/jev.py"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "hasAgentCapabilities": {
+        "basis": "returns a decision; the harness acts on it",
+        "evidence": [
+          "src/tapm/ai/jev.py"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Excessive Agency via Unauthorized Tool Use",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "Very High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM05",
+    "undecided": [
+      "controls.implementsPOLP"
+    ]
+  },
+  {
+    "condition": "target.executesCode is True and target.controls.isHardened is False",
+    "decided": {
+      "executesCode": {
+        "basis": "output is parsed as JSON against a schema and validated; nothing is executed",
+        "evidence": [
+          "src/tapm/ai/harness.py",
+          "src/tapm/ai/validator.py"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Arbitrary Code Execution via LLM Agent",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "Very High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM06",
+    "undecided": [
+      "controls.isHardened"
+    ]
+  },
+  {
+    "condition": "target.executesCode is True and target.controls.isHardened is False",
+    "decided": {
+      "executesCode": {
+        "basis": "decisions are enums checked by code",
+        "evidence": [
+          "src/tapm/ai/jev.py"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Arbitrary Code Execution via LLM Agent",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "Very High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM06",
+    "undecided": [
+      "controls.isHardened"
+    ]
+  },
+  {
+    "condition": "target.hasContentFiltering is False and target.hasSystemPrompt is True",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "comments never reach the model, instruction-like plan values are withheld, and every output sentence must cite evidence or is rejected",
+        "evidence": [
+          "src/tapm/ai/bundle.py: comments withheld, _withhold() for instruction-like plan values",
+          "tests/test_ai_boundary.py::test_instruction_like_plan_values_are_withheld_from_the_model",
+          "src/tapm/ai/validator.py: 14 checks; make security-tests",
+          "make inject"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "hasSystemPrompt": {
+        "basis": "one system prompt per agent",
+        "evidence": [
+          "src/tapm/ai/prompts/"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Jailbreaking and Safety Bypass",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM07",
+    "undecided": []
+  },
+  {
+    "condition": "target.hasContentFiltering is False and target.hasSystemPrompt is True",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "the only input is a typed feature vector",
+        "evidence": [
+          "src/tapm/ai/jev.py: path_state()"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Jailbreaking and Safety Bypass",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM07",
+    "undecided": [
+      "hasSystemPrompt"
+    ]
+  },
+  {
+    "condition": "target.processesPersonalData is True and target.controls.encodesOutput is False",
+    "decided": {
+      "processesPersonalData": {
+        "basis": "an allowlisted view: addresses, evidence IDs and summaries; never the plan, state or secrets",
+        "evidence": [
+          "src/tapm/ai/bundle.py",
+          "src/tapm/terraform/sanitize.py",
+          "SECURITY.md"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Sensitive Information Disclosure Through Output",
+    "element": "Annotation model (anthropic)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM08",
+    "undecided": [
+      "controls.encodesOutput"
+    ]
+  },
+  {
+    "condition": "target.processesPersonalData is True and target.controls.encodesOutput is False",
+    "decided": {
+      "processesPersonalData": {
+        "basis": "no configuration values",
+        "evidence": [
+          "src/tapm/ai/jev.py: path_state()"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Sensitive Information Disclosure Through Output",
+    "element": "Decision model (TypeSafe Jev)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM08",
+    "undecided": [
+      "controls.encodesOutput"
+    ]
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "the agent is one prompt and one JSON reply; no tool servers",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "adversarial_reviewer agent",
+    "element_type": "Agent",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM09",
+    "undecided": [
+      "validatesToolLaunchConfig"
+    ]
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "the agent is one prompt and one JSON reply; no tool servers",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "finding_explainer agent",
+    "element_type": "Agent",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM09",
+    "undecided": [
+      "validatesToolLaunchConfig"
+    ]
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "the agent is one prompt and one JSON reply; no tool servers",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "framework_mapper agent",
+    "element_type": "Agent",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM09",
+    "undecided": [
+      "validatesToolLaunchConfig"
+    ]
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "the agent is one prompt and one JSON reply; no tool servers",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "path_narrator agent",
+    "element_type": "Agent",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM09",
+    "undecided": [
+      "validatesToolLaunchConfig"
+    ]
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "the agent is one prompt and one JSON reply; no tool servers",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "plain_explainer agent",
+    "element_type": "Agent",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM09",
+    "undecided": [
+      "validatesToolLaunchConfig"
+    ]
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "the agent is one prompt and one JSON reply; no tool servers",
+        "evidence": [
+          "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+          "run-manifest.json: tools_offered_to_models = []",
+          "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "remediation agent",
+    "element_type": "Agent",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM09",
+    "undecided": [
+      "validatesToolLaunchConfig"
+    ]
+  }
+]

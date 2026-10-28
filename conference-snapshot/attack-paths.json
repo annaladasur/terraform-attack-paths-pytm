@@ -1,0 +1,170 @@
+{
+  "definition": "docs/methodology.md#attack-path",
+  "paths": [
+    {
+      "entry": "internet",
+      "evidence": [
+        "GRAPH-001",
+        "GRAPH-003",
+        "GRAPH-017",
+        "GRAPH-020",
+        "IAM-001",
+        "IAM-002",
+        "NET-001",
+        "NET-003",
+        "NET-005",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-007",
+        "TF-008",
+        "TF-009",
+        "TF-010",
+        "TF-015"
+      ],
+      "findings": [
+        "SCAN-016",
+        "SCAN-018",
+        "SCAN-020",
+        "SCAN-022",
+        "SCAN-023",
+        "SCAN-031",
+        "SCAN-032"
+      ],
+      "hops": [
+        {
+          "dst": "aws_lb.web",
+          "edge": "GRAPH-017",
+          "evidence": [
+            "NET-001",
+            "NET-003",
+            "TF-007",
+            "TF-008"
+          ],
+          "label": "HTTPS/443",
+          "precondition": null,
+          "src": "internet",
+          "status": "FACT",
+          "type": "EXPOSES"
+        },
+        {
+          "dst": "aws_instance.app",
+          "edge": "GRAPH-020",
+          "evidence": [
+            "NET-005",
+            "TF-005",
+            "TF-007",
+            "TF-008",
+            "TF-009",
+            "TF-010"
+          ],
+          "label": "HTTP/8080",
+          "precondition": null,
+          "src": "aws_lb.web",
+          "status": "FACT",
+          "type": "ROUTES_TO"
+        },
+        {
+          "dst": "aws_iam_role.app",
+          "edge": "GRAPH-003",
+          "evidence": [
+            "IAM-002",
+            "TF-001",
+            "TF-002",
+            "TF-004",
+            "TF-005"
+          ],
+          "label": "instance_profile",
+          "precondition": "workload_ssrf",
+          "src": "aws_instance.app",
+          "status": "ASSUMPTION",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws_s3_bucket.customer_data",
+          "edge": "GRAPH-001",
+          "evidence": [
+            "IAM-001",
+            "TF-002",
+            "TF-015"
+          ],
+          "label": "list,read",
+          "precondition": null,
+          "src": "aws_iam_role.app",
+          "status": "FACT",
+          "type": "ALLOWS"
+        }
+      ],
+      "id": "PATH-001",
+      "key": "e67244a5e4f5",
+      "nodes": [
+        "internet",
+        "aws_lb.web",
+        "aws_instance.app",
+        "aws_iam_role.app",
+        "aws_s3_bucket.customer_data"
+      ],
+      "preconditions": [
+        "workload_ssrf"
+      ],
+      "priority": "high",
+      "score": 4,
+      "status": "plausible",
+      "summary": "plausible path from internet to confidential asset aws_s3_bucket.customer_data: internet -> aws_lb.web -> aws_instance.app -> aws_iam_role.app -> aws_s3_bucket.customer_data; requires: workload_ssrf",
+      "target": "aws_s3_bucket.customer_data",
+      "target_sensitivity": "confidential"
+    }
+  ],
+  "remediation_what_if": [
+    {
+      "after": null,
+      "before": "high",
+      "change": "Remove internet reachability of aws_lb.web: restrict the 0.0.0.0/0 ingress rule to known client CIDRs or set internal = true (alb.tf:3, network.tf:72-78)",
+      "edge": "GRAPH-017",
+      "effect": "breaks_path",
+      "evidence": [
+        "NET-001",
+        "NET-003",
+        "TF-007",
+        "TF-008"
+      ],
+      "hop": 1,
+      "path": "PATH-001",
+      "remaining_paths_to_target": 0
+    },
+    {
+      "after": "medium",
+      "before": "high",
+      "change": "Require IMDSv2 on aws_instance.app: metadata_options { http_tokens = \"required\" }",
+      "edge": "GRAPH-003",
+      "effect": "downgrades_path",
+      "evidence": [
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "hop": 3,
+      "path": "PATH-001",
+      "remaining_paths_to_target": 1
+    },
+    {
+      "after": null,
+      "before": "high",
+      "change": "Scope aws_iam_role.app's policy so it no longer grants list,read on aws_s3_bucket.customer_data (iam.tf:25-35)",
+      "edge": "GRAPH-001",
+      "effect": "breaks_path",
+      "evidence": [
+        "IAM-001",
+        "TF-002",
+        "TF-015"
+      ],
+      "hop": 4,
+      "path": "PATH-001",
+      "remaining_paths_to_target": 0
+    }
+  ],
+  "schema_version": "1"
+}

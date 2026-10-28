@@ -1,0 +1,25 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 002-public-s3
+summary: Three buckets with Principal "*" read policies. One is confidential (a path), one is public by design (not a target), one is neutralised by Block Public Access.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: "principal:any"}
+  - {type: ALLOWS, src: "principal:any", dst: aws_s3_bucket.exports}
+  - {type: ALLOWS, src: "principal:any", dst: aws_s3_bucket.site}
+expected_iam: []
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: aws_s3_bucket.exports
+    hops: [internet, "principal:any", aws_s3_bucket.exports]
+    preconditions: []
+    priority: high
+expected_false_paths:
+  - {reason: Block Public Access (block_public_policy, restrict_public_buckets) neutralises the public policy, hops: [internet, "principal:any", aws_s3_bucket.backups]}
+  - {reason: public by classification; not a security-relevant target, hops: [internet, "principal:any", aws_s3_bucket.site]}
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

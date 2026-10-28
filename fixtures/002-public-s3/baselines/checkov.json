@@ -1,0 +1,1297 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.S3AllowsAnyPrincipal",
+        "check_id": "CKV_AWS_70",
+        "check_len": null,
+        "check_name": "Ensure S3 bucket does not allow an action with any Principal",
+        "check_result": {
+          "evaluated_keys": [
+            "policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          9,
+          24
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket_policy.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.S3AllowsAnyPrincipal",
+        "check_id": "CKV_AWS_70",
+        "check_len": null,
+        "check_name": "Ensure S3 bucket does not allow an action with any Principal",
+        "check_result": {
+          "evaluated_keys": [
+            "policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          49
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket_policy.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.S3AllowsAnyPrincipal",
+        "check_id": "CKV_AWS_70",
+        "check_len": null,
+        "check_name": "Ensure S3 bucket does not allow an action with any Principal",
+        "check_result": {
+          "evaluated_keys": [
+            "policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          59,
+          74
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket_policy.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "backups": {
+                "__address__": "aws_s3_bucket.backups",
+                "__end_line__": 57,
+                "__start_line__": 51,
+                "bucket": [
+                  "acme-db-backups-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "restricted"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "restricted"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          51,
+          57
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_18",
+        "check_len": null,
+        "check_name": "Ensure the S3 bucket has access logging enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "logging"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_18",
+        "check_len": null,
+        "check_name": "Ensure the S3 bucket has access logging enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "logging"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_18",
+        "check_len": null,
+        "check_name": "Ensure the S3 bucket has access logging enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "backups": {
+                "__address__": "aws_s3_bucket.backups",
+                "__end_line__": 57,
+                "__start_line__": 51,
+                "bucket": [
+                  "acme-db-backups-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "restricted"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "logging"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "restricted"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          51,
+          57
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_144",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "replication_configuration/rules/*/status",
+            "resource_type",
+            "rule/*/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_144",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "replication_configuration/rules/*/status",
+            "resource_type",
+            "rule/*/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_144",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "backups": {
+                "__address__": "aws_s3_bucket.backups",
+                "__end_line__": 57,
+                "__start_line__": 51,
+                "bucket": [
+                  "acme-db-backups-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "restricted"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "replication_configuration/rules/*/status",
+            "resource_type",
+            "rule/*/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "restricted"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          51,
+          57
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_21",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "versioning/enabled",
+            "resource_type",
+            "versioning_configuration/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_21",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "versioning/enabled",
+            "resource_type",
+            "versioning_configuration/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_21",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "backups": {
+                "__address__": "aws_s3_bucket.backups",
+                "__end_line__": 57,
+                "__start_line__": 51,
+                "bucket": [
+                  "acme-db-backups-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "restricted"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "versioning/enabled",
+            "resource_type",
+            "versioning_configuration/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "restricted"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          51,
+          57
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_6",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has a Public Access block",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "block_public_acls",
+            "resource_type",
+            "block_public_policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_6",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has a Public Access block",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "block_public_acls",
+            "resource_type",
+            "block_public_policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_145",
+        "check_len": null,
+        "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "server_side_encryption_configuration/rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "resource_type",
+            "rule/apply_server_side_encryption_by_default/sse_algorithm"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_145",
+        "check_len": null,
+        "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "server_side_encryption_configuration/rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "resource_type",
+            "rule/apply_server_side_encryption_by_default/sse_algorithm"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_145",
+        "check_len": null,
+        "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "backups": {
+                "__address__": "aws_s3_bucket.backups",
+                "__end_line__": 57,
+                "__start_line__": 51,
+                "bucket": [
+                  "acme-db-backups-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "restricted"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "server_side_encryption_configuration/rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "resource_type",
+            "rule/apply_server_side_encryption_by_default/sse_algorithm"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "restricted"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          51,
+          57
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_61",
+        "check_len": null,
+        "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "exports": {
+                "__address__": "aws_s3_bucket.exports",
+                "__end_line__": 7,
+                "__start_line__": 1,
+                "bucket": [
+                  "acme-customer-exports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "lifecycle_rule"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          1,
+          7
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.exports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_61",
+        "check_len": null,
+        "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "site": {
+                "__address__": "aws_s3_bucket.site",
+                "__end_line__": 32,
+                "__start_line__": 26,
+                "bucket": [
+                  "acme-marketing-site-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "public"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "lifecycle_rule"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "public"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          26,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.site",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_61",
+        "check_len": null,
+        "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "backups": {
+                "__address__": "aws_s3_bucket.backups",
+                "__end_line__": 57,
+                "__start_line__": 51,
+                "bucket": [
+                  "acme-db-backups-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "restricted"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "lifecycle_rule"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "restricted"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          51,
+          57
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.backups",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 23,
+    "parsing_errors": 0,
+    "passed": 21,
+    "resource_count": 7,
+    "skipped": 0
+  }
+}

@@ -1,0 +1,484 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-09-29T03:21:53.216880748Z",
+  "ReportID": "01a0eb2e-e140-7d66-88ef-f666f8562028",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 67
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 2,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_instance\" \"admin_ec2\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_instance\"\u001b[0m \u001b[38;5;37m\"admin_ec2\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ami                  = data.aws_ami.ec2.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mami\u001b[0m                  = \u001b[38;5;33mdata\u001b[0m.aws_ami.ec2.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_type        = \"t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245minstance_type\u001b[0m        = \u001b[38;5;37m\"t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  iam_instance_profile = aws_iam_instance_profile.ec2_role.name",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245miam_instance_profile\u001b[0m = aws_iam_instance_profile.ec2_role.name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;239m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  # Specify the VPC's private subnet",
+                  "FirstCause": false,
+                  "Highlighted": "  # Specify the VPC's private subnet",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  subnet_id = aws_subnet.private_subnet.id",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245msubnet_id\u001b[0m = aws_subnet.private_subnet.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;239m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  # Tags for the instance",
+                  "FirstCause": false,
+                  "Highlighted": "  # Tags for the instance",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 13,
+            "Provider": "AWS",
+            "Resource": "aws_instance.admin_ec2",
+            "Service": "ec2",
+            "StartLine": 1
+          },
+          "Description": "IMDS v2 (Instance Metadata Service) introduced session authentication tokens which improve security when talking to IMDS.\n\nBy default <code>aws_instance</code> resource sets IMDS session auth tokens to be optional.\n\nTo fully protect IMDS you need to enable session tokens by using <code>metadata_options</code> block and its <code>http_tokens</code> variable set to <code>required</code>.\n",
+          "ID": "AWS-0028",
+          "Message": "Instance does not require IMDS access to require a token.",
+          "Namespace": "builtin.aws.ec2.aws0028",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0028",
+          "Query": "data.builtin.aws.ec2.aws0028.deny",
+          "References": [
+            "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service",
+            "https://avd.aquasec.com/misconfig/aws-0028"
+          ],
+          "Resolution": "Enable HTTP token requirement for IMDS",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "aws_instance should activate session tokens for Instance Metadata Service.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_instance\" \"admin_ec2\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_instance\"\u001b[0m \u001b[38;5;37m\"admin_ec2\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ami                  = data.aws_ami.ec2.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mami\u001b[0m                  = \u001b[38;5;33mdata\u001b[0m.aws_ami.ec2.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_type        = \"t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245minstance_type\u001b[0m        = \u001b[38;5;37m\"t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  iam_instance_profile = aws_iam_instance_profile.ec2_role.name",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245miam_instance_profile\u001b[0m = aws_iam_instance_profile.ec2_role.name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;239m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  # Specify the VPC's private subnet",
+                  "FirstCause": false,
+                  "Highlighted": "  # Specify the VPC's private subnet",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  subnet_id = aws_subnet.private_subnet.id",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245msubnet_id\u001b[0m = aws_subnet.private_subnet.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;239m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  # Tags for the instance",
+                  "FirstCause": false,
+                  "Highlighted": "  # Tags for the instance",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 13,
+            "Provider": "AWS",
+            "Resource": "aws_instance.admin_ec2",
+            "Service": "ec2",
+            "StartLine": 1
+          },
+          "Description": "Block devices should be encrypted to ensure sensitive data is held securely at rest.\n",
+          "ID": "AWS-0131",
+          "Message": "Root block device is not encrypted.",
+          "Namespace": "builtin.aws.ec2.aws0131",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0131",
+          "Query": "data.builtin.aws.ec2.aws0131.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+            "https://avd.aquasec.com/misconfig/aws-0131"
+          ],
+          "Resolution": "Turn on encryption for all block devices",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "Instance with unencrypted block device.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "ec2.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"dev_user\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"dev_user\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 32,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name          = \"cg_dev_user_${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m          = \u001b[38;5;37m\"cg_dev_user_\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 33,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 34,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 35,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 35,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.dev_user",
+            "Service": "iam",
+            "StartLine": 32
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "iam.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_vpc\" \"vpc\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_vpc\"\u001b[0m \u001b[38;5;37m\"vpc\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  cidr_block           = \"10.0.0.0/16\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mcidr_block\u001b[0m           = \u001b[38;5;37m\"10.0.0.0/16\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  enable_dns_support   = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245menable_dns_support\u001b[0m   = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  enable_dns_hostnames = false",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245menable_dns_hostnames\u001b[0m = \u001b[38;5;166mfalse",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  tags = {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mtags\u001b[0m = {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    Name = \"cg-vpc-${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mName\u001b[0m = \u001b[38;5;37m\"cg-vpc-\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  }",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_vpc.vpc",
+            "Service": "ec2",
+            "StartLine": 2
+          },
+          "Description": "VPC Flow Logs provide visibility into network traffic that traverses the VPC and can be used to detect anomalous traffic or insight during security workflows.\n",
+          "ID": "AWS-0178",
+          "Message": "VPC does not have VPC Flow Logs enabled.",
+          "Namespace": "builtin.aws.ec2.aws0178",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0178",
+          "Query": "data.builtin.aws.ec2.aws0178.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+            "https://avd.aquasec.com/misconfig/aws-0178"
+          ],
+          "Resolution": "Enable flow logs for VPC",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "vpc.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

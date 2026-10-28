@@ -1,0 +1,253 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.data.aws.AWSAvailabilityZonesUnfiltered",
+        "check_id": "CKV_AWS_394",
+        "check_len": null,
+        "check_name": "Ensure aws_availability_zones data source pins zone identity so its result set does not silently expand when AWS adds an Availability Zone",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          6,
+          6
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "main.tf",
+        "resource": "aws_availability_zones.available",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "aliases": [
+            {
+              "module_connection": false,
+              "name": "name",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "tags": [
+            {
+              "module_connection": false,
+              "name": "tags",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.module.generic.RevisionHash",
+        "check_id": "CKV_TF_1",
+        "check_len": null,
+        "check_name": "Ensure Terraform module sources use a commit hash",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          144,
+          160
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "main.tf",
+        "resource": "kms",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "azs": [
+            {
+              "module_connection": false,
+              "name": "azs",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "cidr": [
+            {
+              "module_connection": false,
+              "name": "vpc_cidr",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "database_subnets": [
+            {
+              "module_connection": false,
+              "name": "azs",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "name": [
+            {
+              "module_connection": false,
+              "name": "name",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "private_subnets": [
+            {
+              "module_connection": false,
+              "name": "azs",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "public_subnets": [
+            {
+              "module_connection": false,
+              "name": "azs",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "tags": [
+            {
+              "module_connection": false,
+              "name": "tags",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.module.generic.RevisionHash",
+        "check_id": "CKV_TF_1",
+        "check_len": null,
+        "check_name": "Ensure Terraform module sources use a commit hash",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          177,
+          192
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "main.tf",
+        "resource": "vpc",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "name": [
+            {
+              "module_connection": false,
+              "name": "name",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ],
+          "tags": [
+            {
+              "module_connection": false,
+              "name": "tags",
+              "path": "main.tf",
+              "type": "locals"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.module.generic.RevisionHash",
+        "check_id": "CKV_TF_1",
+        "check_len": null,
+        "check_name": "Ensure Terraform module sources use a commit hash",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          194,
+          214
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "main.tf",
+        "resource": "security_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 4,
+    "parsing_errors": 0,
+    "passed": 5,
+    "resource_count": 0,
+    "skipped": 0
+  }
+}

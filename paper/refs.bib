@@ -1,0 +1,258 @@
+% Bibliography for the CODASPY 2027 draft.
+% Entries with a "verify" field have NOT been checked against the publisher's page in this project; check the
+% venue, year, pages and author list on the ACM DL / IEEE Xplore / publisher before submission.
+% Entries with a talk/CITATIONS.md row number were checked on 2026-09-29 (see that file for what was seen).
+
+@inproceedings{tran2025terrara,
+  author    = {Tran, Tuan and Sion, Laurens and Yskout, Koen and Joosen, Wouter},
+  title     = {{TerrARA}: Automated Security Threat Modeling for Infrastructure as Code},
+  booktitle = {Proceedings of the 15th ACM Conference on Data and Application Security and Privacy (CODASPY)},
+  year      = {2025},
+  doi       = {10.1145/3714393.3726494},
+  checked   = {CITATIONS.md row 19; first-author name and edition number: VERIFY on the ACM DL page},
+}
+
+@misc{terrara-repo,
+  author       = {{DistriNet, KU Leuven}},
+  title        = {{TerrARA} source code and evaluation data},
+  howpublished = {\url{https://github.com/DistriNet/TerrARA}},
+  note         = {Commit a896de6935fe80a83354def6974c8b4c532815d4; no license file},
+  year         = {2025}
+}
+
+@misc{pytm,
+  author       = {{OWASP pytm contributors}},
+  title        = {pytm: A Pythonic framework for threat modeling},
+  howpublished = {\url{https://github.com/OWASP/pytm}},
+  note      = {Version 1.4.0, 2026-07-06, MIT license},
+  checked   = {CITATIONS.md row 3},
+  year         = {2026}
+}
+
+@misc{tmskills,
+  author       = {Tarandach, Izar},
+  title        = {tm\_skills: Agent skills for continuous threat modeling},
+  howpublished = {\url{https://github.com/izar/tm_skills}},
+  note      = {MIT license; linked from pytm's README},
+  checked   = {CITATIONS.md row 18},
+  year         = {2026}
+}
+
+@inproceedings{sion2018sparta,
+  verify    = {VERIFY: title, venue and pages},
+  author    = {Sion, Laurens and Yskout, Koen and Van Landuyt, Dimitri and Joosen, Wouter},
+  title     = {Solution-aware Data Flow Diagrams for Security Threat Modeling},
+  booktitle = {Proceedings of the 33rd Annual ACM Symposium on Applied Computing (SAC)},
+  year      = {2018}
+}
+
+@book{shostack2014threat,
+  author    = {Shostack, Adam},
+  title     = {Threat Modeling: Designing for Security},
+  publisher = {Wiley},
+  year      = {2014}
+}
+
+@misc{kohnfelder1999stride,
+  verify    = {VERIFY: availability of the original internal paper},
+  author       = {Kohnfelder, Loren and Garg, Praerit},
+  title        = {The Threats to Our Products},
+  howpublished = {Microsoft Interface, Microsoft Corporation},
+  year         = {1999}
+}
+
+@misc{iriusrisk-terraform,
+  author       = {{IriusRisk}},
+  title        = {Threat modeling workflow for {Terraform}-defined architectures using {IriusRisk}},
+  howpublished = {\url{https://www.iriusrisk.com/resources-blog/threat-modeling-workflow-for-terraform-defined-architectures-using-iriusrisk}},
+  checked   = {CITATIONS.md row 20},
+  year         = {2025},
+  verify    = {VERIFY: publication year},
+}
+
+@misc{startleft,
+  verify    = {VERIFY: repository location and license},
+  author       = {{IriusRisk}},
+  title        = {{StartLeft}: threat models from infrastructure as code},
+  howpublished = {\url{https://github.com/iriusrisk/startleft}},
+  year         = {2024}
+}
+
+@misc{ms2026threatai,
+  author       = {{Microsoft Security}},
+  title        = {Threat modeling {AI} applications},
+  howpublished = {Microsoft Security Blog, \url{https://www.microsoft.com/en-us/security/blog/2026/02/26/threat-modeling-ai-applications/}},
+  note      = {2026-02-26},
+  checked   = {CITATIONS.md row 21},
+  year         = {2026}
+}
+
+@misc{tf-json,
+  author       = {{HashiCorp}},
+  title        = {{JSON} Output Format},
+  howpublished = {\url{https://developer.hashicorp.com/terraform/internals/json-format}},
+  note      = {Terraform v1.16},
+  checked   = {CITATIONS.md row 1},
+  year         = {2026}
+}
+
+@misc{checkov,
+  author       = {{Bridgecrew / Prisma Cloud}},
+  title        = {Checkov: Terraform plan scanning},
+  howpublished = {\url{https://www.checkov.io/}, section ``Scan Examples: Terraform Plan Scanning''},
+  note      = {Version 3.3.20},
+  checked   = {CITATIONS.md row 4},
+  year         = {2026}
+}
+
+@misc{trivy,
+  author       = {{Aqua Security}},
+  title        = {Trivy},
+  howpublished = {\url{https://github.com/aquasecurity/trivy}},
+  note      = {Version 0.74.0; tfsec v1.28.14 as baseline},
+  checked   = {CITATIONS.md rows 5--6},
+  year         = {2026}
+}
+
+@misc{aws-iam-eval,
+  author       = {{Amazon Web Services}},
+  title        = {Policy evaluation logic},
+  howpublished = {\url{https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic.html}},
+  checked   = {CITATIONS.md row 7},
+  year         = {2026}
+}
+
+@misc{owasp-llm01,
+  author       = {{OWASP GenAI Security Project}},
+  title        = {{LLM01:2025} Prompt Injection},
+  howpublished = {\url{https://genai.owasp.org/llmrisk/llm01-prompt-injection/}},
+  checked   = {CITATIONS.md row 8},
+  year         = {2025}
+}
+
+@inproceedings{ou2005mulval,
+  author    = {Ou, Xinming and Govindavajhala, Sudhakar and Appel, Andrew W.},
+  title     = {{MulVAL}: A Logic-based Network Security Analyzer},
+  booktitle = {Proceedings of the 14th USENIX Security Symposium},
+  year      = {2005}
+}
+
+@inproceedings{sheyner2002attackgraphs,
+  author    = {Sheyner, Oleg and Haines, Joshua and Jha, Somesh and Lippmann, Richard and Wing, Jeannette M.},
+  title     = {Automated Generation and Analysis of Attack Graphs},
+  booktitle = {Proceedings of the IEEE Symposium on Security and Privacy},
+  year      = {2002}
+}
+
+@inproceedings{rahman2019sevensins,
+  author    = {Rahman, Akond and Parnin, Chris and Williams, Laurie},
+  title     = {The Seven Sins: Security Smells in Infrastructure as Code Scripts},
+  booktitle = {Proceedings of the 41st International Conference on Software Engineering (ICSE)},
+  year      = {2019}
+}
+
+@misc{pmapper,
+  author       = {{NCC Group}},
+  title        = {Principal Mapper ({PMapper})},
+  howpublished = {\url{https://github.com/nccgroup/PMapper}},
+  year         = {2019},
+  verify    = {VERIFY: year of first release},
+}
+
+@misc{cloudsplaining,
+  author       = {{Salesforce}},
+  title        = {Cloudsplaining},
+  howpublished = {\url{https://github.com/salesforce/cloudsplaining}},
+  year         = {2020},
+  verify    = {VERIFY},
+}
+
+@misc{rhino-privesc,
+  verify    = {VERIFY: title and year of the Rhino Security Labs blog post},
+  author       = {Gietzen, Spencer},
+  title        = {{AWS} {IAM} Privilege Escalation -- Methods and Mitigation},
+  howpublished = {Rhino Security Labs blog},
+  year         = {2018}
+}
+
+@misc{iamvulnerable,
+  author       = {{Bishop Fox}},
+  title        = {{IAM Vulnerable}},
+  howpublished = {\url{https://github.com/BishopFox/iam-vulnerable}},
+  note      = {MIT license},
+  checked   = {CITATIONS.md, Tier-2 table},
+  year         = {2025}
+}
+
+@misc{cloudgoat,
+  author       = {{Rhino Security Labs}},
+  title        = {{CloudGoat}: ``Vulnerable by Design'' {AWS} deployment tool},
+  howpublished = {\url{https://github.com/RhinoSecurityLabs/cloudgoat}},
+  note         = {v2.5.0, BSD-3-Clause},
+  year         = {2026}
+}
+
+@misc{awsgoat,
+  author       = {{INE Labs}},
+  title        = {{AWSGoat}: A Damn Vulnerable {AWS} Infrastructure},
+  howpublished = {\url{https://github.com/ine-labs/AWSGoat}},
+  note         = {MIT license},
+  year         = {2022}
+}
+
+@misc{kaimonkey,
+  author       = {{Tenable}},
+  title        = {{KaiMonkey}: Vulnerable Terraform Infrastructure},
+  howpublished = {\url{https://github.com/tenable/KaiMonkey}},
+  note         = {Apache-2.0},
+  year         = {2021},
+  verify    = {VERIFY},
+}
+
+@misc{terragoat,
+  author       = {{Bridgecrew}},
+  title        = {{TerraGoat}: Vulnerable {Terraform} Infrastructure},
+  howpublished = {\url{https://github.com/bridgecrewio/terragoat}},
+  note         = {Apache-2.0},
+  year         = {2020},
+  verify    = {VERIFY},
+}
+
+@book{kleene1952,
+  author    = {Kleene, Stephen C.},
+  title     = {Introduction to Metamathematics},
+  publisher = {North-Holland},
+  year      = {1952}
+}
+
+@article{nemhauser1978,
+  author  = {Nemhauser, George L. and Wolsey, Laurence A. and Fisher, Marshall L.},
+  title   = {An Analysis of Approximations for Maximizing Submodular Set Functions---{I}},
+  journal = {Mathematical Programming},
+  volume  = {14},
+  number  = {1},
+  pages   = {265--294},
+  year    = {1978}
+}
+
+@inproceedings{acar2016sources,
+  author    = {Acar, Yasemin and Backes, Michael and Fahl, Sascha and Kim, Doowon and Mazurek, Michelle L. and Stransky, Christian},
+  title     = {You Get Where You're Looking For: The Impact of Information Sources on Code Security},
+  booktitle = {Proceedings of the IEEE Symposium on Security and Privacy},
+  year      = {2016}
+}
+
+@inproceedings{tahaei2019survey,
+  author    = {Tahaei, Mohammad and Vaniea, Kami},
+  title     = {A Survey on Developer-Centred Security},
+  booktitle = {Proceedings of the IEEE European Symposium on Security and Privacy Workshops (EuroS\&PW)},
+  year      = {2019}
+}
+
+@article{brooke1996sus,
+  author  = {Brooke, John},
+  title   = {{SUS}: A ``Quick and Dirty'' Usability Scale},
+  journal = {Usability Evaluation in Industry},
+  year    = {1996},
+  pages   = {189--194}
+}

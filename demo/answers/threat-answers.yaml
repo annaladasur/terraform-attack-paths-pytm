@@ -1,0 +1,31 @@
+# Example answers from the orders team for the demo PR (fixture 006). In a real repository this file sits next to
+# the Terraform and is reviewed like any other change (protect it with CODEOWNERS).
+answers:
+  - element: aws_instance.app
+    control: validatesInput
+    answer: yes
+    by: orders-team
+    note: request models validate every endpoint
+  - element: aws_instance.app
+    control: sanitizesInput
+    answer: yes
+    by: orders-team
+    note: ORM with bound parameters only
+  - element: aws_instance.app
+    control: encodesOutput
+    answer: yes
+    by: orders-team
+    note: JSON API, framework escaping
+  - element: aws_lb.web
+    control: validatesInput
+    answer: no
+    by: platform-team
+    note: no WAF on the ALB yet
+  - element: aws_lb.web
+    control: sanitizesInput
+    answer: no
+    by: platform-team
+  - element: aws_lb.web
+    control: encodesOutput
+    answer: no
+    by: platform-team

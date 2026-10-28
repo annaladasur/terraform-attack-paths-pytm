@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: runner-config
+  namespace: ci
+  labels:
+    app.kubernetes.io/name: act-runner
+    app.kubernetes.io/part-of: tapm-local-cluster
+data:
+  GITEA_INSTANCE_URL: "http://gitea.git.svc.cluster.local:3000"
+  GITEA_RUNNER_NAME: "tapm-cluster-runner"
+  GITEA_RUNNER_LABELS: "ubuntu-latest:docker://catthehacker/ubuntu:act-latest,ubuntu-24.04:docker://catthehacker/ubuntu:act-24.04,tapm:docker://terraform-attack-paths-pytm:latest"
+  DOCKER_HOST: "unix:///var/run/docker.sock"
+  CONFIG_FILE: "/etc/act-runner/config.yaml"
+  config.yaml: |
+    log:
+      level: info
+    runner:
+      file: .runner
+      capacity: 1
+      timeout: 3h
+      insecure: false
+      fetch_timeout: 5s
+      fetch_interval: 2s
+    container:
+      privileged: false
+      options: "--add-host=host.docker.internal:host-gateway --add-host=gitea:host-gateway --add-host=gitea.git.svc.cluster.local:host-gateway --add-host=tapm-service:host-gateway --add-host=tapm-service.tapm.svc.cluster.local:host-gateway"
+      valid_volumes:
+        - '**'

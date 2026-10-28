@@ -1,0 +1,466 @@
+{
+  "protocol": "Automated independent blind mapping from inputs.json and supplied raw compressed plans only. No gold, engine, adjudication, tracker or other reviewers consulted. No engine run. Does not satisfy a second human review.",
+  "reviewer": {
+    "identity": "Codex automated AWS network/data protection reviewer /root/blind_benign",
+    "kind": "automated",
+    "human": false
+  },
+  "semantics": {
+    "internet": "Unauthenticated arbitrary Internet attacker; no implicit stolen credentials, trusted identity, foothold, or app vulnerability.",
+    "VALID": "A complete plan-supported path exists, conditional on explicit execution prerequisites.",
+    "PARTIALLY_VALID": "Plan establishes some required steps but leaves a material path component unsupported.",
+    "INVALID": "Plan contains controls contradicting the candidate Internet compromise path.",
+    "OUT_OF_SCOPE": "Target is infrastructure configuration rather than a concrete listening service or compromise target.",
+    "INDETERMINATE": "Plan evidence is insufficient to resolve a material requirement."
+  },
+  "cases": [
+    {
+      "case": "terragoat-aws",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/terragoat-aws.json.gz",
+      "plan_sha256": "c776f64b52d703c6b5beba80d7a05a3379a29482923fce0efe3b6ac991ff86bb",
+      "hash_matches_input": true,
+      "supplied_pair_count": 0,
+      "reviewed_pair_count": 0,
+      "pairs": [],
+      "coverage_statement": "Zero supplied candidate pairs; zero pair coverage. Inventory below is independent and non-exhaustive; it does not establish full path recall or absence of other exposures.",
+      "inventory": [
+        {
+          "target": "aws_instance.web_host",
+          "assessment": "Plan-supported public ingress TCP/22 and TCP/80, conditional on successful apply and listening services.",
+          "evidence": [
+            "aws_security_group.web-node.ingress permits 0.0.0.0/0 TCP/22 and /80.",
+            "configuration aws_instance.web_host references web-node and web_subnet.",
+            "aws_subnet.web_subnet.map_public_ip_on_launch=true; route-table association references web_rtb; public_internet_gateway routes 0.0.0.0/0 to web_igw.",
+            "configuration user_data installs and starts apache2."
+          ],
+          "uncertainty": "Network reachability does not establish SSH/HTTP compromise; startup success and host firewall are unverified."
+        },
+        {
+          "target": "aws_instance.db_app",
+          "assessment": "Same plan-supported public TCP/22 and TCP/80 ingress; sensitive application foothold candidate.",
+          "evidence": [
+            "Configuration attaches web-node in web_subnet with public-IP mapping and IGW route.",
+            "Configuration user_data references DB instance and password variable.",
+            "Instance profile ec2profile references ec2role."
+          ],
+          "uncertainty": "No application vulnerability or actual credential extraction established."
+        },
+        {
+          "target": "aws_elb.weblb",
+          "assessment": "Potential public HTTP ingress, with backend mismatch requiring care.",
+          "evidence": [
+            "Listener lb_port=80, lb_protocol=http, instance_port=8000.",
+            "Configuration references web-node, web_subnet and aws_instance.web_host.",
+            "web-node ingress permits 80 and 22, not 8000."
+          ],
+          "uncertainty": "internal flag is computed/absent; no successful load-balancer-to-backend route is established because target port 8000 lacks a matching ingress allowance in visible SG."
+        },
+        {
+          "target": "aws_elasticsearch_domain.monitoring-framework",
+          "assessment": "Public service and broad data/control-plane exposure candidate.",
+          "evidence": [
+            "vpc_options=[]; companion monitoring-framework-policy access_policies allows es:* to Principal AWS:* on Resource:*."
+          ],
+          "uncertainty": "Apply validity, service defaults and live authentication configuration unverified; policy breadth alone does not guarantee every control-plane operation is anonymously callable."
+        },
+        {
+          "target": "aws_eks_cluster.eks_cluster",
+          "assessment": "Public control-plane ingress candidate requiring authentication.",
+          "evidence": [
+            "vpc_config.endpoint_public_access=true; endpoint_private_access=true."
+          ],
+          "uncertainty": "public_access_cidrs is computed/unknown, so unrestricted Internet source coverage is unconfirmed; public endpoint does not imply unauthenticated API authorization."
+        },
+        {
+          "target": "aws_db_instance.default",
+          "assessment": "Sensitive DB; public address setting alone does not permit arbitrary Internet MySQL ingress.",
+          "evidence": [
+            "publicly_accessible=true, storage_encrypted=false, backup_retention_period=0.",
+            "Configuration attaches aws_security_group.default; aws_security_group_rule.ingress allows TCP/3306 only from 172.16.0.0/16.",
+            "DB credentials are embedded in plan; values deliberately omitted from this report."
+          ],
+          "uncertainty": "Requires allowed private-source foothold and database authentication; no anonymous Internet-to-DB path established."
+        },
+        {
+          "target": "aws_s3_bucket.data; aws_s3_bucket.data_science; aws_s3_bucket.financials; aws_s3_bucket.operations; aws_s3_bucket.logs; aws_s3_bucket.flowbucket",
+          "assessment": "Sensitive storage inventory; no public read path proven.",
+          "evidence": [
+            "Several buckets explicitly have acl=private; logs has log-delivery-write.",
+            "data and flowbucket ACLs are computed/unspecified in planned values."
+          ],
+          "uncertainty": "Missing explicit public access block resources does not prove public ACL/policy; object contents and effective account controls unknown."
+        },
+        {
+          "target": "aws_lambda_function.analysis_lambda",
+          "assessment": "Sensitive configuration target with literal example credential material in environment.",
+          "evidence": [
+            "environment.variables includes access_key and secret_key using recognizable AWS example values."
+          ],
+          "uncertainty": "No public invocation path established; example values are not evidence of working credentials."
+        },
+        {
+          "target": "aws_ebs_volume.web_host_storage; aws_ebs_snapshot.example_snapshot",
+          "assessment": "Sensitive storage/snapshot candidates.",
+          "evidence": [
+            "Planned EBS volume and snapshot resources exist."
+          ],
+          "uncertainty": "No public snapshot sharing or Internet read authorization is established by existence alone."
+        }
+      ]
+    },
+    {
+      "case": "realworld-iam-role",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-iam-role.json.gz",
+      "plan_sha256": "9388bacae333366a1f43075932db994ad0bac0dc8e1c6136d0d2602e47bb93c5",
+      "hash_matches_input": true,
+      "supplied_pair_count": 1,
+      "reviewed_pair_count": 1,
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.iam_roles[\"admin\"].aws_iam_role.this[0]",
+          "classification": "INVALID",
+          "rationale": "No anonymous Internet assumption path. The admin role trust restricts AWS Principal and requires MFA; AdministratorAccess is a permission after assumption, not public entry.",
+          "preconditions": [
+            "Control the specifically trusted principal, provide MFA present and age below 86400, and satisfy applicable sts:AssumeRole identity authorization. These are not supplied by the internet entry."
+          ],
+          "evidence": [
+            {
+              "resource": "module.iam_roles[\"admin\"].aws_iam_role.this[0]",
+              "source": "planned_values",
+              "values": {
+                "assume_role_policy": "{\"Statement\":[{\"Action\":[\"sts:TagSession\",\"sts:AssumeRole\"],\"Condition\":{\"Bool\":{\"aws:MultiFactorAuthPresent\":\"true\"},\"NumericLessThan\":{\"aws:MultiFactorAuthAge\":\"86400\"}},\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:sts::123456789012:user/moto\"},\"Sid\":\"TrustRoleAndServiceToAssume\"}],\"Version\":\"2012-10-17\"}",
+                "force_detach_policies": true,
+                "max_session_duration": 3600,
+                "name_prefix": "admin-",
+                "path": "/"
+              }
+            },
+            {
+              "resource": "module.iam_roles[\"admin\"].aws_iam_role_policy_attachment.this[\"AdministratorAccess\"]",
+              "source": "planned_values",
+              "values": {
+                "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess"
+              }
+            }
+          ],
+          "uncertainty": [
+            "Trust principal is the unusual arn:aws:sts::123456789012:user/moto; its live acceptability is not established by a plan. Even treating it as intended user identity, it is not wildcard trust.",
+            "No claims about external SCPs, identity policies or live deployment."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "realworld-rds-complete",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-rds-complete.json.gz",
+      "plan_sha256": "4273cb1c0effffe627ae5bbdfa7201a5d478265476de526166c0514964185f19",
+      "hash_matches_input": true,
+      "supplied_pair_count": 1,
+      "reviewed_pair_count": 1,
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.db.module.db_instance.aws_db_instance.this[0]",
+          "classification": "INVALID",
+          "rationale": "The target is not publicly accessible and its PostgreSQL ingress is confined to the VPC CIDR. Public routes elsewhere do not make this DB Internet accessible.",
+          "preconditions": [
+            "Attacker must first obtain private network reachability from 10.0.0.0/16 and database credentials or another database exploit. No such foothold follows from this pair."
+          ],
+          "evidence": [
+            {
+              "resource": "module.db.module.db_instance.aws_db_instance.this[0]",
+              "source": "planned_values",
+              "values": {
+                "allocated_storage": 20,
+                "allow_major_version_upgrade": false,
+                "apply_immediately": false,
+                "auto_minor_version_upgrade": true,
+                "backup_retention_period": 1,
+                "backup_window": "03:00-06:00",
+                "blue_green_update": [],
+                "copy_tags_to_snapshot": false,
+                "db_name": "completePostgresql",
+                "dedicated_log_volume": false,
+                "delete_automated_backups": true,
+                "deletion_protection": false,
+                "enabled_cloudwatch_logs_exports": [
+                  "postgresql",
+                  "upgrade"
+                ],
+                "engine": "postgres",
+                "engine_version": "14",
+                "iam_database_authentication_enabled": false,
+                "identifier": "complete-postgresql",
+                "instance_class": "db.t4g.large",
+                "maintenance_window": "mon:00:00-mon:03:00",
+                "manage_master_user_password": true,
+                "max_allocated_storage": 100,
+                "monitoring_interval": 60,
+                "multi_az": true,
+                "performance_insights_enabled": true,
+                "performance_insights_retention_period": 7,
+                "port": 5432,
+                "publicly_accessible": false,
+                "region": "eu-west-1",
+                "restore_to_point_in_time": [],
+                "s3_import": [],
+                "skip_final_snapshot": true,
+                "storage_encrypted": true,
+                "username": "complete_postgresql"
+              }
+            },
+            {
+              "resource": "module.security_group.aws_security_group.this_name_prefix[0]",
+              "source": "planned_values",
+              "values": {
+                "description": "Complete PostgreSQL example security group",
+                "name_prefix": "complete-postgresql-",
+                "region": "eu-west-1",
+                "revoke_rules_on_delete": false
+              }
+            },
+            {
+              "resource": "module.security_group.aws_security_group_rule.ingress_with_cidr_blocks[0]",
+              "source": "planned_values",
+              "values": {
+                "cidr_blocks": [
+                  "10.0.0.0/16"
+                ],
+                "description": "PostgreSQL access from within VPC",
+                "from_port": 5432,
+                "protocol": "tcp",
+                "region": "eu-west-1",
+                "self": false,
+                "to_port": 5432,
+                "type": "ingress"
+              }
+            }
+          ],
+          "uncertainty": [
+            "Computed endpoint, subnet and SG IDs are unknown until apply; configuration references and explicit publicly_accessible=false support the negative direct path.",
+            "No live connectivity or application vulnerabilities inspected."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "realworld-s3-bucket-complete",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-s3-bucket-complete.json.gz",
+      "plan_sha256": "be7515cabca2162487cfd1b4cecc12b603772c97e13adde8d2e8a8617202c6df",
+      "hash_matches_input": true,
+      "supplied_pair_count": 1,
+      "reviewed_pair_count": 1,
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.s3_bucket.aws_s3_bucket.this[0]",
+          "classification": "INVALID",
+          "rationale": "Private ACL and all four S3 public-access blocks contradict anonymous public data access. Reaching the S3 service endpoint does not authorize bucket/object access.",
+          "preconditions": [
+            "Attacker needs an authorized identity or presigned operation and any necessary KMS permissions; neither follows from the internet entry."
+          ],
+          "evidence": [
+            {
+              "resource": "module.s3_bucket.aws_s3_bucket.this[0]",
+              "source": "planned_values",
+              "values": {
+                "force_destroy": true,
+                "object_lock_enabled": true,
+                "region": "eu-west-1"
+              }
+            },
+            {
+              "resource": "module.s3_bucket.aws_s3_bucket_acl.this[0]",
+              "source": "planned_values",
+              "values": {
+                "acl": "private",
+                "expected_bucket_owner": "123456789012",
+                "region": "eu-west-1"
+              }
+            },
+            {
+              "resource": "module.s3_bucket.aws_s3_bucket_policy.this[0]",
+              "source": "planned_values",
+              "values": {
+                "region": "eu-west-1"
+              }
+            },
+            {
+              "resource": "module.s3_bucket.aws_s3_bucket_public_access_block.this[0]",
+              "source": "planned_values",
+              "values": {
+                "block_public_acls": true,
+                "block_public_policy": true,
+                "ignore_public_acls": true,
+                "region": "eu-west-1",
+                "restrict_public_buckets": true
+              }
+            }
+          ],
+          "uncertainty": [
+            "Final bucket policy is computed in planned values; block settings and private ACL are explicit. Unknown policy does not justify inventing public access.",
+            "Account-level settings and external identities were not inspected."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "realworld-security-group-complete",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-security-group-complete.json.gz",
+      "plan_sha256": "e7ee4b6638f51298e275ab0ee75e9a318f12670ad3c1041c83eeea494f5a3163",
+      "hash_matches_input": true,
+      "supplied_pair_count": 1,
+      "reviewed_pair_count": 1,
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.postgresql.module.security_group.aws_security_group.this[0]",
+          "classification": "OUT_OF_SCOPE",
+          "rationale": "A security group is a traffic-filter configuration, not a network endpoint. Interpreted as an Internet-to-PostgreSQL allow question, the answer is negative: only private primary/peer CIDRs are allowed.",
+          "preconditions": [
+            "A concrete attached network interface/service, route, source in 10.0.0.0/16 or 192.168.0.0/16, and database authentication would be needed."
+          ],
+          "evidence": [
+            {
+              "resource": "module.postgresql.module.security_group.aws_security_group.this[0]",
+              "source": "planned_values",
+              "values": {
+                "description": "PostgreSQL access from primary VPC and peer VPC",
+                "name_prefix": "ex-complete-postgresql-",
+                "region": "eu-west-1",
+                "revoke_rules_on_delete": false
+              }
+            },
+            {
+              "resource": "module.postgresql.module.security_group.aws_vpc_security_group_egress_rule.this[\"all\"]",
+              "source": "planned_values",
+              "values": {
+                "cidr_ipv4": "0.0.0.0/0",
+                "ip_protocol": "-1",
+                "region": "eu-west-1"
+              }
+            },
+            {
+              "resource": "module.postgresql.module.security_group.aws_vpc_security_group_ingress_rule.this[\"postgresql/peer\"]",
+              "source": "planned_values",
+              "values": {
+                "cidr_ipv4": "192.168.0.0/16",
+                "description": "PostgreSQL",
+                "from_port": 5432,
+                "ip_protocol": "tcp",
+                "region": "eu-west-1",
+                "to_port": 5432
+              }
+            },
+            {
+              "resource": "module.postgresql.module.security_group.aws_vpc_security_group_ingress_rule.this[\"postgresql/primary\"]",
+              "source": "planned_values",
+              "values": {
+                "cidr_ipv4": "10.0.0.0/16",
+                "description": "PostgreSQL",
+                "from_port": 5432,
+                "ip_protocol": "tcp",
+                "region": "eu-west-1",
+                "to_port": 5432
+              }
+            },
+            {
+              "resource": "module.postgresql.module.security_group.aws_vpc_security_group_rules_exclusive.this[0]",
+              "source": "planned_values",
+              "values": {
+                "egress_rule_ids": [
+                  null
+                ],
+                "ingress_rule_ids": [
+                  null,
+                  null
+                ],
+                "region": "eu-west-1"
+              }
+            }
+          ],
+          "uncertainty": [
+            "No concrete PostgreSQL service target is supplied by this pair. Outbound 0.0.0.0/0 does not create unsolicited inbound access."
+          ]
+        }
+      ]
+    },
+    {
+      "case": "realworld-vpc-complete",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-vpc-complete.json.gz",
+      "plan_sha256": "e45f425c19cf62df17bb2dd3ae0732dbbb166fce07e192950744e972bed6be21",
+      "hash_matches_input": true,
+      "supplied_pair_count": 1,
+      "reviewed_pair_count": 1,
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.vpc.aws_db_subnet_group.database[0]",
+          "classification": "OUT_OF_SCOPE",
+          "rationale": "A DB subnet group is placement metadata, not a database or listening endpoint. No Internet compromise of that target can be concluded.",
+          "preconditions": [
+            "A concrete database instance or interface plus public addressing, inbound routes/security-group permissions and authentication would be required."
+          ],
+          "evidence": [
+            {
+              "resource": "module.rds_security_group.aws_security_group.this[0]",
+              "source": "planned_values",
+              "values": {
+                "description": "Allow PostgreSQL inbound traffic",
+                "name_prefix": "ex-complete-rds-",
+                "region": "eu-west-1",
+                "revoke_rules_on_delete": false
+              }
+            },
+            {
+              "resource": "module.rds_security_group.aws_vpc_security_group_ingress_rule.this[\"postgresql\"]",
+              "source": "planned_values",
+              "values": {
+                "cidr_ipv4": "10.0.0.0/16",
+                "description": "TLS from VPC",
+                "from_port": 5432,
+                "ip_protocol": "tcp",
+                "region": "eu-west-1",
+                "to_port": 5432
+              }
+            },
+            {
+              "resource": "module.rds_security_group.aws_vpc_security_group_rules_exclusive.this[0]",
+              "source": "planned_values",
+              "values": {
+                "egress_rule_ids": [],
+                "ingress_rule_ids": [
+                  null
+                ],
+                "region": "eu-west-1"
+              }
+            },
+            {
+              "resource": "module.vpc.aws_db_subnet_group.database[0]",
+              "source": "planned_values",
+              "values": {
+                "description": "Database subnet group for ex-complete",
+                "name": "ex-complete-db",
+                "region": "eu-west-1"
+              }
+            }
+          ],
+          "uncertainty": [
+            "The planned resource list contains no aws_db_instance in this case; database subnet membership alone does not establish service exposure."
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "candidate_pairs_reviewed": 5,
+    "classification_counts": {
+      "INVALID": 3,
+      "OUT_OF_SCOPE": 2
+    },
+    "terragoat_candidate_pairs_reviewed": 0,
+    "inventory_exhaustive": false,
+    "plan_hashes_verified": 6
+  }
+}

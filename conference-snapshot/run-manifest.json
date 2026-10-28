@@ -1,0 +1,73 @@
+{
+  "ai": {
+    "include_comments": false,
+    "jev_backend": "local-rules (Jev stand-in, not calibrated)",
+    "llm_backend": "recorded, fallback simulated",
+    "prompt_version": "v1",
+    "publish_threshold": 0.7,
+    "tools_offered_to_models": []
+  },
+  "deterministic_hashes": {
+    "attack-paths.json": "c34b148447cb6b9d157e6b2a51e6b92901b54646ec11a4ffc597300f3d0e4939",
+    "dfd-overview.dot": "2141bd2b352a7951579846365ed3545944f20dfc7914d83e23819f3c3af67001",
+    "dfd-risk.dot": "51d723f8a4db65aa115db313a50779a55721b04a24d9f65f3a6ac9e5a91dc8b6",
+    "dfd.dot": "031a34ac33f2d010aee035ab44b7a88dc48cb66b5241d39dca3fc942e79273d8",
+    "evidence.json": "147af9d73f598ff308023b4052548545414e50b7a05b5d5aada28d2a0da709ce",
+    "iam-relationships.json": "c17bbbda298e4548e2a3eb5cd00fe2fe7ccc52ca114c507c489010f9b630b125",
+    "pytm-controls.json": "f7945dd829e6799906654bfbdf958792013c0150b077c4a93d9ee68777658fe5",
+    "pytm-findings.json": "3bd4ac3baab03f0f009ab9c74ee7bb0f6a1d569c3ccc668c6eaf3727048124f9",
+    "pytm-threats.json": "32a2f28ebe8d67bf05e303a84b193b418356f3b673e273e0b5fa010d15712ef5",
+    "questions.json": "2e95c5fdbf9f9debe2a80f5de6207a6065232100b2991bcb3903032e31df6075",
+    "resource-graph.json": "7276d576e8912d81d80dc7bf80e986c45abace4b639949360b0b800fee12266f",
+    "scanner-findings.json": "04ae18e3d1bb469809067c082001b5cd85364be6387da03b8f7b9afd06af6b23",
+    "seq.puml": "9b18d8dcd36e638620acc74ff1f6593e33a331b53c057813bd8950da89c17c8f",
+    "terraform-plan.json": "effabdaa40cd59fb7236624653e711d6063f831d86a71c55ce0e4196f08c8a77",
+    "threat-library.json": "9ba36a05d70d2e66efa187378e7240ffda26b6f91a35030aa9f231e8cdefbde7",
+    "threat-model.py": "5f8676721dc46fcc76fcd12b5628562a817205106b1ffdebb8fb66c723ef4fd2"
+  },
+  "prompt_version": "v1",
+  "pytm": "1.4.0",
+  "scanner_baselines": {
+    "checkov": {
+      "command": "checkov -d . --framework terraform -o json --quiet --compact --skip-download",
+      "pinned": "3.3.20",
+      "runtime_ms": 2139,
+      "status": "ok",
+      "version": "3.3.20"
+    },
+    "tfsec": {
+      "command": "tfsec . --format json --no-color --soft-fail",
+      "pinned": "v1.28.14",
+      "runtime_ms": 624,
+      "status": "ok",
+      "version": "v1.28.14"
+    },
+    "trivy": {
+      "command": "trivy config --format json --quiet --skip-check-update .",
+      "pinned": "0.74.0",
+      "runtime_ms": 844,
+      "status": "ok",
+      "version": "0.74.0"
+    }
+  },
+  "scanners_pinned": {
+    "checkov": "3.3.20",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  },
+  "schema_version": "1",
+  "tapm": "0.1.0",
+  "terraform_version_in_plan": "1.16.4",
+  "timings_ms": {
+    "ai": 32,
+    "graph_iam": 110,
+    "parse_plan": 1,
+    "paths": 0,
+    "pytm_generate": 307,
+    "pytm_run": 573,
+    "remediation": 1322,
+    "scanner_join": 1,
+    "whatif": 0,
+    "write": 3
+  }
+}

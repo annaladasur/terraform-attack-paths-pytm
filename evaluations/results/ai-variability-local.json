@@ -1,0 +1,2086 @@
+{
+  "backend": "ollama",
+  "command": ".venv/bin/tapm variability 006 -n 5 --llm ollama --model qwen3-coder:30b --write-results --tag local",
+  "fixture": "006-public-workload-iam-sensitive-bucket",
+  "git_sha": {
+    "code": "aa74c713263e5e001977058ab1d1266a60154aa8",
+    "gold": "514388190b6b534bc0dce73829bd021c3a95aa59",
+    "gold_commit": "514388190b6b534bc0dce73829bd021c3a95aa59",
+    "gold_files": {
+      "fixtures/006-public-workload-iam-sensitive-bucket/gold.yaml": "661219926ebb4c751250af2bc42bd39d2b6c459787edad9ab9df4573ab8b436d"
+    }
+  },
+  "metadata": {
+    "command": ".venv/bin/tapm variability 006 -n 5 --llm ollama --model qwen3-coder:30b --write-results --tag local",
+    "git_sha": {
+      "code": "aa74c713263e5e001977058ab1d1266a60154aa8",
+      "gold": "514388190b6b534bc0dce73829bd021c3a95aa59",
+      "gold_commit": "514388190b6b534bc0dce73829bd021c3a95aa59",
+      "gold_files": {
+        "fixtures/006-public-workload-iam-sensitive-bucket/gold.yaml": "661219926ebb4c751250af2bc42bd39d2b6c459787edad9ab9df4573ab8b436d"
+      }
+    },
+    "gold_commit": "514388190b6b534bc0dce73829bd021c3a95aa59",
+    "gold_files": {
+      "fixtures/006-public-workload-iam-sensitive-bucket/gold.yaml": "661219926ebb4c751250af2bc42bd39d2b6c459787edad9ab9df4573ab8b436d"
+    },
+    "tag": "local",
+    "tool_versions": {
+      "checkov": "3.3.20",
+      "terraform": "1.16.4",
+      "tfsec": "v1.28.14",
+      "trivy": "0.74.0"
+    }
+  },
+  "model": "qwen3-coder:30b",
+  "per_run": [
+    {
+      "annotations": [
+        {
+          "agent": "path_narrator",
+          "annotation_id": "ANN-001",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "relationships": [
+            {
+              "dst": "aws_lb.web",
+              "src": "internet",
+              "type": "EXPOSES"
+            },
+            {
+              "dst": "aws_instance.app",
+              "src": "aws_lb.web",
+              "type": "ROUTES_TO"
+            },
+            {
+              "dst": "aws_iam_role.app",
+              "src": "aws_instance.app",
+              "type": "ASSUMES"
+            },
+            {
+              "dst": "aws_s3_bucket.customer_data",
+              "src": "aws_iam_role.app",
+              "type": "ALLOWS"
+            }
+          ],
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "severity": "high",
+          "statement": "An attacker starting from the internet can reach the load balancer aws_lb.web which is exposed publicly on HTTPS/443 [GRAPH-017]. The load balancer routes traffic to the application instance aws_instance.app on HTTP/8080 [GRAPH-020]. If the workload is vulnerable to SSRF or RCE, the attacker can make the instance assume the IAM role aws_iam_role.app through its instance profile [GRAPH-003]. This role grants access to the confidential S3 bucket aws_s3_bucket.customer_data allowing list and read operations [GRAPH-001].",
+          "status": "accepted",
+          "type": "attack_path_explanation",
+          "validation": {
+            "all_hops_cited": true,
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true,
+            "severity_unchanged": true
+          }
+        },
+        {
+          "agent": "plain_explainer",
+          "annotation_id": "ANN-002",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-031"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker could access the confidential customer data bucket if they can make the web server issue a request to the cloud keys service (a bug that makes the server fetch a web address), because the web server is publicly reachable and the app instance can read the bucket.",
+          "status": "accepted",
+          "type": "plain_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "affected": [
+            "aws_lb.web",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "agent": "finding_explainer",
+          "annotation_id": "ANN-003",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-023",
+            "SCAN-031",
+            "SCAN-032",
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can exploit a public-facing load balancer to reach an application instance, use IMDSv1 to escalate privileges via SSRF, assume an IAM role with overly permissive S3 access, and ultimately read confidential data from an S3 bucket.",
+          "status": "accepted",
+          "type": "finding_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          },
+          "what_is_wrong": "A public load balancer allows direct internet access to an application instance that uses IMDSv1, which can be exploited via SSRF to assume an IAM role with wildcard S3 permissions, enabling unauthorized access to a confidential S3 bucket.",
+          "why_it_matters": "The path leads to a confidential asset (aws_s3_bucket.customer_data), and the chain of vulnerabilities allows an attacker to bypass security controls and directly access sensitive data."
+        },
+        {
+          "agent": "remediation",
+          "annotation_id": "ANN-004",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "NET-001",
+            "NET-003",
+            "PATH-001"
+          ],
+          "expected_effect": "breaks_path",
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "recommended_change": "Remove internet reachability of aws_lb.web: restrict the 0.0.0.0/0 ingress rule to known client CIDRs or set internal = true",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "Removing the internet-facing exposure of aws_lb.web by restricting its ingress rule from 0.0.0.0/0 to known CIDRs or setting internal = true breaks the attack path PATH-001, which requires workload_ssrf to exploit.",
+          "status": "accepted",
+          "terraform_example": "resource \"aws_lb\" \"web\" {\n  internal = true\n  # ... other configuration\n}",
+          "tradeoff": "The application's public accessibility may be impacted, potentially breaking external access to the service if not properly replaced with a secure alternative such as a VPC endpoint or private link setup. This change could also affect load balancer-based routing and monitoring if the service is expected to be accessed from the internet directly.",
+          "type": "remediation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "remediation_targets_existing": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "agent": "framework_mapper",
+          "annotation_id": "ANN-005",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "PATH-001"
+          ],
+          "mappings": [
+            {
+              "evidence_refs": [
+                "GRAPH-003"
+              ],
+              "framework": "CWE",
+              "id": "CWE-918",
+              "rationale": "The path involves a server-side request forgery (SSRF) attack that allows an attacker to make requests from the application instance, which is a form of CWE-918."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "CWE",
+              "id": "CWE-732",
+              "rationale": "The IAM role app has overly permissive permissions, allowing access to all S3 buckets (arn:aws:s3:::*), which is a CWE-732 vulnerability."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "ATTACK",
+              "id": "T1190",
+              "rationale": "The path exploits an exposed internet-facing load balancer (aws_lb.web) to gain access to internal resources, which is a T1190 technique."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "ATTACK",
+              "id": "T1530",
+              "rationale": "The path leads to access to data stored in an S3 bucket, which is a T1530 technique."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "AC-6",
+              "rationale": "The path exploits insufficient least privilege access control, where the IAM role app has excessive permissions to read all S3 buckets."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "SC-7",
+              "rationale": "The path exploits an exposed internet-facing load balancer, which violates SC-7 (Network Security Monitoring) by allowing unrestricted access to internal services."
+            }
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can potentially access the confidential S3 bucket aws_s3_bucket.customer_data by exploiting a chain of vulnerabilities starting from an internet-facing load balancer, through a vulnerable EC2 instance, and leveraging insufficient IAM role permissions.",
+          "status": "accepted",
+          "type": "framework_mapping",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "framework_ids_known": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        }
+      ],
+      "calls_count": 10,
+      "duration_ms": 79221,
+      "metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 58531,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 79104,
+        "model_calls": 10,
+        "output_tokens": 1703
+      },
+      "run_index": 0,
+      "seed": 42,
+      "summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      }
+    },
+    {
+      "annotations": [
+        {
+          "agent": "path_narrator",
+          "annotation_id": "ANN-001",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "NET-001",
+            "NET-003",
+            "NET-005",
+            "IAM-002",
+            "TF-004",
+            "IAM-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "relationships": [
+            {
+              "dst": "aws_lb.web",
+              "src": "internet",
+              "type": "EXPOSES"
+            },
+            {
+              "dst": "aws_instance.app",
+              "src": "aws_lb.web",
+              "type": "ROUTES_TO"
+            },
+            {
+              "dst": "aws_iam_role.app",
+              "src": "aws_instance.app",
+              "type": "ASSUMES"
+            },
+            {
+              "dst": "aws_s3_bucket.customer_data",
+              "src": "aws_iam_role.app",
+              "type": "ALLOWS"
+            }
+          ],
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "severity": "high",
+          "statement": "An attacker starting from the internet can reach the web load balancer aws_lb.web which is exposed to the internet [GRAPH-017]. From there, traffic is routed to the application instance aws_instance.app [GRAPH-020]. The path requires the precondition 'workload_ssrf' which allows the attacker to exploit a server-side request forgery or remote code execution on the workload, enabling them to assume the role aws_iam_role.app through IMDSv1 [GRAPH-003]. Finally, the attacker can use the permissions granted to aws_iam_role.app to list and read data in the confidential S3 bucket aws_s3_bucket.customer_data [GRAPH-001].",
+          "status": "accepted",
+          "type": "attack_path_explanation",
+          "validation": {
+            "all_hops_cited": true,
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true,
+            "severity_unchanged": true
+          }
+        },
+        {
+          "agent": "plain_explainer",
+          "annotation_id": "ANN-002",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-031"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker could access the confidential customer data bucket if they can make the web server issue a request to the cloud keys service (a bug that makes the server fetch a web address), because the web server is publicly reachable and the app instance can read the bucket.",
+          "status": "accepted",
+          "type": "plain_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "affected": [
+            "aws_lb.web",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "agent": "finding_explainer",
+          "annotation_id": "ANN-003",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-023",
+            "SCAN-031",
+            "SCAN-032",
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can exploit a public-facing load balancer to reach an application instance, use IMDSv1 to escalate privileges via SSRF, assume an IAM role with overly permissive S3 access, and ultimately read confidential data from an S3 bucket.",
+          "status": "accepted",
+          "type": "finding_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          },
+          "what_is_wrong": "A public load balancer allows direct internet access to an application instance that uses IMDSv1, which can be exploited via SSRF to assume an IAM role with wildcard S3 permissions, enabling unauthorized access to a confidential S3 bucket.",
+          "why_it_matters": "The path leads to a confidential asset (aws_s3_bucket.customer_data), and the attack chain requires only a workload SSRF vulnerability, making it a high-severity risk."
+        },
+        {
+          "agent": "remediation",
+          "annotation_id": "ANN-004",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "NET-001",
+            "NET-003",
+            "PATH-001"
+          ],
+          "expected_effect": "breaks_path",
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "recommended_change": "Remove internet reachability of aws_lb.web: restrict the 0.0.0.0/0 ingress rule to known client CIDRs or set internal = true",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "Removing the internet-facing exposure of aws_lb.web by restricting its ingress rule from 0.0.0.0/0 to known CIDRs or setting internal = true breaks the attack path PATH-001, which requires workload_ssrf to exploit.",
+          "status": "accepted",
+          "terraform_example": "resource \"aws_lb\" \"web\" {\n  internal = true\n  # ... other configuration\n}",
+          "tradeoff": "The application's public accessibility may be impacted, potentially breaking external access to the service if not properly replaced with a secure alternative such as a VPC endpoint or private link setup. This change could also affect load balancer-based routing and monitoring if the service is expected to be accessed from the internet directly.",
+          "type": "remediation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "remediation_targets_existing": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "agent": "framework_mapper",
+          "annotation_id": "ANN-005",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "PATH-001"
+          ],
+          "mappings": [
+            {
+              "evidence_refs": [
+                "GRAPH-003"
+              ],
+              "framework": "CWE",
+              "id": "CWE-918",
+              "rationale": "The path involves a server-side request forgery (SSRF) attack that allows an attacker to make requests from the application instance, which is a form of CWE-918 (Server-Side Request Forgery)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "CWE",
+              "id": "CWE-732",
+              "rationale": "The IAM role app_s3 grants overly broad permissions (s3:GetObject, s3:ListBucket) on all S3 resources (*), which is a form of CWE-732 (Improper Resource Protection)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "CWE",
+              "id": "CWE-668",
+              "rationale": "The load balancer web is exposed to the internet with an open ingress rule (0.0.0.0/0), which allows unauthorized access to the backend application instance, a form of CWE-668 (Improper Access Control)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "ATTACK",
+              "id": "T1190",
+              "rationale": "The path exploits an exposed service (aws_lb.web) to gain access to internal resources, which aligns with T1190 (Exploit Public-Facing Application)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "ATTACK",
+              "id": "T1530",
+              "rationale": "The path leads to accessing data stored in an S3 bucket, which is a form of T1530 (Data from Cloud Storage)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "AC-6",
+              "rationale": "The path demonstrates a lack of least privilege access control, as the IAM role app_s3 has overly broad permissions on S3 resources, violating AC-6 (Least Privilege)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "SC-7",
+              "rationale": "The path exploits an insecure network configuration where the load balancer allows unrestricted ingress from the internet, violating SC-7 (Unsuccessful Logon Attempts)."
+            }
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can potentially access the confidential S3 bucket aws_s3_bucket.customer_data by exploiting a chain of vulnerabilities starting from an internet-facing load balancer, through a vulnerable EC2 instance, and leveraging insufficient IAM role permissions.",
+          "status": "accepted",
+          "type": "framework_mapping",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "framework_ids_known": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        }
+      ],
+      "calls_count": 10,
+      "duration_ms": 45435,
+      "metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 58739,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 45361,
+        "model_calls": 10,
+        "output_tokens": 1911
+      },
+      "run_index": 1,
+      "seed": 43,
+      "summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      }
+    },
+    {
+      "annotations": [
+        {
+          "agent": "path_narrator",
+          "annotation_id": "ANN-001",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "NET-001",
+            "NET-003",
+            "NET-005",
+            "IAM-002",
+            "TF-004",
+            "IAM-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "relationships": [
+            {
+              "dst": "aws_lb.web",
+              "src": "internet",
+              "type": "EXPOSES"
+            },
+            {
+              "dst": "aws_instance.app",
+              "src": "aws_lb.web",
+              "type": "ROUTES_TO"
+            },
+            {
+              "dst": "aws_iam_role.app",
+              "src": "aws_instance.app",
+              "type": "ASSUMES"
+            },
+            {
+              "dst": "aws_s3_bucket.customer_data",
+              "src": "aws_iam_role.app",
+              "type": "ALLOWS"
+            }
+          ],
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "severity": "high",
+          "statement": "An attacker starting from the internet can reach the web load balancer aws_lb.web which is exposed to the internet [GRAPH-017]. From there, traffic is routed to the application instance aws_instance.app [GRAPH-020]. The path requires the precondition 'workload_ssrf' which allows the attacker to exploit a server-side request forgery or remote code execution on the workload, enabling them to assume the role aws_iam_role.app through IMDSv1 [GRAPH-003]. Finally, the attacker can use the permissions granted to aws_iam_role.app to list and read data in the confidential S3 bucket aws_s3_bucket.customer_data [GRAPH-001].",
+          "status": "accepted",
+          "type": "attack_path_explanation",
+          "validation": {
+            "all_hops_cited": true,
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true,
+            "severity_unchanged": true
+          }
+        },
+        {
+          "agent": "plain_explainer",
+          "annotation_id": "ANN-002",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-031"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker could access the confidential customer data bucket if they can make the web server issue a request to the cloud keys service (a bug that makes the server fetch a web address), because the web server is publicly reachable and the app instance can read the bucket.",
+          "status": "accepted",
+          "type": "plain_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "affected": [
+            "aws_lb.web",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "agent": "finding_explainer",
+          "annotation_id": "ANN-003",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-023",
+            "SCAN-031",
+            "SCAN-032",
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can exploit a public-facing load balancer to reach an application instance, use IMDSv1 to escalate privileges via SSRF, assume an IAM role with overly permissive S3 access, and ultimately read confidential data from an S3 bucket.",
+          "status": "accepted",
+          "type": "finding_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          },
+          "what_is_wrong": "A public load balancer allows direct internet access to an application instance that uses IMDSv1, which can be exploited via SSRF to assume an IAM role with wildcard S3 permissions, enabling unauthorized access to a confidential S3 bucket.",
+          "why_it_matters": "The path leads to a confidential asset (aws_s3_bucket.customer_data), and the attack chain requires only a workload SSRF vulnerability, making it a high-severity risk."
+        },
+        {
+          "agent": "remediation",
+          "annotation_id": "ANN-004",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "NET-001",
+            "NET-003",
+            "PATH-001"
+          ],
+          "expected_effect": "breaks_path",
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "recommended_change": "Remove internet reachability of aws_lb.web: restrict the 0.0.0.0/0 ingress rule to known client CIDRs or set internal = true",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "Removing the internet-facing exposure of aws_lb.web by restricting its ingress rule from 0.0.0.0/0 to known CIDRs or setting internal = true breaks the attack path PATH-001, which requires workload_ssrf to exploit.",
+          "status": "accepted",
+          "terraform_example": "resource \"aws_lb\" \"web\" {\n  internal = true\n  # ... other configuration\n}",
+          "tradeoff": "The application's public accessibility may be impacted, potentially breaking external access to the service if not properly replaced with a secure alternative such as a VPC endpoint or private link setup. This change could also affect load balancer-based routing and monitoring if the service is expected to be accessed from the internet directly.",
+          "type": "remediation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "remediation_targets_existing": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "agent": "framework_mapper",
+          "annotation_id": "ANN-005",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "PATH-001"
+          ],
+          "mappings": [
+            {
+              "evidence_refs": [
+                "GRAPH-003"
+              ],
+              "framework": "CWE",
+              "id": "CWE-918",
+              "rationale": "The path involves a server-side request forgery (SSRF) attack that allows an attacker to make requests from the application instance, which is a form of CWE-918 (Server-Side Request Forgery)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "CWE",
+              "id": "CWE-732",
+              "rationale": "The IAM role app_s3 grants overly broad permissions (s3:GetObject, s3:ListBucket) on all S3 resources (*), which is a form of CWE-732 (Improper Resource Protection)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "CWE",
+              "id": "CWE-668",
+              "rationale": "The load balancer web is exposed to the internet with an open ingress rule (0.0.0.0/0), which allows unauthorized access to the backend application instance, a form of CWE-668 (Improper Access Control)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "ATTACK",
+              "id": "T1190",
+              "rationale": "The path exploits an exposed service (aws_lb.web) to gain access to internal resources, which aligns with T1190 (Exploit Public-Facing Application)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "ATTACK",
+              "id": "T1530",
+              "rationale": "The path leads to accessing data stored in an S3 bucket, which is a form of T1530 (Data from Cloud Storage)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "AC-6",
+              "rationale": "The path demonstrates a lack of least privilege access control, as the IAM role app_s3 has overly broad permissions on S3 resources, violating AC-6 (Least Privilege)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "SC-7",
+              "rationale": "The path exploits an insecure network configuration where the load balancer allows unrestricted ingress from the internet, violating SC-7 (Unsuccessful Logon Attempts)."
+            }
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can potentially access the confidential S3 bucket aws_s3_bucket.customer_data by exploiting a chain of vulnerabilities starting from an internet-facing load balancer, through a vulnerable EC2 instance, and leveraging insufficient IAM role permissions.",
+          "status": "accepted",
+          "type": "framework_mapping",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "framework_ids_known": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        }
+      ],
+      "calls_count": 10,
+      "duration_ms": 42655,
+      "metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 58739,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 42589,
+        "model_calls": 10,
+        "output_tokens": 1911
+      },
+      "run_index": 2,
+      "seed": 44,
+      "summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      }
+    },
+    {
+      "annotations": [
+        {
+          "agent": "path_narrator",
+          "annotation_id": "ANN-001",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "NET-001",
+            "NET-003",
+            "NET-005",
+            "IAM-002",
+            "TF-004",
+            "IAM-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "relationships": [
+            {
+              "dst": "aws_lb.web",
+              "src": "internet",
+              "type": "EXPOSES"
+            },
+            {
+              "dst": "aws_instance.app",
+              "src": "aws_lb.web",
+              "type": "ROUTES_TO"
+            },
+            {
+              "dst": "aws_iam_role.app",
+              "src": "aws_instance.app",
+              "type": "ASSUMES"
+            },
+            {
+              "dst": "aws_s3_bucket.customer_data",
+              "src": "aws_iam_role.app",
+              "type": "ALLOWS"
+            }
+          ],
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "severity": "high",
+          "statement": "An attacker starting from the internet can reach the web load balancer aws_lb.web which is exposed to the internet [GRAPH-017]. From there, traffic is routed to the application instance aws_instance.app [GRAPH-020]. The path requires the precondition 'workload_ssrf' which allows the attacker to exploit a server-side request forgery or remote code execution on the workload, enabling them to assume the role aws_iam_role.app through IMDSv1 [GRAPH-003]. Finally, the attacker can use the permissions granted to aws_iam_role.app to list and read data in the confidential S3 bucket aws_s3_bucket.customer_data [GRAPH-001].",
+          "status": "accepted",
+          "type": "attack_path_explanation",
+          "validation": {
+            "all_hops_cited": true,
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true,
+            "severity_unchanged": true
+          }
+        },
+        {
+          "agent": "plain_explainer",
+          "annotation_id": "ANN-002",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-031"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker could access the confidential customer data bucket if they can make the web server issue a request to the cloud keys service (a bug that makes the server fetch a web address), because the web server is publicly reachable and the app instance can read the bucket.",
+          "status": "accepted",
+          "type": "plain_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "affected": [
+            "aws_lb.web",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "agent": "finding_explainer",
+          "annotation_id": "ANN-003",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-023",
+            "SCAN-031",
+            "SCAN-032",
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can exploit a public-facing load balancer to reach an application instance, use IMDSv1 to escalate privileges via SSRF, assume an IAM role with overly permissive S3 access, and ultimately read confidential data from an S3 bucket.",
+          "status": "accepted",
+          "type": "finding_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          },
+          "what_is_wrong": "A public load balancer allows direct internet access to an application instance that uses IMDSv1, which can be exploited via SSRF to assume an IAM role with wildcard S3 permissions, enabling unauthorized access to a confidential S3 bucket.",
+          "why_it_matters": "The path leads to a confidential asset (aws_s3_bucket.customer_data), and the attack chain requires only a workload SSRF vulnerability, making it a high-severity risk."
+        },
+        {
+          "agent": "remediation",
+          "annotation_id": "ANN-004",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "NET-001",
+            "NET-003",
+            "PATH-001"
+          ],
+          "expected_effect": "breaks_path",
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "recommended_change": "Remove internet reachability of aws_lb.web: restrict the 0.0.0.0/0 ingress rule to known client CIDRs or set internal = true",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "Removing the internet-facing exposure of aws_lb.web by restricting its ingress rule from 0.0.0.0/0 to known CIDRs or setting internal = true breaks the attack path PATH-001, which requires workload_ssrf to exploit.",
+          "status": "accepted",
+          "terraform_example": "resource \"aws_lb\" \"web\" {\n  internal = true\n  # ... other configuration\n}",
+          "tradeoff": "The application's public accessibility may be impacted, potentially breaking external access to the service if not properly replaced with a secure alternative such as a VPC endpoint or private link setup. This change could also affect load balancer-based routing and monitoring if the service is expected to be accessed from the internet directly.",
+          "type": "remediation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "remediation_targets_existing": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "agent": "framework_mapper",
+          "annotation_id": "ANN-005",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "PATH-001"
+          ],
+          "mappings": [
+            {
+              "evidence_refs": [
+                "GRAPH-003"
+              ],
+              "framework": "CWE",
+              "id": "CWE-918",
+              "rationale": "The path involves a server-side request forgery (SSRF) attack that allows an attacker to make requests from the application instance, which is a form of CWE-918 (Server-Side Request Forgery)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "CWE",
+              "id": "CWE-732",
+              "rationale": "The IAM role app_s3 grants overly broad permissions (s3:GetObject, s3:ListBucket) on all S3 resources (*), which is a form of CWE-732 (Improper Resource Protection)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "CWE",
+              "id": "CWE-668",
+              "rationale": "The load balancer web is exposed to the internet with an open ingress rule (0.0.0.0/0), which allows unauthorized access to the backend application instance, a form of CWE-668 (Improper Access Control)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "ATTACK",
+              "id": "T1190",
+              "rationale": "The path exploits an exposed service (aws_lb.web) to gain access to internal resources, which aligns with T1190 (Exploit Public-Facing Application)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "ATTACK",
+              "id": "T1530",
+              "rationale": "The path leads to accessing data stored in an S3 bucket, which is a form of T1530 (Data from Cloud Storage)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "AC-6",
+              "rationale": "The path demonstrates a lack of least privilege access control, as the IAM role app_s3 has overly broad permissions on S3 resources, violating AC-6 (Least Privilege)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "SC-7",
+              "rationale": "The path exploits an insecure network configuration where the load balancer allows unrestricted ingress from the internet, violating SC-7 (Unsuccessful Logon Attempts)."
+            }
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can potentially access the confidential S3 bucket aws_s3_bucket.customer_data by exploiting a chain of vulnerabilities starting from an internet-facing load balancer, through a vulnerable EC2 instance, and leveraging insufficient IAM role permissions.",
+          "status": "accepted",
+          "type": "framework_mapping",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "framework_ids_known": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        }
+      ],
+      "calls_count": 10,
+      "duration_ms": 49284,
+      "metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 58739,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 49209,
+        "model_calls": 10,
+        "output_tokens": 1911
+      },
+      "run_index": 3,
+      "seed": 45,
+      "summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      }
+    },
+    {
+      "annotations": [
+        {
+          "agent": "path_narrator",
+          "annotation_id": "ANN-001",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "NET-001",
+            "NET-003",
+            "NET-005",
+            "IAM-002",
+            "TF-004",
+            "IAM-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "relationships": [
+            {
+              "dst": "aws_lb.web",
+              "src": "internet",
+              "type": "EXPOSES"
+            },
+            {
+              "dst": "aws_instance.app",
+              "src": "aws_lb.web",
+              "type": "ROUTES_TO"
+            },
+            {
+              "dst": "aws_iam_role.app",
+              "src": "aws_instance.app",
+              "type": "ASSUMES"
+            },
+            {
+              "dst": "aws_s3_bucket.customer_data",
+              "src": "aws_iam_role.app",
+              "type": "ALLOWS"
+            }
+          ],
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "severity": "high",
+          "statement": "An attacker starting from the internet can reach the web load balancer aws_lb.web which is exposed to the internet [GRAPH-017]. From there, traffic is routed to the application instance aws_instance.app [GRAPH-020]. The path requires the precondition 'workload_ssrf' which allows the attacker to exploit a server-side request forgery or remote code execution on the workload, enabling them to assume the role aws_iam_role.app through IMDSv1 [GRAPH-003]. Finally, the attacker can use the permissions granted to aws_iam_role.app to list and read data in the confidential S3 bucket aws_s3_bucket.customer_data [GRAPH-001].",
+          "status": "accepted",
+          "type": "attack_path_explanation",
+          "validation": {
+            "all_hops_cited": true,
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true,
+            "severity_unchanged": true
+          }
+        },
+        {
+          "agent": "plain_explainer",
+          "annotation_id": "ANN-002",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001",
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-031"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker could access the confidential customer data bucket if they can make the web server issue a request to the cloud keys service (a bug that makes the server fetch a web address), because the web server is publicly reachable and the app instance can read the bucket.",
+          "status": "accepted",
+          "type": "plain_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "affected": [
+            "aws_lb.web",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          "agent": "finding_explainer",
+          "annotation_id": "ANN-003",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "SCAN-020",
+            "SCAN-022",
+            "SCAN-018",
+            "SCAN-023",
+            "SCAN-031",
+            "SCAN-032",
+            "GRAPH-017",
+            "GRAPH-020",
+            "GRAPH-003",
+            "GRAPH-001"
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can exploit a public-facing load balancer to reach an application instance, use IMDSv1 to escalate privileges via SSRF, assume an IAM role with overly permissive S3 access, and ultimately read confidential data from an S3 bucket.",
+          "status": "accepted",
+          "type": "finding_explanation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          },
+          "what_is_wrong": "A public load balancer allows direct internet access to an application instance that uses IMDSv1, which can be exploited via SSRF to assume an IAM role with wildcard S3 permissions, enabling unauthorized access to a confidential S3 bucket.",
+          "why_it_matters": "The path leads to a confidential asset (aws_s3_bucket.customer_data), and the attack chain requires only a workload SSRF vulnerability, making it a high-severity risk."
+        },
+        {
+          "agent": "remediation",
+          "annotation_id": "ANN-004",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 1,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "GRAPH-017",
+            "NET-001",
+            "NET-003",
+            "PATH-001"
+          ],
+          "expected_effect": "breaks_path",
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "recommended_change": "Remove internet reachability of aws_lb.web: restrict the 0.0.0.0/0 ingress rule to known client CIDRs or set internal = true",
+          "review": {
+            "confidence": 1,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "Removing the internet-facing exposure of aws_lb.web by restricting its ingress rule from 0.0.0.0/0 to known CIDRs or setting internal = true breaks the attack path PATH-001, which requires workload_ssrf to exploit.",
+          "status": "accepted",
+          "terraform_example": "resource \"aws_lb\" \"web\" {\n  internal = true\n  # ... other configuration\n}",
+          "tradeoff": "The application's public accessibility may be impacted, potentially breaking external access to the service if not properly replaced with a secure alternative such as a VPC endpoint or private link setup. This change could also affect load balancer-based routing and monitoring if the service is expected to be accessed from the internet directly.",
+          "type": "remediation",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "remediation_targets_existing": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        },
+        {
+          "agent": "framework_mapper",
+          "annotation_id": "ANN-005",
+          "backend": "ollama",
+          "bundle_hash": "625977f5a18d6298",
+          "confidence": 0.9,
+          "escalation": {
+            "publish_without_human": 1.0,
+            "threshold": 0.7
+          },
+          "evidence_refs": [
+            "PATH-001"
+          ],
+          "mappings": [
+            {
+              "evidence_refs": [
+                "GRAPH-003"
+              ],
+              "framework": "CWE",
+              "id": "CWE-918",
+              "rationale": "The path involves a server-side request forgery (SSRF) attack that allows an attacker to make requests from the application instance, which is a form of CWE-918 (Server-Side Request Forgery)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "CWE",
+              "id": "CWE-732",
+              "rationale": "The IAM role app_s3 grants overly broad permissions (s3:GetObject, s3:ListBucket) on all S3 resources (*), which is a form of CWE-732 (Improper Resource Protection)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "CWE",
+              "id": "CWE-668",
+              "rationale": "The load balancer web is exposed to the internet with an open ingress rule (0.0.0.0/0), which allows unauthorized access to the backend application instance, a form of CWE-668 (Improper Access Control)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "ATTACK",
+              "id": "T1190",
+              "rationale": "The path exploits an exposed service (aws_lb.web) to gain access to internal resources, which aligns with T1190 (Exploit Public-Facing Application)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "ATTACK",
+              "id": "T1530",
+              "rationale": "The path leads to accessing data stored in an S3 bucket, which is a form of T1530 (Data from Cloud Storage)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-001"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "AC-6",
+              "rationale": "The path demonstrates a lack of least privilege access control, as the IAM role app_s3 has overly broad permissions on S3 resources, violating AC-6 (Least Privilege)."
+            },
+            {
+              "evidence_refs": [
+                "GRAPH-017"
+              ],
+              "framework": "NIST-800-53r5",
+              "id": "SC-7",
+              "rationale": "The path exploits an insecure network configuration where the load balancer allows unrestricted ingress from the internet, violating SC-7 (Unsuccessful Logon Attempts)."
+            }
+          ],
+          "model": "qwen3-coder:30b",
+          "path_ref": "PATH-001",
+          "prompt_version": "v1",
+          "review": {
+            "confidence": 0.9,
+            "issues": [],
+            "verdict": "accept"
+          },
+          "statement": "An attacker can potentially access the confidential S3 bucket aws_s3_bucket.customer_data by exploiting a chain of vulnerabilities starting from an internet-facing load balancer, through a vulnerable EC2 instance, and leveraging insufficient IAM role permissions.",
+          "status": "accepted",
+          "type": "framework_mapping",
+          "validation": {
+            "evidence_exists": true,
+            "evidence_in_bundle": true,
+            "evidence_present": true,
+            "framework_ids_known": true,
+            "no_actions": true,
+            "no_exploit_claim": true,
+            "no_markup_or_links": true,
+            "no_suppression": true,
+            "no_untrusted_echo": true,
+            "path_exists": true,
+            "permissions_exist": true,
+            "relationships_exist": true,
+            "resources_exist": true,
+            "schema": true
+          }
+        }
+      ],
+      "calls_count": 10,
+      "duration_ms": 52031,
+      "metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 58739,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 51945,
+        "model_calls": 10,
+        "output_tokens": 1911
+      },
+      "run_index": 4,
+      "seed": 46,
+      "summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      }
+    }
+  ],
+  "runs": 5,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "summary": {
+    "annotations_total": 25,
+    "backend": "ollama",
+    "calls_per_path": 5,
+    "cost_usd": 0.0,
+    "fixture": "006-public-workload-iam-sensitive-bucket",
+    "framework_mapping_agreement": {
+      "ground_truth_ids": [
+        "AC-6",
+        "CWE-668",
+        "CWE-732",
+        "CWE-918",
+        "SC-7",
+        "T1190",
+        "T1530",
+        "T1552.005"
+      ],
+      "mean_jaccard": 0.85,
+      "mean_precision": 1.0,
+      "mean_recall": 0.85,
+      "pairwise_jaccard": 0.9429,
+      "precision_rate": "100.0% (34/34)",
+      "recall_rate": "85.0% (34/40)"
+    },
+    "generator_calls_per_path": 5,
+    "latency_ms": {
+      "max": 21043,
+      "mean": 5364.2,
+      "min": 789,
+      "p50": 3161.5,
+      "p95": 16554
+    },
+    "model": "qwen3-coder:30b",
+    "paths_count": 1,
+    "per_annotation": {
+      "PATH-001:finding_explainer": {
+        "agent": "finding_explainer",
+        "distinct_texts": 1,
+        "modal_verdict": "accepted",
+        "path_ref": "PATH-001",
+        "rejected_count": 0,
+        "runs": 5,
+        "sample_statement": "An attacker can exploit a public-facing load balancer to reach an application instance, use IMDSv1 to escalate privileges via SSRF, assume an IAM role with overly permissive S3 access, and ultimately read confidential data from an S3 bucket.",
+        "status_counts": {
+          "accepted": 5
+        },
+        "statuses": [
+          "accepted"
+        ],
+        "unsupported_published": 0,
+        "verdict_agreement": 1.0,
+        "verdict_agreement_rate": "100.0% (5/5, 95% CI [56.5%, 100.0%])",
+        "verdict_agreement_wilson_95": [
+          0.5655,
+          1.0
+        ]
+      },
+      "PATH-001:framework_mapper": {
+        "agent": "framework_mapper",
+        "distinct_id_sets": 2,
+        "distinct_texts": 1,
+        "ground_truth_ids": [
+          "AC-6",
+          "CWE-668",
+          "CWE-732",
+          "CWE-918",
+          "SC-7",
+          "T1190",
+          "T1530",
+          "T1552.005"
+        ],
+        "mean_jaccard": 0.85,
+        "mean_pairwise_jaccard": 0.9429,
+        "mean_precision": 1.0,
+        "mean_recall": 0.85,
+        "modal_verdict": "accepted",
+        "path_ref": "PATH-001",
+        "per_run": [
+          {
+            "annotation_id": "ANN-005",
+            "emitted_ids": [
+              "AC-6",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "jaccard": 0.75,
+            "matching_ids": [
+              "AC-6",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "precision": 1.0,
+            "recall": 0.75
+          },
+          {
+            "annotation_id": "ANN-005",
+            "emitted_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "jaccard": 0.875,
+            "matching_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "precision": 1.0,
+            "recall": 0.875
+          },
+          {
+            "annotation_id": "ANN-005",
+            "emitted_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "jaccard": 0.875,
+            "matching_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "precision": 1.0,
+            "recall": 0.875
+          },
+          {
+            "annotation_id": "ANN-005",
+            "emitted_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "jaccard": 0.875,
+            "matching_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "precision": 1.0,
+            "recall": 0.875
+          },
+          {
+            "annotation_id": "ANN-005",
+            "emitted_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "jaccard": 0.875,
+            "matching_ids": [
+              "AC-6",
+              "CWE-668",
+              "CWE-732",
+              "CWE-918",
+              "SC-7",
+              "T1190",
+              "T1530"
+            ],
+            "precision": 1.0,
+            "recall": 0.875
+          }
+        ],
+        "rejected_count": 0,
+        "runs": 5,
+        "sample_statement": "An attacker can potentially access the confidential S3 bucket aws_s3_bucket.customer_data by exploiting a chain of vulnerabilities starting from an internet-facing load balancer, through a vulnerable EC2 instance, and leveraging insufficient IAM role permissions.",
+        "status_counts": {
+          "accepted": 5
+        },
+        "statuses": [
+          "accepted"
+        ],
+        "unsupported_published": 0,
+        "verdict_agreement": 1.0,
+        "verdict_agreement_rate": "100.0% (5/5, 95% CI [56.5%, 100.0%])",
+        "verdict_agreement_wilson_95": [
+          0.5655,
+          1.0
+        ]
+      },
+      "PATH-001:path_narrator": {
+        "agent": "path_narrator",
+        "distinct_texts": 2,
+        "modal_verdict": "accepted",
+        "path_ref": "PATH-001",
+        "rejected_count": 0,
+        "runs": 5,
+        "sample_statement": "An attacker starting from the internet can reach the load balancer aws_lb.web which is exposed publicly on HTTPS/443 [GRAPH-017]. The load balancer routes traffic to the application instance aws_instance.app on HTTP/8080 [GRAPH-020]. If the workload is vulnerable to SSRF or RCE, the attacker can make the instance assume the IAM role aws_iam_role.app through its instance profile [GRAPH-003]. This role grants access to the confidential S3 bucket aws_s3_bucket.customer_data allowing list and read operations [GRAPH-001].",
+        "status_counts": {
+          "accepted": 5
+        },
+        "statuses": [
+          "accepted"
+        ],
+        "unsupported_published": 0,
+        "verdict_agreement": 1.0,
+        "verdict_agreement_rate": "100.0% (5/5, 95% CI [56.5%, 100.0%])",
+        "verdict_agreement_wilson_95": [
+          0.5655,
+          1.0
+        ]
+      },
+      "PATH-001:plain_explainer": {
+        "agent": "plain_explainer",
+        "distinct_texts": 1,
+        "modal_verdict": "accepted",
+        "path_ref": "PATH-001",
+        "rejected_count": 0,
+        "runs": 5,
+        "sample_statement": "An attacker could access the confidential customer data bucket if they can make the web server issue a request to the cloud keys service (a bug that makes the server fetch a web address), because the web server is publicly reachable and the app instance can read the bucket.",
+        "status_counts": {
+          "accepted": 5
+        },
+        "statuses": [
+          "accepted"
+        ],
+        "unsupported_published": 0,
+        "verdict_agreement": 1.0,
+        "verdict_agreement_rate": "100.0% (5/5, 95% CI [56.5%, 100.0%])",
+        "verdict_agreement_wilson_95": [
+          0.5655,
+          1.0
+        ]
+      },
+      "PATH-001:remediation": {
+        "agent": "remediation",
+        "distinct_texts": 1,
+        "modal_verdict": "accepted",
+        "path_ref": "PATH-001",
+        "rejected_count": 0,
+        "runs": 5,
+        "sample_statement": "Removing the internet-facing exposure of aws_lb.web by restricting its ingress rule from 0.0.0.0/0 to known CIDRs or setting internal = true breaks the attack path PATH-001, which requires workload_ssrf to exploit.",
+        "status_counts": {
+          "accepted": 5
+        },
+        "statuses": [
+          "accepted"
+        ],
+        "unsupported_published": 0,
+        "verdict_agreement": 1.0,
+        "verdict_agreement_rate": "100.0% (5/5, 95% CI [56.5%, 100.0%])",
+        "verdict_agreement_wilson_95": [
+          0.5655,
+          1.0
+        ]
+      }
+    },
+    "runs": 5,
+    "total_calls": 50,
+    "unsupported_published": 0,
+    "unsupported_published_rate": "0.0% (0/25, 95% CI [0.0%, 13.3%])",
+    "verdict_agreement_overall": "100.0% (25/25, 95% CI [86.7%, 100.0%])"
+  },
+  "tag": "local",
+  "tool_versions": {
+    "checkov": "3.3.20",
+    "terraform": "1.16.4",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  }
+}

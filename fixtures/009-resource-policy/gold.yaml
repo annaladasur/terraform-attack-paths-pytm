@@ -1,0 +1,25 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 009-resource-policy
+summary: The role has no identity policy at all; the bucket policy grants it read directly. Public API with IMDSv2 required.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: aws_instance.api}
+  - {type: ASSUMES, src: aws_instance.api, dst: aws_iam_role.app}
+  - {type: TRUSTS, src: aws_iam_role.app, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ALLOWS, src: aws_iam_role.app, dst: aws_s3_bucket.ledger}
+expected_iam:
+  - {principal: aws_iam_role.app, resource: aws_s3_bucket.ledger, access: [read]}
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: aws_s3_bucket.ledger
+    hops: [internet, aws_instance.api, aws_iam_role.app, aws_s3_bucket.ledger]
+    preconditions: [workload_rce]
+    priority: medium
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

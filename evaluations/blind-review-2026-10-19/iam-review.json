@@ -1,0 +1,5055 @@
+{
+  "case": "iam-vulnerable",
+  "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/iam-vulnerable.json.gz",
+  "plan_sha256": "a4157877c79fe39608e7f33cc8c117b53316f9971e82714f831f185a962d8bc5",
+  "reviewer": {
+    "identity": "Codex automated independent blind IAM reviewer /root/blind_iam",
+    "review_type": "automated independent blind mapping; not a second human reviewer",
+    "review_date": "2026-10-19",
+    "inputs_read": [
+      "evaluations/blind-review-2026-10-19/inputs.json",
+      "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/iam-vulnerable.json.gz"
+    ],
+    "prohibited_material_read": false,
+    "attack_path_engine_run": false
+  },
+  "methodology": {
+    "target_interpretation": "aws:account-admin means the candidate can obtain unrestricted account permissions, directly or by executing/assuming an administrator role; IAM wildcard sufficient to self-grant administration.",
+    "labels": {
+      "VALID": "Raw policy/config supports a complete escalation mechanism with stated ordinary operational preconditions.",
+      "PARTIALLY_VALID": "Dangerous primitive is present but a material prerequisite/resource/trust/trigger/history is missing from the supplied plan.",
+      "INVALID": "Concrete policy semantics block the proposed reachability or the candidate lacks an initiating grant.",
+      "INDETERMINATE": "Evidence cannot resolve effective permissions.",
+      "OUT_OF_SCOPE": "Pair cannot be assessed within IAM/control-plane review scope."
+    },
+    "scope": "Independently inspect every exact candidate pair; resource names/descriptions are not proof of reachability. Only supplied input and named compressed plan read.",
+    "global_preconditions": [
+      "Attacker possesses the entry user credentials; active access-key resources are present.",
+      "Planned resources successfully exist; missing external SCPs, permission boundaries, session policies, IAM Identity Center restrictions and organization controls are not assumed.",
+      "Known resource ARNs/names may be supplied to APIs without requiring enumeration permissions."
+    ],
+    "limitations": [
+      "This plan contains only IAM resources, not running workloads, network topology, triggers, policy-version history, login profiles, or service capacity.",
+      "Several planned ARNs/trust documents are unknown; configuration references identify dependencies but do not reveal unrendered policy content.",
+      "No AWS simulator, service execution, external account inspection, web verification, repository engine, gold labels, or other reviewer results used.",
+      "Service availability and account enrollment at the review date are unverified.",
+      "Git metadata inaccessible; no branch or commit attestation."
+    ]
+  },
+  "coverage": {
+    "candidate_pairs": 41,
+    "reviewed_pairs": 41,
+    "label_counts": {
+      "VALID": 22,
+      "PARTIALLY_VALID": 13,
+      "INVALID": 6
+    }
+  },
+  "reviews": [
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Create a new version of the policy attached to this user with Allow * on *, setting it default in CreatePolicyVersion. No separate SetDefaultPolicyVersion permission is needed for that creation flag.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc1-CreateNewPolicyVersion-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc1-CreateNewPolicyVersion-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc1-CreateNewPolicyVersion.arn",
+                "aws_iam_policy.privesc1-CreateNewPolicyVersion"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc1-CreateNewPolicyVersion-user.name",
+                "aws_iam_user.privesc1-CreateNewPolicyVersion-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc1-CreateNewPolicyVersion",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreatePolicyVersion",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Know attached customer-managed policy ARN; available policy version slot."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "SetDefaultPolicyVersion is allowed, but no older privileged version is represented. All visible policy resources are newly created; the plan supplies no rollback history.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc2-SetExistingDefaultPolicyVersion-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc2-SetExistingDefaultPolicyVersion-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc2-SetExistingDefaultPolicyVersion.arn",
+                "aws_iam_policy.privesc2-SetExistingDefaultPolicyVersion"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user.name",
+                "aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc2-SetExistingDefaultPolicyVersion",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:SetDefaultPolicyVersion",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An attached customer-managed policy must already have a nondefault version granting escalation."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Run an EC2 instance with privesc-high-priv-service-profile and attacker-controlled user data; its service role grants * on *. User data can use instance credentials to install an admin policy on the entry user.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc3-CreateEC2WithExistingInstanceProfile-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc3-CreateEC2WithExistingInstanceProfile.arn",
+                "aws_iam_policy.privesc3-CreateEC2WithExistingInstanceProfile"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user.name",
+                "aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc3-CreateEC2WithExistingInstanceProfile",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "iam:PassRole",
+                  "ec2:DescribeInstances",
+                  "ec2:RunInstances",
+                  "ec2:CreateKeyPair",
+                  "ec2:AssociateIamInstanceProfile"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Usable AMI, subnet, instance capacity, metadata credentials, and AWS API connectivity."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Create an access key for privesc-sre-user, whose group grants iam:* on *. Use its credentials to attach or put an administrator policy. The plan creates one access key for this user, leaving a second slot.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc4-CreateAccessKey-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc4-CreateAccessKey-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc4-CreateAccessKey.arn",
+                "aws_iam_policy.privesc4-CreateAccessKey"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc4-CreateAccessKey-user.name",
+                "aws_iam_user.privesc4-CreateAccessKey-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc4-CreateAccessKey",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreateAccessKey",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sre-admin-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy Role used by SREs",
+            "name": "privesc-sre-admin-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"iam:*\",\"ec2:*\",\"s3:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy Role used by SREs"
+            },
+            "name": {
+              "constant_value": "privesc-sre-admin-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc-sre-group-membership",
+          "values": {
+            "group": "privesc-sre-group",
+            "name": "privesc-sre-group-membership",
+            "users": [
+              "privesc-sre-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc-sre-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc-sre-user.name",
+                "aws_iam_user.privesc-sre-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_policy_attachment.privesc-sre-group-attach-policy",
+          "values": {
+            "group": "privesc-sre-group"
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sre-admin-policy.arn",
+                "aws_iam_policy.privesc-sre-admin-policy"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Know privesc-sre-user; an access-key slot remains at execution."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Create a login profile for privesc-sre-user, which inherits iam:* through privesc-sre-group, then use console IAM permissions to grant administration. No login profile is created for that user in this plan.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc5-CreateLoginProfile-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc5-CreateLoginProfile-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc5-CreateLoginProfile.arn",
+                "aws_iam_policy.privesc5-CreateLoginProfile"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc5-CreateLoginProfile-user.name",
+                "aws_iam_user.privesc5-CreateLoginProfile-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc5-CreateLoginProfile",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreateLoginProfile",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sre-admin-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy Role used by SREs",
+            "name": "privesc-sre-admin-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"iam:*\",\"ec2:*\",\"s3:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy Role used by SREs"
+            },
+            "name": {
+              "constant_value": "privesc-sre-admin-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc-sre-group-membership",
+          "values": {
+            "group": "privesc-sre-group",
+            "name": "privesc-sre-group-membership",
+            "users": [
+              "privesc-sre-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc-sre-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc-sre-user.name",
+                "aws_iam_user.privesc-sre-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_policy_attachment.privesc-sre-group-attach-policy",
+          "values": {
+            "group": "privesc-sre-group"
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sre-admin-policy.arn",
+                "aws_iam_policy.privesc-sre-admin-policy"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Console sign-in is usable and no external MFA or sign-in restriction blocks the newly created password."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "UpdateLoginProfile permits password replacement, but the plan creates no login profile for privesc-sre-user or any other user. Update cannot create an absent profile.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc6-UpdateLoginProfile-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc6-UpdateLoginProfile-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc6-UpdateLoginProfile.arn",
+                "aws_iam_policy.privesc6-UpdateLoginProfile"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc6-UpdateLoginProfile-user.name",
+                "aws_iam_user.privesc6-UpdateLoginProfile-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc6-UpdateLoginProfile",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:UpdateLoginProfile",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sre-admin-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy Role used by SREs",
+            "name": "privesc-sre-admin-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"iam:*\",\"ec2:*\",\"s3:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy Role used by SREs"
+            },
+            "name": {
+              "constant_value": "privesc-sre-admin-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc-sre-group-membership",
+          "values": {
+            "group": "privesc-sre-group",
+            "name": "privesc-sre-group-membership",
+            "users": [
+              "privesc-sre-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc-sre-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc-sre-user.name",
+                "aws_iam_user.privesc-sre-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_policy_attachment.privesc-sre-group-attach-policy",
+          "values": {
+            "group": "privesc-sre-group"
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sre-admin-policy.arn",
+                "aws_iam_policy.privesc-sre-admin-policy"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "An existing privileged user login profile and usable console sign-in without inaccessible MFA are required."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Attach the visible privesc-high-priv-service-policy (* on *) to the entry user; AttachUserPolicy is unconstrained.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc7-AttachUserPolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc7-AttachUserPolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc7-AttachUserPolicy.arn",
+                "aws_iam_policy.privesc7-AttachUserPolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc7-AttachUserPolicy-user.name",
+                "aws_iam_user.privesc7-AttachUserPolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc7-AttachUserPolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:AttachUserPolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Know the visible customer-managed administrator policy ARN."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Attach the visible administrator policy to privesc8-AttachGroupPolicy-group; the group membership explicitly contains the entry user.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc8-AttachGroupPolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc8-AttachGroupPolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc8-AttachGroupPolicy.arn",
+                "aws_iam_policy.privesc8-AttachGroupPolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc8-AttachGroupPolicy-user.name",
+                "aws_iam_user.privesc8-AttachGroupPolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc8-AttachGroupPolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:AttachGroupPolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc8-AttachGroupPolicy-group-membership",
+          "values": {
+            "group": "privesc8-AttachGroupPolicy-group",
+            "name": "privesc8-AttachGroupPolicy-group-membership",
+            "users": [
+              "privesc8-AttachGroupPolicy-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc8-AttachGroupPolicy-group.name",
+                "aws_iam_group.privesc8-AttachGroupPolicy-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc8-AttachGroupPolicy-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc8-AttachGroupPolicy-user.name",
+                "aws_iam_user.privesc8-AttachGroupPolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        }
+      ],
+      "preconditions": [
+        "Known group and administrator policy ARNs/names."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "AttachRolePolicy can make a role administrative, but the entry user has no sts:AssumeRole, PassRole, or service execution grant. Visible ordinary role trusts name moto, not this user; the powerful service role trusts services.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc9-AttachRolePolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc9-AttachRolePolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc9-AttachRolePolicy.arn",
+                "aws_iam_policy.privesc9-AttachRolePolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc9-AttachRolePolicy-user.name",
+                "aws_iam_user.privesc9-AttachRolePolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc9-AttachRolePolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:AttachRolePolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "A role usable by this user through a matching resource trust or separately authorized service execution is required."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "PutUserPolicy on the entry user can install Allow * on *.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc10-PutUserPolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc10-PutUserPolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc10-PutUserPolicy.arn",
+                "aws_iam_policy.privesc10-PutUserPolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc10-PutUserPolicy-user.name",
+                "aws_iam_user.privesc10-PutUserPolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc10-PutUserPolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:PutUserPolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Know own user name."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "PutGroupPolicy can install Allow * on * on privesc11-PutGroupPolicy-group, which explicitly contains the entry user.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc11-PutGroupPolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc11-PutGroupPolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc11-PutGroupPolicy.arn",
+                "aws_iam_policy.privesc11-PutGroupPolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc11-PutGroupPolicy-user.name",
+                "aws_iam_user.privesc11-PutGroupPolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc11-PutGroupPolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:PutGroupPolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc11-PutGroupPolicy-group-membership",
+          "values": {
+            "group": "privesc11-PutGroupPolicy-group",
+            "name": "privesc11-PutGroupPolicy-group-membership",
+            "users": [
+              "privesc11-PutGroupPolicy-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc11-PutGroupPolicy-group.name",
+                "aws_iam_group.privesc11-PutGroupPolicy-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc11-PutGroupPolicy-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc11-PutGroupPolicy-user.name",
+                "aws_iam_user.privesc11-PutGroupPolicy-user"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Know own group name."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "PutRolePolicy can change a role permission document but supplies no right or matching trust to assume that role as this candidate.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc12-PutRolePolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc12-PutRolePolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc12-PutRolePolicy.arn",
+                "aws_iam_policy.privesc12-PutRolePolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc12-PutRolePolicy-user.name",
+                "aws_iam_user.privesc12-PutRolePolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc12-PutRolePolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:PutRolePolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An independently usable role session or service execution path is required."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Add the entry user to privesc-sre-group. Its attached privesc-sre-admin-policy grants iam:* on *, sufficient to put or attach unrestricted administration.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc13-AddUserToGroup-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc13-AddUserToGroup-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc13-AddUserToGroup.arn",
+                "aws_iam_policy.privesc13-AddUserToGroup"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc13-AddUserToGroup-user.name",
+                "aws_iam_user.privesc13-AddUserToGroup-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc13-AddUserToGroup",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:AddUserToGroup",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sre-admin-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy Role used by SREs",
+            "name": "privesc-sre-admin-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"iam:*\",\"ec2:*\",\"s3:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy Role used by SREs"
+            },
+            "name": {
+              "constant_value": "privesc-sre-admin-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc-sre-group-membership",
+          "values": {
+            "group": "privesc-sre-group",
+            "name": "privesc-sre-group-membership",
+            "users": [
+              "privesc-sre-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc-sre-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc-sre-user.name",
+                "aws_iam_user.privesc-sre-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_policy_attachment.privesc-sre-group-attach-policy",
+          "values": {
+            "group": "privesc-sre-group"
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sre-admin-policy.arn",
+                "aws_iam_policy.privesc-sre-admin-policy"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Know the visible SRE group name."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Update the trust of privesc-high-priv-service-role to trust this user, then use the explicit sts:AssumeRole allow. The role has Allow * on *.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc14-UpdatingAssumeRolePolicy-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc14-UpdatingAssumeRolePolicy-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc14-UpdatingAssumeRolePolicy.arn",
+                "aws_iam_policy.privesc14-UpdatingAssumeRolePolicy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user.name",
+                "aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc14-UpdatingAssumeRolePolicy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "iam:UpdateAssumeRolePolicy",
+                  "sts:AssumeRole"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Known admin service-role ARN; replace trust with valid matching principal."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Create and invoke attacker code using privesc-high-priv-service-role. The role explicitly trusts lambda.amazonaws.com and has Allow * on *. Code can grant administration to the entry user.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc15-PassExistingRoleToNewLambdaThenInvoke-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc15-PassExistingRoleToNewLambdaThenInvoke.arn",
+                "aws_iam_policy.privesc15-PassExistingRoleToNewLambdaThenInvoke"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user.name",
+                "aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc15-PassExistingRoleToNewLambdaThenInvoke",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "iam:PassRole",
+                  "lambda:CreateFunction",
+                  "lambda:InvokeFunction"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Supported runtime, code package, and service capacity."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "CreateFunction, PassRole and CreateEventSourceMapping allow installation and wiring of privileged Lambda code. The plan has no stream/event source, no producer, and this user has neither DynamoDB creation/write permissions nor InvokeFunction.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo.arn",
+                "aws_iam_policy.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user.name",
+                "aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "lambda:CreateFunction",
+                  "iam:PassRole",
+                  "lambda:CreateEventSourceMapping"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An existing supported event stream with events and a triggerable/active mapping is required."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Create a Glue development endpoint with attacker SSH key and the visible admin service role, whose trust includes glue.amazonaws.com; obtain credentials or execute IAM operations there.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc18-PassExistingRoleToNewGlueDevEndpoint-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc18-PassExistingRoleToNewGlueDevEndpoint.arn",
+                "aws_iam_policy.privesc18-PassExistingRoleToNewGlueDevEndpoint"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user.name",
+                "aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc18-PassExistingRoleToNewGlueDevEndpoint",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "glue:CreateDevEndpoint",
+                  "glue:GetDevEndpoint",
+                  "iam:PassRole"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Glue development endpoints must be available for the account/region; endpoint provisioning and SSH connectivity must work."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "CreateStack can use the visible administrator role, whose trust includes cloudformation.amazonaws.com. A supplied template can install an administrator policy for the entry user.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc20-PassExistingRoleToCloudFormation-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc20-PassExistingRoleToCloudFormation-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc20-PassExistingRoleToCloudFormation.arn",
+                "aws_iam_policy.privesc20-PassExistingRoleToCloudFormation"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user.name",
+                "aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc20-PassExistingRoleToCloudFormation",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "iam:PassRole",
+                  "cloudformation:CreateStack",
+                  "cloudformation:DescribeStacks"
+                ],
+                "Effect": "Allow",
+                "Resource": "*",
+                "Sid": "VisualEditor0"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Template IAM capabilities acknowledged; service can create the requested IAM resources."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "PassRole plus CreatePipeline, PutPipelineDefinition and ActivatePipeline permits defining an execution pipeline using the admin service role and instance profile. No task runner, worker, schedulable resource configuration, or supported execution setup is represented.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc21-PassExistingRoleToNewDataPipeline-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc21-PassExistingRoleToNewDataPipeline-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc21-PassExistingRoleToNewDataPipeline.arn",
+                "aws_iam_policy.privesc21-PassExistingRoleToNewDataPipeline"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user.name",
+                "aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc21-PassExistingRoleToNewDataPipeline",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:PassRole",
+                "Effect": "Allow",
+                "Resource": "*"
+              },
+              {
+                "Action": [
+                  "datapipeline:CreatePipeline",
+                  "datapipeline:PutPipelineDefinition",
+                  "datapipeline:ActivatePipeline"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Data Pipeline must be available in the account/region, with a working task runner or EC2 resource configuration capable of running attacker commands."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "CreateProject and StartBuild with the administrator service role allow a supplied buildspec to execute IAM administration; the role trusts codebuild.amazonaws.com.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-codeBuildCreateProjectPassRole-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-codeBuildCreateProjectPassRole-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-codeBuildCreateProjectPassRole-policy.arn",
+                "aws_iam_policy.privesc-codeBuildCreateProjectPassRole-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-codeBuildCreateProjectPassRole-user.name",
+                "aws_iam_user.privesc-codeBuildCreateProjectPassRole-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-codeBuildCreateProjectPassRole-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "codebuild:CreateProject",
+                  "codebuild:StartBuild",
+                  "codebuild:StartBuildBatch",
+                  "iam:PassRole",
+                  "iam:ListRoles"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Usable build environment/source or inline buildspec and service capacity."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Create a notebook with the administrator role and open it through CreatePresignedNotebookInstanceUrl. The role trusts sagemaker.amazonaws.com.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-sageMakerCreateNotebookPassRole-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-sageMakerCreateNotebookPassRole-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sageMakerCreateNotebookPassRole-policy.arn",
+                "aws_iam_policy.privesc-sageMakerCreateNotebookPassRole-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user.name",
+                "aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sageMakerCreateNotebookPassRole-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "sagemaker:CreateNotebookInstance",
+                  "sagemaker:CreatePresignedNotebookInstanceUrl",
+                  "sagemaker:ListNotebookInstances",
+                  "sagemaker:DescribeNotebookInstance",
+                  "sagemaker:StopNotebookInstance",
+                  "sagemaker:DeleteNotebookInstance",
+                  "iam:PassRole",
+                  "iam:ListRoles"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Notebook instance type/capacity and usable notebook networking."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "CreateTrainingJob can run attacker-controlled training code as the visible administrator role, which trusts sagemaker.amazonaws.com.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-sageMakerCreateTrainingJobPassRole-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-sageMakerCreateTrainingJobPassRole-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sageMakerCreateTrainingJobPassRole-policy.arn",
+                "aws_iam_policy.privesc-sageMakerCreateTrainingJobPassRole-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user.name",
+                "aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sageMakerCreateTrainingJobPassRole-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "sagemaker:CreateTrainingJob",
+                  "iam:PassRole"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "A usable container/image and job configuration accessible by the service role."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "CreateProcessingJob can execute attacker-controlled processing code as the visible administrator role, which trusts sagemaker.amazonaws.com.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-sageMakerCreateProcessingJobPassRole-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-sageMakerCreateProcessingJobPassRole-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sageMakerCreateProcessingJobPassRole-policy.arn",
+                "aws_iam_policy.privesc-sageMakerCreateProcessingJobPassRole-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user.name",
+                "aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sageMakerCreateProcessingJobPassRole-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "sagemaker:CreateProcessingJob",
+                  "iam:PassRole"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "A usable container/image and processing configuration accessible by the service role."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+      "target": "aws:account-admin",
+      "label": "INVALID",
+      "assessment": "The entry user has no identity policy attachment or group membership granting sts:AssumeRole. The starting-role trust names arn:aws:sts::123456789012:user/moto, not this user. References among intermediate and ending trusts cannot establish this missing first hop.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-AssumeRole-start-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-starting-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:sts::123456789012:user/moto\"},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-AssumeRole-starting-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {
+              "references": [
+                "var.aws_assume_role_arn"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc-AssumeRole-starting-role"
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Would require changing the starting trust or granting this candidate an independently usable starting session; neither is in the plan."
+      ],
+      "uncertainty": "Conclusion is limited to supplied raw plan; external grants or post-plan changes were not inspected."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "UpdateStack and DescribeStacks are allowed but there is no CloudFormation stack, existing service-role association, or template in the plan; the user lacks CreateStack and PassRole.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-CloudFormationUpdateStack-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-CloudFormationUpdateStack-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-CloudFormationUpdateStack.arn",
+                "aws_iam_policy.privesc-CloudFormationUpdateStack"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-CloudFormationUpdateStack-user.name",
+                "aws_iam_user.privesc-CloudFormationUpdateStack-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-CloudFormationUpdateStack",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "cloudformation:UpdateStack",
+                  "cloudformation:DescribeStacks"
+                ],
+                "Effect": "Allow",
+                "Resource": "*",
+                "Sid": "VisualEditor0"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "An existing stack already associated with an administrative service role and an update that can perform privileged IAM changes."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "SendSSHPublicKey and SendSerialConsoleSSHPublicKey are allowed, but no EC2 instance, SSH/network route, Instance Connect support, serial-console configuration, or attached instance role is represented.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-ec2InstanceConnect-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-ec2InstanceConnect-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-ec2InstanceConnect-policy.arn",
+                "aws_iam_policy.privesc-ec2InstanceConnect-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-ec2InstanceConnect-user.name",
+                "aws_iam_user.privesc-ec2InstanceConnect-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-ec2InstanceConnect-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ec2-instance-connect:SendSSHPublicKey",
+                  "ec2-instance-connect:SendSerialConsoleSSHPublicKey"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Reachable compatible privileged EC2 instance; a valid OS login and configured access channel."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "CreatePresignedNotebookInstanceUrl can access an existing notebook, but this plan contains no notebook or notebook execution-role binding.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-sageMakerCreatePresignedNotebookURL-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-sageMakerCreatePresignedNotebookURL-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sageMakerCreatePresignedNotebookURL-policy.arn",
+                "aws_iam_policy.privesc-sageMakerCreatePresignedNotebookURL-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user.name",
+                "aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sageMakerCreatePresignedNotebookURL-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "sagemaker:CreatePresignedNotebookInstanceUrl",
+                  "sagemaker:ListNotebookInstances"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An existing running accessible notebook with an administrator execution role."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "SendCommand is allowed, but this plan contains no EC2/SSM managed instance. The admin role and AmazonSSMManagedInstanceCore attachment alone do not establish a running registered agent.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-ssmSendCommand-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-ssmSendCommand-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-ssmSendCommand-policy.arn",
+                "aws_iam_policy.privesc-ssmSendCommand-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-ssmSendCommand-user.name",
+                "aws_iam_user.privesc-ssmSendCommand-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-ssmSendCommand-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ssm:listCommands",
+                  "ssm:listCommandInvocations",
+                  "ssm:sendCommand"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "A managed instance with working agent/connectivity and administrator instance-profile credentials."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "StartSession is allowed, but there is no EC2/SSM managed instance or live session target in this plan.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-ssmStartSession-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc-ssmStartSession-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-ssmStartSession-policy.arn",
+                "aws_iam_policy.privesc-ssmStartSession-policy"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc-ssmStartSession-user.name",
+                "aws_iam_user.privesc-ssmStartSession-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-ssmStartSession-policy",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ssm:StartSession",
+                  "ssm:DescribeSessions",
+                  "ssm:GetConnectionStatus",
+                  "ssm:DescribeInstanceProperties",
+                  "ssm:TerminateSession",
+                  "ssm:ResumeSession"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An SSM session-capable managed instance with administrator instance-profile credentials and working agent/network."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "UpdateFunctionCode and UpdateFunctionConfiguration are allowed, but no existing Lambda function or invocation/trigger is represented. The user has no CreateFunction or InvokeFunction permission.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc17-EditExistingLambdaFunctionWithRole-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc17-EditExistingLambdaFunctionWithRole-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc17-EditExistingLambdaFunctionWithRole.arn",
+                "aws_iam_policy.privesc17-EditExistingLambdaFunctionWithRole"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user.name",
+                "aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc17-EditExistingLambdaFunctionWithRole",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "lambda:UpdateFunctionCode",
+                  "lambda:UpdateFunctionConfiguration"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An existing privileged function and an execution trigger usable by the attacker or reliably activated by another actor."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+      "target": "aws:account-admin",
+      "label": "PARTIALLY_VALID",
+      "assessment": "UpdateDevEndpoint and GetDevEndpoint permit modifying endpoint access, but no Glue development endpoint is represented.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc19-UpdateExistingGlueDevEndpoint-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_user_policy_attachment.privesc19-UpdateExistingGlueDevEndpoint-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc19-UpdateExistingGlueDevEndpoint.arn",
+                "aws_iam_policy.privesc19-UpdateExistingGlueDevEndpoint"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user.name",
+                "aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc19-UpdateExistingGlueDevEndpoint",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "glue:UpdateDevEndpoint",
+                  "glue:GetDevEndpoint"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "An existing reachable development endpoint with an administrator execution role."
+      ],
+      "uncertainty": "No complete path is established from this plan alone; do not infer missing resources, grants, or trust from resource names."
+    },
+    {
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "The entry user is explicitly a member of privesc-sre-group, whose attached policy grants iam:* on *. PutUserPolicy or AttachUserPolicy can grant unrestricted administration.",
+      "evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "values": {
+            "force_destroy": false,
+            "name": "privesc-sre-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sre-admin-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy Role used by SREs",
+            "name": "privesc-sre-admin-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":[\"iam:*\",\"ec2:*\",\"s3:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy Role used by SREs"
+            },
+            "name": {
+              "constant_value": "privesc-sre-admin-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_membership.privesc-sre-group-membership",
+          "values": {
+            "group": "privesc-sre-group",
+            "name": "privesc-sre-group-membership",
+            "users": [
+              "privesc-sre-user"
+            ]
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "name": {
+              "constant_value": "privesc-sre-group-membership"
+            },
+            "users": {
+              "references": [
+                "aws_iam_user.privesc-sre-user.name",
+                "aws_iam_user.privesc-sre-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_group_policy_attachment.privesc-sre-group-attach-policy",
+          "values": {
+            "group": "privesc-sre-group"
+          },
+          "configuration_expressions": {
+            "group": {
+              "references": [
+                "aws_iam_group.privesc-sre-group.name",
+                "aws_iam_group.privesc-sre-group"
+              ]
+            },
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.privesc-sre-admin-policy.arn",
+                "aws_iam_policy.privesc-sre-admin-policy"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Use IAM permissions already inherited from the group."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "Two independent user policy attachments combine ec2:RunInstances with iam:PassRole. The admin EC2 instance profile is visible in the other module, so launch attacker user data under that role.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fn1-privesc3-partial-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fn1-privesc3-partial-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fn1-privesc3-partial.arn",
+                "aws_iam_policy.fn1-privesc3-partial"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fn1-privesc3-partial-user.name",
+                "aws_iam_user.fn1-privesc3-partial-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fn1-privesc3-partial",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ec2:RunInstances"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.privesc3-passrole-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fn1-passrole-star.arn",
+                "aws_iam_policy.fn1-passrole-star"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fn1-privesc3-partial-user.name",
+                "aws_iam_user.fn1-privesc3-partial-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fn1-passrole-star",
+          "policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "iam:PassRole"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "values": {
+            "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+            "description": null,
+            "force_detach_policies": false,
+            "max_session_duration": 3600,
+            "name": "privesc-high-priv-service-role",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          },
+          "configuration_expressions": {
+            "assume_role_policy": {},
+            "name": {
+              "constant_value": "privesc-high-priv-service-role"
+            }
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+          "values": {
+            "delay_after_policy_creation_in_ms": null,
+            "description": "High priv policy",
+            "name": "privesc-high-priv-service-policy",
+            "path": "/",
+            "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "description": {
+              "constant_value": "High priv policy"
+            },
+            "name": {
+              "constant_value": "privesc-high-priv-service-policy"
+            },
+            "path": {
+              "constant_value": "/"
+            },
+            "policy": {}
+          }
+        },
+        {
+          "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+          "values": {
+            "name": "privesc-high-priv-service-profile",
+            "path": "/",
+            "role": "privesc-high-priv-service-role",
+            "tags": null
+          },
+          "configuration_expressions": {
+            "name": {
+              "constant_value": "privesc-high-priv-service-profile"
+            },
+            "role": {
+              "references": [
+                "aws_iam_role.privesc-high-priv-service-role.name",
+                "aws_iam_role.privesc-high-priv-service-role"
+              ]
+            }
+          }
+        }
+      ],
+      "preconditions": [
+        "Usable AMI/subnet/capacity, metadata access, and AWS API connectivity."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "The policy resource arn:aws:iam::*:policy/fn2-* matches its own customer-managed policy name fn2-exploitableResourceConstraint. CreatePolicyVersion with a default administrator document escalates the attached user.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fn2-exploitableResourceConstraint-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fn2-exploitableResourceConstraint-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fn2-exploitableResourceConstraint.arn",
+                "aws_iam_policy.fn2-exploitableResourceConstraint"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fn2-exploitableResourceConstraint-user.name",
+                "aws_iam_user.fn2-exploitableResourceConstraint-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fn2-exploitableResourceConstraint",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreatePolicyVersion",
+                "Effect": "Allow",
+                "Resource": "arn:aws:iam::*:policy/fn2-*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Know the attached policy ARN and have an available version slot."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "CreatePolicyVersion is conditioned on TokenIssueTime after 2020-01-01. Long-term access keys lack this key, but the IAM user can obtain a current GetSessionToken session, satisfying the date test, and create a default admin policy version.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fn3-exploitableConditionConstraint-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fn3-exploitableConditionConstraint-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fn3-exploitableConditionConstraint.arn",
+                "aws_iam_policy.fn3-exploitableConditionConstraint"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fn3-exploitableConditionConstraint-user.name",
+                "aws_iam_user.fn3-exploitableConditionConstraint-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fn3-exploitableConditionConstraint",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreatePolicyVersion",
+                "Condition": {
+                  "DateGreaterThan": {
+                    "aws:TokenIssueTime": "2020-01-01T00:00:01Z"
+                  }
+                },
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Obtain temporary session credentials with a post-2020 TokenIssueTime; a policy version slot is available."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+      "target": "aws:account-admin",
+      "label": "VALID",
+      "assessment": "NotAction excludes only iam:Update*, iam:Create*, and iam:Attach*. It still allows iam:PutUserPolicy on *, so the user can install an inline administrator policy directly.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fn4-exploitableNotAction-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fn4-exploitableNotAction-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fn4-exploitableNotAction.arn",
+                "aws_iam_policy.fn4-exploitableNotAction"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fn4-exploitableNotAction-user.name",
+                "aws_iam_user.fn4-exploitableNotAction-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fn4-exploitableNotAction",
+          "policy": {
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "NotAction": [
+                  "iam:Update*",
+                  "iam:Create*",
+                  "iam:Attach*"
+                ],
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Use PutUserPolicy with an unrestricted inline document."
+      ],
+      "uncertainty": "Concrete enabling IAM grant is present; execution still depends on stated runtime preconditions and external account controls."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+      "target": "aws:account-admin",
+      "label": "INVALID",
+      "assessment": "The attached policy explicitly Denies iam:* on *, overriding its Allow iam:*. No other execution or role-assumption permission is granted to this entry.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fp1-allow-and-deny-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fp1-allow-and-deny-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fp1-allow-and-deny.arn",
+                "aws_iam_policy.fp1-allow-and-deny"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fp1-allow-and-deny-user.name",
+                "aws_iam_user.fp1-allow-and-deny-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fp1-allow-and-deny",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:*",
+                "Effect": "Allow",
+                "Resource": "*"
+              },
+              {
+                "Action": "iam:*",
+                "Effect": "Deny",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Would require an external grant/path not present in this plan."
+      ],
+      "uncertainty": "Conclusion is limited to supplied raw plan; external grants or post-plan changes were not inspected."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+      "target": "aws:account-admin",
+      "label": "INVALID",
+      "assessment": "The user has both Allow * and an explicit Deny * through separate attached policies. Deny overrides the allow for all candidate escalation actions.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fp2-allow-and-deny-multiple-policies-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fp2-allow-and-deny-attach-allow-to-user",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fp2-allow-all.arn",
+                "aws_iam_policy.fp2-allow-all"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fp2-allow-and-deny-multiple-policies-user.name",
+                "aws_iam_user.fp2-allow-and-deny-multiple-policies-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fp2-allow-all",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "*",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fp2-allow-and-deny-attach-deny-to-user",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.deny-all.arn",
+                "aws_iam_policy.deny-all"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fp2-allow-and-deny-multiple-policies-user.name",
+                "aws_iam_user.fp2-allow-and-deny-multiple-policies-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.deny-all",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "*",
+                "Effect": "Deny",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Would require external removal or bypass of the deny; no authorized path is represented."
+      ],
+      "uncertainty": "Conclusion is limited to supplied raw plan; external grants or post-plan changes were not inspected."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+      "target": "aws:account-admin",
+      "label": "INVALID",
+      "assessment": "The only attached policy explicitly Denies iam:* and contains no Allow. No service or role-assumption capability is granted.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fp3-deny-iam-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fp3-deny-iam-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fp3-deny-iam.arn",
+                "aws_iam_policy.fp3-deny-iam"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fp3-deny-iam-user.name",
+                "aws_iam_user.fp3-deny-iam-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fp3-deny-iam",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:*",
+                "Effect": "Deny",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Would require an external grant/path absent from the plan."
+      ],
+      "uncertainty": "Conclusion is limited to supplied raw plan; external grants or post-plan changes were not inspected."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+      "target": "aws:account-admin",
+      "label": "INVALID",
+      "assessment": "CreatePolicyVersion is scoped to arn:aws:iam::aws:policy/fp4-* (AWS-managed-policy namespace). It does not match this customer-managed policy, and customers cannot modify AWS-managed policies.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fp4-nonExploitableResourceConstraint-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fp4-nonExploitableResourceConstraint-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fp4-nonExploitableResourceConstraint.arn",
+                "aws_iam_policy.fp4-nonExploitableResourceConstraint"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fp4-nonExploitableResourceConstraint-user.name",
+                "aws_iam_user.fp4-nonExploitableResourceConstraint-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fp4-nonExploitableResourceConstraint",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreatePolicyVersion",
+                "Effect": "Allow",
+                "Resource": "arn:aws:iam::aws:policy/fp4-*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "No matching customer-editable policy can satisfy this scope."
+      ],
+      "uncertainty": "Conclusion is limited to supplied raw plan; external grants or post-plan changes were not inspected."
+    },
+    {
+      "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+      "target": "aws:account-admin",
+      "label": "INVALID",
+      "assessment": "CreatePolicyVersion requires TokenIssueTime before 2020-01-01. The plan creates the access key now; long-term keys omit TokenIssueTime and newly minted sessions fail the historical date condition.",
+      "evidence": [
+        {
+          "resource": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+          "values": {
+            "force_destroy": false,
+            "name": "fp5-nonExploitableConditionConstraint-user",
+            "path": "/",
+            "permissions_boundary": null,
+            "tags": null
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_user_policy_attachment.fp5-nonExploitableConditionConstraint-user-attach-policy",
+          "configuration_expressions": {
+            "policy_arn": {
+              "references": [
+                "aws_iam_policy.fp5-nonExploitableConditionConstraint.arn",
+                "aws_iam_policy.fp5-nonExploitableConditionConstraint"
+              ]
+            },
+            "user": {
+              "references": [
+                "aws_iam_user.fp5-nonExploitableConditionConstraint-user.name",
+                "aws_iam_user.fp5-nonExploitableConditionConstraint-user"
+              ]
+            }
+          }
+        },
+        {
+          "resource": "module.tool-testing.aws_iam_policy.fp5-nonExploitableConditionConstraint",
+          "policy": {
+            "Statement": [
+              {
+                "Action": "iam:CreatePolicyVersion",
+                "Condition": {
+                  "DateLessThan": {
+                    "aws:TokenIssueTime": "2020-01-01T00:00:01Z"
+                  }
+                },
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "preconditions": [
+        "Would require an unexpired pre-2020 temporary session, impossible under ordinary STS lifetimes at the review date."
+      ],
+      "uncertainty": "Conclusion is limited to supplied raw plan; external grants or post-plan changes were not inspected."
+    }
+  ],
+  "supporting_configuration_evidence": [
+    {
+      "resource": "module.privesc-paths.aws_iam_group_membership.privesc-sre-group-membership",
+      "expressions": {
+        "group": {
+          "references": [
+            "aws_iam_group.privesc-sre-group.name",
+            "aws_iam_group.privesc-sre-group"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-sre-group-membership"
+        },
+        "users": {
+          "references": [
+            "aws_iam_user.privesc-sre-user.name",
+            "aws_iam_user.privesc-sre-user"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_group_membership.privesc11-PutGroupPolicy-group-membership",
+      "expressions": {
+        "group": {
+          "references": [
+            "aws_iam_group.privesc11-PutGroupPolicy-group.name",
+            "aws_iam_group.privesc11-PutGroupPolicy-group"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc11-PutGroupPolicy-group-membership"
+        },
+        "users": {
+          "references": [
+            "aws_iam_user.privesc11-PutGroupPolicy-user.name",
+            "aws_iam_user.privesc11-PutGroupPolicy-user"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_group_membership.privesc8-AttachGroupPolicy-group-membership",
+      "expressions": {
+        "group": {
+          "references": [
+            "aws_iam_group.privesc8-AttachGroupPolicy-group.name",
+            "aws_iam_group.privesc8-AttachGroupPolicy-group"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc8-AttachGroupPolicy-group-membership"
+        },
+        "users": {
+          "references": [
+            "aws_iam_user.privesc8-AttachGroupPolicy-user.name",
+            "aws_iam_user.privesc8-AttachGroupPolicy-user"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_group_policy_attachment.privesc-sre-group-attach-policy",
+      "expressions": {
+        "group": {
+          "references": [
+            "aws_iam_group.privesc-sre-group.name",
+            "aws_iam_group.privesc-sre-group"
+          ]
+        },
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-sre-admin-policy.arn",
+            "aws_iam_policy.privesc-sre-admin-policy"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+      "expressions": {
+        "name": {
+          "constant_value": "privesc-high-priv-service-profile"
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-high-priv-service-role.name",
+            "aws_iam_role.privesc-high-priv-service-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-ending-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "aws_iam_role.privesc-AssumeRole-intermediate-role.arn",
+            "aws_iam_role.privesc-AssumeRole-intermediate-role"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-AssumeRole-ending-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-intermediate-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "aws_iam_role.privesc-AssumeRole-starting-role.arn",
+            "aws_iam_role.privesc-AssumeRole-starting-role"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-AssumeRole-intermediate-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-starting-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-AssumeRole-starting-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-CloudFormationUpdateStack-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-CloudFormationUpdateStack-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-codeBuildCreateProjectPassRole-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-codeBuildCreateProjectPassRole-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-ec2InstanceConnect-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-ec2InstanceConnect-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+      "expressions": {
+        "assume_role_policy": {},
+        "name": {
+          "constant_value": "privesc-high-priv-service-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-sageMakerCreateNotebookPassRole-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-sageMakerCreateNotebookPassRole-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-sageMakerCreatePresignedNotebookURL-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-sageMakerCreatePresignedNotebookURL-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-sageMakerCreateProcessingJobPassRole-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-sageMakerCreateProcessingJobPassRole-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-sageMakerCreateTrainingJobPassRole-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-sageMakerCreateTrainingJobPassRole-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-sre-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "aws_iam_user.privesc-sre-user.arn",
+            "aws_iam_user.privesc-sre-user"
+          ]
+        },
+        "managed_policy_arns": {
+          "references": [
+            "aws_iam_policy.privesc-sre-admin-policy.arn",
+            "aws_iam_policy.privesc-sre-admin-policy"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-sre-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-ssmSendCommand-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-ssmSendCommand-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc-ssmStartSession-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-ssmStartSession-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc1-CreateNewPolicyVersion-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc1-CreateNewPolicyVersion-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc10-PutUserPolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc10-PutUserPolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc11-PutGroupPolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc11-PutGroupPolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc12-PutRolePolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc12-PutRolePolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc13-AddUserToGroup-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc13-AddUserToGroup-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc14-UpdatingAssumeRolePolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc14-UpdatingAssumeRolePolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc15-PassExistingRoleToNewLambdaThenInvoke-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc15-PassExistingRoleToNewLambdaThenInvoke-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc17-EditExistingLambdaFunctionWithRole-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc17-EditExistingLambdaFunctionWithRole-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc18-PassExistingRoleToNewGlueDevEndpoint-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc18-PassExistingRoleToNewGlueDevEndpoint-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc19-UpdateExistingGlueDevEndpoint-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc19-UpdateExistingGlueDevEndpoint-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc2-SetExistingDefaultPolicyVersion-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc2-SetExistingDefaultPolicyVersion-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc20-PassExistingRoleToCloudFormation-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc20-PassExistingRoleToCloudFormation-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc21-PassExistingRoleToNewDataPipeline-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc21-PassExistingRoleToNewDataPipeline-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc3-CreateEC2WithExistingInstanceProfile-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc3-CreateEC2WithExistingInstanceProfile-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc4-CreateAccessKey-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc4-CreateAccessKey-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc5-CreateLoginProfile-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc5-CreateLoginProfile-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc6-UpdateLoginProfile-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc6-UpdateLoginProfile-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc7-AttachUserPolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc7-AttachUserPolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc8-AttachGroupPolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc8-AttachGroupPolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role.privesc9-AttachRolePolicy-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc9-AttachRolePolicy-role"
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-AssumeRole-high-priv-policy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-AssumeRole-high-priv-policy.arn",
+            "aws_iam_policy.privesc-AssumeRole-high-priv-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-AssumeRole-ending-role.name",
+            "aws_iam_role.privesc-AssumeRole-ending-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-CloudFormationUpdateStack-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-CloudFormationUpdateStack.arn",
+            "aws_iam_policy.privesc-CloudFormationUpdateStack"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-CloudFormationUpdateStack-role.name",
+            "aws_iam_role.privesc-CloudFormationUpdateStack-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-codeBuildCreateProjectPassRole-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-codeBuildCreateProjectPassRole-policy.arn",
+            "aws_iam_policy.privesc-codeBuildCreateProjectPassRole-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-codeBuildCreateProjectPassRole-role.name",
+            "aws_iam_role.privesc-codeBuildCreateProjectPassRole-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-ec2InstanceConnect-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-ec2InstanceConnect-policy.arn",
+            "aws_iam_policy.privesc-ec2InstanceConnect-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-ec2InstanceConnect-role.name",
+            "aws_iam_role.privesc-ec2InstanceConnect-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-high-priv-service-role-attach-policy1",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-high-priv-service-policy.arn",
+            "aws_iam_policy.privesc-high-priv-service-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-high-priv-service-role.name",
+            "aws_iam_role.privesc-high-priv-service-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-high-priv-service-role-attach-policy2",
+      "expressions": {
+        "policy_arn": {
+          "constant_value": "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-high-priv-service-role.name",
+            "aws_iam_role.privesc-high-priv-service-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-sageMakerCreateNotebookPassRole-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-sageMakerCreateNotebookPassRole-policy.arn",
+            "aws_iam_policy.privesc-sageMakerCreateNotebookPassRole-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-sageMakerCreateNotebookPassRole-role.name",
+            "aws_iam_role.privesc-sageMakerCreateNotebookPassRole-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-sageMakerCreatePresignedNotebookURL-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-sageMakerCreatePresignedNotebookURL-policy.arn",
+            "aws_iam_policy.privesc-sageMakerCreatePresignedNotebookURL-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-sageMakerCreatePresignedNotebookURL-role.name",
+            "aws_iam_role.privesc-sageMakerCreatePresignedNotebookURL-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-sageMakerCreateProcessingJobPassRole-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-sageMakerCreateProcessingJobPassRole-policy.arn",
+            "aws_iam_policy.privesc-sageMakerCreateProcessingJobPassRole-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-sageMakerCreateProcessingJobPassRole-role.name",
+            "aws_iam_role.privesc-sageMakerCreateProcessingJobPassRole-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-sageMakerCreateTrainingJobPassRole-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-sageMakerCreateTrainingJobPassRole-policy.arn",
+            "aws_iam_policy.privesc-sageMakerCreateTrainingJobPassRole-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-sageMakerCreateTrainingJobPassRole-role.name",
+            "aws_iam_role.privesc-sageMakerCreateTrainingJobPassRole-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-sre-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-sre-admin-policy.arn",
+            "aws_iam_policy.privesc-sre-admin-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-sre-role.name",
+            "aws_iam_role.privesc-sre-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-ssmSendCommand-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-ssmSendCommand-policy.arn",
+            "aws_iam_policy.privesc-ssmSendCommand-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-ssmSendCommand-role.name",
+            "aws_iam_role.privesc-ssmSendCommand-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc-ssmStartSession-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc-ssmStartSession-policy.arn",
+            "aws_iam_policy.privesc-ssmStartSession-policy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc-ssmStartSession-role.name",
+            "aws_iam_role.privesc-ssmStartSession-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc1-CreateNewPolicyVersion-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc1-CreateNewPolicyVersion.arn",
+            "aws_iam_policy.privesc1-CreateNewPolicyVersion"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc1-CreateNewPolicyVersion-role.name",
+            "aws_iam_role.privesc1-CreateNewPolicyVersion-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc10-PutUserPolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc10-PutUserPolicy.arn",
+            "aws_iam_policy.privesc10-PutUserPolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc10-PutUserPolicy-role.name",
+            "aws_iam_role.privesc10-PutUserPolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc11-PutGroupPolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc11-PutGroupPolicy.arn",
+            "aws_iam_policy.privesc11-PutGroupPolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc11-PutGroupPolicy-role.name",
+            "aws_iam_role.privesc11-PutGroupPolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc12-PutRolePolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc12-PutRolePolicy.arn",
+            "aws_iam_policy.privesc12-PutRolePolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc12-PutRolePolicy-role.name",
+            "aws_iam_role.privesc12-PutRolePolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc13-AddUserToGroup-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc13-AddUserToGroup.arn",
+            "aws_iam_policy.privesc13-AddUserToGroup"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc13-AddUserToGroup-role.name",
+            "aws_iam_role.privesc13-AddUserToGroup-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc14-UpdatingAssumeRolePolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc14-UpdatingAssumeRolePolicy.arn",
+            "aws_iam_policy.privesc14-UpdatingAssumeRolePolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc14-UpdatingAssumeRolePolicy-role.name",
+            "aws_iam_role.privesc14-UpdatingAssumeRolePolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc15-PassExistingRoleToNewLambdaThenInvoke-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc15-PassExistingRoleToNewLambdaThenInvoke.arn",
+            "aws_iam_policy.privesc15-PassExistingRoleToNewLambdaThenInvoke"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc15-PassExistingRoleToNewLambdaThenInvoke-role.name",
+            "aws_iam_role.privesc15-PassExistingRoleToNewLambdaThenInvoke-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo.arn",
+            "aws_iam_policy.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-role.name",
+            "aws_iam_role.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc17-EditExistingLambdaFunctionWithRole-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc17-EditExistingLambdaFunctionWithRole.arn",
+            "aws_iam_policy.privesc17-EditExistingLambdaFunctionWithRole"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc17-EditExistingLambdaFunctionWithRole-role.name",
+            "aws_iam_role.privesc17-EditExistingLambdaFunctionWithRole-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc18-PassExistingRoleToNewGlueDevEndpoint-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc18-PassExistingRoleToNewGlueDevEndpoint.arn",
+            "aws_iam_policy.privesc18-PassExistingRoleToNewGlueDevEndpoint"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc18-PassExistingRoleToNewGlueDevEndpoint-role.name",
+            "aws_iam_role.privesc18-PassExistingRoleToNewGlueDevEndpoint-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc19-UpdateExistingGlueDevEndpoint-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc19-UpdateExistingGlueDevEndpoint.arn",
+            "aws_iam_policy.privesc19-UpdateExistingGlueDevEndpoint"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc19-UpdateExistingGlueDevEndpoint-role.name",
+            "aws_iam_role.privesc19-UpdateExistingGlueDevEndpoint-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc2-SetExistingDefaultPolicyVersion-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc2-SetExistingDefaultPolicyVersion.arn",
+            "aws_iam_policy.privesc2-SetExistingDefaultPolicyVersion"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc2-SetExistingDefaultPolicyVersion-role.name",
+            "aws_iam_role.privesc2-SetExistingDefaultPolicyVersion-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc20-PassExistingRoleToCloudFormation-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc20-PassExistingRoleToCloudFormation.arn",
+            "aws_iam_policy.privesc20-PassExistingRoleToCloudFormation"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc20-PassExistingRoleToCloudFormation-role.name",
+            "aws_iam_role.privesc20-PassExistingRoleToCloudFormation-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc21-PassExistingRoleToNewDataPipeline-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc21-PassExistingRoleToNewDataPipeline.arn",
+            "aws_iam_policy.privesc21-PassExistingRoleToNewDataPipeline"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc21-PassExistingRoleToNewDataPipeline-role.name",
+            "aws_iam_role.privesc21-PassExistingRoleToNewDataPipeline-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc3-CreateEC2WithExistingInstanceProfile-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc3-CreateEC2WithExistingInstanceProfile.arn",
+            "aws_iam_policy.privesc3-CreateEC2WithExistingInstanceProfile"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc3-CreateEC2WithExistingInstanceProfile-role.name",
+            "aws_iam_role.privesc3-CreateEC2WithExistingInstanceProfile-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc4-CreateAccessKey-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc4-CreateAccessKey.arn",
+            "aws_iam_policy.privesc4-CreateAccessKey"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc4-CreateAccessKey-role.name",
+            "aws_iam_role.privesc4-CreateAccessKey-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc5-CreateLoginProfile-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc5-CreateLoginProfile.arn",
+            "aws_iam_policy.privesc5-CreateLoginProfile"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc5-CreateLoginProfile-role.name",
+            "aws_iam_role.privesc5-CreateLoginProfile-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc6-UpdateLoginProfile-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc6-UpdateLoginProfile.arn",
+            "aws_iam_policy.privesc6-UpdateLoginProfile"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc6-UpdateLoginProfile-role.name",
+            "aws_iam_role.privesc6-UpdateLoginProfile-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc7-AttachUserPolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc7-AttachUserPolicy.arn",
+            "aws_iam_policy.privesc7-AttachUserPolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc7-AttachUserPolicy-role.name",
+            "aws_iam_role.privesc7-AttachUserPolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc8-AttachGroupPolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc8-AttachGroupPolicy.arn",
+            "aws_iam_policy.privesc8-AttachGroupPolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc8-AttachGroupPolicy-role.name",
+            "aws_iam_role.privesc8-AttachGroupPolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.privesc-paths.aws_iam_role_policy_attachment.privesc9-AttachRolePolicy-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.privesc9-AttachRolePolicy.arn",
+            "aws_iam_policy.privesc9-AttachRolePolicy"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.privesc9-AttachRolePolicy-role.name",
+            "aws_iam_role.privesc9-AttachRolePolicy-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fn1-privesc3-partial-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fn1-privesc3-partial-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fn2-exploitableResourceConstraint-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fn2-exploitableResourceConstraint-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fn3-exploitableConditionConstraint-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fn3-exploitableConditionConstraint-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fn4-exploitableNotAction-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fn4-exploitableNotAction-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fp1-allow-and-deny-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fp1-allow-and-deny-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fp2-allow-and-deny-multiple-policies-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fp2-allow-and-deny-multiple-policies-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fp3-deny-iam-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fp3-deny-iam-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fp4-nonExploitableResourceConstraint-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fp4-nonExploitableResourceConstraint-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.fp5-nonExploitableConditionConstraint-role",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_assume_role_arn"
+          ]
+        },
+        "name": {
+          "constant_value": "fp5-nonExploitableConditionConstraint-role"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role.privesc-permissive-role-trust",
+      "expressions": {
+        "assume_role_policy": {
+          "references": [
+            "var.aws_root_user"
+          ]
+        },
+        "name": {
+          "constant_value": "privesc-permissive-role-trust"
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fn1-privesc3-partial-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fn1-privesc3-partial.arn",
+            "aws_iam_policy.fn1-privesc3-partial"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fn1-privesc3-partial-role.name",
+            "aws_iam_role.fn1-privesc3-partial-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fn2-exploitableResourceConstraint-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fn2-exploitableResourceConstraint.arn",
+            "aws_iam_policy.fn2-exploitableResourceConstraint"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fn2-exploitableResourceConstraint-role.name",
+            "aws_iam_role.fn2-exploitableResourceConstraint-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fn3-exploitableConditionConstraint-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fn3-exploitableConditionConstraint.arn",
+            "aws_iam_policy.fn3-exploitableConditionConstraint"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fn3-exploitableConditionConstraint-role.name",
+            "aws_iam_role.fn3-exploitableConditionConstraint-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fn4-exploitableNotAction-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fn4-exploitableNotAction.arn",
+            "aws_iam_policy.fn4-exploitableNotAction"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fn4-exploitableNotAction-role.name",
+            "aws_iam_role.fn4-exploitableNotAction-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fp1-allow-and-deny-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fp1-allow-and-deny.arn",
+            "aws_iam_policy.fp1-allow-and-deny"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fp1-allow-and-deny-role.name",
+            "aws_iam_role.fp1-allow-and-deny-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fp2-allow-and-deny-attach-allow-to-role",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fp2-allow-all.arn",
+            "aws_iam_policy.fp2-allow-all"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fp2-allow-and-deny-multiple-policies-role.name",
+            "aws_iam_role.fp2-allow-and-deny-multiple-policies-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fp2-allow-and-deny-attach-deny-to-roler",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.deny-all.arn",
+            "aws_iam_policy.deny-all"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fp2-allow-and-deny-multiple-policies-role.name",
+            "aws_iam_role.fp2-allow-and-deny-multiple-policies-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fp3-deny-iam-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fp3-deny-iam.arn",
+            "aws_iam_policy.fp3-deny-iam"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fp3-deny-iam-role.name",
+            "aws_iam_role.fp3-deny-iam-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fp4-nonExploitableResourceConstraint-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fp4-nonExploitableResourceConstraint.arn",
+            "aws_iam_policy.fp4-nonExploitableResourceConstraint"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fp4-nonExploitableResourceConstraint-role.name",
+            "aws_iam_role.fp4-nonExploitableResourceConstraint-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.fp5-nonExploitableConditionConstraint-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fp5-nonExploitableConditionConstraint.arn",
+            "aws_iam_policy.fp5-nonExploitableConditionConstraint"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fp5-nonExploitableConditionConstraint-role.name",
+            "aws_iam_role.fp5-nonExploitableConditionConstraint-role"
+          ]
+        }
+      }
+    },
+    {
+      "resource": "module.tool-testing.aws_iam_role_policy_attachment.privesc3-passrole-role-attach-policy",
+      "expressions": {
+        "policy_arn": {
+          "references": [
+            "aws_iam_policy.fn1-passrole-star.arn",
+            "aws_iam_policy.fn1-passrole-star"
+          ]
+        },
+        "role": {
+          "references": [
+            "aws_iam_role.fn1-privesc3-partial-role.name",
+            "aws_iam_role.fn1-privesc3-partial-role"
+          ]
+        }
+      }
+    }
+  ]
+}

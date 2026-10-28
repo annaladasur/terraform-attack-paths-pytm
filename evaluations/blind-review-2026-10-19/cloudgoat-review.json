@@ -1,0 +1,421 @@
+{
+  "protocol": "Independent automated blind mapping from candidate pairs and raw Terraform plans; selected matching raw Terraform source only to resolve apply-time unknown expressions/provisioner intent. No engine, original labels, adjudications, tracker, or other reviewer outputs consulted. This does not satisfy independent human review.",
+  "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+  "case_count": 13,
+  "pair_count": 17,
+  "label_definitions": {
+    "VALID": "A concrete unauthorized target capability is supported, subject to stated ordinary deployment/service preconditions; DB modification is an integrity compromise and Lambda reading is disclosure.",
+    "PARTIALLY_VALID": "Meaningful plan-supported links exist but an essential application/runtime/hidden-policy step remains unproven.",
+    "INVALID": "No complete path follows from the specified entry capabilities; a required additional foothold or authorization is absent/contradicted.",
+    "OUT_OF_SCOPE": "Not assessable in this review scope.",
+    "INDETERMINATE": "Evidence insufficient to support even a bounded partial judgment."
+  },
+  "limitations": [
+    "Automated reviewer, not a second human.",
+    "Static assessment only; no AWS calls, exploitation, deployment or service-policy simulation.",
+    "Unknown plan expressions supplemented only with matching scenario raw .tf sources. No scenario walkthroughs read.",
+    "IAM users imply possession of their credentials, not unrelated SSH private keys or deployment operator capabilities.",
+    "Internet entry is source-constrained where plan rules use 203.0.113.10/32; no universal reachability is inferred.",
+    "Credential references in environment settings are explicit data flows, not direct IAM role-assumption edges.",
+    "AWS-managed policies interpreted by named baseline purpose; external SCPs, session denies, deployment success and account quotas are not known."
+  ],
+  "label_counts": {
+    "VALID": 9,
+    "PARTIALLY_VALID": 5,
+    "INVALID": 3
+  },
+  "reviews": [
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "entry": "aws_iam_user.low_priv_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "plan_sha256": "7148b7aa2154893ea2fe0a7233ca5584685ea7ba01fcc242e5f1e8b94c485843",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "DescribeConfigurationSettings exposes secondary-user credentials stored as Beanstalk environment settings. Secondary user can create an access key for the administrator user, whose attached policy grants all actions; administrator can read the target secret.",
+      "evidence": [
+        "aws_iam_policy.low_priv_policy: Allow elasticbeanstalk:DescribeConfigurationSettings on *; low_priv_policy_attach binds it to entry.",
+        "aws_elastic_beanstalk_environment.eb_env configuration.setting: SECONDARY_ACCESS_KEY/SECONDARY_SECRET_KEY reference aws_iam_access_key.secondary_key.id/secret.",
+        "aws_iam_policy.secondary_policy: Allow iam:CreateAccessKey on *; secondary_policy_attach binds secondary user.",
+        "aws_iam_policy.admin_user_policy: Allow Action=* Resource=*; admin_user_policy_attach binds admin_user."
+      ],
+      "preconditions": [
+        "Valid entry credentials; successfully applied environment; administrator has a free access-key slot (no administrator keys declared)."
+      ],
+      "uncertainties": [
+        "Credential values are apply-time unknown, but their data-flow references are explicit. Retrieval and use of exposed credentials is a data-mediated pivot, not an sts:AssumeRole edge.",
+        "External organization policies and service-side environment-setting masking are not represented."
+      ]
+    },
+    {
+      "case": "cloudgoat-cloud_breach_s3",
+      "entry": "internet",
+      "target": "aws_s3_bucket.cg-cardholder-data-bucket",
+      "plan_sha256": "ee60e82cce6a290acc3e2e782aceb26d5bb957f3de5a737f2ec9c775d849a5df",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "PARTIALLY_VALID",
+      "rationale": "Public proxy EC2 has an S3-full-access instance role, supporting the impact of a metadata credential theft. The plan does not establish a working SSRF/open proxy or metadata-token compatibility, and ingress is restricted to a single source.",
+      "evidence": [
+        "aws_instance.ec2-vulnerable-proxy-server: public IP=true; cg-ec2-instance-profile -> cg-banking-WAF-Role.",
+        "aws_iam_role.cg-banking-WAF-Role: EC2 trust and AmazonS3FullAccess managed policy.",
+        "aws_security_group.cg-ec2-http-security-group: TCP/80 only 203.0.113.10/32; public subnet has IGW route.",
+        "EC2 user_data installs nginx and copies /home/ubuntu/proxy.com, but its contents and successful provisioning are not visible.",
+        "aws_s3_bucket.cg-cardholder-data-bucket has no public grant in the plan."
+      ],
+      "preconditions": [
+        "Attacker originates from the permitted source; proxy configuration permits a request to instance metadata; usable instance credentials can be obtained."
+      ],
+      "uncertainties": [
+        "IMDS defaults/options are unknown in the plan; no explicit http_tokens=optional evidence.",
+        "Internet is not unrestricted 0.0.0.0/0 here. A public IP and powerful role alone do not prove the full path."
+      ]
+    },
+    {
+      "case": "cloudgoat-codebuild_secrets",
+      "entry": "aws_iam_user.cg-solo",
+      "target": "aws_db_instance.cg-psql-rds",
+      "plan_sha256": "6e31e225d21307f5989d2e3054a7d10cf4be80080fced4edeaaa3a0f66ea064f",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "Solo can read CodeBuild plaintext environment credentials for Calrissian, which can modify the target DB and snapshot/restore its data. A separate SSM private-key exposure supports an EC2/Lambda-configuration pivot to DB credentials.",
+      "evidence": [
+        "aws_iam_policy.cg-solo-policy: codebuild:BatchGetProjects and ssm:GetParameter on *.",
+        "aws_codebuild_project.cg-codebuild-project configuration.environment_variable explicitly references cg-calrissian access key id/secret; variables are PLAINTEXT.",
+        "aws_iam_policy.cg-calrissian-policy: rds:ModifyDBInstance, CreateDBSnapshot, RestoreDBInstanceFromDBSnapshot and EC2 SG creation/ingress on *.",
+        "aws_ssm_parameter.cg-ec2-private-key is a String; public EC2 uses cg-ec2-key-pair and cg-ec2-role; its role policy permits lambda:GetFunction.",
+        "aws_lambda_function.cg-lambda-function environment contains DB credentials matching aws_db_instance.cg-psql-rds."
+      ],
+      "preconditions": [
+        "Valid Solo credentials and active exposed Calrissian key; normal RDS modification/snapshot service availability.",
+        "For SQL access through EC2: usable matching SSM SSH key, source 203.0.113.10/32 and functioning SSH."
+      ],
+      "uncertainties": [
+        "VALID includes control-plane compromise of the exact target DB via ModifyDBInstance. It does not claim current direct SQL connectivity: target publicly_accessible=false.",
+        "Snapshot restoration creates a copy rather than connecting to the original target; data-plane login additionally needs credentials/network placement."
+      ]
+    },
+    {
+      "case": "cloudgoat-codebuild_secrets",
+      "entry": "aws_iam_user.cg-calrissian",
+      "target": "aws_db_instance.cg-psql-rds",
+      "plan_sha256": "6e31e225d21307f5989d2e3054a7d10cf4be80080fced4edeaaa3a0f66ea064f",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "Attached policy permits unrestricted modification of the exact target DB, including its authentication/exposure configuration, plus snapshot/restore for data extraction.",
+      "evidence": [
+        "aws_iam_policy.cg-calrissian-policy attached by cg-calrissian-attachment: rds:ModifyDBInstance, CreateDBSnapshot, RestoreDBInstanceFromDBSnapshot on *.",
+        "Policy also permits ec2:CreateSecurityGroup and ec2:AuthorizeSecurityGroupIngress on *.",
+        "aws_db_instance.cg-psql-rds: PostgreSQL, publicly_accessible=false; testing subnet group references public subnets while current group references private subnets."
+      ],
+      "preconditions": [
+        "Valid Calrissian credentials; successful service operations. SQL access requires an accessible resulting DB/clone endpoint and reset or known password."
+      ],
+      "uncertainties": [
+        "Current private placement is not bypassed merely by IAM authorization; network changes or restore are needed for external SQL access.",
+        "VALID represents demonstrated DB control-plane compromise; it does not prove existing SQL connectivity."
+      ]
+    },
+    {
+      "case": "cloudgoat-data_secrets",
+      "entry": "aws_iam_user.start_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "plan_sha256": "43a5b21ddf52f09778cfe0612a4163395dcf0f7a4b4f39bc40af86e73ebef456",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "PARTIALLY_VALID",
+      "rationale": "EC2 user-data disclosure yields an SSH password. A functioning permitted SSH login could obtain EC2 role credentials, read Lambda configuration and recover a user key authorized to read the target secret. The plan supports each privilege/data link but does not demonstrate the host login.",
+      "evidence": [
+        "aws_iam_user_policy.start_user_policy: ec2:DescribeInstanceAttribute on *.",
+        "aws_instance.ec2_instance user_data sets an ec2-user password and changes PasswordAuthentication to yes; public instance with EC2 profile.",
+        "aws_security_group.sg: SSH only 203.0.113.10/32.",
+        "aws_iam_role_policy.ec2_role_policy: lambda:GetFunction/GetFunctionConfiguration on *.",
+        "aws_lambda_function.sensitive_lambda configuration.environment references aws_iam_access_key.lambda_user id/secret; lambda_user_policy allows secretsmanager:GetSecretValue on *."
+      ],
+      "preconditions": [
+        "Attacker has entry credentials and access from allowed SSH source; user_data succeeds on the selected AMI; SSH daemon accepts configured password; local metadata is usable."
+      ],
+      "uncertainties": [
+        "A user_data password and sed command do not establish effective SSH configuration or successful boot.",
+        "This is a runtime login followed by credential-in-configuration pivot; there is no direct entry GetSecretValue permission."
+      ]
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "entry": "internet",
+      "target": "aws_s3_bucket.secret_bucket",
+      "plan_sha256": "5f5befc9fb730a352fafb0ded99da7840daedcf0e2492446e715be7c9b1cb608",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "PARTIALLY_VALID",
+      "rationale": "The public EC2 instance uses optional metadata tokens and an S3-capable role, but an SSRF vulnerability in the Node application is not demonstrated by the raw plan.",
+      "evidence": [
+        "aws_instance.ubuntu_ec2: public IP=true; http_endpoint=enabled, http_tokens=optional; cg-ec2-instance-profile -> ec2_role.",
+        "aws_iam_policy.ec2_policy: s3:* Resource=*; configuration binds it to ec2_role.",
+        "aws_security_group.ec2_security_group: TCP/80 and 22 only 203.0.113.10/32; associated subnet has IGW route.",
+        "user_data extracts app.zip and starts app.js; code/vulnerability not included in plan.",
+        "aws_s3_bucket.secret_bucket has no public resource grant."
+      ],
+      "preconditions": [
+        "Allowed source IP; successful application deployment; exploitable request primitive reaching IMDS; returned metadata credentials."
+      ],
+      "uncertainties": [
+        "Optional IMDS tokens do not make 169.254.169.254 remotely reachable without a local request primitive.",
+        "Application code and execution were not inspected or tested."
+      ]
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "entry": "aws_iam_user.solus",
+      "target": "aws_lambda_function.lambda_function",
+      "plan_sha256": "5f5befc9fb730a352fafb0ded99da7840daedcf0e2492446e715be7c9b1cb608",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "Solus has direct Lambda read/configuration/code access to the specified function. That exposes credentials in its environment; invocation is not granted directly.",
+      "evidence": [
+        "aws_iam_policy.solus: Allow lambda:Get* and lambda:List* on *; solus attachment binds entry.",
+        "aws_lambda_function.lambda_function configuration.environment.variables references aws_iam_access_key.wrex id/secret.",
+        "aws_iam_policy.wrex grants ec2:* on *."
+      ],
+      "preconditions": [
+        "Valid Solus credentials; function exists; target access means read/disclosure."
+      ],
+      "uncertainties": [
+        "Direct lambda:InvokeFunction is absent. If the target outcome is specifically invocation, this is only partial until a further credential/runtime chain succeeds.",
+        "Credential data flow is explicit while actual environment values remain apply-time unknown."
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_attachment",
+      "entry": "aws_iam_user.kerrigan",
+      "target": "aws:account-admin",
+      "plan_sha256": "0b475a1a3911af081b3d7407161715eceadd053bab1ef1181c9363d3925e9331",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "Kerrigan can replace the role in the existing instance profile with the mighty administrator role, then run an attacker-controlled EC2 instance using that profile and obtain administrator credentials/code execution.",
+      "evidence": [
+        "aws_iam_policy.kerrigan_policy: iam:RemoveRoleFromInstanceProfile/AddRoleToInstanceProfile/PassRole, ec2:RunInstances/CreateKeyPair on *.",
+        "aws_iam_instance_profile.ec2_meek initially uses ec2_meek_role; its Deny * does not bind Kerrigan or ec2_mighty_role.",
+        "aws_iam_policy.ec2_mighty_policy: Allow * on *; configuration managed_policy_arns binds ec2_mighty_role.",
+        "ec2_mighty_role trusts ec2.amazonaws.com; public subnet IGW route and SSH SG present."
+      ],
+      "preconditions": [
+        "Valid entry credentials; account quota/AMI availability; attacker can supply key/user_data and retrieve instance credentials after profile propagation."
+      ],
+      "uncertainties": [
+        "The existing super_critical_security_server has no profile declared; the sound route launches a new controlled instance.",
+        "An explicit deny on the removed meek role does not transfer to the mighty role."
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_ec2",
+      "entry": "aws_iam_user.dev_user",
+      "target": "aws:account-admin",
+      "plan_sha256": "563d9442c5e1576a95139fc282c1eaddfd5b8f3798a3523fc53610173c783871",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "PARTIALLY_VALID",
+      "rationale": "Dev can delete the admin EC2 Name tag to bypass a StringNotEquals condition, assume the management role, and gain stop/start/ModifyInstanceAttribute permissions over an EC2 with AdministratorAccess. Account administration still requires a working code-execution and credential-extraction step.",
+      "evidence": [
+        "dev_ec2_permissions grants ec2:DeleteTags on *; ReadOnlyAccess attached.",
+        "ec2_manage_permissions grants StopInstances/StartInstances/ModifyInstanceAttribute if Name != cg_admin_ec2_tapm.",
+        "admin_ec2 has exactly that Name tag and profile ec2_role; ec2_role_policy_attach is AdministratorAccess.",
+        "Matching raw Terraform iam_privesc_by_ec2/terraform/iam.tf resolves unknown role trust and user policy: dev may assume ec2_management_role, and that role trusts dev.",
+        "admin_ec2 is in private_subnet with map_public_ip_on_launch=false; no IGW/NAT route in plan."
+      ],
+      "preconditions": [
+        "Valid dev credentials; deletable tag; successful assumed role session; stopped-instance user-data/attribute manipulation results in privileged execution and usable credential exfiltration."
+      ],
+      "uncertainties": [
+        "Modified user_data is not guaranteed to execute on reboot with the AMI cloud-init configuration.",
+        "Private subnet has no demonstrated AWS API egress. A console-based extraction channel or added connectivity is a separate runtime dependency."
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_key_rotation",
+      "entry": "aws_iam_user.manager",
+      "target": "aws_secretsmanager_secret.primary_secret",
+      "plan_sha256": "8d0865977d3ded371c723b271190d60b1503aaa5cd1fc123a07bf3d68fe49de3",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "Manager can tag admin developer=true, delete an inactive admin key to free a slot, create an admin key, and enroll attacker-controlled MFA. Admin can then assume the MFA-conditioned role and read the primary secret.",
+      "evidence": [
+        "manager_tag_resources allows iam:TagUser/TagMFADevice on *.",
+        "manager_manage_access_keys permits CreateAccessKey/DeleteAccessKey/EnableMFADevice for user/* and mfa/* conditioned on developer=true, plus CreateVirtualMFADevice on mfa/*.",
+        "admin_one and admin_two are Inactive: keys still occupy both slots until deleted; manager has DeleteAccessKey.",
+        "secretsmanager_role trust allows account principal only when aws:MultiFactorAuthPresent=true.",
+        "Matching raw Terraform iam_admin.tf: admin_assume_role permits sts:AssumeRole on secretsmanager_role; role managed policy grants GetSecretValue on primary_secret."
+      ],
+      "preconditions": [
+        "Valid manager credentials; tag-conditioned IAM actions evaluate against the tagged target; attacker can create/enroll a virtual MFA device and supply valid consecutive codes."
+      ],
+      "uncertainties": [
+        "Key rotation alone does not satisfy role MFA. The necessary enrollment/session step is explicit in this assessment.",
+        "Actual IAM/MFA operations and external guardrails were not tested."
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_rollback",
+      "entry": "aws_iam_user.raynor",
+      "target": "aws:account-admin",
+      "plan_sha256": "814a057351035636d14daa6d2e8c223f5878b72f955c19f68217db0c9d197298",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "PARTIALLY_VALID",
+      "rationale": "Raynor can switch the default version of its attached policy, but a privileged non-default version is absent from plan values. Source Terraform declares provisioners creating extra versions, whose documents and successful execution remain outside the inspected plan.",
+      "evidence": [
+        "aws_iam_policy.versioned_policy: iam:SetDefaultPolicyVersion, iam:Get*, iam:List* on *; raynor_attachment connects entry.",
+        "null_resource.policy_version exists, but after values contain only triggers=null.",
+        "Matching raw Terraform null_resource.tf runs aws iam create-policy-version for policies/v2.json through v5.json with --no-set-as-default."
+      ],
+      "preconditions": [
+        "A non-default version granting administration exists and local-exec provisioners completed successfully; caller selects that version."
+      ],
+      "uncertainties": [
+        "SetDefaultPolicyVersion cannot invent permissions absent from available versions.",
+        "Version document contents were not inspected, so administrator outcome is conditional rather than proven."
+      ]
+    },
+    {
+      "case": "cloudgoat-lambda_privesc",
+      "entry": "aws_iam_user.chris",
+      "target": "aws:account-admin",
+      "plan_sha256": "5c7092fa4988fbbd0f7f10f91c72317262ba461edabe4d7212c4831db367e64a",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "Chris can assume lambdaManager, create and invoke attacker Lambda code with the administrator debug role, then use that execution to administer the account.",
+      "evidence": [
+        "chris_policy grants sts:AssumeRole on *; chris_attachment binds entry.",
+        "Matching raw Terraform lambda_privesc/terraform/iam.tf resolves unknown lambdaManager_role trust specifically to Chris.",
+        "lambdaManager_policy grants lambda:* and iam:PassRole on *; configuration attachment binds lambdaManager.",
+        "debug_role trusts lambda.amazonaws.com; debug_administrator_attachment attaches AdministratorAccess."
+      ],
+      "preconditions": [
+        "Valid Chris credentials; functioning STS/Lambda services; attacker supplies runnable function code with debug_role."
+      ],
+      "uncertainties": [
+        "No existing Lambda resource is needed: CreateFunction and InvokeFunction are covered by lambda:*.",
+        "External SCPs, account restrictions and runtime execution are not tested."
+      ]
+    },
+    {
+      "case": "cloudgoat-rds_snapshot",
+      "entry": "internet",
+      "target": "aws_db_instance.cg-rds-db_instance",
+      "plan_sha256": "879cd2d5104ba576e72a12687c104af71c2eff524c3605af5aadc6db50fc10a0",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "INVALID",
+      "rationale": "The DB is private and no anonymous DB or snapshot-sharing grant or exploitable public runtime pivot is established. A whitelisted security-group rule alone does not expose this DB to the internet.",
+      "evidence": [
+        "aws_db_instance.cg-rds-db_instance: publicly_accessible=false.",
+        "aws_security_group.allow_mysql: port 3306 from 10.0.0.0/16 and 203.0.113.10/32 only.",
+        "aws_db_snapshot.cg-rds_snapshot: shared_accounts=null; no public sharing declaration.",
+        "EC2 only exposes whitelisted SSH and requires a key; IMDS tokens are required."
+      ],
+      "preconditions": [
+        "A separate compromise of an authorized IAM principal or reachable authenticated host would be a different starting condition."
+      ],
+      "uncertainties": [
+        "INVALID means no supported complete internet-to-target compromise in this inspected configuration, not a claim that external unknown vulnerabilities cannot exist."
+      ]
+    },
+    {
+      "case": "cloudgoat-rds_snapshot",
+      "entry": "aws_iam_user.cg-david",
+      "target": "aws_db_instance.cg-rds-db_instance",
+      "plan_sha256": "879cd2d5104ba576e72a12687c104af71c2eff524c3605af5aadc6db50fc10a0",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "David can directly modify the exact DB, reset credentials/change exposure, and restore the declared snapshot to recover a copy of its data. Current public connectivity is not assumed.",
+      "evidence": [
+        "aws_iam_user_policy.cg-david-policy: rds:ModifyDBInstance, RestoreDBInstanceFromDBSnapshot, DescribeDBInstances/DBSnapshots on *.",
+        "aws_db_snapshot.cg-rds_snapshot references target DB; no additional privileged role is required for these grants.",
+        "Target DB publicly_accessible=false; allow_mysql includes permitted external /32 and VPC CIDR; VPC main route table associates with an IGW route."
+      ],
+      "preconditions": [
+        "Valid David credentials; RDS modification/restore succeeds; SQL extraction requires endpoint connectivity and known or reset password."
+      ],
+      "uncertainties": [
+        "Control-plane modification is a demonstrated target integrity compromise. Restore yields another instance rather than the original endpoint.",
+        "No permission to change SG ingress is present, so external SQL client must satisfy existing permitted source or use suitable clone networking."
+      ]
+    },
+    {
+      "case": "cloudgoat-secrets_in_the_cloud",
+      "entry": "aws_iam_user.low_priv_user",
+      "target": "aws_secretsmanager_secret.this",
+      "plan_sha256": "abf7a0fa3c8cba48943ea3b605233fe89dd54585e86546c5e1c2fe69ec295212",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "VALID",
+      "rationale": "An unconditional wildcard-principal resource policy grants GetSecretValue on the target, allowing the same-account low_priv_user to read directly. The longer application/DynamoDB credential chain is unnecessary for this pair.",
+      "evidence": [
+        "aws_secretsmanager_secret_policy.this plan policy is apply-time unknown and configuration references target ARN.",
+        "Matching raw Terraform secrets_in_the_cloud/terraform/secrets_manager.tf resolves this policy to Effect=Allow, Action=secretsmanager:GetSecretValue, Principal=*, Resource=target ARN.",
+        "Entry user has no declared permissions boundary and there is no represented explicit deny.",
+        "The secret has no declared customer-managed KMS key requiring an additional kms:Decrypt grant."
+      ],
+      "preconditions": [
+        "Valid authenticated same-account entry credentials; resource policy applies successfully; target ARN is known or discovered."
+      ],
+      "uncertainties": [
+        "This is authenticated same-account access, not a claim that Secrets Manager supports anonymous unsigned secret retrieval.",
+        "Low-privilege identity policy need not independently Allow a same-account direct user grant; external deny policies remain unrepresented."
+      ]
+    },
+    {
+      "case": "cloudgoat-vpc_peering_overexposed",
+      "entry": "internet",
+      "target": "aws_db_instance.customer_db",
+      "plan_sha256": "35a12ea73f00ffb0173f659db7323e2fd66e8efd0966a9b98af0e334382722cf",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "INVALID",
+      "rationale": "The database is private and allows only the production subnet. Internet can reach whitelisted SSH on dev, but neither a key nor a remotely exploitable application is established, so the required first compromise is missing.",
+      "evidence": [
+        "customer_db publicly_accessible=false; db_sg permits TCP/3306 only 10.20.10.0/24.",
+        "dev_ec2 is public, dev_sg allows TCP/22 only 203.0.113.10/32; no HTTP ingress or vulnerable app specified.",
+        "dev_ec2 optional IMDS tokens are host-local and do not create an internet metadata endpoint.",
+        "Peering routes connect dev/prod CIDRs; prod_sg allows SSH/443 from dev CIDR, not direct DB access from dev."
+      ],
+      "preconditions": [
+        "Additional attacker possession of generated SSH private key or an independent dev-host vulnerability would change the starting condition."
+      ],
+      "uncertainties": [
+        "Peering permits lateral network movement once a foothold exists; it does not supply that foothold or DB authentication."
+      ]
+    },
+    {
+      "case": "cloudgoat-vpc_peering_overexposed",
+      "entry": "aws_iam_user.initial_user",
+      "target": "aws_db_instance.customer_db",
+      "plan_sha256": "35a12ea73f00ffb0173f659db7323e2fd66e8efd0966a9b98af0e334382722cf",
+      "reviewer": "automated-independent-blind-cloudgoat-gpt-6",
+      "reviewer_type": "automated_agent",
+      "label": "INVALID",
+      "rationale": "Initial user has only EC2 inventory permissions. It cannot start SSM sessions, retrieve metadata from outside EC2, or obtain the generated SSH private key through declared IAM grants, so no complete pivot to the private DB is supported.",
+      "evidence": [
+        "initial_user_policy permits only ec2:DescribeInstances/Vpcs/Subnets/SecurityGroups/RouteTables/VpcPeeringConnections on *.",
+        "No ssm:StartSession, ec2:DescribeInstanceAttribute, EC2 Instance Connect, or private-key data-read grant attaches to entry.",
+        "local_file.private_key stores TLS-generated private key locally; null_resource copies it to scenario directory, not an IAM-readable service.",
+        "dev_ec2_role grants ssm:StartSession, but requires dev host credentials first; prod user_data creates a DB credential file; DB SG permits prod subnet only."
+      ],
+      "preconditions": [
+        "An externally supplied local private key plus whitelisted SSH source could enable dev login, metadata credential retrieval, SSM pivot to prod and DB login. That extra secret is not implied by possession of initial_user AWS credentials."
+      ],
+      "uncertainties": [
+        "If the intended starting capability explicitly includes the local SSH key, reassess as a conditional runtime chain; inputs specify only the IAM user.",
+        "SSM agent health and production endpoints are deployment/runtime conditions, not verified connectivity."
+      ]
+    }
+  ]
+}

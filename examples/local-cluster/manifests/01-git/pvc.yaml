@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gitea-data-pvc
+  namespace: git
+  labels:
+    app.kubernetes.io/name: gitea
+    app.kubernetes.io/part-of: tapm-local-cluster
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi

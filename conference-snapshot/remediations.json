@@ -1,0 +1,110 @@
+{
+  "manifest": {
+    "acceptance": "path gone or downgraded after re-planning; no new path; no resource removed; no new pytm threat decided by the plan",
+    "applied_to_repository": false,
+    "max_attempts": 3,
+    "patch_author": "recorded, fallback simulated"
+  },
+  "paths": [
+    {
+      "attempts": [
+        {
+          "backend": "simulated",
+          "diff": "--- a/app.tf\n+++ b/app.tf\n@@ -9,7 +9,7 @@\n \n   metadata_options {\n     http_endpoint = \"enabled\"\n-    http_tokens   = \"optional\"\n+    http_tokens   = \"required\"\n   }\n \n   root_block_device {\n",
+          "effect": "downgrades_path",
+          "n": 1,
+          "new_paths": [],
+          "other_paths_to_target": 0,
+          "patch": {
+            "confidence": 0.6,
+            "evidence_refs": [
+              "TF-004",
+              "GRAPH-003"
+            ],
+            "file": "app.tf",
+            "find": "http_tokens   = \"optional\"",
+            "hop": 3,
+            "rationale": "Require IMDSv2 on aws_instance.app so SSRF cannot read the role's credentials.",
+            "replace": "http_tokens   = \"required\""
+          },
+          "plan_source": "plan-cache",
+          "preconditions_after": [
+            "workload_rce"
+          ],
+          "priority_after": "medium",
+          "priority_before": "high",
+          "pytm": {
+            "new": [],
+            "resolved": [
+              "TAPM-EC2-01 on aws_instance.app"
+            ]
+          },
+          "reasons": [],
+          "resources_removed": [],
+          "stage": "verification",
+          "status": "PROVEN_DOWNGRADE",
+          "what_if_predicted": "downgrades_path"
+        },
+        {
+          "backend": "simulated",
+          "diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.reports.arn, \"${aws_s3_bucket.reports.arn}/*\"]\n       }\n     ]\n   })\n",
+          "effect": "breaks_path",
+          "n": 2,
+          "new_paths": [],
+          "other_paths_to_target": 0,
+          "patch": {
+            "confidence": 0.6,
+            "evidence_refs": [
+              "IAM-001",
+              "GRAPH-001"
+            ],
+            "file": "iam.tf",
+            "find": "Resource = [\"arn:aws:s3:::*\"]",
+            "hop": 4,
+            "rationale": "Scope the grant to aws_s3_bucket.reports instead of a wildcard, so it no longer reaches aws_s3_bucket.customer_data.",
+            "replace": "Resource = [aws_s3_bucket.reports.arn, \"${aws_s3_bucket.reports.arn}/*\"]"
+          },
+          "plan_source": "plan-cache",
+          "preconditions_after": [],
+          "priority_after": null,
+          "priority_before": "high",
+          "pytm": {
+            "new": [],
+            "resolved": [
+              "DE04 on aws_s3_bucket.customer_data",
+              "DE04 on aws_s3_bucket.reports",
+              "TAPM-IAM-01 on aws_instance.app",
+              "TAPM-IAM-02 on aws_s3_bucket.customer_data"
+            ]
+          },
+          "reasons": [],
+          "resources_removed": [],
+          "stage": "verification",
+          "status": "PROVEN_BREAK",
+          "what_if_predicted": "breaks_path"
+        }
+      ],
+      "nodes": [
+        "internet",
+        "aws_lb.web",
+        "aws_instance.app",
+        "aws_iam_role.app",
+        "aws_s3_bucket.customer_data"
+      ],
+      "path": "PATH-001",
+      "priority": "high",
+      "recommended_attempt": 2,
+      "recommended_diff": "--- a/iam.tf\n+++ b/iam.tf\n@@ -29,7 +29,7 @@\n         Sid      = \"ReadReports\"\n         Effect   = \"Allow\"\n         Action   = [\"s3:GetObject\", \"s3:ListBucket\"]\n-        Resource = [\"arn:aws:s3:::*\"]\n+        Resource = [aws_s3_bucket.reports.arn, \"${aws_s3_bucket.reports.arn}/*\"]\n       }\n     ]\n   })\n",
+      "result": "PROVEN_BREAK"
+    }
+  ],
+  "summary": {
+    "attempts": 2,
+    "no_verified_fix": 0,
+    "paths": 1,
+    "rejected": 0,
+    "unverified": 0,
+    "verified_break": 1,
+    "verified_downgrade_only": 0
+  }
+}

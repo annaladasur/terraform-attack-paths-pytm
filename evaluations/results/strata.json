@@ -1,0 +1,685 @@
+{
+  "by_repository": {
+    "cloudgoat": {
+      "blind": {
+        "fn": 5,
+        "fp": 0,
+        "recall": "2/7",
+        "tp": 2
+      },
+      "cases": 8,
+      "second_run": {
+        "fn": 0,
+        "fp": 0,
+        "recall": "7/7",
+        "tp": 7
+      }
+    },
+    "cloudgoat_heldout": {
+      "blind": {
+        "fn": 0,
+        "fp": 0,
+        "paths_emitted": 9,
+        "paths_scored": 2,
+        "recall": "2/2",
+        "tn": 0,
+        "tp": 2
+      },
+      "cases": 5,
+      "second_run": null
+    },
+    "iam_vulnerable": {
+      "blind": {
+        "fn": 3,
+        "fp": 4,
+        "tn": 1,
+        "tp": 26
+      },
+      "resources": 265,
+      "second_run": {
+        "fn": 3,
+        "fp": 1,
+        "tn": 4,
+        "tp": 26
+      }
+    },
+    "realworld_benign": {
+      "blind": {
+        "fn": 0,
+        "fp": 0,
+        "paths_emitted": 0,
+        "paths_scored": 0,
+        "recall": "n/a",
+        "tn": 5,
+        "tp": 0
+      },
+      "cases": 5,
+      "second_run": null
+    },
+    "synthetic_tier1": {
+      "cases": 21,
+      "fn": 0,
+      "fp": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tp": 14
+    },
+    "terragoat": {
+      "false_paths": 0,
+      "paths_emitted": 0,
+      "resources": 64
+    }
+  },
+  "by_resource_count": {
+    "complex_gt_30": {
+      "blind": {
+        "fn": 3,
+        "fp": 4,
+        "precision": 0.8667,
+        "recall": 0.8966,
+        "tn": 1,
+        "tp": 26
+      },
+      "cases": [
+        "terragoat-aws (64)",
+        "iam-vulnerable (265)"
+      ],
+      "cases_count": 2,
+      "resource_range": "> 30 resources",
+      "second_run": {
+        "fn": 3,
+        "fp": 1,
+        "precision": 0.963,
+        "recall": 0.8966,
+        "tn": 4,
+        "tp": 26
+      }
+    },
+    "medium_13_to_30": {
+      "blind": {
+        "fn": 5,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.6154,
+        "tier2_only_recall": 0.0,
+        "tp": 8
+      },
+      "cases_count": 15,
+      "resource_range": "13–30 resources",
+      "second_run": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tier2_only_recall": 1.0,
+        "tp": 13
+      },
+      "tier1_cases": 9,
+      "tier2_cases": [
+        "cloudgoat-iam_privesc_by_attachment",
+        "cloudgoat-iam_privesc_by_key_rotation",
+        "cloudgoat-iam_privesc_by_ec2",
+        "cloudgoat-cloud_breach_s3",
+        "cloudgoat-ec2_ssrf",
+        "cloudgoat-data_secrets"
+      ]
+    },
+    "simple_le_12": {
+      "blind": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 8
+      },
+      "cases_count": 14,
+      "resource_range": "≤ 12 resources",
+      "second_run": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 8
+      },
+      "tier1_cases": 12,
+      "tier2_cases": [
+        "cloudgoat-lambda_privesc",
+        "cloudgoat-iam_privesc_by_rollback"
+      ]
+    }
+  },
+  "by_tier": {
+    "benign": {
+      "blind": {
+        "cases": [
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "realworld-iam-role",
+            "paths": 0,
+            "resources": 20,
+            "runtime_ms": 452,
+            "tn": 1,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "realworld-rds-complete",
+            "paths": 0,
+            "resources": 42,
+            "runtime_ms": 515,
+            "tn": 1,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "realworld-s3-bucket-complete",
+            "paths": 0,
+            "resources": 32,
+            "runtime_ms": 628,
+            "tn": 1,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "realworld-security-group-complete",
+            "paths": 0,
+            "resources": 68,
+            "runtime_ms": 270,
+            "tn": 1,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "realworld-vpc-complete",
+            "paths": 0,
+            "resources": 70,
+            "runtime_ms": 1185,
+            "tn": 1,
+            "tp": 0
+          }
+        ],
+        "fn": 0,
+        "fp": 0,
+        "labeled_invalid": 5,
+        "labeled_valid": 0,
+        "paths_emitted": 0,
+        "paths_scored": 0,
+        "paths_unadjudicated": 0,
+        "precision": null,
+        "recall": null,
+        "recall_fraction": "0/0",
+        "runtime_ms_max": 1185,
+        "tn": 5,
+        "tp": 0
+      },
+      "cases_count": 5,
+      "corpus": "terraform-aws-modules",
+      "definition": "5 public production-grade Terraform AWS modules",
+      "deterministic_replay": "5/5 identical",
+      "ground_truth_paths": 0,
+      "name": "Benign (Real-world modules)",
+      "notes": "Evaluation across 5 public production-grade modules testing false-path suppression on benign architectures; 0 false paths emitted (TN = 5, one per module). Kept separate from tuned second-run numbers.",
+      "resources": {
+        "max": 70,
+        "mean": 46.4,
+        "min": 20,
+        "total": 232
+      },
+      "second_run": null
+    },
+    "complex": {
+      "blind": {
+        "combined": {
+          "fn": 3,
+          "fp": 4,
+          "precision": 0.8667,
+          "recall": 0.8966,
+          "runtime_ms_max": 33998,
+          "tn": 1,
+          "tp": 26
+        },
+        "iam_vulnerable": {
+          "fn": 3,
+          "fp": 4,
+          "paths": 41,
+          "precision": 0.8667,
+          "recall": 0.8966,
+          "resources": 265,
+          "runtime_ms": 33998,
+          "tn": 1,
+          "tp": 26
+        },
+        "terragoat": {
+          "fn": 0,
+          "fp": 0,
+          "note": "Unlabelled full-stack baseline; asserts zero false paths emitted.",
+          "paths": 0,
+          "precision": null,
+          "recall": null,
+          "resources": 64,
+          "runtime_ms": 280,
+          "tn": 0,
+          "tp": 0
+        }
+      },
+      "cases_count": 2,
+      "corpus": "iam-vulnerable, terragoat",
+      "definition": "Large-scale privilege escalation lab (265 resources) and enterprise baseline (64 resources)",
+      "name": "Complex (IAM-Vulnerable & TerraGoat)",
+      "notes": "IAM-Vulnerable blind precision 86.7%, recall 89.7% (34 s); second run precision 96.3%, recall 89.7% in 982 ms (~1.0 s) after what-if optimizations. TerraGoat has 64 resources, 0 false paths emitted.",
+      "resources": {
+        "max": 265,
+        "min": 64,
+        "total": 329
+      },
+      "second_run": {
+        "combined": {
+          "fn": 3,
+          "fp": 1,
+          "precision": 0.963,
+          "recall": 0.8966,
+          "runtime_ms_max": 982,
+          "tn": 4,
+          "tp": 26
+        },
+        "iam_vulnerable": {
+          "fn": 3,
+          "fp": 1,
+          "paths": 38,
+          "precision": 0.963,
+          "recall": 0.8966,
+          "resources": 265,
+          "runtime_ms": 982,
+          "tn": 4,
+          "tp": 26
+        },
+        "terragoat": {
+          "fn": 0,
+          "fp": 0,
+          "note": "Unlabelled full-stack baseline; asserts zero false paths emitted.",
+          "paths": 0,
+          "precision": null,
+          "recall": null,
+          "resources": 64,
+          "runtime_ms": 310,
+          "tn": 0,
+          "tp": 0
+        }
+      }
+    },
+    "heldout": {
+      "blind": {
+        "cases": [
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-beanstalk_secrets",
+            "paths": 4,
+            "resources": 24,
+            "runtime_ms": 203,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-codebuild_secrets",
+            "paths": 1,
+            "resources": 38,
+            "runtime_ms": 75,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-rds_snapshot",
+            "paths": 1,
+            "resources": 21,
+            "runtime_ms": 43,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-secrets_in_the_cloud",
+            "paths": 3,
+            "resources": 36,
+            "runtime_ms": 78,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-vpc_peering_overexposed",
+            "paths": 0,
+            "resources": 43,
+            "runtime_ms": 98,
+            "tn": 0,
+            "tp": 0
+          }
+        ],
+        "fn": 0,
+        "fp": 0,
+        "labeled_invalid": 0,
+        "labeled_valid": 2,
+        "paths_emitted": 9,
+        "paths_scored": 2,
+        "paths_unadjudicated": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_fraction": "2/2",
+        "runtime_ms_max": 203,
+        "tn": 0,
+        "tp": 2
+      },
+      "cases_count": 5,
+      "corpus": "cloudgoat-heldout",
+      "definition": "5 unseen public privilege-escalation scenarios (commit 2a199ec)",
+      "deterministic_replay": "5/5 identical",
+      "ground_truth_paths": 2,
+      "name": "Held-out (CloudGoat unseen scenarios)",
+      "notes": "Blind evaluation on 5 unseen CloudGoat scenarios; ground-truth reachability labels committed prior to engine execution (commit 2a199ec). Zero false paths on labeled pairs; 7 unmodeled paths adjudicated in ADJUDICATION.md. Kept separate from tuned second-run numbers.",
+      "resources": {
+        "max": 43,
+        "mean": 32.4,
+        "min": 21,
+        "total": 162
+      },
+      "second_run": null
+    },
+    "medium": {
+      "blind": {
+        "cases": [
+          {
+            "fn": 1,
+            "fp": 0,
+            "id": "cloudgoat-cloud_breach_s3",
+            "paths": 0,
+            "resources": 18,
+            "runtime_ms": 55,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-data_secrets",
+            "paths": 1,
+            "resources": 21,
+            "runtime_ms": 50,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 1,
+            "fp": 0,
+            "id": "cloudgoat-ec2_ssrf",
+            "paths": 0,
+            "resources": 27,
+            "runtime_ms": 129,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 1,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_attachment",
+            "paths": 0,
+            "resources": 16,
+            "runtime_ms": 115,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 1,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_ec2",
+            "paths": 0,
+            "resources": 13,
+            "runtime_ms": 42,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 1,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_key_rotation",
+            "paths": 0,
+            "resources": 17,
+            "runtime_ms": 48,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_rollback",
+            "paths": 1,
+            "resources": 5,
+            "runtime_ms": 18,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-lambda_privesc",
+            "paths": 2,
+            "resources": 9,
+            "runtime_ms": 34,
+            "tn": 0,
+            "tp": 1
+          }
+        ],
+        "fn": 5,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.2857,
+        "recall_fraction": "2/7",
+        "runtime_ms_max": 129,
+        "tn": 0,
+        "tp": 2
+      },
+      "cases_count": 8,
+      "corpus": "cloudgoat",
+      "definition": "8 public multi-resource privilege-escalation scenarios",
+      "ground_truth_paths": 7,
+      "name": "Medium (CloudGoat scenarios)",
+      "notes": "Blind run found 2/7 paths (rollback, lambda_privesc). General engine fixes (managed_policy_arns, public CIDRs, EC2 user-data) achieved 7/7 on second run.",
+      "resources": {
+        "max": 27,
+        "mean": 15.75,
+        "min": 5,
+        "total": 126
+      },
+      "second_run": {
+        "cases": [
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-cloud_breach_s3",
+            "paths": 1,
+            "resources": 18,
+            "runtime_ms": 52,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-data_secrets",
+            "paths": 1,
+            "resources": 21,
+            "runtime_ms": 52,
+            "tn": 0,
+            "tp": 0
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-ec2_ssrf",
+            "paths": 2,
+            "resources": 27,
+            "runtime_ms": 62,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_attachment",
+            "paths": 1,
+            "resources": 16,
+            "runtime_ms": 51,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_ec2",
+            "paths": 1,
+            "resources": 13,
+            "runtime_ms": 57,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_key_rotation",
+            "paths": 2,
+            "resources": 17,
+            "runtime_ms": 49,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-iam_privesc_by_rollback",
+            "paths": 1,
+            "resources": 5,
+            "runtime_ms": 16,
+            "tn": 0,
+            "tp": 1
+          },
+          {
+            "fn": 0,
+            "fp": 0,
+            "id": "cloudgoat-lambda_privesc",
+            "paths": 2,
+            "resources": 9,
+            "runtime_ms": 32,
+            "tn": 0,
+            "tp": 1
+          }
+        ],
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "recall_fraction": "7/7",
+        "runtime_ms_max": 62,
+        "tn": 0,
+        "tp": 7
+      }
+    },
+    "simple": {
+      "blind": {
+        "false_paths": 0,
+        "fn": 0,
+        "fp": 0,
+        "paths_found": 14,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tn": 0,
+        "tp": 14
+      },
+      "cases_count": 21,
+      "corpus": "synthetic",
+      "definition": "21 synthetic fixtures written by the engine author",
+      "deterministic_replay": "21/21 fixtures fully identical",
+      "ground_truth_paths": 14,
+      "name": "Simple (Tier 1 synthetic)",
+      "notes": "Internal consistency and regression coverage; gold labels pre-registered before engine runs.",
+      "resources": {
+        "max": 25,
+        "median": 12,
+        "min": 5,
+        "total": 305
+      },
+      "runtime_ms": {
+        "median": 723,
+        "p95": 864
+      },
+      "second_run": {
+        "false_paths": 0,
+        "fn": 0,
+        "fp": 0,
+        "paths_found": 14,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tn": 0,
+        "tp": 14
+      }
+    }
+  },
+  "command": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/src/tapm/eval/report.py",
+  "description": "Strata re-cut of evaluation results (simple / medium / complex) feeding slide 14 and B14",
+  "feeds": {
+    "backup_b14": "Tier 2: real-world results per case",
+    "slide_14": "Blind, public lab repos: medium tier recall 2/7, complex tier precision 87% recall 90%",
+    "slide_14_note": "Where it lost: medium-tier recall 2/7 blind; 1.0s at 265 resources (second run)"
+  },
+  "git_sha": {
+    "code": "5c66fd271c44ae1e9bf22d6541a66e31d94b6e5f",
+    "gold": "08fd459ae9a2fcea6be5946c78bcc90f16bc2ed2"
+  },
+  "headline_metrics": {
+    "cloudgoat_medium_blind_precision_pct": 100.0,
+    "cloudgoat_medium_blind_recall_fraction": "2/7",
+    "cloudgoat_medium_blind_recall_pct": 28.6,
+    "cloudgoat_medium_second_run_precision_pct": 100.0,
+    "cloudgoat_medium_second_run_recall_fraction": "7/7",
+    "cloudgoat_medium_second_run_recall_pct": 100.0,
+    "heldout_blind_precision_pct": 100.0,
+    "heldout_blind_recall_fraction": "2/2",
+    "heldout_blind_recall_pct": 100.0,
+    "heldout_paths_emitted": 9,
+    "iam_vulnerable_complex_blind_precision_pct": 87,
+    "iam_vulnerable_complex_blind_recall_pct": 90,
+    "iam_vulnerable_complex_second_run_precision_pct": 96,
+    "iam_vulnerable_complex_second_run_recall_pct": 90,
+    "iam_vulnerable_complex_second_run_runtime_ms": 982,
+    "iam_vulnerable_resources": 265,
+    "realworld_benign_cases": 5,
+    "realworld_benign_false_paths": 0,
+    "realworld_benign_tn": 5,
+    "tier1_simple_precision": 1.0,
+    "tier1_simple_recall": 1.0
+  },
+  "schema_version": 1,
+  "source_files": [
+    "evaluations/results/metrics.json",
+    "evaluations/results/tier2-first-run-combined.json",
+    "evaluations/results/tier2-second-run.json",
+    "evaluations/results/tier2-heldout.json",
+    "evaluations/results/realworld-benign.json"
+  ],
+  "task": "E7",
+  "tool_versions": {
+    "checkov": "3.3.20",
+    "terraform": "1.16.4",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  }
+}

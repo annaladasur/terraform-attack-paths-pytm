@@ -1,0 +1,155 @@
+{
+  "level": "prevent",
+  "fail_on": "high",
+  "canaries": [
+    {
+      "canary": "001-clean",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "002-public-s3",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "003-open-ingress",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "004-wildcard-iam",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "005-public-workload-iam-role",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "006-public-workload-iam-sensitive-bucket",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "007-instance-profile",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "008-role-trust",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "009-resource-policy",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "010-explicit-deny",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "011-iam-condition",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "012-for-each",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "013-count",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "014-modules",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "015-dynamic-blocks",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "016-unknown-values",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "017-cross-module-references",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "018-noisy-false-positives",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "019-prompt-injection-comments",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    },
+    {
+      "canary": "020-benign-security-comments",
+      "expect": "pass",
+      "got": "pass",
+      "paths_in_scope": 0,
+      "result": "ok"
+    },
+    {
+      "canary": "021-passrole-escalation",
+      "expect": "block",
+      "got": "block",
+      "paths_in_scope": 1,
+      "result": "ok"
+    }
+  ],
+  "failed": 0,
+  "control_failure_rate": 0.0
+}

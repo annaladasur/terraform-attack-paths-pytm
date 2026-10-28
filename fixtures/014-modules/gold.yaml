@@ -1,0 +1,28 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 014-modules
+summary: The demo scenario wrapped in a local module. Addresses carry the module prefix; source locations point into modules/orders/.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: module.orders.aws_lb.web}
+  - {type: ROUTES_TO, src: module.orders.aws_lb.web, dst: module.orders.aws_instance.app}
+  - {type: ASSUMES, src: module.orders.aws_instance.app, dst: module.orders.aws_iam_role.app}
+  - {type: TRUSTS, src: module.orders.aws_iam_role.app, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ALLOWS, src: module.orders.aws_iam_role.app, dst: module.orders.aws_s3_bucket.customer_data}
+  - {type: ALLOWS, src: module.orders.aws_iam_role.app, dst: module.orders.aws_s3_bucket.reports}
+expected_iam:
+  - {principal: module.orders.aws_iam_role.app, resource: module.orders.aws_s3_bucket.customer_data, access: [list, read]}
+  - {principal: module.orders.aws_iam_role.app, resource: module.orders.aws_s3_bucket.reports, access: [list, read]}
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: module.orders.aws_s3_bucket.customer_data
+    hops: [internet, module.orders.aws_lb.web, module.orders.aws_instance.app, module.orders.aws_iam_role.app, module.orders.aws_s3_bucket.customer_data]
+    preconditions: [workload_ssrf]
+    priority: high
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

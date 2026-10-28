@@ -1,0 +1,416 @@
+{
+  "protocol": "Automated independent blind mapping; candidate entry/target pairs only. No original labels, routes, engine output, or adjudications supplied. Does not satisfy a second human reviewer.",
+  "cases": [
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+      "plan_sha256": "7148b7aa2154893ea2fe0a7233ca5584685ea7ba01fcc242e5f1e8b94c485843",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.low_priv_user",
+          "target": "aws_secretsmanager_secret.final_flag"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-cloud_breach_s3",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-cloud_breach_s3.json.gz",
+      "plan_sha256": "ee60e82cce6a290acc3e2e782aceb26d5bb957f3de5a737f2ec9c775d849a5df",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "aws_s3_bucket.cg-cardholder-data-bucket"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-codebuild_secrets",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-codebuild_secrets.json.gz",
+      "plan_sha256": "6e31e225d21307f5989d2e3054a7d10cf4be80080fced4edeaaa3a0f66ea064f",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.cg-solo",
+          "target": "aws_db_instance.cg-psql-rds"
+        },
+        {
+          "entry": "aws_iam_user.cg-calrissian",
+          "target": "aws_db_instance.cg-psql-rds"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-data_secrets",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-data_secrets.json.gz",
+      "plan_sha256": "43a5b21ddf52f09778cfe0612a4163395dcf0f7a4b4f39bc40af86e73ebef456",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.start_user",
+          "target": "aws_secretsmanager_secret.final_flag"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-ec2_ssrf.json.gz",
+      "plan_sha256": "5f5befc9fb730a352fafb0ded99da7840daedcf0e2492446e715be7c9b1cb608",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "aws_s3_bucket.secret_bucket"
+        },
+        {
+          "entry": "aws_iam_user.solus",
+          "target": "aws_lambda_function.lambda_function"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_attachment",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-iam_privesc_by_attachment.json.gz",
+      "plan_sha256": "0b475a1a3911af081b3d7407161715eceadd053bab1ef1181c9363d3925e9331",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.kerrigan",
+          "target": "aws:account-admin"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_ec2",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-iam_privesc_by_ec2.json.gz",
+      "plan_sha256": "563d9442c5e1576a95139fc282c1eaddfd5b8f3798a3523fc53610173c783871",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.dev_user",
+          "target": "aws:account-admin"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_key_rotation",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-iam_privesc_by_key_rotation.json.gz",
+      "plan_sha256": "8d0865977d3ded371c723b271190d60b1503aaa5cd1fc123a07bf3d68fe49de3",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.manager",
+          "target": "aws_secretsmanager_secret.primary_secret"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-iam_privesc_by_rollback",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-iam_privesc_by_rollback.json.gz",
+      "plan_sha256": "814a057351035636d14daa6d2e8c223f5878b72f955c19f68217db0c9d197298",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.raynor",
+          "target": "aws:account-admin"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-lambda_privesc",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-lambda_privesc.json.gz",
+      "plan_sha256": "5c7092fa4988fbbd0f7f10f91c72317262ba461edabe4d7212c4831db367e64a",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.chris",
+          "target": "aws:account-admin"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-rds_snapshot",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-rds_snapshot.json.gz",
+      "plan_sha256": "879cd2d5104ba576e72a12687c104af71c2eff524c3605af5aadc6db50fc10a0",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "aws_db_instance.cg-rds-db_instance"
+        },
+        {
+          "entry": "aws_iam_user.cg-david",
+          "target": "aws_db_instance.cg-rds-db_instance"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-secrets_in_the_cloud",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+      "plan_sha256": "abf7a0fa3c8cba48943ea3b605233fe89dd54585e86546c5e1c2fe69ec295212",
+      "pairs": [
+        {
+          "entry": "aws_iam_user.low_priv_user",
+          "target": "aws_secretsmanager_secret.this"
+        }
+      ]
+    },
+    {
+      "case": "cloudgoat-vpc_peering_overexposed",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/cloudgoat-vpc_peering_overexposed.json.gz",
+      "plan_sha256": "35a12ea73f00ffb0173f659db7323e2fd66e8efd0966a9b98af0e334382722cf",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "aws_db_instance.customer_db"
+        },
+        {
+          "entry": "aws_iam_user.initial_user",
+          "target": "aws_db_instance.customer_db"
+        }
+      ]
+    },
+    {
+      "case": "iam-vulnerable",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/iam-vulnerable.json.gz",
+      "plan_sha256": "a4157877c79fe39608e7f33cc8c117b53316f9971e82714f831f185a962d8bc5",
+      "pairs": [
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+          "target": "aws:account-admin"
+        }
+      ]
+    },
+    {
+      "case": "terragoat-aws",
+      "suite": "tier2",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/tier2/plans/terragoat-aws.json.gz",
+      "plan_sha256": "c776f64b52d703c6b5beba80d7a05a3379a29482923fce0efe3b6ac991ff86bb",
+      "pairs": []
+    },
+    {
+      "case": "realworld-iam-role",
+      "suite": "realworld",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-iam-role.json.gz",
+      "plan_sha256": "9388bacae333366a1f43075932db994ad0bac0dc8e1c6136d0d2602e47bb93c5",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.iam_roles[\"admin\"].aws_iam_role.this[0]"
+        }
+      ]
+    },
+    {
+      "case": "realworld-rds-complete",
+      "suite": "realworld",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-rds-complete.json.gz",
+      "plan_sha256": "4273cb1c0effffe627ae5bbdfa7201a5d478265476de526166c0514964185f19",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.db.module.db_instance.aws_db_instance.this[0]"
+        }
+      ]
+    },
+    {
+      "case": "realworld-s3-bucket-complete",
+      "suite": "realworld",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-s3-bucket-complete.json.gz",
+      "plan_sha256": "be7515cabca2162487cfd1b4cecc12b603772c97e13adde8d2e8a8617202c6df",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.s3_bucket.aws_s3_bucket.this[0]"
+        }
+      ]
+    },
+    {
+      "case": "realworld-security-group-complete",
+      "suite": "realworld",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-security-group-complete.json.gz",
+      "plan_sha256": "e7ee4b6638f51298e275ab0ee75e9a318f12670ad3c1041c83eeea494f5a3163",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.postgresql.module.security_group.aws_security_group.this[0]"
+        }
+      ]
+    },
+    {
+      "case": "realworld-vpc-complete",
+      "suite": "realworld",
+      "plan": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/evaluations/realworld/plans/realworld-vpc-complete.json.gz",
+      "plan_sha256": "e45f425c19cf62df17bb2dd3ae0732dbbb166fce07e192950744e972bed6be21",
+      "pairs": [
+        {
+          "entry": "internet",
+          "target": "module.vpc.aws_db_subnet_group.database[0]"
+        }
+      ]
+    }
+  ]
+}

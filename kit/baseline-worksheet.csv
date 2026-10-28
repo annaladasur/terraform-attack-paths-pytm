@@ -1,0 +1,17 @@
+metric_id,metric,unit,definition,source,baseline_date,baseline_value,baseline_n,day30_value,day90_value,day180_value,notes
+M1,Review items per change before,count (median),Scanner findings + pytm generic threats for the same plan,tapm measure,,,,,,,
+M2,Review items per change after,count (median),Paths + first six questions + data questions (first screen),tapm measure,,,,,,,
+M3,Open attack paths,count,Paths at or above the threshold,tapm measure (default branch runs),,,,,,,
+M4,Changes that open a path,count,Runs with a path at or above the threshold,tapm measure (PR runs),,,,,,,
+M5,Paths without a decision,count,Paths at or above the threshold with no fix and no valid accepted risk,tapm measure,,,,,,,
+M6,Accepted-risk coverage,%,Share of open paths covered by a valid accepted risk,tapm measure,,,,,,,
+M7,Verified-fix rate,%,Share of remediated paths re-planned with the path gone,tapm measure (runs with --remediate),,,,,,,
+M8,False-path rate,%,Share of reported paths a reviewer marks as not reachable,tapm measure (or weekly sample),,,,,,,auto from not_reachable exceptions; report n
+M9,Time to a security decision,hours (median),PR opened to security decision recorded,PR timestamps,,,,,,,manual
+M10,Questions answered,%,Share of first-screen questions answered in threat-answers.yaml,tapm measure,,,,,,,
+M11,Scanner findings on a path,%,Share of scanner findings on a reported path,tapm measure,,,,,,,
+M12,Accepted-risk hygiene,%,Share of accepted risks that are valid,tapm measure (default branch runs),,,,,,,
+M13,AI statements held back,%,Share of AI annotations rejected or sent to a person,tapm measure,,,,,,,leave empty if AI is off
+M14,Pipeline time,ms (p95),tapm run time per change,tapm measure,,,,,,,
+M15,Control failure rate,%,Canaries whose result differs from their expectation,tapm canary (nightly),,,,,,,
+M16,Threat-model freshness,%,Root modules whose model was regenerated on their latest merged change,CI inventory,,,,,,,manual

@@ -1,0 +1,49 @@
+# Standalone critic workflow for terraform-attack-paths-pytm.
+# Enforces mandatory critic checks and secret scanning across the pipeline.
+# All GitHub Actions are pinned by full 40-character commit SHA.
+name: critic
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  critic:
+    name: critic-checks
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@42375524e23c412d93fb67b49958b491fce71c38 # v5.4.0
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: pyproject.toml
+
+      - name: Install system dependencies (graphviz)
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends graphviz
+
+      - name: Set up virtualenv and dependencies
+        run: make setup
+
+      - name: Install pinned gitleaks
+        run: |
+          GITLEAKS_VERSION=8.30.0
+          curl -fsSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSLO "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          grep "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz\$" "gitleaks_${GITLEAKS_VERSION}_checksums.txt" | sha256sum -c -
+          sudo tar xzf "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -C /usr/local/bin gitleaks
+          rm -f "gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" "gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          gitleaks version
+
+      - name: Run automated critic checks
+        run: make critic

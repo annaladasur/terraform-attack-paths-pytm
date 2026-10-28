@@ -1,0 +1,12 @@
+# Real-world benign modules gold labels: reachability (entry -> target).
+# Derived from module documentation and declared sensitive targets before engine run.
+# VALID = documented as exploitable; INVALID = documented as not exploitable (benign / quiet); OUT_OF_SCOPE = unmodeled.
+case: realworld-security-group-complete
+documented_by: README.md, examples/complete/main.tf
+targets:
+  - module.postgresql.module.security_group.aws_security_group.this[0]
+expected:
+  - entry: internet
+    target: module.postgresql.module.security_group.aws_security_group.this[0]
+    label: INVALID
+    route: postgresql security group ingress is restricted to 10.0.0.0/16 and 192.168.0.0/16; no 0.0.0.0/0 ingress

@@ -1,0 +1,21 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-10-11T14:30:03.788829-05:00",
+  "ReportID": "01a12c71-958c-7ca2-a650-92ec0ac4d5e7",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 51
+      },
+      "Target": ".",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

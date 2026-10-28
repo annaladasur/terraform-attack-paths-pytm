@@ -1,0 +1,17 @@
+log:
+  level: info
+
+runner:
+  file: .runner
+  capacity: 1
+  timeout: 3h
+  insecure: false
+  fetch_timeout: 5s
+  fetch_interval: 2s
+
+container:
+  network: "tapm-local-stack"
+  privileged: false
+  options: "--add-host=host.docker.internal:host-gateway"
+  valid_volumes:
+    - '**'

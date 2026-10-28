@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/Resource node",
+  "title": "Resource node",
+  "description": "A typed security-graph node (Terraform resource instance or synthetic principal).",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "aws_type",
+    "category",
+    "label",
+    "source",
+    "sensitivity",
+    "synthetic",
+    "modeled"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "aws_type": {
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "external",
+        "network",
+        "compute",
+        "identity",
+        "data",
+        "other"
+      ]
+    },
+    "label": {
+      "type": "string"
+    },
+    "address": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "module": {
+      "type": "string"
+    },
+    "source": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "file",
+            "start_line",
+            "end_line"
+          ],
+          "properties": {
+            "file": {
+              "type": "string"
+            },
+            "start_line": {
+              "type": "integer"
+            },
+            "end_line": {
+              "type": "integer"
+            },
+            "focus_line": {
+              "type": "integer"
+            }
+          }
+        }
+      ]
+    },
+    "attributes": {
+      "type": "object"
+    },
+    "sensitivity": {
+      "type": "object",
+      "required": [
+        "level",
+        "basis"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "unclassified",
+            "public",
+            "internal",
+            "confidential",
+            "restricted"
+          ]
+        },
+        "basis": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        }
+      }
+    },
+    "flags": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "modeled": {
+      "type": "boolean"
+    }
+  }
+}

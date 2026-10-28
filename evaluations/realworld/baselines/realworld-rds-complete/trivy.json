@@ -1,0 +1,168 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-10-11T14:29:48.213215-05:00",
+  "ReportID": "01a12c71-58b5-7340-9a1c-1f3103f17bff",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 71
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_vpc\" \"this\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_vpc\"\u001b[0m \u001b[38;5;37m\"this\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 28,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  count = local.create_vpc ? 1 : 0",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mcount\u001b[0m = local.create_vpc \u001b[38;5;245m?\u001b[0m \u001b[38;5;37m1\u001b[0m \u001b[38;5;245m:\u001b[0m \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 29,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 30,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  cidr_block          = var.use_ipam_pool ? null : var.cidr",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mcidr_block\u001b[0m          = \u001b[38;5;33mvar\u001b[0m.use_ipam_pool \u001b[38;5;245m?\u001b[0m null \u001b[38;5;245m:\u001b[0m \u001b[38;5;33mvar\u001b[0m.cidr",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 31,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ipv4_ipam_pool_id   = var.ipv4_ipam_pool_id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mipv4_ipam_pool_id\u001b[0m   = \u001b[38;5;33mvar\u001b[0m.ipv4_ipam_pool_id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 32,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ipv4_netmask_length = var.ipv4_netmask_length",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mipv4_netmask_length\u001b[0m = \u001b[38;5;33mvar\u001b[0m.ipv4_netmask_length",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 33,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 34,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  assign_generated_ipv6_cidr_block     = var.enable_ipv6 && !var.use_ipam_pool ? true : null",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245massign_generated_ipv6_cidr_block\u001b[0m     = \u001b[38;5;33mvar\u001b[0m.enable_ipv6 \u001b[38;5;245m&&\u001b[0m \u001b[38;5;245m!\u001b[0m\u001b[38;5;33mvar\u001b[0m.use_ipam_pool \u001b[38;5;245m?\u001b[0m \u001b[38;5;166mtrue\u001b[0m \u001b[38;5;245m:\u001b[0m null",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 35,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ipv6_cidr_block                      = var.ipv6_cidr",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mipv6_cidr_block\u001b[0m                      = \u001b[38;5;33mvar\u001b[0m.ipv6_cidr",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 36,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 37,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 51,
+            "Occurrences": [
+              {
+                "Filename": "main.tf",
+                "Location": {
+                  "EndLine": 192,
+                  "StartLine": 177
+                },
+                "Resource": "module.vpc"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "module.vpc",
+            "Service": "ec2",
+            "StartLine": 28
+          },
+          "Description": "VPC Flow Logs provide visibility into network traffic that traverses the VPC and can be used to detect anomalous traffic or insight during security workflows.\n",
+          "ID": "AWS-0178",
+          "Message": "VPC does not have VPC Flow Logs enabled.",
+          "Namespace": "builtin.aws.ec2.aws0178",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0178",
+          "Query": "data.builtin.aws.ec2.aws0178.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+            "https://avd.aquasec.com/misconfig/aws-0178"
+          ],
+          "Resolution": "Enable flow logs for VPC",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "terraform-aws-modules/vpc/aws/main.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

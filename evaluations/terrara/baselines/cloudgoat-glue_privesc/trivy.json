@@ -1,0 +1,3324 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-09-29T15:29:03.334988609Z",
+  "ReportID": "01a0edc8-9f66-7f09-a466-2809f9b7b830",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 73
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 2,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_instance\" \"linux_ec2\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_instance\"\u001b[0m \u001b[38;5;37m\"linux_ec2\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ami                         = data.aws_ami.latest_amazon_linux.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mami\u001b[0m                         = \u001b[38;5;33mdata\u001b[0m.aws_ami.latest_amazon_linux.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_type               = \"t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245minstance_type\u001b[0m               = \u001b[38;5;37m\"t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  iam_instance_profile        = aws_iam_instance_profile.ec2.name",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245miam_instance_profile\u001b[0m        = aws_iam_instance_profile.ec2.name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  subnet_id                   = aws_subnet.public_1.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245msubnet_id\u001b[0m                   = aws_subnet.public_1.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  associate_public_ip_address = true",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245massociate_public_ip_address\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 11,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 12,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  vpc_security_group_ids = [",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mvpc_security_group_ids\u001b[0m = [",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 13,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    aws_security_group.ec2.id",
+                  "FirstCause": false,
+                  "Highlighted": "    aws_security_group.ec2.id",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 14,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 15,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 88,
+            "Provider": "AWS",
+            "Resource": "aws_instance.linux_ec2",
+            "Service": "ec2",
+            "StartLine": 6
+          },
+          "Description": "IMDS v2 (Instance Metadata Service) introduced session authentication tokens which improve security when talking to IMDS.\n\nBy default <code>aws_instance</code> resource sets IMDS session auth tokens to be optional.\n\nTo fully protect IMDS you need to enable session tokens by using <code>metadata_options</code> block and its <code>http_tokens</code> variable set to <code>required</code>.\n",
+          "ID": "AWS-0028",
+          "Message": "Instance does not require IMDS access to require a token.",
+          "Namespace": "builtin.aws.ec2.aws0028",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0028",
+          "Query": "data.builtin.aws.ec2.aws0028.deny",
+          "References": [
+            "https://aws.amazon.com/blogs/security/defense-in-depth-open-firewalls-reverse-proxies-ssrf-vulnerabilities-ec2-instance-metadata-service",
+            "https://avd.aquasec.com/misconfig/aws-0028"
+          ],
+          "Resolution": "Enable HTTP token requirement for IMDS",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "aws_instance should activate session tokens for Instance Metadata Service.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_instance\" \"linux_ec2\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_instance\"\u001b[0m \u001b[38;5;37m\"linux_ec2\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ami                         = data.aws_ami.latest_amazon_linux.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mami\u001b[0m                         = \u001b[38;5;33mdata\u001b[0m.aws_ami.latest_amazon_linux.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_type               = \"t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245minstance_type\u001b[0m               = \u001b[38;5;37m\"t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  iam_instance_profile        = aws_iam_instance_profile.ec2.name",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245miam_instance_profile\u001b[0m        = aws_iam_instance_profile.ec2.name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  subnet_id                   = aws_subnet.public_1.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245msubnet_id\u001b[0m                   = aws_subnet.public_1.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  associate_public_ip_address = true",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245massociate_public_ip_address\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 11,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 12,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  vpc_security_group_ids = [",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mvpc_security_group_ids\u001b[0m = [",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 13,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    aws_security_group.ec2.id",
+                  "FirstCause": false,
+                  "Highlighted": "    aws_security_group.ec2.id",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 14,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 15,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 88,
+            "Provider": "AWS",
+            "Resource": "aws_instance.linux_ec2",
+            "Service": "ec2",
+            "StartLine": 6
+          },
+          "Description": "Block devices should be encrypted to ensure sensitive data is held securely at rest.\n",
+          "ID": "AWS-0131",
+          "Message": "Root block device is not encrypted.",
+          "Namespace": "builtin.aws.ec2.aws0131",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0131",
+          "Query": "data.builtin.aws.ec2.aws0131.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+            "https://avd.aquasec.com/misconfig/aws-0131"
+          ],
+          "Resolution": "Turn on encryption for all block devices",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "Instance with unencrypted block device.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "ec2.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 2,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"glue_admin\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"glue_admin\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 40,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name = \"cg-glue-admin-${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m = \u001b[38;5;37m\"cg-glue-admin-\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 41,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 42,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 42,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.glue_admin",
+            "Service": "iam",
+            "StartLine": 40
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_iam_user\" \"glue_web\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_iam_user\"\u001b[0m \u001b[38;5;37m\"glue_web\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name = \"cg-run-app-${var.cgid}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m = \u001b[38;5;37m\"cg-run-app-\u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 3,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 3,
+            "Provider": "AWS",
+            "Resource": "aws_iam_user.glue_web",
+            "Service": "iam",
+            "StartLine": 1
+          },
+          "Description": "CIS recommends that you apply IAM policies directly to groups and roles but not users. Assigning privileges at the group or role level reduces the complexity of access management as the number of users grow. Reducing access management complexity might in turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.\n",
+          "ID": "AWS-0143",
+          "Message": "One or more policies are attached directly to a user",
+          "Namespace": "builtin.aws.iam.aws0143",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0143",
+          "Query": "data.builtin.aws.iam.aws0143.deny",
+          "References": [
+            "https://console.aws.amazon.com/iam/",
+            "https://avd.aquasec.com/misconfig/aws-0143"
+          ],
+          "Resolution": "Grant policies at the group level instead.",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "IAM policies should not be granted directly to users.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "iam.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_lambda_function\" \"s3_to_gluecatalog\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_lambda_function\"\u001b[0m \u001b[38;5;37m\"s3_to_gluecatalog\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  function_name = \"s3_to_gluecatalog\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mfunction_name\u001b[0m = \u001b[38;5;37m\"s3_to_gluecatalog\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  description   = \"This lambda function is triggered by an S3 event and loads data into Glue Catalog\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdescription\u001b[0m   = \u001b[38;5;37m\"This lambda function is triggered by an S3 event and loads data into Glue Catalog\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  handler       = \"s3_to_gluecatalog.lambda_handler\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mhandler\u001b[0m       = \u001b[38;5;37m\"s3_to_gluecatalog.lambda_handler\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  role          = aws_iam_role.s3_to_gluecatalog_lambda_role.arn",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mrole\u001b[0m          = aws_iam_role.s3_to_gluecatalog_lambda_role.arn",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  runtime       = \"python3.12\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mruntime\u001b[0m       = \u001b[38;5;37m\"python3.12\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  filename         = data.archive_file.lambda.output_path",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mfilename\u001b[0m         = \u001b[38;5;33mdata\u001b[0m.archive_file.lambda.output_path",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  source_code_hash = data.archive_file.lambda.output_base64sha256",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245msource_code_hash\u001b[0m = \u001b[38;5;33mdata\u001b[0m.archive_file.lambda.output_base64sha256",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 20,
+            "Provider": "AWS",
+            "Resource": "aws_lambda_function.s3_to_gluecatalog",
+            "Service": "lambda",
+            "StartLine": 1
+          },
+          "Description": "X-Ray tracing enables end-to-end debugging and analysis of all function activity. This will allow for identifying bottlenecks, slow downs and timeouts.\n",
+          "ID": "AWS-0066",
+          "Message": "Function does not have tracing enabled.",
+          "Namespace": "builtin.aws.lambda.aws0066",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0066",
+          "Query": "data.builtin.aws.lambda.aws0066.deny",
+          "References": [
+            "https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html",
+            "https://avd.aquasec.com/misconfig/aws-0066"
+          ],
+          "Resolution": "Enable tracing",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Lambda functions should have X-Ray tracing enabled",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "lambda.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 4,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_db_instance\" \"rds\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_db_instance\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  allocated_storage    = 20",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mallocated_storage\u001b[0m    = \u001b[38;5;37m20",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  storage_type         = \"gp2\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mstorage_type\u001b[0m         = \u001b[38;5;37m\"gp2\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine               = \"postgres\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine\u001b[0m               = \u001b[38;5;37m\"postgres\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine_version       = \"16.4\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine_version\u001b[0m       = \u001b[38;5;37m\"16.4\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_class       = \"db.t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245minstance_class\u001b[0m       = \u001b[38;5;37m\"db.t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_subnet_group_name = aws_db_subnet_group.this.id",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdb_subnet_group_name\u001b[0m = aws_db_subnet_group.this.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_name              = var.rds_database_name",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mdb_name\u001b[0m              = \u001b[38;5;33mvar\u001b[0m.rds_database_name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  username             = var.rds_username",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245musername\u001b[0m             = \u001b[38;5;33mvar\u001b[0m.rds_username",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 22,
+            "Provider": "AWS",
+            "Resource": "aws_db_instance.rds",
+            "Service": "rds",
+            "StartLine": 1
+          },
+          "Description": "RDS backup retention for clusters defaults to 1 day, this may not be enough to identify and respond to an issue. Backup retention periods should be set to a period that is a balance on cost and limiting risk.\n",
+          "ID": "AWS-0077",
+          "Message": "Instance has very low backup retention period.",
+          "Namespace": "builtin.aws.rds.aws0077",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0077",
+          "Query": "data.builtin.aws.rds.aws0077.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.html#USER_WorkingWithAutomatedBackups.BackupRetention",
+            "https://avd.aquasec.com/misconfig/aws-0077"
+          ],
+          "Resolution": "Explicitly set the retention period to greater than the default",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "RDS Cluster and RDS instance should have backup retention longer than default 1 day",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_db_instance\" \"rds\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_db_instance\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  allocated_storage    = 20",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mallocated_storage\u001b[0m    = \u001b[38;5;37m20",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  storage_type         = \"gp2\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mstorage_type\u001b[0m         = \u001b[38;5;37m\"gp2\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine               = \"postgres\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine\u001b[0m               = \u001b[38;5;37m\"postgres\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine_version       = \"16.4\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine_version\u001b[0m       = \u001b[38;5;37m\"16.4\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_class       = \"db.t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245minstance_class\u001b[0m       = \u001b[38;5;37m\"db.t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_subnet_group_name = aws_db_subnet_group.this.id",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdb_subnet_group_name\u001b[0m = aws_db_subnet_group.this.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_name              = var.rds_database_name",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mdb_name\u001b[0m              = \u001b[38;5;33mvar\u001b[0m.rds_database_name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  username             = var.rds_username",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245musername\u001b[0m             = \u001b[38;5;33mvar\u001b[0m.rds_username",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 22,
+            "Provider": "AWS",
+            "Resource": "aws_db_instance.rds",
+            "Service": "rds",
+            "StartLine": 1
+          },
+          "Description": "Enabling Performance insights allows for greater depth in monitoring data.\nFor example, information about active sessions could help diagose a compromise or assist in the investigation\n",
+          "ID": "AWS-0133",
+          "Message": "Instance does not have performance insights enabled.",
+          "Namespace": "builtin.aws.rds.aws0133",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0133",
+          "Query": "data.builtin.aws.rds.aws0133.deny",
+          "References": [
+            "https://aws.amazon.com/rds/performance-insights/",
+            "https://avd.aquasec.com/misconfig/aws-0133"
+          ],
+          "Resolution": "Enable performance insights",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Enable Performance Insights to detect potential problems",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_db_instance\" \"rds\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_db_instance\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  allocated_storage    = 20",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mallocated_storage\u001b[0m    = \u001b[38;5;37m20",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  storage_type         = \"gp2\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mstorage_type\u001b[0m         = \u001b[38;5;37m\"gp2\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine               = \"postgres\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine\u001b[0m               = \u001b[38;5;37m\"postgres\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine_version       = \"16.4\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine_version\u001b[0m       = \u001b[38;5;37m\"16.4\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_class       = \"db.t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245minstance_class\u001b[0m       = \u001b[38;5;37m\"db.t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_subnet_group_name = aws_db_subnet_group.this.id",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdb_subnet_group_name\u001b[0m = aws_db_subnet_group.this.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_name              = var.rds_database_name",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mdb_name\u001b[0m              = \u001b[38;5;33mvar\u001b[0m.rds_database_name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  username             = var.rds_username",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245musername\u001b[0m             = \u001b[38;5;33mvar\u001b[0m.rds_username",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 22,
+            "Provider": "AWS",
+            "Resource": "aws_db_instance.rds",
+            "Service": "rds",
+            "StartLine": 1
+          },
+          "Description": "Ensure IAM Database Authentication is enabled for RDS database instances to manage database access",
+          "ID": "AWS-0176",
+          "Message": "Instance does not have IAM Authentication enabled",
+          "Namespace": "builtin.aws.rds.aws0176",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0176",
+          "Query": "data.builtin.aws.rds.aws0176.deny",
+          "References": [
+            "https://docs.aws.amazon.com/neptune/latest/userguide/iam-auth.html",
+            "https://avd.aquasec.com/misconfig/aws-0176"
+          ],
+          "Resolution": "Modify the PostgreSQL and MySQL type RDS instances to enable IAM database authentication.",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "RDS IAM Database Authentication Disabled",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_db_instance\" \"rds\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_db_instance\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  allocated_storage    = 20",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mallocated_storage\u001b[0m    = \u001b[38;5;37m20",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  storage_type         = \"gp2\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mstorage_type\u001b[0m         = \u001b[38;5;37m\"gp2\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine               = \"postgres\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine\u001b[0m               = \u001b[38;5;37m\"postgres\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  engine_version       = \"16.4\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mengine_version\u001b[0m       = \u001b[38;5;37m\"16.4\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  instance_class       = \"db.t3.micro\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245minstance_class\u001b[0m       = \u001b[38;5;37m\"db.t3.micro\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_subnet_group_name = aws_db_subnet_group.this.id",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdb_subnet_group_name\u001b[0m = aws_db_subnet_group.this.id",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  db_name              = var.rds_database_name",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mdb_name\u001b[0m              = \u001b[38;5;33mvar\u001b[0m.rds_database_name",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  username             = var.rds_username",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245musername\u001b[0m             = \u001b[38;5;33mvar\u001b[0m.rds_username",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 22,
+            "Provider": "AWS",
+            "Resource": "aws_db_instance.rds",
+            "Service": "rds",
+            "StartLine": 1
+          },
+          "Description": "Ensure deletion protection is enabled for RDS database instances.",
+          "ID": "AWS-0177",
+          "Message": "Instance does not have Deletion Protection enabled",
+          "Namespace": "builtin.aws.rds.aws0177",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0177",
+          "Query": "data.builtin.aws.rds.aws0177.deny",
+          "References": [
+            "https://aws.amazon.com/about-aws/whats-new/2018/09/amazon-rds-now-provides-database-deletion-protection/",
+            "https://avd.aquasec.com/misconfig/aws-0177"
+          ],
+          "Resolution": "Modify the RDS instances to enable deletion protection.",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "RDS Deletion Protection Disabled",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "rds.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 12,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "S3 buckets should block public ACLs on buckets and any objects they contain. By blocking, PUTs with fail if the object has any public ACL a.\n",
+          "ID": "AWS-0086",
+          "Message": "No public access block so not blocking public acls",
+          "Namespace": "builtin.aws.s3.aws0086",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0086",
+          "Query": "data.builtin.aws.s3.aws0086.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+            "https://avd.aquasec.com/misconfig/aws-0086"
+          ],
+          "Resolution": "Enable blocking any PUT calls with a public ACL specified",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 Access block should block public ACL",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "S3 bucket policy should have block public policy to prevent users from putting a policy that enable public access.\n",
+          "ID": "AWS-0087",
+          "Message": "No public access block so not blocking public policies",
+          "Namespace": "builtin.aws.s3.aws0087",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0087",
+          "Query": "data.builtin.aws.s3.aws0087.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/dev-retired/access-control-block-public-access.html",
+            "https://avd.aquasec.com/misconfig/aws-0087"
+          ],
+          "Resolution": "Prevent policies that allow public access being PUT",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 Access block should block public policy",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket_public_access_block\" \"access_block\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket_public_access_block\"\u001b[0m \u001b[38;5;37m\"access_block\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 45,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket = aws_s3_bucket.web.id",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m = aws_s3_bucket.web.id",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 46,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 47,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ignore_public_acls      = true",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mignore_public_acls\u001b[0m      = \u001b[38;5;166mtrue",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 48,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  block_public_acls       = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mblock_public_acls\u001b[0m       = \u001b[38;5;166mtrue",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 49,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  block_public_policy     = false",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mblock_public_policy\u001b[0m     = \u001b[38;5;166mfalse",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 50,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  restrict_public_buckets = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mrestrict_public_buckets\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 51,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 52,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 50,
+            "Occurrences": [
+              {
+                "Filename": "s3.tf",
+                "Location": {
+                  "EndLine": 52,
+                  "StartLine": 45
+                },
+                "Resource": "aws_s3_bucket_public_access_block.access_block"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket_public_access_block.access_block",
+            "Service": "s3",
+            "StartLine": 50
+          },
+          "Description": "S3 bucket policy should have block public policy to prevent users from putting a policy that enable public access.\n",
+          "ID": "AWS-0087",
+          "Message": "Public access block does not block public policies",
+          "Namespace": "builtin.aws.s3.aws0087",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0087",
+          "Query": "data.builtin.aws.s3.aws0087.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/dev-retired/access-control-block-public-access.html",
+            "https://avd.aquasec.com/misconfig/aws-0087"
+          ],
+          "Resolution": "Prevent policies that allow public access being PUT",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 Access block should block public policy",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "Ensures S3 bucket logging is enabled for S3 buckets",
+          "ID": "AWS-0089",
+          "Message": "Bucket has logging disabled",
+          "Namespace": "builtin.aws.s3.aws0089",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0089",
+          "Query": "data.builtin.aws.s3.aws0089.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerLogs.html",
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-server-access-logging.html",
+            "https://avd.aquasec.com/misconfig/aws-0089"
+          ],
+          "Resolution": "Add a logging block to the resource to enable access logging",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "S3 Bucket Logging",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"web\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"web\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 34,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-web-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-web-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 35,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 36,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 37,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 37,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.web",
+            "Service": "s3",
+            "StartLine": 34
+          },
+          "Description": "Ensures S3 bucket logging is enabled for S3 buckets",
+          "ID": "AWS-0089",
+          "Message": "Bucket has logging disabled",
+          "Namespace": "builtin.aws.s3.aws0089",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0089",
+          "Query": "data.builtin.aws.s3.aws0089.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerLogs.html",
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/enable-server-access-logging.html",
+            "https://avd.aquasec.com/misconfig/aws-0089"
+          ],
+          "Resolution": "Add a logging block to the resource to enable access logging",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "S3 Bucket Logging",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "Versioning in Amazon S3 is a means of keeping multiple variants of an object in the same bucket.\n\nYou can use the S3 Versioning feature to preserve, retrieve, and restore every version of every object stored in your buckets.\n\nWith versioning you can recover more easily from both unintended user actions and application failures.\n\nWhen you enable versioning, also keep in mind the potential costs of storing noncurrent versions of objects. To help manage those costs, consider setting up an S3 Lifecycle configuration.\n",
+          "ID": "AWS-0090",
+          "Message": "Bucket does not have versioning enabled",
+          "Namespace": "builtin.aws.s3.aws0090",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0090",
+          "Query": "data.builtin.aws.s3.aws0090.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html",
+            "https://aws.amazon.com/blogs/storage/reduce-storage-costs-with-fewer-noncurrent-versions-using-amazon-s3-lifecycle/",
+            "https://avd.aquasec.com/misconfig/aws-0090"
+          ],
+          "Resolution": "Enable versioning to protect against accidental/malicious removal or modification",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "S3 Data should be versioned",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"web\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"web\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 34,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-web-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-web-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 35,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 36,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 37,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 37,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.web",
+            "Service": "s3",
+            "StartLine": 34
+          },
+          "Description": "Versioning in Amazon S3 is a means of keeping multiple variants of an object in the same bucket.\n\nYou can use the S3 Versioning feature to preserve, retrieve, and restore every version of every object stored in your buckets.\n\nWith versioning you can recover more easily from both unintended user actions and application failures.\n\nWhen you enable versioning, also keep in mind the potential costs of storing noncurrent versions of objects. To help manage those costs, consider setting up an S3 Lifecycle configuration.\n",
+          "ID": "AWS-0090",
+          "Message": "Bucket does not have versioning enabled",
+          "Namespace": "builtin.aws.s3.aws0090",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0090",
+          "Query": "data.builtin.aws.s3.aws0090.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Versioning.html",
+            "https://aws.amazon.com/blogs/storage/reduce-storage-costs-with-fewer-noncurrent-versions-using-amazon-s3-lifecycle/",
+            "https://avd.aquasec.com/misconfig/aws-0090"
+          ],
+          "Resolution": "Enable versioning to protect against accidental/malicious removal or modification",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "S3 Data should be versioned",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "S3 buckets should ignore public ACLs on buckets and any objects they contain. By ignoring rather than blocking, PUT calls with public ACLs will still be applied but the ACL will be ignored.\n",
+          "ID": "AWS-0091",
+          "Message": "No public access block so not blocking public acls",
+          "Namespace": "builtin.aws.s3.aws0091",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0091",
+          "Query": "data.builtin.aws.s3.aws0091.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+            "https://avd.aquasec.com/misconfig/aws-0091"
+          ],
+          "Resolution": "Enable ignoring the application of public ACLs in PUT calls",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 Access Block should Ignore Public ACL",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "S3 buckets should restrict public policies for the bucket. By enabling, the restrict_public_buckets, only the bucket owner and AWS Services can access if it has a public policy.\n",
+          "ID": "AWS-0093",
+          "Message": "No public access block so not restricting public buckets",
+          "Namespace": "builtin.aws.s3.aws0093",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0093",
+          "Query": "data.builtin.aws.s3.aws0093.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/dev-retired/access-control-block-public-access.html",
+            "https://avd.aquasec.com/misconfig/aws-0093"
+          ],
+          "Resolution": "Limit the access to public buckets to only the owner or AWS Services (eg; CloudFront)",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 Access block should restrict public bucket to limit access",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "The \"block public access\" settings in S3 override individual policies that apply to a given bucket, meaning that all public access can be controlled in one central types for that bucket. It is therefore good practice to define these settings for each bucket in order to clearly define the public access that can be allowed for it.\n",
+          "ID": "AWS-0094",
+          "Message": "Bucket does not have a corresponding public access block.",
+          "Namespace": "builtin.aws.s3.aws0094",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0094",
+          "Query": "data.builtin.aws.s3.aws0094.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html",
+            "https://avd.aquasec.com/misconfig/aws-0094"
+          ],
+          "Resolution": "Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "S3 buckets should each define an aws_s3_bucket_public_access_block",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"data\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"data\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-data-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-data-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 9,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 9,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.data",
+            "Service": "s3",
+            "StartLine": 6
+          },
+          "Description": "Encryption using AWS keys provides protection for your S3 buckets. To gain greater control over encryption, such as key rotation, access policies, and auditability, use customer managed keys (CMKs) with SSE-KMS.\nNote that SSE-KMS is not supported for S3 server access logging destination buckets; in such cases, use SSE-S3 instead.\n",
+          "ID": "AWS-0132",
+          "Message": "Bucket does not encrypt data with a customer managed key.",
+          "Namespace": "builtin.aws.s3.aws0132",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0132",
+          "Query": "data.builtin.aws.s3.aws0132.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html",
+            "https://avd.aquasec.com/misconfig/aws-0132"
+          ],
+          "Resolution": "Use SSE-KMS with a customer managed key (CMK)",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 encryption should use Customer Managed Keys",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_s3_bucket\" \"web\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_s3_bucket\"\u001b[0m \u001b[38;5;37m\"web\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 34,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  bucket        = \"cg-web-${local.bucket_suffix}\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mbucket\u001b[0m        = \u001b[38;5;37m\"cg-web-\u001b[0m\u001b[38;5;37m${\u001b[0mlocal.bucket_suffix\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 35,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  force_destroy = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mforce_destroy\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 36,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 37,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 37,
+            "Provider": "AWS",
+            "Resource": "aws_s3_bucket.web",
+            "Service": "s3",
+            "StartLine": 34
+          },
+          "Description": "Encryption using AWS keys provides protection for your S3 buckets. To gain greater control over encryption, such as key rotation, access policies, and auditability, use customer managed keys (CMKs) with SSE-KMS.\nNote that SSE-KMS is not supported for S3 server access logging destination buckets; in such cases, use SSE-S3 instead.\n",
+          "ID": "AWS-0132",
+          "Message": "Bucket does not encrypt data with a customer managed key.",
+          "Namespace": "builtin.aws.s3.aws0132",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0132",
+          "Query": "data.builtin.aws.s3.aws0132.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucket-encryption.html",
+            "https://avd.aquasec.com/misconfig/aws-0132"
+          ],
+          "Resolution": "Use SSE-KMS with a customer managed key (CMK)",
+          "Severity": "HIGH",
+          "Status": "FAIL",
+          "Title": "S3 encryption should use Customer Managed Keys",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "s3.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 10,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"ec2\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"ec2\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 25,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 26,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = [\"0.0.0.0/0\"]",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = [\u001b[38;5;37m\"0.0.0.0/0\"\u001b[0m]",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 48,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 53,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 54,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 48,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 49,
+                  "StartLine": 44
+                },
+                "Resource": "egress"
+              },
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 54,
+                  "StartLine": 25
+                },
+                "Resource": "aws_security_group.ec2"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.ec2",
+            "Service": "ec2",
+            "StartLine": 48
+          },
+          "Description": "Opening up ports to connect out to the public internet is generally to be avoided. You should restrict access to IP addresses or ranges that are explicitly required where possible.\n",
+          "ID": "AWS-0104",
+          "Message": "Security group rule allows unrestricted egress to any IP address.",
+          "Namespace": "builtin.aws.ec2.aws0104",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0104",
+          "Query": "data.builtin.aws.ec2.aws0104.deny",
+          "References": [
+            "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-egress-to-internet.html",
+            "https://avd.aquasec.com/misconfig/aws-0104"
+          ],
+          "Resolution": "Set a more restrictive cidr range",
+          "Severity": "CRITICAL",
+          "Status": "FAIL",
+          "Title": "A security group rule should not allow unrestricted egress to any IP address.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"glue\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"glue\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = [\"0.0.0.0/0\"]",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = [\u001b[38;5;37m\"0.0.0.0/0\"\u001b[0m]",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 17,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 22,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 23,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 17,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 18,
+                  "StartLine": 13
+                },
+                "Resource": "egress"
+              },
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 23,
+                  "StartLine": 1
+                },
+                "Resource": "aws_security_group.glue"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.glue",
+            "Service": "ec2",
+            "StartLine": 17
+          },
+          "Description": "Opening up ports to connect out to the public internet is generally to be avoided. You should restrict access to IP addresses or ranges that are explicitly required where possible.\n",
+          "ID": "AWS-0104",
+          "Message": "Security group rule allows unrestricted egress to any IP address.",
+          "Namespace": "builtin.aws.ec2.aws0104",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0104",
+          "Query": "data.builtin.aws.ec2.aws0104.deny",
+          "References": [
+            "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-egress-to-internet.html",
+            "https://avd.aquasec.com/misconfig/aws-0104"
+          ],
+          "Resolution": "Set a more restrictive cidr range",
+          "Severity": "CRITICAL",
+          "Status": "FAIL",
+          "Title": "A security group rule should not allow unrestricted egress to any IP address.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"rds\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 56,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 57,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = [",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = [",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 72,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "      \"0.0.0.0/0\"",
+                  "FirstCause": false,
+                  "Highlighted": "      \u001b[38;5;37m\"0.0.0.0/0\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 73,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    ]",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    ]",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 74,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 79,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 80,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 74,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 75,
+                  "StartLine": 68
+                },
+                "Resource": "egress"
+              },
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 80,
+                  "StartLine": 56
+                },
+                "Resource": "aws_security_group.rds"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.rds",
+            "Service": "ec2",
+            "StartLine": 72
+          },
+          "Description": "Opening up ports to connect out to the public internet is generally to be avoided. You should restrict access to IP addresses or ranges that are explicitly required where possible.\n",
+          "ID": "AWS-0104",
+          "Message": "Security group rule allows unrestricted egress to any IP address.",
+          "Namespace": "builtin.aws.ec2.aws0104",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0104",
+          "Query": "data.builtin.aws.ec2.aws0104.deny",
+          "References": [
+            "https://docs.aws.amazon.com/whitepapers/latest/building-scalable-secure-multi-vpc-network-infrastructure/centralized-egress-to-internet.html",
+            "https://avd.aquasec.com/misconfig/aws-0104"
+          ],
+          "Resolution": "Set a more restrictive cidr range",
+          "Severity": "CRITICAL",
+          "Status": "FAIL",
+          "Title": "A security group rule should not allow unrestricted egress to any IP address.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"ec2\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"ec2\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 25,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 26,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ingress {",
+                  "FirstCause": true,
+                  "Highlighted": "  ingress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 30,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port   = 22",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m   = \u001b[38;5;37m22",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 31,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port     = 22",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m     = \u001b[38;5;37m22",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 32,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol    = \"tcp\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m    = \u001b[38;5;37m\"tcp\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 33,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = var.cg_whitelist",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = \u001b[38;5;33mvar\u001b[0m.cg_whitelist",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 34,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "  }",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 35,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 53,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 54,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 35,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 54,
+                  "StartLine": 25
+                },
+                "Resource": "aws_security_group.ec2"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.ec2",
+            "Service": "ec2",
+            "StartLine": 30
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"ec2\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"ec2\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 25,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 26,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ingress {",
+                  "FirstCause": true,
+                  "Highlighted": "  ingress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 37,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port   = 5000",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m   = \u001b[38;5;37m5000",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 38,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port     = 5000",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m     = \u001b[38;5;37m5000",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 39,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol    = \"tcp\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m    = \u001b[38;5;37m\"tcp\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 40,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = var.cg_whitelist",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = \u001b[38;5;33mvar\u001b[0m.cg_whitelist",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 41,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "  }",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 42,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 53,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 54,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 42,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 54,
+                  "StartLine": 25
+                },
+                "Resource": "aws_security_group.ec2"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.ec2",
+            "Service": "ec2",
+            "StartLine": 37
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"ec2\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"ec2\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 25,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 26,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  egress {",
+                  "FirstCause": true,
+                  "Highlighted": "  egress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 44,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port   = 0",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m   = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 45,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port     = 0",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m     = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 46,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol    = \"-1\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m    = \u001b[38;5;37m\"-1\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 47,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = [\"0.0.0.0/0\"]",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = [\u001b[38;5;37m\"0.0.0.0/0\"\u001b[0m]",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 48,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "  }",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 49,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 53,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 54,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 49,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 54,
+                  "StartLine": 25
+                },
+                "Resource": "aws_security_group.ec2"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.ec2",
+            "Service": "ec2",
+            "StartLine": 44
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"glue\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"glue\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ingress {",
+                  "FirstCause": true,
+                  "Highlighted": "  ingress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port   = 0",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m   = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 7,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port     = 0",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m     = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 8,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol    = \"-1\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m    = \u001b[38;5;37m\"-1\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 9,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = var.cg_whitelist",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = \u001b[38;5;33mvar\u001b[0m.cg_whitelist",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 10,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "  }",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 11,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 22,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 23,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 11,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 23,
+                  "StartLine": 1
+                },
+                "Resource": "aws_security_group.glue"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.glue",
+            "Service": "ec2",
+            "StartLine": 6
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"glue\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"glue\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  egress {",
+                  "FirstCause": true,
+                  "Highlighted": "  egress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 13,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port   = 0",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m   = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 14,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port     = 0",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m     = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 15,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol    = \"-1\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m    = \u001b[38;5;37m\"-1\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 16,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = [\"0.0.0.0/0\"]",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = [\u001b[38;5;37m\"0.0.0.0/0\"\u001b[0m]",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 17,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "  }",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 18,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 22,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 23,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 18,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 23,
+                  "StartLine": 1
+                },
+                "Resource": "aws_security_group.glue"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.glue",
+            "Service": "ec2",
+            "StartLine": 13
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"rds\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 56,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 57,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  ingress {",
+                  "FirstCause": true,
+                  "Highlighted": "  ingress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 61,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port   = 5432",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m   = \u001b[38;5;37m5432",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 62,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port     = 5432",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m     = \u001b[38;5;37m5432",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 63,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol    = \"tcp\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m    = \u001b[38;5;37m\"tcp\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 64,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = concat([aws_vpc.vpc.cidr_block], var.cg_whitelist)",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m =\u001b[38;5;33m concat\u001b[0m([aws_vpc.vpc.cidr_block], \u001b[38;5;33mvar\u001b[0m.cg_whitelist)",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 65,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "  }",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 66,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 79,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 80,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 66,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 80,
+                  "StartLine": 56
+                },
+                "Resource": "aws_security_group.rds"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.rds",
+            "Service": "ec2",
+            "StartLine": 61
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_security_group\" \"rds\" {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group\"\u001b[0m \u001b[38;5;37m\"rds\"\u001b[0m {",
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 56,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 57,
+                  "Truncated": true
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  egress {",
+                  "FirstCause": true,
+                  "Highlighted": "  egress {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 68,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    from_port = 0",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mfrom_port\u001b[0m = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 69,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    to_port   = 0",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mto_port\u001b[0m   = \u001b[38;5;37m0",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 70,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    protocol  = \"-1\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mprotocol\u001b[0m  = \u001b[38;5;37m\"-1\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 71,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    cidr_blocks = [",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    \u001b[38;5;245mcidr_blocks\u001b[0m = [",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 72,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "      \"0.0.0.0/0\"",
+                  "FirstCause": false,
+                  "Highlighted": "      \u001b[38;5;37m\"0.0.0.0/0\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 73,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    ]",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m    ]",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 74,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "",
+                  "FirstCause": false,
+                  "IsCause": false,
+                  "LastCause": false,
+                  "Number": 75,
+                  "Truncated": true
+                }
+              ]
+            },
+            "EndLine": 75,
+            "Occurrences": [
+              {
+                "Filename": "security_groups.tf",
+                "Location": {
+                  "EndLine": 80,
+                  "StartLine": 56
+                },
+                "Resource": "aws_security_group.rds"
+              }
+            ],
+            "Provider": "AWS",
+            "Resource": "aws_security_group.rds",
+            "Service": "ec2",
+            "StartLine": 68
+          },
+          "Description": "Security group rules should include a description for auditing purposes.\n\nSimplifies auditing, debugging, and managing security groups.\n",
+          "ID": "AWS-0124",
+          "Message": "Security group rule does not have a description.",
+          "Namespace": "builtin.aws.ec2.aws0124",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0124",
+          "Query": "data.builtin.aws.ec2.aws0124.deny",
+          "References": [
+            "https://www.cloudconformity.com/knowledge-base/aws/EC2/security-group-rules-description.html",
+            "https://avd.aquasec.com/misconfig/aws-0124"
+          ],
+          "Resolution": "Add descriptions for all security groups rules",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Missing description for security group rule.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "security_groups.tf",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_vpc\" \"vpc\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_vpc\"\u001b[0m \u001b[38;5;37m\"vpc\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 1,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  cidr_block           = \"10.10.0.0/16\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mcidr_block\u001b[0m           = \u001b[38;5;37m\"10.10.0.0/16\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 2,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  enable_dns_hostnames = true",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245menable_dns_hostnames\u001b[0m = \u001b[38;5;166mtrue",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 3,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  tags = {",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mtags\u001b[0m = {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 4,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "    Name = \"CloudGoat ${var.cgid} VPC\"",
+                  "FirstCause": false,
+                  "Highlighted": "    \u001b[38;5;245mName\u001b[0m = \u001b[38;5;37m\"CloudGoat \u001b[0m\u001b[38;5;37m${\u001b[0m\u001b[38;5;33mvar\u001b[0m.cgid\u001b[38;5;37m}\u001b[0m\u001b[38;5;37m VPC\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 5,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  }",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  }",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 6,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 7,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 7,
+            "Provider": "AWS",
+            "Resource": "aws_vpc.vpc",
+            "Service": "ec2",
+            "StartLine": 1
+          },
+          "Description": "VPC Flow Logs provide visibility into network traffic that traverses the VPC and can be used to detect anomalous traffic or insight during security workflows.\n",
+          "ID": "AWS-0178",
+          "Message": "VPC does not have VPC Flow Logs enabled.",
+          "Namespace": "builtin.aws.ec2.aws0178",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0178",
+          "Query": "data.builtin.aws.ec2.aws0178.deny",
+          "References": [
+            "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html",
+            "https://avd.aquasec.com/misconfig/aws-0178"
+          ],
+          "Resolution": "Enable flow logs for VPC",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "vpc.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

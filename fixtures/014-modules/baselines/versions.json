@@ -1,0 +1,23 @@
+{
+  "checkov": {
+    "command": "checkov -d . --framework terraform -o json --quiet --compact --skip-download",
+    "pinned": "3.3.20",
+    "runtime_ms": 1948,
+    "status": "ok",
+    "version": "3.3.20"
+  },
+  "tfsec": {
+    "command": "tfsec . --format json --no-color --soft-fail",
+    "pinned": "v1.28.14",
+    "runtime_ms": 677,
+    "status": "ok",
+    "version": "v1.28.14"
+  },
+  "trivy": {
+    "command": "trivy config --format json --quiet --skip-check-update .",
+    "pinned": "0.74.0",
+    "runtime_ms": 891,
+    "status": "ok",
+    "version": "0.74.0"
+  }
+}

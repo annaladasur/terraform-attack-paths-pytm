@@ -1,0 +1,1000 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LBDeletionProtection",
+        "check_id": "CKV_AWS_150",
+        "check_len": null,
+        "check_name": "Ensure that Load Balancer has deletion protection enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "enable_deletion_protection"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "alb.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "alb.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/alb.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/alb.tf",
+        "resource": "aws_lb.web",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.ELBv2AccessLogs",
+        "check_id": "CKV_AWS_91",
+        "check_len": null,
+        "check_name": "Ensure the ELBv2 (Application/Network) has access logging enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "access_logs/0/enabled/0"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "alb.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "alb.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/alb.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/alb.tf",
+        "resource": "aws_lb.web",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "iam_instance_profile": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_instance_profile.app",
+              "path": "iam.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IMDSv1Disabled",
+        "check_id": "CKV_AWS_79",
+        "check_len": null,
+        "check_name": "Ensure Instance Metadata Service Version 1 is not enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "metadata_options/[0]/http_tokens"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "app.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "orders-app",
+          "Service": "orders"
+        },
+        "evaluations": null,
+        "file_abs_path": "app.tf",
+        "file_line_range": [
+          1,
+          23
+        ],
+        "file_path": "/app.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/app.tf",
+        "resource": "aws_instance.app",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "customer_data": {
+                "__address__": "aws_s3_bucket.customer_data",
+                "__end_line__": 8,
+                "__start_line__": 1,
+                "bucket": [
+                  "orders-customer-data-111122223333"
+                ],
+                "tags": [
+                  {
+                    "Contains": "customer-pii",
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Contains": "customer-pii",
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.customer_data",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "reports": {
+                "__address__": "aws_s3_bucket.reports",
+                "__end_line__": 34,
+                "__start_line__": 28,
+                "bucket": [
+                  "orders-reports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "internal"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "internal"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          28,
+          34
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.reports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_18",
+        "check_len": null,
+        "check_name": "Ensure the S3 bucket has access logging enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "customer_data": {
+                "__address__": "aws_s3_bucket.customer_data",
+                "__end_line__": 8,
+                "__start_line__": 1,
+                "bucket": [
+                  "orders-customer-data-111122223333"
+                ],
+                "tags": [
+                  {
+                    "Contains": "customer-pii",
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "logging",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Contains": "customer-pii",
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.customer_data",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_18",
+        "check_len": null,
+        "check_name": "Ensure the S3 bucket has access logging enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "reports": {
+                "__address__": "aws_s3_bucket.reports",
+                "__end_line__": 34,
+                "__start_line__": 28,
+                "bucket": [
+                  "orders-reports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "internal"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "logging",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "internal"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          28,
+          34
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.reports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_11",
+        "check_len": null,
+        "check_name": "Ensure VPC flow logging is enabled in all VPCs",
+        "check_result": {
+          "entity": {
+            "aws_vpc": {
+              "main": {
+                "__address__": "aws_vpc.main",
+                "__end_line__": 9,
+                "__start_line__": 1,
+                "cidr_block": [
+                  "10.20.0.0/16"
+                ],
+                "enable_dns_hostnames": [
+                  true
+                ],
+                "enable_dns_support": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Name": "orders-vpc"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "networking",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "network.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "orders-vpc"
+        },
+        "evaluations": null,
+        "file_abs_path": "network.tf",
+        "file_line_range": [
+          1,
+          9
+        ],
+        "file_path": "/network.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/network.tf",
+        "resource": "aws_vpc.main",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_28",
+        "check_len": null,
+        "check_name": "Ensure public facing ALB are protected by WAF",
+        "check_result": {
+          "entity": {
+            "aws_lb": {
+              "web": {
+                "__address__": "aws_lb.web",
+                "__end_line__": 8,
+                "__start_line__": 1,
+                "drop_invalid_header_fields": [
+                  true
+                ],
+                "internal": [
+                  false
+                ],
+                "load_balancer_type": [
+                  "application"
+                ],
+                "name": [
+                  "orders-web"
+                ],
+                "security_groups": [
+                  [
+                    "aws_security_group.alb.id"
+                  ]
+                ],
+                "subnets": [
+                  [
+                    "aws_subnet.public_a.id",
+                    "aws_subnet.public_b.id"
+                  ]
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "internal",
+            "load_balancer_type",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "alb.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "alb.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/alb.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/alb.tf",
+        "resource": "aws_lb.web",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_12",
+        "check_len": null,
+        "check_name": "Ensure the default security group of every VPC restricts all traffic",
+        "check_result": {
+          "entity": {
+            "aws_vpc": {
+              "main": {
+                "__address__": "aws_vpc.main",
+                "__end_line__": 9,
+                "__start_line__": 1,
+                "cidr_block": [
+                  "10.20.0.0/16"
+                ],
+                "enable_dns_hostnames": [
+                  true
+                ],
+                "enable_dns_support": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Name": "orders-vpc"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "egress/cidr_blocks",
+            "resource_type",
+            "ingress/to_port",
+            "ingress/protocol",
+            "egress/to_port",
+            "ingress/from_port",
+            "egress/from_port",
+            "ingress/self",
+            "egress/protocol"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "network.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "orders-vpc"
+        },
+        "evaluations": null,
+        "file_abs_path": "network.tf",
+        "file_line_range": [
+          1,
+          9
+        ],
+        "file_path": "/network.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/network.tf",
+        "resource": "aws_vpc.main",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_61",
+        "check_len": null,
+        "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "customer_data": {
+                "__address__": "aws_s3_bucket.customer_data",
+                "__end_line__": 8,
+                "__start_line__": 1,
+                "bucket": [
+                  "orders-customer-data-111122223333"
+                ],
+                "tags": [
+                  {
+                    "Contains": "customer-pii",
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "lifecycle_rule",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Contains": "customer-pii",
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.customer_data",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_61",
+        "check_len": null,
+        "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "reports": {
+                "__address__": "aws_s3_bucket.reports",
+                "__end_line__": 34,
+                "__start_line__": 28,
+                "bucket": [
+                  "orders-reports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "internal"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "lifecycle_rule",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "internal"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          28,
+          34
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.reports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_144",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "customer_data": {
+                "__address__": "aws_s3_bucket.customer_data",
+                "__end_line__": 8,
+                "__start_line__": 1,
+                "bucket": [
+                  "orders-customer-data-111122223333"
+                ],
+                "tags": [
+                  {
+                    "Contains": "customer-pii",
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "rule/*/status",
+            "resource_type",
+            "replication_configuration/rules/*/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Contains": "customer-pii",
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.customer_data",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_144",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "reports": {
+                "__address__": "aws_s3_bucket.reports",
+                "__end_line__": 34,
+                "__start_line__": 28,
+                "bucket": [
+                  "orders-reports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "internal"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "rule/*/status",
+            "resource_type",
+            "replication_configuration/rules/*/status"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "internal"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          28,
+          34
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.reports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_21",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "customer_data": {
+                "__address__": "aws_s3_bucket.customer_data",
+                "__end_line__": 8,
+                "__start_line__": 1,
+                "bucket": [
+                  "orders-customer-data-111122223333"
+                ],
+                "tags": [
+                  {
+                    "Contains": "customer-pii",
+                    "DataClassification": "confidential"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "versioning_configuration/status",
+            "versioning/enabled",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Contains": "customer-pii",
+          "DataClassification": "confidential"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          1,
+          8
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.customer_data",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_21",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "reports": {
+                "__address__": "aws_s3_bucket.reports",
+                "__end_line__": 34,
+                "__start_line__": 28,
+                "bucket": [
+                  "orders-reports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "internal"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "versioning_configuration/status",
+            "versioning/enabled",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "internal"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          28,
+          34
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.reports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_145",
+        "check_len": null,
+        "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "reports": {
+                "__address__": "aws_s3_bucket.reports",
+                "__end_line__": 34,
+                "__start_line__": 28,
+                "bucket": [
+                  "orders-reports-111122223333"
+                ],
+                "tags": [
+                  {
+                    "DataClassification": "internal"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "server_side_encryption_configuration/rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "storage.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "DataClassification": "internal"
+        },
+        "evaluations": null,
+        "file_abs_path": "storage.tf",
+        "file_line_range": [
+          28,
+          34
+        ],
+        "file_path": "/storage.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/storage.tf",
+        "resource": "aws_s3_bucket.reports",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 17,
+    "parsing_errors": 0,
+    "passed": 68,
+    "resource_count": 23,
+    "skipped": 0
+  }
+}

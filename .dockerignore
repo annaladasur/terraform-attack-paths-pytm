@@ -1,0 +1,7 @@
+.venv
+.venv-scanners
+.venv-moto
+.tools
+artifacts
+**/__pycache__
+.pytest_cache

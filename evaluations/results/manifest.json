@@ -1,0 +1,19 @@
+{
+  "aws_provider": "6.66.0",
+  "jev": "local",
+  "llm": "simulated",
+  "llm_model": null,
+  "max_paths": null,
+  "prompt_version": "v1",
+  "python": "3.12.10",
+  "python-hcl2": "8.1.4",
+  "pytm": "1.4.0",
+  "scanners": {
+    "checkov": "3.3.20",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  },
+  "schema_version": "1",
+  "tapm": "0.1.0",
+  "terraform": "1.16.4 (plans committed; see fixtures/*/plan.json terraform_version)"
+}

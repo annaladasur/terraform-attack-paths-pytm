@@ -1,0 +1,113 @@
+{
+  "calls": [
+    {
+      "agent": "path_narrator",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "adversarial_reviewer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "plain_explainer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "adversarial_reviewer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "finding_explainer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "adversarial_reviewer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "remediation",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "adversarial_reviewer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "framework_mapper",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    },
+    {
+      "agent": "adversarial_reviewer",
+      "backend": "simulated",
+      "cost_usd": 0.0,
+      "input_tokens": null,
+      "latency_ms": 0,
+      "model": null,
+      "output_tokens": null,
+      "stop_reason": "end_turn"
+    }
+  ],
+  "metrics": {
+    "cost_usd": 0.0,
+    "input_tokens": 0,
+    "jev_calls": 6,
+    "jev_latency_ms_total": 0,
+    "llm_calls": 10,
+    "llm_latency_ms_total": 0,
+    "output_tokens": 0
+  }
+}

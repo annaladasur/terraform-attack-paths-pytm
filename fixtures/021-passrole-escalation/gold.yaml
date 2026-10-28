@@ -1,0 +1,24 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 021-passrole-escalation
+summary: A developer can pass an admin role to a new EC2 instance (iam:PassRole + ec2:RunInstances). Modeled with compromised-user entries.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: ASSUMES, src: aws_iam_user.dev, dst: aws_iam_role.ops}
+  - {type: TRUSTS, src: aws_iam_role.ops, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ESCALATES, src: aws_iam_role.ops, dst: "aws:account-admin"}
+expected_iam: []
+expected_paths:
+  - label: VALID
+    entry: aws_iam_user.dev
+    target: "aws:account-admin"
+    hops: [aws_iam_user.dev, aws_iam_role.ops, "aws:account-admin"]
+    preconditions: [credential_compromise]
+    priority: high
+expected_false_paths:
+  - {reason: read-only IAM access is not an escalation primitive, hops: [aws_iam_user.auditor, "aws:account-admin"]}
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

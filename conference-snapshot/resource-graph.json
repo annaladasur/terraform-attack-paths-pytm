@@ -1,0 +1,1401 @@
+{
+  "edges": [
+    {
+      "conditional": false,
+      "data": {
+        "access": [
+          "list",
+          "read"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "denied": [],
+        "symbolic": false
+      },
+      "dst": "aws_s3_bucket.customer_data",
+      "evidence": [
+        "IAM-001",
+        "TF-002",
+        "TF-015"
+      ],
+      "id": "GRAPH-001",
+      "label": "list,read",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "ALLOWS"
+    },
+    {
+      "conditional": false,
+      "data": {
+        "access": [
+          "list",
+          "read"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "denied": [],
+        "symbolic": false
+      },
+      "dst": "aws_s3_bucket.reports",
+      "evidence": [
+        "IAM-001",
+        "TF-002",
+        "TF-017"
+      ],
+      "id": "GRAPH-002",
+      "label": "list,read",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "ALLOWS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role.app",
+      "evidence": [
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "id": "GRAPH-003",
+      "label": "instance_profile",
+      "precondition": "workload_ssrf",
+      "src": "aws_instance.app",
+      "type": "ASSUMES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role.app",
+      "evidence": [
+        "TF-001",
+        "TF-002"
+      ],
+      "id": "GRAPH-004",
+      "label": "role",
+      "precondition": null,
+      "src": "aws_iam_instance_profile.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role_policy.app_s3",
+      "evidence": [
+        "TF-002",
+        "TF-003"
+      ],
+      "id": "GRAPH-005",
+      "label": "policy",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_instance_profile.app",
+      "evidence": [
+        "TF-001",
+        "TF-005"
+      ],
+      "id": "GRAPH-006",
+      "label": "iam_instance_profile",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.app",
+      "evidence": [
+        "TF-005",
+        "TF-022"
+      ],
+      "id": "GRAPH-007",
+      "label": "security_group",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.alb",
+      "evidence": [
+        "TF-007",
+        "TF-021"
+      ],
+      "id": "GRAPH-008",
+      "label": "security_group",
+      "precondition": null,
+      "src": "aws_lb.web",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_instance.app",
+      "evidence": [
+        "TF-005",
+        "TF-023"
+      ],
+      "id": "GRAPH-009",
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.app",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_lb.web",
+      "evidence": [
+        "TF-007",
+        "TF-024"
+      ],
+      "id": "GRAPH-010",
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.public_a",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_route_table_association.public_a",
+      "evidence": [
+        "TF-012",
+        "TF-024"
+      ],
+      "id": "GRAPH-011",
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.public_a",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_lb.web",
+      "evidence": [
+        "TF-007",
+        "TF-025"
+      ],
+      "id": "GRAPH-012",
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.public_b",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_route_table_association.public_b",
+      "evidence": [
+        "TF-013",
+        "TF-025"
+      ],
+      "id": "GRAPH-013",
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.public_b",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.app",
+      "evidence": [
+        "TF-023",
+        "TF-026"
+      ],
+      "id": "GRAPH-014",
+      "label": "",
+      "precondition": null,
+      "src": "aws_vpc.main",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.public_a",
+      "evidence": [
+        "TF-024",
+        "TF-026"
+      ],
+      "id": "GRAPH-015",
+      "label": "",
+      "precondition": null,
+      "src": "aws_vpc.main",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.public_b",
+      "evidence": [
+        "TF-025",
+        "TF-026"
+      ],
+      "id": "GRAPH-016",
+      "label": "",
+      "precondition": null,
+      "src": "aws_vpc.main",
+      "type": "CONTAINS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role.app",
+      "evidence": [
+        "TF-001",
+        "TF-002"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_iam_instance_profile.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role.app",
+      "evidence": [
+        "TF-002",
+        "TF-003"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_iam_role_policy.app_s3",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_instance_profile.app",
+      "evidence": [
+        "TF-001",
+        "TF-005"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.app",
+      "evidence": [
+        "TF-005",
+        "TF-022"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.app",
+      "evidence": [
+        "TF-005",
+        "TF-023"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-006",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_internet_gateway.main",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.alb",
+      "evidence": [
+        "TF-007",
+        "TF-021"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb.web",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.public_a",
+      "evidence": [
+        "TF-007",
+        "TF-024"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb.web",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.public_b",
+      "evidence": [
+        "TF-007",
+        "TF-025"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb.web",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_lb.web",
+      "evidence": [
+        "TF-007",
+        "TF-008"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb_listener.https",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_lb_target_group.app",
+      "evidence": [
+        "TF-008",
+        "TF-009"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb_listener.https",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-009",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb_target_group.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_instance.app",
+      "evidence": [
+        "TF-005",
+        "TF-010"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb_target_group_attachment.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_lb_target_group.app",
+      "evidence": [
+        "TF-009",
+        "TF-010"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_lb_target_group_attachment.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_internet_gateway.main",
+      "evidence": [
+        "TF-006",
+        "TF-011"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_route_table.public",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-011",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_route_table.public",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_route_table.public",
+      "evidence": [
+        "TF-011",
+        "TF-012"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_route_table_association.public_a",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.public_a",
+      "evidence": [
+        "TF-012",
+        "TF-024"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_route_table_association.public_a",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_route_table.public",
+      "evidence": [
+        "TF-011",
+        "TF-013"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_route_table_association.public_b",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_subnet.public_b",
+      "evidence": [
+        "TF-013",
+        "TF-025"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_route_table_association.public_b",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_s3_bucket.customer_data",
+      "evidence": [
+        "TF-015",
+        "TF-018"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_s3_bucket_public_access_block.customer_data",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_s3_bucket.reports",
+      "evidence": [
+        "TF-017",
+        "TF-019"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_s3_bucket_public_access_block.reports",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_s3_bucket.customer_data",
+      "evidence": [
+        "TF-015",
+        "TF-020"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_s3_bucket_server_side_encryption_configuration.customer_data",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-021",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_security_group.alb",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.alb",
+      "evidence": [
+        "TF-021",
+        "TF-022"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_security_group.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-022",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_security_group.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-023",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.app",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-024",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.public_a",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_vpc.main",
+      "evidence": [
+        "TF-025",
+        "TF-026"
+      ],
+      "id": null,
+      "label": "",
+      "precondition": null,
+      "src": "aws_subnet.public_b",
+      "type": "DEPENDS_ON"
+    },
+    {
+      "conditional": false,
+      "data": {
+        "ports": [
+          443
+        ],
+        "protocol": "HTTPS"
+      },
+      "dst": "aws_lb.web",
+      "evidence": [
+        "NET-001",
+        "NET-003",
+        "TF-007",
+        "TF-008"
+      ],
+      "id": "GRAPH-017",
+      "label": "HTTPS/443",
+      "precondition": null,
+      "src": "internet",
+      "type": "EXPOSES"
+    },
+    {
+      "conditional": false,
+      "data": {
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "role": "aws_iam_role.app"
+      },
+      "dst": "aws_s3_bucket.customer_data",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-015"
+      ],
+      "id": "GRAPH-018",
+      "label": "via aws_iam_role.app",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "READS"
+    },
+    {
+      "conditional": false,
+      "data": {
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "role": "aws_iam_role.app"
+      },
+      "dst": "aws_s3_bucket.reports",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-017"
+      ],
+      "id": "GRAPH-019",
+      "label": "via aws_iam_role.app",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "READS"
+    },
+    {
+      "conditional": false,
+      "data": {
+        "listener": "aws_lb_listener.https",
+        "port": 8080,
+        "target_group": "aws_lb_target_group.app"
+      },
+      "dst": "aws_instance.app",
+      "evidence": [
+        "NET-005",
+        "TF-005",
+        "TF-007",
+        "TF-008",
+        "TF-009",
+        "TF-010"
+      ],
+      "id": "GRAPH-020",
+      "label": "HTTP/8080",
+      "precondition": null,
+      "src": "aws_lb.web",
+      "type": "ROUTES_TO"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "principal:service:ec2.amazonaws.com",
+      "evidence": [
+        "IAM-002",
+        "TF-002"
+      ],
+      "id": "GRAPH-021",
+      "label": "",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "TRUSTS"
+    }
+  ],
+  "nodes": [
+    {
+      "address": "aws_iam_instance_profile.app",
+      "attributes": {
+        "name": "orders-app"
+      },
+      "aws_type": "AWS::IAM::InstanceProfile",
+      "category": "identity",
+      "evidence": "TF-001",
+      "flags": {},
+      "id": "aws_iam_instance_profile.app",
+      "label": "aws_iam_instance_profile.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 19,
+        "file": "iam.tf",
+        "start_line": 16
+      },
+      "synthetic": false,
+      "type": "aws_iam_instance_profile"
+    },
+    {
+      "address": "aws_iam_role.app",
+      "attributes": {
+        "name": "orders-app",
+        "path": "/"
+      },
+      "aws_type": "AWS::IAM::Role",
+      "category": "identity",
+      "evidence": "TF-002",
+      "flags": {
+        "trust_provenance": "plan"
+      },
+      "id": "aws_iam_role.app",
+      "label": "aws_iam_role.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 14,
+        "file": "iam.tf",
+        "start_line": 1
+      },
+      "synthetic": false,
+      "type": "aws_iam_role"
+    },
+    {
+      "address": "aws_iam_role_policy.app_s3",
+      "attributes": {
+        "name": "orders-app-s3"
+      },
+      "aws_type": "AWS::IAM::RolePolicy",
+      "category": "identity",
+      "evidence": "TF-003",
+      "flags": {},
+      "id": "aws_iam_role_policy.app_s3",
+      "label": "aws_iam_role_policy.app_s3",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 36,
+        "file": "iam.tf",
+        "start_line": 21
+      },
+      "synthetic": false,
+      "type": "aws_iam_role_policy"
+    },
+    {
+      "address": "aws_instance.app",
+      "attributes": {
+        "associate_public_ip_address": "(known after apply)",
+        "instance_type": "t3.small"
+      },
+      "aws_type": "AWS::EC2::Instance",
+      "category": "compute",
+      "evidence": "TF-005",
+      "flags": {},
+      "id": "aws_instance.app",
+      "label": "aws_instance.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 23,
+        "file": "app.tf",
+        "start_line": 1
+      },
+      "synthetic": false,
+      "type": "aws_instance"
+    },
+    {
+      "address": "aws_internet_gateway.main",
+      "attributes": {},
+      "aws_type": "AWS::EC2::InternetGateway",
+      "category": "network",
+      "evidence": "TF-006",
+      "flags": {},
+      "id": "aws_internet_gateway.main",
+      "label": "aws_internet_gateway.main",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 13,
+        "file": "network.tf",
+        "start_line": 11
+      },
+      "synthetic": false,
+      "type": "aws_internet_gateway"
+    },
+    {
+      "address": "aws_lb.web",
+      "attributes": {
+        "internal": false,
+        "load_balancer_type": "application",
+        "name": "orders-web"
+      },
+      "aws_type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "category": "network",
+      "evidence": "TF-007",
+      "flags": {},
+      "id": "aws_lb.web",
+      "label": "aws_lb.web",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 8,
+        "file": "alb.tf",
+        "start_line": 1
+      },
+      "synthetic": false,
+      "type": "aws_lb"
+    },
+    {
+      "address": "aws_lb_listener.https",
+      "attributes": {
+        "port": 443,
+        "protocol": "HTTPS"
+      },
+      "aws_type": "AWS::ElasticLoadBalancingV2::Listener",
+      "category": "network",
+      "evidence": "TF-008",
+      "flags": {},
+      "id": "aws_lb_listener.https",
+      "label": "aws_lb_listener.https",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 32,
+        "file": "alb.tf",
+        "start_line": 21
+      },
+      "synthetic": false,
+      "type": "aws_lb_listener"
+    },
+    {
+      "address": "aws_lb_target_group.app",
+      "attributes": {
+        "port": 8080,
+        "protocol": "HTTP",
+        "target_type": "instance"
+      },
+      "aws_type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+      "category": "network",
+      "evidence": "TF-009",
+      "flags": {},
+      "id": "aws_lb_target_group.app",
+      "label": "aws_lb_target_group.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 19,
+        "file": "alb.tf",
+        "start_line": 10
+      },
+      "synthetic": false,
+      "type": "aws_lb_target_group"
+    },
+    {
+      "address": "aws_lb_target_group_attachment.app",
+      "attributes": {
+        "port": 8080
+      },
+      "aws_type": "AWS::ElasticLoadBalancingV2::TargetGroupAttachment",
+      "category": "network",
+      "evidence": "TF-010",
+      "flags": {},
+      "id": "aws_lb_target_group_attachment.app",
+      "label": "aws_lb_target_group_attachment.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 38,
+        "file": "alb.tf",
+        "start_line": 34
+      },
+      "synthetic": false,
+      "type": "aws_lb_target_group_attachment"
+    },
+    {
+      "address": "aws_route_table.public",
+      "attributes": {},
+      "aws_type": "AWS::EC2::RouteTable",
+      "category": "network",
+      "evidence": "TF-011",
+      "flags": {},
+      "id": "aws_route_table.public",
+      "label": "aws_route_table.public",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 55,
+        "file": "network.tf",
+        "start_line": 48
+      },
+      "synthetic": false,
+      "type": "aws_route_table"
+    },
+    {
+      "address": "aws_route_table_association.public_a",
+      "attributes": {},
+      "aws_type": "AWS::EC2::SubnetRouteTableAssociation",
+      "category": "network",
+      "evidence": "TF-012",
+      "flags": {},
+      "id": "aws_route_table_association.public_a",
+      "label": "aws_route_table_association.public_a",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 60,
+        "file": "network.tf",
+        "start_line": 57
+      },
+      "synthetic": false,
+      "type": "aws_route_table_association"
+    },
+    {
+      "address": "aws_route_table_association.public_b",
+      "attributes": {},
+      "aws_type": "AWS::EC2::SubnetRouteTableAssociation",
+      "category": "network",
+      "evidence": "TF-013",
+      "flags": {},
+      "id": "aws_route_table_association.public_b",
+      "label": "aws_route_table_association.public_b",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 65,
+        "file": "network.tf",
+        "start_line": 62
+      },
+      "synthetic": false,
+      "type": "aws_route_table_association"
+    },
+    {
+      "address": "aws_s3_bucket.customer_data",
+      "attributes": {
+        "bucket": "orders-customer-data-111122223333"
+      },
+      "aws_type": "AWS::S3::Bucket",
+      "category": "data",
+      "evidence": "TF-015",
+      "flags": {},
+      "id": "aws_s3_bucket.customer_data",
+      "label": "aws_s3_bucket.customer_data",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "tag:DataClassification",
+        "evidence": "TF-014",
+        "level": "confidential"
+      },
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "synthetic": false,
+      "type": "aws_s3_bucket"
+    },
+    {
+      "address": "aws_s3_bucket.reports",
+      "attributes": {
+        "bucket": "orders-reports-111122223333"
+      },
+      "aws_type": "AWS::S3::Bucket",
+      "category": "data",
+      "evidence": "TF-017",
+      "flags": {},
+      "id": "aws_s3_bucket.reports",
+      "label": "aws_s3_bucket.reports",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "tag:DataClassification",
+        "evidence": "TF-016",
+        "level": "internal"
+      },
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "synthetic": false,
+      "type": "aws_s3_bucket"
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.customer_data",
+      "attributes": {
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "ignore_public_acls": true,
+        "restrict_public_buckets": true
+      },
+      "aws_type": "AWS::S3::PublicAccessBlock",
+      "category": "data",
+      "evidence": "TF-018",
+      "flags": {},
+      "id": "aws_s3_bucket_public_access_block.customer_data",
+      "label": "aws_s3_bucket_public_access_block.customer_data",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 16,
+        "file": "storage.tf",
+        "start_line": 10
+      },
+      "synthetic": false,
+      "type": "aws_s3_bucket_public_access_block"
+    },
+    {
+      "address": "aws_s3_bucket_public_access_block.reports",
+      "attributes": {
+        "block_public_acls": true,
+        "block_public_policy": true,
+        "ignore_public_acls": true,
+        "restrict_public_buckets": true
+      },
+      "aws_type": "AWS::S3::PublicAccessBlock",
+      "category": "data",
+      "evidence": "TF-019",
+      "flags": {},
+      "id": "aws_s3_bucket_public_access_block.reports",
+      "label": "aws_s3_bucket_public_access_block.reports",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 42,
+        "file": "storage.tf",
+        "start_line": 36
+      },
+      "synthetic": false,
+      "type": "aws_s3_bucket_public_access_block"
+    },
+    {
+      "address": "aws_s3_bucket_server_side_encryption_configuration.customer_data",
+      "attributes": {},
+      "aws_type": "AWS::S3::BucketEncryption",
+      "category": "data",
+      "evidence": "TF-020",
+      "flags": {},
+      "id": "aws_s3_bucket_server_side_encryption_configuration.customer_data",
+      "label": "aws_s3_bucket_server_side_encryption_configuration.customer_data",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 26,
+        "file": "storage.tf",
+        "start_line": 18
+      },
+      "synthetic": false,
+      "type": "aws_s3_bucket_server_side_encryption_configuration"
+    },
+    {
+      "address": "aws_security_group.alb",
+      "attributes": {
+        "name": "orders-alb"
+      },
+      "aws_type": "AWS::EC2::SecurityGroup",
+      "category": "network",
+      "evidence": "TF-021",
+      "flags": {},
+      "id": "aws_security_group.alb",
+      "label": "aws_security_group.alb",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 87,
+        "file": "network.tf",
+        "start_line": 67
+      },
+      "synthetic": false,
+      "type": "aws_security_group"
+    },
+    {
+      "address": "aws_security_group.app",
+      "attributes": {
+        "name": "orders-app"
+      },
+      "aws_type": "AWS::EC2::SecurityGroup",
+      "category": "network",
+      "evidence": "TF-022",
+      "flags": {},
+      "id": "aws_security_group.app",
+      "label": "aws_security_group.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 109,
+        "file": "network.tf",
+        "start_line": 89
+      },
+      "synthetic": false,
+      "type": "aws_security_group"
+    },
+    {
+      "address": "aws_subnet.app",
+      "attributes": {
+        "availability_zone": "us-east-1a",
+        "cidr_block": "10.20.10.0/24",
+        "map_public_ip_on_launch": false
+      },
+      "aws_type": "AWS::EC2::Subnet",
+      "category": "network",
+      "evidence": "TF-023",
+      "flags": {},
+      "id": "aws_subnet.app",
+      "label": "aws_subnet.app",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 46,
+        "file": "network.tf",
+        "start_line": 37
+      },
+      "synthetic": false,
+      "type": "aws_subnet"
+    },
+    {
+      "address": "aws_subnet.public_a",
+      "attributes": {
+        "availability_zone": "us-east-1a",
+        "cidr_block": "10.20.1.0/24",
+        "map_public_ip_on_launch": false
+      },
+      "aws_type": "AWS::EC2::Subnet",
+      "category": "network",
+      "evidence": "TF-024",
+      "flags": {},
+      "id": "aws_subnet.public_a",
+      "label": "aws_subnet.public_a",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 24,
+        "file": "network.tf",
+        "start_line": 15
+      },
+      "synthetic": false,
+      "type": "aws_subnet"
+    },
+    {
+      "address": "aws_subnet.public_b",
+      "attributes": {
+        "availability_zone": "us-east-1b",
+        "cidr_block": "10.20.2.0/24",
+        "map_public_ip_on_launch": false
+      },
+      "aws_type": "AWS::EC2::Subnet",
+      "category": "network",
+      "evidence": "TF-025",
+      "flags": {},
+      "id": "aws_subnet.public_b",
+      "label": "aws_subnet.public_b",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 35,
+        "file": "network.tf",
+        "start_line": 26
+      },
+      "synthetic": false,
+      "type": "aws_subnet"
+    },
+    {
+      "address": "aws_vpc.main",
+      "attributes": {
+        "cidr_block": "10.20.0.0/16"
+      },
+      "aws_type": "AWS::EC2::VPC",
+      "category": "network",
+      "evidence": "TF-026",
+      "flags": {},
+      "id": "aws_vpc.main",
+      "label": "aws_vpc.main",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "not-an-asset",
+        "level": "unclassified"
+      },
+      "source": {
+        "end_line": 9,
+        "file": "network.tf",
+        "start_line": 1
+      },
+      "synthetic": false,
+      "type": "aws_vpc"
+    },
+    {
+      "address": null,
+      "attributes": {},
+      "aws_type": "Internet",
+      "category": "external",
+      "evidence": null,
+      "flags": {
+        "entry": "internet"
+      },
+      "id": "internet",
+      "label": "Internet (untrusted clients)",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "none",
+        "level": "unclassified"
+      },
+      "source": null,
+      "synthetic": true,
+      "type": "external"
+    },
+    {
+      "address": null,
+      "attributes": {},
+      "aws_type": "AWS::IAM::ServicePrincipal",
+      "category": "external",
+      "evidence": null,
+      "flags": {},
+      "id": "principal:service:ec2.amazonaws.com",
+      "label": "AWS service ec2.amazonaws.com",
+      "modeled": true,
+      "module": "",
+      "sensitivity": {
+        "basis": "none",
+        "level": "unclassified"
+      },
+      "source": null,
+      "synthetic": true,
+      "type": "external"
+    }
+  ],
+  "notes": [],
+  "schema_version": "1",
+  "unresolved_policies": []
+}

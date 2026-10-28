@@ -1,0 +1,177 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: iam-vulnerable
+documented_by: README.md path table (non-default module column) and tool-testing module names
+targets:
+- aws:account-admin
+expected:
+- entry: module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc1-CreateNewPolicyVersion (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc2-SetExistingDefaultPolicyVersion (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc3-CreateEC2WithExistingInstanceProfile (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc4-CreateAccessKey (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc5-CreateLoginProfile (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc6-UpdateLoginProfile (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc7-AttachUserPolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc8-AttachGroupPolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc9-AttachRolePolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc10-PutUserPolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc11-PutGroupPolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc12-PutRolePolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc13-AddUserToGroup (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc14-UpdatingAssumeRolePolicy (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc15-PassExistingRoleToNewLambdaThenInvoke (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc18-PassExistingRoleToNewGlueDevEndpoint (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc20-PassExistingRoleToCloudFormation (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc21-PassExistingRoleToNewDataPipeline (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc-codeBuildCreateProjectPassRole (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc-sageMakerCreateNotebookPassRole (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc-sageMakerCreateTrainingJobPassRole (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc-sageMakerCreateProcessingJobPassRole (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user
+  target: aws:account-admin
+  label: VALID
+  route: 'privesc-AssumeRole-start (README table: no extra module required)'
+- entry: module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc-CloudFormationUpdateStack needs the non-default 'cloudformation' module (disabled in main.tf), so the resource it abuses is not
+    in this plan
+- entry: module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc-ec2InstanceConnect needs the non-default 'ec2' module (disabled in main.tf), so the resource it abuses is not in this plan
+- entry: module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc-sageMakerCreatePresignedNotebookURL needs the non-default 'sagemaker' module (disabled in main.tf), so the resource it abuses
+    is not in this plan
+- entry: module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc-ssmSendCommand needs the non-default 'ec2' module (disabled in main.tf), so the resource it abuses is not in this plan
+- entry: module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc-ssmStartSession needs the non-default 'ec2' module (disabled in main.tf), so the resource it abuses is not in this plan
+- entry: module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc17-EditExistingLambdaFunctionWithRole needs the non-default 'lambda' module (disabled in main.tf), so the resource it abuses is
+    not in this plan
+- entry: module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user
+  target: aws:account-admin
+  label: OUT_OF_SCOPE
+  route: privesc19-UpdateExistingGlueDevEndpoint needs the non-default 'glue' module (disabled in main.tf), so the resource it abuses is not in
+    this plan
+- entry: module.privesc-paths.aws_iam_user.privesc-sre-user
+  target: aws:account-admin
+  label: VALID
+  route: privesc-sre-user is in a group whose policy grants iam:*, ec2:*, s3:* on * (admin-equivalent by membership)
+- entry: module.tool-testing.aws_iam_user.fn1-privesc3-partial-user
+  target: aws:account-admin
+  label: VALID
+  route: 'fn1-privesc3-partial: tool-testing ''false negative'' case, exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user
+  target: aws:account-admin
+  label: VALID
+  route: 'fn2-exploitableResourceConstraint: tool-testing ''false negative'' case, exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user
+  target: aws:account-admin
+  label: VALID
+  route: 'fn3-exploitableConditionConstraint: tool-testing ''false negative'' case, exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user
+  target: aws:account-admin
+  label: VALID
+  route: 'fn4-exploitableNotAction: tool-testing ''false negative'' case, exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fp1-allow-and-deny-user
+  target: aws:account-admin
+  label: INVALID
+  route: 'fp1-allow-and-deny: tool-testing ''false positive'' case, NOT exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user
+  target: aws:account-admin
+  label: INVALID
+  route: 'fp2-allow-and-deny-multiple-policies: tool-testing ''false positive'' case, NOT exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fp3-deny-iam-user
+  target: aws:account-admin
+  label: INVALID
+  route: 'fp3-deny-iam: tool-testing ''false positive'' case, NOT exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user
+  target: aws:account-admin
+  label: INVALID
+  route: 'fp4-nonExploitableResourceConstraint: tool-testing ''false positive'' case, NOT exploitable by design'
+- entry: module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user
+  target: aws:account-admin
+  label: INVALID
+  route: 'fp5-nonExploitableConditionConstraint: tool-testing ''false positive'' case, NOT exploitable by design'

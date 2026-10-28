@@ -1,0 +1,197 @@
+name: Terraform attack-path review
+
+"on":
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  attack-paths:
+    name: attack-paths
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+        continue-on-error: true
+
+      - name: Locate or generate Terraform plan JSON
+        id: plan
+        run: |
+          mkdir -p /tmp/tapm-run
+          if [ -f plan.json ]; then
+            echo "Using committed plan.json"
+            cp plan.json /tmp/tapm-run/plan.json
+          elif [ -f tfplan.json ]; then
+            echo "Using committed tfplan.json"
+            cp tfplan.json /tmp/tapm-run/plan.json
+          elif command -v terraform >/dev/null 2>&1; then
+            echo "Running terraform plan..."
+            terraform init -input=false
+            terraform plan -input=false -lock=false -out=/tmp/tapm-run/tfplan
+            terraform show -json /tmp/tapm-run/tfplan > /tmp/tapm-run/plan.json
+            rm -f /tmp/tapm-run/tfplan
+          else
+            echo "Error: No plan.json found and terraform CLI is not installed." >&2
+            exit 1
+          fi
+
+      - name: Submit plan to TAPM analysis service
+        env:
+          TAPM_SERVER_URL: ${{ vars.TAPM_SERVER_URL || 'http://tapm-service:8080' }}
+          TAPM_SERVER_TOKEN: ${{ secrets.TAPM_SERVER_TOKEN || 'demo-secret-token' }}
+          TAPM_LEVEL: ${{ vars.TAPM_LEVEL || 'validate' }}
+        run: |
+          mkdir -p ./artifacts
+          PR_NUM="${{ github.event.pull_request.number }}"
+          if [ -z "$PR_NUM" ] || [ "$PR_NUM" = "0" ]; then
+            PR_NUM="${{ github.event.number }}"
+          fi
+          if [ -z "$PR_NUM" ] || [ "$PR_NUM" = "0" ]; then
+            PR_NUM=$(echo "${{ github.ref }}" | sed -n 's|refs/pull/\([0-9]*\)/.*|\1|p')
+          fi
+          if [ -z "$PR_NUM" ] || [ "$PR_NUM" = "0" ]; then
+            PR_NUM=$(echo "${{ github.ref_name }}" | sed -n 's|^\([0-9]*\)/.*|\1|p')
+          fi
+          [ -z "$PR_NUM" ] && PR_NUM="0"
+          
+          # 1. Primary: tapm submit CLI command
+          if command -v tapm >/dev/null 2>&1; then
+            echo "Submitting via tapm submit..."
+            tapm submit /tmp/tapm-run/plan.json \
+              --server "${TAPM_SERVER_URL}" \
+              --token "${TAPM_SERVER_TOKEN}" \
+              --level "${TAPM_LEVEL}" \
+              --repo "${{ github.repository }}" \
+              --pr "${PR_NUM}" \
+              --sha "${{ github.sha }}" \
+              --download-artifacts ./artifacts
+            exit $?
+          fi
+
+          # 2. Secondary: python -m tapm.cli submit
+          if python3 -c "import tapm.cli" >/dev/null 2>&1; then
+            echo "Submitting via python3 -m tapm.cli submit..."
+            python3 -m tapm.cli submit /tmp/tapm-run/plan.json \
+              --server "${TAPM_SERVER_URL}" \
+              --token "${TAPM_SERVER_TOKEN}" \
+              --level "${TAPM_LEVEL}" \
+              --repo "${{ github.repository }}" \
+              --pr "${PR_NUM}" \
+              --sha "${{ github.sha }}" \
+              --download-artifacts ./artifacts
+            exit $?
+          fi
+
+          # 3. Direct REST API submission fallback
+          echo "Submitting via REST API fallback..."
+          python3 - << 'EOF'
+          import json, os, sys, time, urllib.error, urllib.request
+
+          server = os.environ.get("TAPM_SERVER_URL", "http://tapm-service:8080").rstrip("/")
+          token = os.environ.get("TAPM_SERVER_TOKEN", "demo-secret-token")
+          level = os.environ.get("TAPM_LEVEL", "validate")
+          repo = os.environ.get("GITHUB_REPOSITORY", "${{ github.repository }}")
+          pr = int(os.environ.get("PR_NUM", "0"))
+          sha = os.environ.get("GITHUB_SHA", "${{ github.sha }}")
+
+          if pr == 0:
+              ref = os.environ.get("GITHUB_REF", "")
+              if "refs/pull/" in ref:
+                  try:
+                      pr = int(ref.split("/")[2])
+                  except Exception:
+                      pass
+          if pr == 0:
+              event_path = os.environ.get("GITHUB_EVENT_PATH", "")
+              if event_path and os.path.exists(event_path):
+                  try:
+                      with open(event_path, "r", encoding="utf-8") as ef:
+                          ev = json.load(ef)
+                          pr = int(ev.get("pull_request", {}).get("number") or ev.get("number") or ev.get("pull_request", {}).get("index") or 0)
+                  except Exception:
+                      pass
+          if pr == 0:
+              try:
+                  gitea_base = os.environ.get("GITEA_BASE_URL", "http://gitea:3000")
+                  prs_req = urllib.request.Request(f"{gitea_base}/api/v1/repos/{repo}/pulls?state=open")
+                  with urllib.request.urlopen(prs_req, timeout=5.0) as presp:
+                      prs = json.loads(presp.read().decode("utf-8"))
+                      for p in prs:
+                          if p.get("head", {}).get("sha") == sha or p.get("head", {}).get("ref") == os.environ.get("GITHUB_HEAD_REF"):
+                              pr = int(p.get("number", 0))
+                              break
+              except Exception:
+                  pass
+
+          with open("/tmp/tapm-run/plan.json", "r", encoding="utf-8") as f:
+              plan_data = json.load(f)
+
+          payload = json.dumps({
+              "repo": repo,
+              "pr": pr,
+              "sha": sha,
+              "level": level,
+              "plan_json": plan_data
+          }).encode("utf-8")
+
+          req = urllib.request.Request(
+              f"{server}/v1/jobs",
+              data=payload,
+              headers={
+                  "Content-Type": "application/json",
+                  "Authorization": f"Bearer {token}",
+              }
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=15.0) as resp:
+                  job_res = json.loads(resp.read().decode("utf-8"))
+                  job_id = job_res.get("job_id") or job_res.get("id")
+                  print(f"Job submitted successfully: {job_id}")
+          except Exception as e:
+              if level in ("observe", "recommend"):
+                  print(f"Warning: connection to analysis service failed ({e}); failing open at level '{level}'")
+                  sys.exit(0)
+              print(f"Error submitting plan to analysis service: {e}", file=sys.stderr)
+              sys.exit(1)
+
+          # Poll for job completion
+          deadline = time.time() + 60.0
+          while time.time() < deadline:
+              poll_req = urllib.request.Request(
+                  f"{server}/v1/jobs/{job_id}",
+                  headers={"Authorization": f"Bearer {token}"}
+              )
+              try:
+                  with urllib.request.urlopen(poll_req, timeout=5.0) as resp:
+                      status_data = json.loads(resp.read().decode("utf-8"))
+                      status = status_data.get("status")
+                      if status == "completed":
+                          verdict = status_data.get("gate_verdict") or status_data.get("verdict", "pass")
+                          print(f"Job {job_id} completed. Verdict: {verdict}")
+                          if verdict == "blocked" and level in ("validate", "prevent"):
+                              sys.exit(3)
+                          sys.exit(0)
+                      elif status == "failed":
+                          print(f"Job failed: {status_data.get('error')}", file=sys.stderr)
+                          sys.exit(1 if level in ("validate", "prevent") else 0)
+              except Exception as e:
+                  print(f"Polling error: {e}")
+              time.sleep(1.0)
+
+          print(f"Job polling timed out after 60s")
+          if level in ("observe", "recommend"):
+              sys.exit(0)
+          sys.exit(1)
+          EOF
+
+      - name: Clean up ephemeral plan
+        if: always()
+        run: rm -rf /tmp/tapm-run

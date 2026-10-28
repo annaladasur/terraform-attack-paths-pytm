@@ -1,0 +1,14 @@
+{
+  "id": 504,
+  "status": "warning",
+  "context": "attack-paths",
+  "description": "Attack paths: 1 path(s) without decision (recommend mode)",
+  "target_url": "http://localhost:8080/v1/jobs/job-12345",
+  "created_at": "2026-10-08T10:05:00Z",
+  "updated_at": "2026-10-08T10:05:00Z",
+  "creator": {
+    "id": 2,
+    "login": "tapm-bot",
+    "username": "tapm-bot"
+  }
+}

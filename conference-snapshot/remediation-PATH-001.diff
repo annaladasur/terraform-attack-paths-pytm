@@ -1,0 +1,11 @@
+--- a/iam.tf
++++ b/iam.tf
+@@ -29,7 +29,7 @@
+         Sid      = "ReadReports"
+         Effect   = "Allow"
+         Action   = ["s3:GetObject", "s3:ListBucket"]
+-        Resource = ["arn:aws:s3:::*"]
++        Resource = [aws_s3_bucket.reports.arn, "${aws_s3_bucket.reports.arn}/*"]
+       }
+     ]
+   })

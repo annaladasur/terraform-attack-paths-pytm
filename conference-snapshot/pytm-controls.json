@@ -1,0 +1,431 @@
+{
+  "HTTPS/443 (GRAPH-017)": {
+    "tlsVersion": {
+      "basis": "the listener refuses anything below its policy minimum (ssl_policy ELBSecurityPolicy-TLS13-1-2-2021-06)",
+      "evidence": [
+        "TF-007",
+        "TF-008"
+      ],
+      "value": "TLSVersion.TLSv12"
+    }
+  },
+  "IMDS of aws_instance.app": {
+    "controls.isEncrypted": {
+      "basis": "IMDS answers over link-local HTTP (169.254.169.254)",
+      "evidence": [
+        "TF-004"
+      ],
+      "value": false
+    }
+  },
+  "aws_instance.app": {
+    "controls.implementsPOLP": {
+      "basis": "role has wildcard-resource grants",
+      "evidence": [
+        "IAM-001"
+      ],
+      "value": false
+    },
+    "controls.isEncrypted": {
+      "basis": "target group protocol HTTP",
+      "evidence": [
+        "NET-005",
+        "TF-005",
+        "TF-007",
+        "TF-008",
+        "TF-009",
+        "TF-010"
+      ],
+      "value": false
+    },
+    "controls.isEncryptedAtRest": {
+      "basis": "every EBS volume has encrypted = true",
+      "evidence": [
+        "TF-005"
+      ],
+      "value": true
+    },
+    "hasInstanceRole": {
+      "basis": "instance profile attached",
+      "evidence": [
+        "GRAPH-006",
+        "TF-005"
+      ],
+      "value": true
+    },
+    "imdsV1Allowed": {
+      "basis": "http_tokens = optional, http_endpoint = enabled",
+      "evidence": [
+        "TF-004"
+      ],
+      "value": true
+    },
+    "internetReachable": {
+      "basis": "reachable from the internet",
+      "evidence": [
+        "GRAPH-020"
+      ],
+      "value": true
+    },
+    "internetWideIngress": {
+      "basis": "no internet-wide ingress rule",
+      "evidence": [],
+      "value": false
+    },
+    "readsSensitiveData": {
+      "basis": "role can read or write a confidential/restricted asset",
+      "evidence": [
+        "GRAPH-018"
+      ],
+      "value": true
+    }
+  },
+  "aws_lb.web": {
+    "controls.authenticatesDestination": {
+      "basis": "TLS listener presents an ACM certificate",
+      "evidence": [
+        "TF-007",
+        "TF-008"
+      ],
+      "value": true
+    },
+    "controls.implementsStrictHTTPValidation": {
+      "basis": "desync_mitigation_mode = defensive",
+      "evidence": [
+        "TF-007"
+      ],
+      "value": false
+    },
+    "controls.isEncrypted": {
+      "basis": "every listener terminates TLS",
+      "evidence": [
+        "TF-007",
+        "TF-008"
+      ],
+      "value": true
+    },
+    "controls.validatesHeaders": {
+      "basis": "drop_invalid_header_fields = true",
+      "evidence": [
+        "TF-007"
+      ],
+      "value": true
+    },
+    "hasInstanceRole": {
+      "basis": "not applicable to this element",
+      "evidence": [],
+      "value": false
+    },
+    "imdsV1Allowed": {
+      "basis": "not applicable to this element",
+      "evidence": [],
+      "value": false
+    },
+    "internetReachable": {
+      "basis": "reachable from the internet",
+      "evidence": [
+        "GRAPH-017"
+      ],
+      "value": true
+    },
+    "internetWideIngress": {
+      "basis": "security group admits 0.0.0.0/0 or ::/0",
+      "evidence": [
+        "NET-003"
+      ],
+      "value": true
+    },
+    "minTLSVersion": {
+      "basis": "ssl_policy ELBSecurityPolicy-TLS13-1-2-2021-06",
+      "evidence": [
+        "TF-007",
+        "TF-008"
+      ],
+      "value": "TLSVersion.TLSv12"
+    },
+    "readsSensitiveData": {
+      "basis": "not applicable to this element",
+      "evidence": [],
+      "value": false
+    }
+  },
+  "aws_s3_bucket.customer_data": {
+    "controls.authorizesSource": {
+      "basis": "IAM authorises the caller",
+      "evidence": [
+        "TF-015"
+      ],
+      "value": true
+    },
+    "controls.hasAccessControl": {
+      "basis": "every request needs IAM authorisation",
+      "evidence": [
+        "TF-015"
+      ],
+      "value": true
+    },
+    "controls.implementsPOLP": {
+      "basis": "reachable through wildcard-resource grants",
+      "evidence": [
+        "IAM-001"
+      ],
+      "value": false
+    },
+    "controls.isEncryptedAtRest": {
+      "basis": "server-side encryption configured",
+      "evidence": [
+        "TF-015",
+        "TF-020"
+      ],
+      "value": true
+    },
+    "controls.usesEncryptionAlgorithm": {
+      "basis": "AES-256 (server-side encryption configured)",
+      "evidence": [
+        "TF-015",
+        "TF-020"
+      ],
+      "value": "AES"
+    },
+    "publicAccessBlocked": {
+      "basis": "no block public access neutralising a grant",
+      "evidence": [],
+      "value": false
+    },
+    "publicPolicyGrant": {
+      "basis": "no public grant",
+      "evidence": [],
+      "value": false
+    },
+    "readableViaWildcardGrant": {
+      "basis": "a wildcard-resource grant covers this store",
+      "evidence": [
+        "IAM-001"
+      ],
+      "value": true
+    }
+  },
+  "aws_s3_bucket.reports": {
+    "controls.authorizesSource": {
+      "basis": "IAM authorises the caller",
+      "evidence": [
+        "TF-017"
+      ],
+      "value": true
+    },
+    "controls.hasAccessControl": {
+      "basis": "every request needs IAM authorisation",
+      "evidence": [
+        "TF-017"
+      ],
+      "value": true
+    },
+    "controls.implementsPOLP": {
+      "basis": "reachable through wildcard-resource grants",
+      "evidence": [
+        "IAM-001"
+      ],
+      "value": false
+    },
+    "controls.isEncryptedAtRest": {
+      "basis": "S3 encrypts new objects with SSE-S3 by default (since January 2023)",
+      "evidence": [
+        "TF-017"
+      ],
+      "value": true
+    },
+    "controls.usesEncryptionAlgorithm": {
+      "basis": "AES-256 (S3 encrypts new objects with SSE-S3 by default (since January 2023))",
+      "evidence": [
+        "TF-017"
+      ],
+      "value": "AES"
+    },
+    "publicAccessBlocked": {
+      "basis": "no block public access neutralising a grant",
+      "evidence": [],
+      "value": false
+    },
+    "publicPolicyGrant": {
+      "basis": "no public grant",
+      "evidence": [],
+      "value": false
+    },
+    "readableViaWildcardGrant": {
+      "basis": "a wildcard-resource grant covers this store",
+      "evidence": [
+        "IAM-001"
+      ],
+      "value": true
+    }
+  },
+  "data:aws_iam_role.app credentials": {
+    "classification": {
+      "basis": "temporary AWS credentials for aws_iam_role.app",
+      "evidence": [
+        "GRAPH-003",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "value": "Classification.SECRET"
+    },
+    "credentialsLife": {
+      "basis": "instance-profile credentials expire and rotate automatically",
+      "evidence": [
+        "GRAPH-003",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "value": "Lifetime.SHORT"
+    },
+    "isCredentials": {
+      "basis": "STS credentials issued through the instance profile",
+      "evidence": [
+        "GRAPH-003",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "value": true
+    },
+    "isPII": {
+      "basis": "credentials, not personal data",
+      "evidence": [
+        "GRAPH-003",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "value": false
+    },
+    "isStored": {
+      "basis": "fetched on demand from IMDS",
+      "evidence": [
+        "GRAPH-003",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "value": false
+    }
+  },
+  "data:aws_s3_bucket.customer_data contents": {
+    "classification": {
+      "basis": "confidential (tag:DataClassification)",
+      "evidence": [
+        "TF-014"
+      ],
+      "value": "Classification.SENSITIVE"
+    },
+    "isStored": {
+      "basis": "held in the data store",
+      "evidence": [
+        "TF-015"
+      ],
+      "value": true
+    }
+  },
+  "role credentials for aws_iam_role.app (GRAPH-003)": {
+    "controls.authenticatesSource": {
+      "basis": "http_tokens = optional: IMDSv1 answers any local request, including one an SSRF makes",
+      "evidence": [
+        "TF-004"
+      ],
+      "value": false
+    }
+  },
+  "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)": {
+    "controls.authenticatesSource": {
+      "basis": "AWS API requests are SigV4-signed",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-015"
+      ],
+      "value": true
+    },
+    "controls.authorizesSource": {
+      "basis": "IAM authorises every AWS API request",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-015"
+      ],
+      "value": true
+    },
+    "controls.implementsAuthenticationScheme": {
+      "basis": "SigV4",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-015"
+      ],
+      "value": true
+    }
+  },
+  "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)": {
+    "controls.authenticatesSource": {
+      "basis": "AWS API requests are SigV4-signed",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-017"
+      ],
+      "value": true
+    },
+    "controls.authorizesSource": {
+      "basis": "IAM authorises every AWS API request",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-017"
+      ],
+      "value": true
+    },
+    "controls.implementsAuthenticationScheme": {
+      "basis": "SigV4",
+      "evidence": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-017"
+      ],
+      "value": true
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "results": [
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 39,
+        "filename": "main.tf",
+        "start_line": 39
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.ci",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 39,
+        "filename": "main.tf",
+        "start_line": 39
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.ci",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 32,
+        "filename": "main.tf",
+        "start_line": 30
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.ci",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Function does not have tracing enabled.",
+      "impact": "Without full tracing enabled it is difficult to trace the flow of logs",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/lambda/enable-tracing/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode"
+      ],
+      "location": {
+        "end_line": 28,
+        "filename": "main.tf",
+        "start_line": 21
+      },
+      "long_id": "aws-lambda-enable-tracing",
+      "resolution": "Enable tracing",
+      "resource": "aws_lambda_function.deploy",
+      "rule_description": "Lambda functions should have X-Ray tracing enabled",
+      "rule_id": "AVD-AWS-0066",
+      "rule_provider": "aws",
+      "rule_service": "lambda",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

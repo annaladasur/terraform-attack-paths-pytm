@@ -1,0 +1,554 @@
+{
+ "applyable": true,
+ "complete": true,
+ "configuration": {
+  "provider_config": {
+   "aws": {
+    "expressions": {
+     "region": {
+      "constant_value": "us-east-1"
+     },
+     "skip_credentials_validation": {
+      "constant_value": true
+     },
+     "skip_metadata_api_check": {
+      "constant_value": true
+     },
+     "skip_region_validation": {
+      "constant_value": true
+     },
+     "skip_requesting_account_id": {
+      "constant_value": true
+     }
+    },
+    "full_name": "registry.terraform.io/hashicorp/aws",
+    "name": "aws",
+    "version_constraint": "~> 6.0"
+   }
+  },
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_iam_role.deployer",
+     "expressions": {
+      "assume_role_policy": {},
+      "name": {
+       "constant_value": "deployer"
+      }
+     },
+     "mode": "managed",
+     "name": "deployer",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_role"
+    },
+    {
+     "address": "aws_iam_role_policy_attachment.deployer_admin",
+     "expressions": {
+      "policy_arn": {
+       "constant_value": "arn:aws:iam::aws:policy/AdministratorAccess"
+      },
+      "role": {
+       "references": [
+        "aws_iam_role.deployer.name",
+        "aws_iam_role.deployer"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "deployer_admin",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_role_policy_attachment"
+    },
+    {
+     "address": "aws_iam_user.ci",
+     "expressions": {
+      "name": {
+       "constant_value": "ci-deployer"
+      }
+     },
+     "mode": "managed",
+     "name": "ci",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_user"
+    },
+    {
+     "address": "aws_iam_user_policy.ci",
+     "expressions": {
+      "name": {
+       "constant_value": "ci-everything"
+      },
+      "policy": {},
+      "user": {
+       "references": [
+        "aws_iam_user.ci.name",
+        "aws_iam_user.ci"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "ci",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_user_policy"
+    },
+    {
+     "address": "aws_lambda_function.deploy",
+     "expressions": {
+      "function_name": {
+       "constant_value": "deploy-hook"
+      },
+      "handler": {
+       "constant_value": "app.handler"
+      },
+      "role": {
+       "references": [
+        "aws_iam_role.deployer.arn",
+        "aws_iam_role.deployer"
+       ]
+      },
+      "runtime": {
+       "constant_value": "python3.12"
+      },
+      "s3_bucket": {
+       "constant_value": "artifacts-111122223333"
+      },
+      "s3_key": {
+       "constant_value": "deploy-hook.zip"
+      }
+     },
+     "mode": "managed",
+     "name": "deploy",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_lambda_function"
+    }
+   ]
+  }
+ },
+ "errored": false,
+ "format_version": "1.2",
+ "planned_values": {
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_iam_role.deployer",
+     "identity": {
+      "account_id": null,
+      "name": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "deployer",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "inline_policy": [],
+      "managed_policy_arns": [],
+      "tags_all": {}
+     },
+     "type": "aws_iam_role",
+     "values": {
+      "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+      "description": null,
+      "force_detach_policies": false,
+      "max_session_duration": 3600,
+      "name": "deployer",
+      "path": "/",
+      "permissions_boundary": null,
+      "tags": null
+     }
+    },
+    {
+     "address": "aws_iam_role_policy_attachment.deployer_admin",
+     "identity": {
+      "account_id": null,
+      "policy_arn": null,
+      "role": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "deployer_admin",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_iam_role_policy_attachment",
+     "values": {
+      "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "role": "deployer"
+     }
+    },
+    {
+     "address": "aws_iam_user.ci",
+     "identity": {
+      "account_id": null,
+      "name": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "ci",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "tags_all": {}
+     },
+     "type": "aws_iam_user",
+     "values": {
+      "force_destroy": false,
+      "name": "ci-deployer",
+      "path": "/",
+      "permissions_boundary": null,
+      "tags": null
+     }
+    },
+    {
+     "address": "aws_iam_user_policy.ci",
+     "identity": {
+      "account_id": null,
+      "name": null,
+      "user": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "ci",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_iam_user_policy",
+     "values": {
+      "name": "ci-everything",
+      "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"iam:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+      "user": "ci-deployer"
+     }
+    },
+    {
+     "address": "aws_lambda_function.deploy",
+     "identity": {
+      "account_id": null,
+      "function_name": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "deploy",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "architectures": [],
+      "capacity_provider_config": [],
+      "dead_letter_config": [],
+      "durable_config": [],
+      "environment": [],
+      "ephemeral_storage": [],
+      "file_system_config": [],
+      "image_config": [],
+      "logging_config": [],
+      "snap_start": [],
+      "tags_all": {},
+      "tenancy_config": [],
+      "tracing_config": [],
+      "vpc_config": []
+     },
+     "type": "aws_lambda_function",
+     "values": {
+      "capacity_provider_config": [],
+      "code_signing_config_arn": null,
+      "dead_letter_config": [],
+      "description": null,
+      "durable_config": [],
+      "environment": [],
+      "file_system_config": [],
+      "filename": null,
+      "function_name": "deploy-hook",
+      "handler": "app.handler",
+      "image_config": [],
+      "image_uri": null,
+      "kms_key_arn": null,
+      "layers": null,
+      "memory_size": 128,
+      "package_type": "Zip",
+      "publish": false,
+      "publish_to": null,
+      "region": "us-east-1",
+      "replace_security_groups_on_destroy": null,
+      "replacement_security_group_ids": null,
+      "reserved_concurrent_executions": -1,
+      "runtime": "python3.12",
+      "s3_bucket": "artifacts-111122223333",
+      "s3_key": "deploy-hook.zip",
+      "s3_object_version": null,
+      "skip_destroy": false,
+      "snap_start": [],
+      "source_kms_key_arn": null,
+      "tags": null,
+      "tenancy_config": [],
+      "timeout": 3,
+      "timeouts": null,
+      "use_resource_timeout_for_propagation": null,
+      "vpc_config": []
+     }
+    }
+   ]
+  }
+ },
+ "relevant_attributes": [
+  {
+   "attribute": [
+    "name"
+   ],
+   "resource": "aws_iam_role.deployer"
+  },
+  {
+   "attribute": [
+    "arn"
+   ],
+   "resource": "aws_iam_role.deployer"
+  },
+  {
+   "attribute": [
+    "name"
+   ],
+   "resource": "aws_iam_user.ci"
+  }
+ ],
+ "resource_changes": [
+  {
+   "address": "aws_iam_role.deployer",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+     "description": null,
+     "force_detach_policies": false,
+     "max_session_duration": 3600,
+     "name": "deployer",
+     "path": "/",
+     "permissions_boundary": null,
+     "tags": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null
+    },
+    "after_sensitive": {
+     "inline_policy": [],
+     "managed_policy_arns": [],
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "create_date": true,
+     "id": true,
+     "inline_policy": true,
+     "managed_policy_arns": true,
+     "name_prefix": true,
+     "tags_all": true,
+     "unique_id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "deployer",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_role"
+  },
+  {
+   "address": "aws_iam_role_policy_attachment.deployer_admin",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+     "role": "deployer"
+    },
+    "after_identity": {
+     "account_id": null,
+     "policy_arn": null,
+     "role": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "deployer_admin",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_role_policy_attachment"
+  },
+  {
+   "address": "aws_iam_user.ci",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "force_destroy": false,
+     "name": "ci-deployer",
+     "path": "/",
+     "permissions_boundary": null,
+     "tags": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null
+    },
+    "after_sensitive": {
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "id": true,
+     "tags_all": true,
+     "unique_id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "ci",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_user"
+  },
+  {
+   "address": "aws_iam_user_policy.ci",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "name": "ci-everything",
+     "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":[\"iam:*\"],\"Effect\":\"Allow\",\"Resource\":\"*\"}]}",
+     "user": "ci-deployer"
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null,
+     "user": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "id": true,
+     "name_prefix": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "ci",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_user_policy"
+  },
+  {
+   "address": "aws_lambda_function.deploy",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "capacity_provider_config": [],
+     "code_signing_config_arn": null,
+     "dead_letter_config": [],
+     "description": null,
+     "durable_config": [],
+     "environment": [],
+     "file_system_config": [],
+     "filename": null,
+     "function_name": "deploy-hook",
+     "handler": "app.handler",
+     "image_config": [],
+     "image_uri": null,
+     "kms_key_arn": null,
+     "layers": null,
+     "memory_size": 128,
+     "package_type": "Zip",
+     "publish": false,
+     "publish_to": null,
+     "region": "us-east-1",
+     "replace_security_groups_on_destroy": null,
+     "replacement_security_group_ids": null,
+     "reserved_concurrent_executions": -1,
+     "runtime": "python3.12",
+     "s3_bucket": "artifacts-111122223333",
+     "s3_key": "deploy-hook.zip",
+     "s3_object_version": null,
+     "skip_destroy": false,
+     "snap_start": [],
+     "source_kms_key_arn": null,
+     "tags": null,
+     "tenancy_config": [],
+     "timeout": 3,
+     "timeouts": null,
+     "use_resource_timeout_for_propagation": null,
+     "vpc_config": []
+    },
+    "after_identity": {
+     "account_id": null,
+     "function_name": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "architectures": [],
+     "capacity_provider_config": [],
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": [],
+     "file_system_config": [],
+     "image_config": [],
+     "logging_config": [],
+     "snap_start": [],
+     "tags_all": {},
+     "tenancy_config": [],
+     "tracing_config": [],
+     "vpc_config": []
+    },
+    "after_unknown": {
+     "architectures": true,
+     "arn": true,
+     "capacity_provider_config": [],
+     "code_sha256": true,
+     "dead_letter_config": [],
+     "durable_config": [],
+     "environment": [],
+     "ephemeral_storage": true,
+     "file_system_config": [],
+     "id": true,
+     "image_config": [],
+     "invoke_arn": true,
+     "last_modified": true,
+     "logging_config": true,
+     "qualified_arn": true,
+     "qualified_invoke_arn": true,
+     "response_streaming_invoke_arn": true,
+     "role": true,
+     "signing_job_arn": true,
+     "signing_profile_version_arn": true,
+     "snap_start": [],
+     "source_code_hash": true,
+     "source_code_size": true,
+     "tags_all": true,
+     "tenancy_config": [],
+     "tracing_config": true,
+     "version": true,
+     "vpc_config": []
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "deploy",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_lambda_function"
+  }
+ ],
+ "terraform_version": "1.16.4"
+}

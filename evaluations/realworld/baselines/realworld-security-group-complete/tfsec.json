@@ -1,0 +1,186 @@
+{
+  "results": [
+    {
+      "description": "Network ACL rule allows access using ALL ports.",
+      "impact": "All ports exposed for ingressing/egressing data",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-excessive-port-access/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl_rule#to_port"
+      ],
+      "location": {
+        "end_line": 373,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 373
+      },
+      "long_id": "aws-ec2-no-excessive-port-access",
+      "resolution": "Set specific allowed ports",
+      "resource": "module.vpc_secondary",
+      "rule_description": "An Network ACL rule allows ALL ports.",
+      "rule_id": "AVD-AWS-0102",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Network ACL rule allows access using ALL ports.",
+      "impact": "All ports exposed for ingressing/egressing data",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-excessive-port-access/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl_rule#to_port"
+      ],
+      "location": {
+        "end_line": 373,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 373
+      },
+      "long_id": "aws-ec2-no-excessive-port-access",
+      "resolution": "Set specific allowed ports",
+      "resource": "module.vpc",
+      "rule_description": "An Network ACL rule allows ALL ports.",
+      "rule_id": "AVD-AWS-0102",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Network ACL rule allows access using ALL ports.",
+      "impact": "All ports exposed for ingressing/egressing data",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-excessive-port-access/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl_rule#to_port"
+      ],
+      "location": {
+        "end_line": 356,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 356
+      },
+      "long_id": "aws-ec2-no-excessive-port-access",
+      "resolution": "Set specific allowed ports",
+      "resource": "module.vpc",
+      "rule_description": "An Network ACL rule allows ALL ports.",
+      "rule_id": "AVD-AWS-0102",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Network ACL rule allows access using ALL ports.",
+      "impact": "All ports exposed for ingressing/egressing data",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-excessive-port-access/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl_rule#to_port"
+      ],
+      "location": {
+        "end_line": 356,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 356
+      },
+      "long_id": "aws-ec2-no-excessive-port-access",
+      "resolution": "Set specific allowed ports",
+      "resource": "module.vpc_secondary",
+      "rule_description": "An Network ACL rule allows ALL ports.",
+      "rule_id": "AVD-AWS-0102",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Network ACL rule allows ingress from public internet.",
+      "impact": "The ports are exposed for ingressing data to the internet",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-public-ingress-acl/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl_rule#cidr_block"
+      ],
+      "location": {
+        "end_line": 357,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 357
+      },
+      "long_id": "aws-ec2-no-public-ingress-acl",
+      "resolution": "Set a more restrictive cidr range",
+      "resource": "module.vpc_secondary",
+      "rule_description": "An ingress Network ACL rule allows specific ports from /0.",
+      "rule_id": "AVD-AWS-0105",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Network ACL rule allows ingress from public internet.",
+      "impact": "The ports are exposed for ingressing data to the internet",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-public-ingress-acl/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl_rule#cidr_block"
+      ],
+      "location": {
+        "end_line": 357,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 357
+      },
+      "long_id": "aws-ec2-no-public-ingress-acl",
+      "resolution": "Set a more restrictive cidr range",
+      "resource": "module.vpc",
+      "rule_description": "An ingress Network ACL rule allows specific ports from /0.",
+      "rule_id": "AVD-AWS-0105",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "VPC Flow Logs is not enabled for VPC ",
+      "impact": "Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/"
+      ],
+      "location": {
+        "end_line": 51,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 28
+      },
+      "long_id": "aws-ec2-require-vpc-flow-logs-for-all-vpcs",
+      "resolution": "Enable flow logs for VPC",
+      "resource": "module.vpc",
+      "rule_description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "rule_id": "AVD-AWS-0178",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "VPC Flow Logs is not enabled for VPC ",
+      "impact": "Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/"
+      ],
+      "location": {
+        "end_line": 51,
+        "filename": "terraform-aws-modules/vpc/aws/main.tf",
+        "start_line": 28
+      },
+      "long_id": "aws-ec2-require-vpc-flow-logs-for-all-vpcs",
+      "resolution": "Enable flow logs for VPC",
+      "resource": "module.vpc_secondary",
+      "rule_description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "rule_id": "AVD-AWS-0178",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

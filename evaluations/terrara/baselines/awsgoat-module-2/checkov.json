@@ -1,0 +1,2940 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SubnetPublicIP",
+        "check_id": "CKV_AWS_130",
+        "check_len": null,
+        "check_name": "Ensure VPC subnets do not assign public IP by default",
+        "check_result": {
+          "evaluated_keys": [
+            "map_public_ip_on_launch"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          29,
+          34
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_subnet.lab-subnet-public-1",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SubnetPublicIP",
+        "check_id": "CKV_AWS_130",
+        "check_len": null,
+        "check_name": "Ensure VPC subnets do not assign public IP by default",
+        "check_result": {
+          "evaluated_keys": [
+            "map_public_ip_on_launch"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          57,
+          62
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_subnet.lab-subnet-public-1b",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedEgressAny",
+        "check_id": "CKV_AWS_382",
+        "check_len": null,
+        "check_name": "Ensure no security groups allow egress from 0.0.0.0:0 to port -1",
+        "check_result": {
+          "evaluated_keys": [
+            "egress/[0]/from_port",
+            "egress/[0]/to_port",
+            "egress/[0]/cidr_blocks",
+            "egress/[0]/ipv6_cidr_blocks"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          68,
+          86
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.ecs_sg",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupRuleDescription",
+        "check_id": "CKV_AWS_23",
+        "check_len": null,
+        "check_name": "Ensure every security group and rule has a description",
+        "check_result": {
+          "evaluated_keys": [
+            "description",
+            "egress/[0]",
+            "ingress/[0]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          68,
+          86
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.ecs_sg",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedEgressAny",
+        "check_id": "CKV_AWS_382",
+        "check_len": null,
+        "check_name": "Ensure no security groups allow egress from 0.0.0.0:0 to port -1",
+        "check_result": {
+          "evaluated_keys": [
+            "egress/[0]/from_port",
+            "egress/[0]/to_port",
+            "egress/[0]/cidr_blocks",
+            "egress/[0]/ipv6_cidr_blocks"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "rds-db-sg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          103,
+          127
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.database-security-group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupRuleDescription",
+        "check_id": "CKV_AWS_23",
+        "check_len": null,
+        "check_name": "Ensure every security group and rule has a description",
+        "check_result": {
+          "evaluated_keys": [
+            "description",
+            "egress/[0]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "rds-db-sg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          103,
+          127
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.database-security-group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.RDSEncryption",
+        "check_id": "CKV_AWS_16",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the RDS is securely encrypted at rest",
+        "check_result": {
+          "evaluated_keys": [
+            "storage_encrypted"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.RDSInstanceDeletionProtection",
+        "check_id": "CKV_AWS_293",
+        "check_len": null,
+        "check_name": "Ensure that AWS database instances have deletion protection enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "deletion_protection"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.RDSMultiAZEnabled",
+        "check_id": "CKV_AWS_157",
+        "check_len": null,
+        "check_name": "Ensure that RDS instances have Multi-AZ enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "multi_az"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.RDSEnhancedMonitorEnabled",
+        "check_id": "CKV_AWS_118",
+        "check_len": null,
+        "check_name": "Ensure that enhanced monitoring is enabled for Amazon RDS instances",
+        "check_result": {
+          "evaluated_keys": [
+            "monitoring_interval"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.DBInstanceMinorUpgrade",
+        "check_id": "CKV_AWS_226",
+        "check_len": null,
+        "check_name": "Ensure DB instance gets all minor upgrades automatically",
+        "check_result": {
+          "evaluated_keys": [
+            "auto_minor_version_upgrade"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.DBInstanceLogging",
+        "check_id": "CKV_AWS_129",
+        "check_len": null,
+        "check_name": "Ensure that respective logs of Amazon Relational Database Service (Amazon RDS) are enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "enabled_cloudwatch_logs_exports/[0]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.RDSIAMAuthentication",
+        "check_id": "CKV_AWS_161",
+        "check_len": null,
+        "check_name": "Ensure RDS database has IAM authentication enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "iam_database_authentication_enabled"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedIngress80",
+        "check_id": "CKV_AWS_260",
+        "check_len": null,
+        "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 80",
+        "check_result": {
+          "evaluated_keys": [
+            "ingress/[0]/from_port",
+            "ingress/[0]/to_port",
+            "ingress/[0]/cidr_blocks",
+            "ingress/[0]/ipv6_cidr_blocks"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-sg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          148,
+          169
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.load_balancer_security_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupUnrestrictedEgressAny",
+        "check_id": "CKV_AWS_382",
+        "check_len": null,
+        "check_name": "Ensure no security groups allow egress from 0.0.0.0:0 to port -1",
+        "check_result": {
+          "evaluated_keys": [
+            "egress/[0]/from_port",
+            "egress/[0]/to_port",
+            "egress/[0]/cidr_blocks",
+            "egress/[0]/ipv6_cidr_blocks"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-sg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          148,
+          169
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.load_balancer_security_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecurityGroupRuleDescription",
+        "check_id": "CKV_AWS_23",
+        "check_len": null,
+        "check_name": "Ensure every security group and rule has a description",
+        "check_result": {
+          "evaluated_keys": [
+            "description",
+            "egress/[0]",
+            "ingress/[0]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-sg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          148,
+          169
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_security_group.load_balancer_security_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMWriteAccess",
+        "check_id": "CKV_AWS_290",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow write access without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          207,
+          225
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ecs_instance_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMDataExfiltration",
+        "check_id": "CKV_AWS_288",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow data exfiltration",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          207,
+          225
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ecs_instance_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPermissionsManagement",
+        "check_id": "CKV_AWS_289",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          207,
+          225
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ecs_instance_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMStarResourcePolicyDocument",
+        "check_id": "CKV_AWS_355",
+        "check_len": null,
+        "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          207,
+          225
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ecs_instance_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPrivilegeEscalation",
+        "check_id": "CKV_AWS_286",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow privilege escalation",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          227,
+          253
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.instance_boundary_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMWriteAccess",
+        "check_id": "CKV_AWS_290",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow write access without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          227,
+          253
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.instance_boundary_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMDataExfiltration",
+        "check_id": "CKV_AWS_288",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow data exfiltration",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          227,
+          253
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.instance_boundary_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPermissionsManagement",
+        "check_id": "CKV_AWS_289",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          227,
+          253
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.instance_boundary_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMStarResourcePolicyDocument",
+        "check_id": "CKV_AWS_355",
+        "check_len": null,
+        "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          227,
+          253
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.instance_boundary_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPrivilegeEscalation",
+        "check_id": "CKV_AWS_286",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow privilege escalation",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMWriteAccess",
+        "check_id": "CKV_AWS_290",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow write access without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMDataExfiltration",
+        "check_id": "CKV_AWS_288",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow data exfiltration",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMAdminPolicyDocument",
+        "check_id": "CKV_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure IAM policies that allow full \"*-*\" administrative privileges are not created",
+        "check_result": {
+          "evaluated_keys": [
+            "policy",
+            "inline_policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPermissionsManagement",
+        "check_id": "CKV_AWS_289",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMCredentialsExposure",
+        "check_id": "CKV_AWS_287",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow credentials exposure",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMStarActionPolicyDocument",
+        "check_id": "CKV_AWS_63",
+        "check_len": null,
+        "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's actions",
+        "check_result": {
+          "evaluated_keys": [
+            "policy",
+            "inline_policy"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMStarResourcePolicyDocument",
+        "check_id": "CKV_AWS_355",
+        "check_len": null,
+        "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "iam_instance_profile.name": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_instance_profile.ecs-instance-profile",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IMDSv1Disabled",
+        "check_id": "CKV_AWS_79",
+        "check_len": null,
+        "check_name": "Ensure Instance Metadata Service Version 1 is not enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "metadata_options/[0]/http_tokens"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          350,
+          361
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_launch_template.ecs_launch_template",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.AutoScalingTagging",
+        "check_id": "CKV_AWS_153",
+        "check_len": null,
+        "check_name": "Autoscaling groups should supply tags to launch configurations",
+        "check_result": {
+          "evaluated_keys": [
+            "tag",
+            "tags"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          363,
+          374
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_autoscaling_group.ecs_asg",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.ECSClusterContainerInsights",
+        "check_id": "CKV_AWS_65",
+        "check_len": null,
+        "check_name": "Ensure container insights are enabled on ECS cluster",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "name": "ecs-cluster-name"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          377,
+          383
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_ecs_cluster.cluster",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.ALBDropHttpHeaders",
+        "check_id": "CKV_AWS_131",
+        "check_len": null,
+        "check_name": "Ensure that ALB drops HTTP headers",
+        "check_result": {
+          "evaluated_keys": [
+            "drop_invalid_header_fields"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-alb"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          433,
+          443
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_alb.application_load_balancer",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LBDeletionProtection",
+        "check_id": "CKV_AWS_150",
+        "check_len": null,
+        "check_name": "Ensure that Load Balancer has deletion protection enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "enable_deletion_protection"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-alb"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          433,
+          443
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_alb.application_load_balancer",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.ELBv2AccessLogs",
+        "check_id": "CKV_AWS_91",
+        "check_len": null,
+        "check_name": "Ensure the ELBv2 (Application/Network) has access logging enabled",
+        "check_result": {
+          "evaluated_keys": [
+            "access_logs/0/enabled/0"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-alb"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          433,
+          443
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_alb.application_load_balancer",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LBTargetGroupsDefinesHealthcheck",
+        "check_id": "CKV_AWS_261",
+        "check_len": null,
+        "check_name": "Ensure HTTP HTTPS Target group defines Healthcheck",
+        "check_result": {
+          "evaluated_keys": [
+            "health_check"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-tg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          445,
+          455
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lb_target_group.target_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.ALBListenerHTTPS",
+        "check_id": "CKV_AWS_2",
+        "check_len": null,
+        "check_name": "Ensure ALB protocol is HTTPS",
+        "check_result": {
+          "evaluated_keys": [
+            "protocol"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          457,
+          466
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lb_listener.listener",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.SecretManagerSecretEncrypted",
+        "check_id": "CKV_AWS_149",
+        "check_len": null,
+        "check_name": "Ensure that Secrets Manager secret is encrypted using KMS CMK",
+        "check_result": {
+          "evaluated_keys": [
+            "kms_key_id"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          469,
+          472
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_secretsmanager_secret.rds_creds",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.data.aws.AWSAvailabilityZonesUnfiltered",
+        "check_id": "CKV_AWS_394",
+        "check_len": null,
+        "check_name": "Ensure aws_availability_zones data source pins zone identity so its result set does not silently expand when AWS adds an Availability Zone",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          18
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_availability_zones.available",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "db_subnet_group_name": [
+            {
+              "module_connection": false,
+              "name": "aws_db_subnet_group.database-subnet-group",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_60",
+        "check_len": null,
+        "check_name": "Ensure RDS instance with copy tags to snapshots is enabled",
+        "check_result": {
+          "entity": {
+            "aws_db_instance": {
+              "database-instance": {
+                "__address__": "aws_db_instance.database-instance",
+                "__end_line__": 144,
+                "__provider_address__": "aws.default",
+                "__start_line__": 131,
+                "allocated_storage": [
+                  10
+                ],
+                "availability_zone": [
+                  "us-east-1a"
+                ],
+                "db_subnet_group_name": [
+                  "database subnets"
+                ],
+                "engine": [
+                  "mysql"
+                ],
+                "engine_version": [
+                  "8.0"
+                ],
+                "identifier": [
+                  "aws-goat-db"
+                ],
+                "instance_class": [
+                  "db.t3.micro"
+                ],
+                "parameter_group_name": [
+                  "default.mysql8.0"
+                ],
+                "password": [
+                  "T2kVB3zgeN3YbrKS"
+                ],
+                "skip_final_snapshot": [
+                  true
+                ],
+                "username": [
+                  "root"
+                ],
+                "vpc_security_group_ids": [
+                  [
+                    "aws_security_group.database-security-group.id"
+                  ]
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "copy_tags_to_snapshot",
+            "engine"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          131,
+          144
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_db_instance.database-instance",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_6",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has a Public Access block",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "block_public_policy",
+            "block_public_acls",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_62",
+        "check_len": null,
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_11",
+        "check_len": null,
+        "check_name": "Ensure VPC flow logging is enabled in all VPCs",
+        "check_result": {
+          "entity": {
+            "aws_vpc": {
+              "lab-vpc": {
+                "__address__": "aws_vpc.lab-vpc",
+                "__end_line__": 28,
+                "__provider_address__": "aws.default",
+                "__start_line__": 21,
+                "cidr_block": [
+                  "10.0.0.0/16"
+                ],
+                "enable_dns_hostnames": [
+                  true
+                ],
+                "enable_dns_support": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Name": "AWS_GOAT_VPC"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "networking",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "AWS_GOAT_VPC"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_vpc.lab-vpc",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_18",
+        "check_len": null,
+        "check_name": "Ensure the S3 bucket has access logging enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "logging"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_61",
+        "check_len": null,
+        "check_name": "Ensure that an S3 bucket has a lifecycle configuration",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "lifecycle_rule",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_57",
+        "check_len": null,
+        "check_name": "Ensure Secrets Manager secrets should have automatic rotation enabled",
+        "check_result": {
+          "entity": {
+            "aws_secretsmanager_secret": {
+              "rds_creds": {
+                "__address__": "aws_secretsmanager_secret.rds_creds",
+                "__end_line__": 472,
+                "__provider_address__": "aws.default",
+                "__start_line__": 469,
+                "name": [
+                  "RDS_CREDS"
+                ],
+                "recovery_window_in_days": [
+                  0
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          469,
+          472
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_secretsmanager_secret.rds_creds",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_12",
+        "check_len": null,
+        "check_name": "Ensure the default security group of every VPC restricts all traffic",
+        "check_result": {
+          "entity": {
+            "aws_vpc": {
+              "lab-vpc": {
+                "__address__": "aws_vpc.lab-vpc",
+                "__end_line__": 28,
+                "__provider_address__": "aws.default",
+                "__start_line__": 21,
+                "cidr_block": [
+                  "10.0.0.0/16"
+                ],
+                "enable_dns_hostnames": [
+                  true
+                ],
+                "enable_dns_support": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Name": "AWS_GOAT_VPC"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "ingress/protocol",
+            "resource_type",
+            "egress/from_port",
+            "ingress/from_port",
+            "ingress/self",
+            "egress/cidr_blocks",
+            "egress/to_port",
+            "egress/protocol",
+            "ingress/to_port"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "AWS_GOAT_VPC"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_vpc.lab-vpc",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_103",
+        "check_len": null,
+        "check_name": "Ensure that load balancer is using at least TLS 1.2",
+        "check_result": {
+          "entity": {
+            "aws_lb_listener": {
+              "listener": {
+                "__address__": "aws_lb_listener.listener",
+                "__end_line__": 466,
+                "__provider_address__": "aws.default",
+                "__start_line__": 457,
+                "default_action": [
+                  {
+                    "target_group_arn": [
+                      "aws_lb_target_group.target_group.id"
+                    ],
+                    "type": [
+                      "forward"
+                    ]
+                  }
+                ],
+                "load_balancer_arn": [
+                  "aws_alb.application_load_balancer.id"
+                ],
+                "port": [
+                  "80"
+                ],
+                "protocol": [
+                  "HTTP"
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "ssl_policy",
+            "default_action/type",
+            "default_action/redirect/protocol",
+            "protocol",
+            "load_balancer_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          457,
+          466
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lb_listener.listener",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "role": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_role.ecs-instance-role",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_56",
+        "check_len": null,
+        "check_name": "Ensure AWS Managed IAMFullAccess IAM policy is not used.",
+        "check_result": {
+          "entity": {
+            "aws_iam_role_policy_attachment": {
+              "ecs-instance-role-attachment-2": {
+                "__address__": "aws_iam_role_policy_attachment.ecs-instance-role-attachment-2",
+                "__end_line__": 200,
+                "__provider_address__": "aws.default",
+                "__start_line__": 197,
+                "policy_arn": [
+                  "arn:aws:iam::aws:policy/IAMFullAccess"
+                ],
+                "role": [
+                  "ecs-instance-role"
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "name",
+            "managed_policy_arn",
+            "managed_policy_arns/*",
+            "policy_arn",
+            "arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          197,
+          200
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_role_policy_attachment.ecs-instance-role-attachment-2",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_40",
+        "check_len": null,
+        "check_name": "Ensure AWS IAM policy does not allow full IAM privileges",
+        "check_result": {
+          "entity": {
+            "aws_iam_policy": {
+              "ec2_deployer_admin_policy": {
+                "__address__": "aws_iam_policy.ec2_deployer_admin_policy",
+                "__end_line__": 293,
+                "__provider_address__": "aws.default",
+                "__start_line__": 278,
+                "name": [
+                  "ec2DeployerAdmin-policy"
+                ],
+                "policy": [
+                  {
+                    "Statement": [
+                      {
+                        "Action": [
+                          "*"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": "*",
+                        "Sid": "Policy1"
+                      }
+                    ],
+                    "Version": "2012-10-17"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "policy/Statement[?(@/Effect == Allow)]/Action[*]",
+            "inline_policy/Statement[?(@/Effect == Allow)]/Action[*]",
+            "statement[?(@/effect == Allow)]/actions[*]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          278,
+          293
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_policy.ec2_deployer_admin_policy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_28",
+        "check_len": null,
+        "check_name": "Ensure public facing ALB are protected by WAF",
+        "check_result": {
+          "entity": {
+            "aws_alb": {
+              "application_load_balancer": {
+                "__address__": "aws_alb.application_load_balancer",
+                "__end_line__": 443,
+                "__provider_address__": "aws.default",
+                "__start_line__": 433,
+                "internal": [
+                  false
+                ],
+                "load_balancer_type": [
+                  "application"
+                ],
+                "name": [
+                  "aws-goat-m2-alb"
+                ],
+                "security_groups": [
+                  [
+                    "aws_security_group.load_balancer_security_group.id"
+                  ]
+                ],
+                "subnets": [
+                  [
+                    "aws_subnet.lab-subnet-public-1.id",
+                    "aws_subnet.lab-subnet-public-1b.id"
+                  ]
+                ],
+                "tags": [
+                  {
+                    "Name": "aws-goat-m2-alb"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "internal",
+            "load_balancer_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-alb"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          433,
+          443
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_alb.application_load_balancer",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_144",
+        "check_len": null,
+        "check_name": "Ensure that S3 bucket has cross-region replication enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "rule/*/status",
+            "replication_configuration/rules/*/status",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_20",
+        "check_len": null,
+        "check_name": "Ensure that ALB redirects HTTP requests into HTTPS ones",
+        "check_result": {
+          "entity": {
+            "aws_alb": {
+              "application_load_balancer": {
+                "__address__": "aws_alb.application_load_balancer",
+                "__end_line__": 443,
+                "__provider_address__": "aws.default",
+                "__start_line__": 433,
+                "internal": [
+                  false
+                ],
+                "load_balancer_type": [
+                  "application"
+                ],
+                "name": [
+                  "aws-goat-m2-alb"
+                ],
+                "security_groups": [
+                  [
+                    "aws_security_group.load_balancer_security_group.id"
+                  ]
+                ],
+                "subnets": [
+                  [
+                    "aws_subnet.lab-subnet-public-1.id",
+                    "aws_subnet.lab-subnet-public-1b.id"
+                  ]
+                ],
+                "tags": [
+                  {
+                    "Name": "aws-goat-m2-alb"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "default_action/type",
+            "port",
+            "default_action/redirect/*/protocol",
+            "default_action/redirect/*/port",
+            "protocol"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-alb"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          433,
+          443
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_alb.application_load_balancer",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_378",
+        "check_len": null,
+        "check_name": "Ensure AWS Load Balancer doesn't use HTTP protocol",
+        "check_result": {
+          "entity": {
+            "aws_lb_target_group": {
+              "target_group": {
+                "__address__": "aws_lb_target_group.target_group",
+                "__end_line__": 455,
+                "__provider_address__": "aws.default",
+                "__start_line__": 445,
+                "name": [
+                  "aws-goat-m2-tg"
+                ],
+                "port": [
+                  80
+                ],
+                "protocol": [
+                  "HTTP"
+                ],
+                "tags": [
+                  {
+                    "Name": "aws-goat-m2-tg"
+                  }
+                ],
+                "target_type": [
+                  "instance"
+                ],
+                "vpc_id": [
+                  "aws_vpc.lab-vpc.id"
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "resource_type",
+            "protocol"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Name": "aws-goat-m2-tg"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          445,
+          455
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lb_target_group.target_group",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_21",
+        "check_len": null,
+        "check_name": "Ensure all data stored in the S3 bucket have versioning enabled",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "versioning_configuration/status",
+            "resource_type",
+            "versioning/enabled"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV_AWS_145",
+        "check_len": null,
+        "check_name": "Ensure that S3 buckets are encrypted with KMS by default",
+        "check_result": {
+          "entity": {
+            "aws_s3_bucket": {
+              "bucket_tf_files": {
+                "__address__": "aws_s3_bucket.bucket_tf_files",
+                "__end_line__": 523,
+                "__provider_address__": "aws.default",
+                "__start_line__": 516,
+                "bucket": [
+                  "do-not-delete-awsgoat-state-files-${data.aws_caller_identity.current.account_id}"
+                ],
+                "force_destroy": [
+                  true
+                ],
+                "tags": [
+                  {
+                    "Environment": "Dev",
+                    "Name": "Do not delete Bucket"
+                  }
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "server_side_encryption_configuration/rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "rule/apply_server_side_encryption_by_default/sse_algorithm",
+            "resource_type"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": {
+          "Environment": "Dev",
+          "Name": "Do not delete Bucket"
+        },
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          516,
+          523
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_s3_bucket.bucket_tf_files",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 60,
+    "parsing_errors": 0,
+    "passed": 75,
+    "resource_count": 40,
+    "skipped": 0
+  }
+}

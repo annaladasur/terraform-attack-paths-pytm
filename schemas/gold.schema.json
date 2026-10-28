@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/Tier-1 gold labels",
+  "title": "Tier-1 gold labels",
+  "description": "Human labels for a synthetic fixture.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "fixture",
+    "labeled_edge_types",
+    "expected_edges",
+    "expected_paths",
+    "review"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer"
+    },
+    "fixture": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "labeled_edge_types": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "DEPENDS_ON",
+          "CONTAINS",
+          "ATTACHES",
+          "EXPOSES",
+          "ROUTES_TO",
+          "TRUSTS",
+          "ASSUMES",
+          "ALLOWS",
+          "READS",
+          "WRITES",
+          "ESCALATES",
+          "RESOLVES_TO"
+        ]
+      }
+    },
+    "expected_edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "src",
+          "dst"
+        ]
+      }
+    },
+    "expected_iam": {
+      "type": "array"
+    },
+    "expected_paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "hops"
+        ],
+        "properties": {
+          "label": {
+            "enum": [
+              "VALID",
+              "PARTIALLY VALID"
+            ]
+          },
+          "hops": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preconditions": {
+            "type": "array"
+          },
+          "priority": {
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          }
+        }
+      }
+    },
+    "expected_false_paths": {
+      "type": "array"
+    },
+    "review": {
+      "type": "object"
+    }
+  }
+}

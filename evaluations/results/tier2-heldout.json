@@ -1,0 +1,306 @@
+{
+  "cases": [
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-beanstalk_secrets",
+      "license": "BSD-3-Clause",
+      "modeled": 20,
+      "paths": 4,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 24,
+      "runtime_ms": 203,
+      "scanner_findings": {
+        "checkov": 24,
+        "tfsec": 10,
+        "trivy": 7
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 1,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.low_priv_user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_secretsmanager_secret.final_flag"
+          }
+        ],
+        "tn": 0,
+        "tp": 0,
+        "unlabeled_paths": [
+          "aws_iam_user.admin_user -> aws:account-admin",
+          "aws_iam_user.admin_user -> aws_secretsmanager_secret.final_flag",
+          "aws_iam_user.secondary_user -> aws:account-admin",
+          "aws_iam_user.secondary_user -> aws_secretsmanager_secret.final_flag"
+        ]
+      },
+      "semantic_edges": 11,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-secrets_in_the_cloud",
+      "license": "BSD-3-Clause",
+      "modeled": 27,
+      "paths": 3,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 36,
+      "runtime_ms": 78,
+      "scanner_findings": {
+        "checkov": 32,
+        "tfsec": 26,
+        "trivy": 23
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 1,
+        "out_of_scope_found": 1,
+        "rows": [
+          {
+            "entry": "aws_iam_user.low_priv_user",
+            "found": true,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_secretsmanager_secret.this"
+          }
+        ],
+        "tn": 0,
+        "tp": 0,
+        "unlabeled_paths": [
+          "aws_iam_user.secrets_manager_user -> aws_secretsmanager_secret.this",
+          "internet -> aws_secretsmanager_secret.this"
+        ]
+      },
+      "semantic_edges": 30,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-vpc_peering_overexposed",
+      "license": "BSD-3-Clause",
+      "modeled": 30,
+      "paths": 0,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 43,
+      "runtime_ms": 98,
+      "scanner_findings": {
+        "checkov": 38,
+        "tfsec": 28,
+        "trivy": 25
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 2,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "internet",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_db_instance.customer_db"
+          },
+          {
+            "entry": "aws_iam_user.initial_user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_db_instance.customer_db"
+          }
+        ],
+        "tn": 0,
+        "tp": 0,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 33,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-rds_snapshot",
+      "license": "BSD-3-Clause",
+      "modeled": 16,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 21,
+      "runtime_ms": 43,
+      "scanner_findings": {
+        "checkov": 34,
+        "tfsec": 32,
+        "trivy": 25
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 1,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "internet",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_db_instance.cg-rds-db_instance"
+          },
+          {
+            "entry": "aws_iam_user.cg-david",
+            "found": true,
+            "label": "VALID",
+            "target": "aws_db_instance.cg-rds-db_instance"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 18,
+      "terraform": "current",
+      "unresolved_policies": 0
+    },
+    {
+      "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "id": "cloudgoat-codebuild_secrets",
+      "license": "BSD-3-Clause",
+      "modeled": 34,
+      "paths": 1,
+      "repo": "https://github.com/RhinoSecurityLabs/cloudgoat",
+      "resources": 38,
+      "runtime_ms": 75,
+      "scanner_findings": {
+        "checkov": 42,
+        "tfsec": 23,
+        "trivy": 18
+      },
+      "score": {
+        "fn": 0,
+        "fp": 0,
+        "out_of_scope": 1,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "aws_iam_user.cg-solo",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws_db_instance.cg-psql-rds"
+          },
+          {
+            "entry": "aws_iam_user.cg-calrissian",
+            "found": true,
+            "label": "VALID",
+            "target": "aws_db_instance.cg-psql-rds"
+          }
+        ],
+        "tn": 0,
+        "tp": 1,
+        "unlabeled_paths": []
+      },
+      "semantic_edges": 30,
+      "terraform": "current",
+      "unresolved_policies": 0
+    }
+  ],
+  "command": ".venv/bin/tapm tier2 --heldout --write-results",
+  "git_sha": {
+    "code": "70758b1db6895bc658f70c465089eb7540cc58b5",
+    "gold": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+    "gold_commit": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+    "gold_files": {
+      "evaluations/tier2/gold/cloudgoat-beanstalk_secrets.yaml": "d4d6fa5e85ea7c9df66a83baad9d74038c7e8a64ec3168e208418f46489f71b2",
+      "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml": "9217133604280c6c8b44db6913351a5ba93518b42770706c0cbdf8ef02f230fb",
+      "evaluations/tier2/gold/cloudgoat-rds_snapshot.yaml": "7a73b438f6def4bb6e79b65296a90b48461d687295cb76e555f47a1892e6d4af",
+      "evaluations/tier2/gold/cloudgoat-secrets_in_the_cloud.yaml": "949df85172e1811b008ba80a797fc1e4cb6fc1a3b4ff2f24a3a9625d551f0565",
+      "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml": "2aa01b4aeeb27bcf871ac95c582e1bf3730958e49045ed316bb342ef8cab86ee"
+    }
+  },
+  "gold_commit": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+  "gold_files": {
+    "evaluations/tier2/gold/cloudgoat-beanstalk_secrets.yaml": "d4d6fa5e85ea7c9df66a83baad9d74038c7e8a64ec3168e208418f46489f71b2",
+    "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml": "9217133604280c6c8b44db6913351a5ba93518b42770706c0cbdf8ef02f230fb",
+    "evaluations/tier2/gold/cloudgoat-rds_snapshot.yaml": "7a73b438f6def4bb6e79b65296a90b48461d687295cb76e555f47a1892e6d4af",
+    "evaluations/tier2/gold/cloudgoat-secrets_in_the_cloud.yaml": "949df85172e1811b008ba80a797fc1e4cb6fc1a3b4ff2f24a3a9625d551f0565",
+    "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml": "2aa01b4aeeb27bcf871ac95c582e1bf3730958e49045ed316bb342ef8cab86ee"
+  },
+  "markdown": "Run `heldout`: 5 cases. Reachability over VALID/INVALID labels: TP 2, FN 0, FP 0, TN 0; precision 1.0, recall 1.0.\n\n| Case | Commit | Resources (modeled) | Findings C/tf/T | Paths | TP | FN | FP | TN | Out of scope (found) | Runtime |\n|---|---|---|---|---|---|---|---|---|---|---|\n| cloudgoat-beanstalk_secrets | `abf1ba8` | 24 (20) | 24/10/7 | 4 | 0 | 0 | 0 | 0 | 1 (0) | 203 ms |\n| cloudgoat-secrets_in_the_cloud | `abf1ba8` | 36 (27) | 32/26/23 | 3 | 0 | 0 | 0 | 0 | 1 (1) | 78 ms |\n| cloudgoat-vpc_peering_overexposed | `abf1ba8` | 43 (30) | 38/28/25 | 0 | 0 | 0 | 0 | 0 | 2 (0) | 98 ms |\n| cloudgoat-rds_snapshot | `abf1ba8` | 21 (16) | 34/32/25 | 1 | 1 | 0 | 0 | 0 | 1 (0) | 43 ms |\n| cloudgoat-codebuild_secrets | `abf1ba8` | 38 (34) | 42/23/18 | 1 | 1 | 0 | 0 | 0 | 1 (0) | 75 ms |",
+  "metadata": {
+    "command": ".venv/bin/tapm tier2 --heldout --write-results",
+    "git_sha": {
+      "code": "70758b1db6895bc658f70c465089eb7540cc58b5",
+      "gold": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+      "gold_commit": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+      "gold_files": {
+        "evaluations/tier2/gold/cloudgoat-beanstalk_secrets.yaml": "d4d6fa5e85ea7c9df66a83baad9d74038c7e8a64ec3168e208418f46489f71b2",
+        "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml": "9217133604280c6c8b44db6913351a5ba93518b42770706c0cbdf8ef02f230fb",
+        "evaluations/tier2/gold/cloudgoat-rds_snapshot.yaml": "7a73b438f6def4bb6e79b65296a90b48461d687295cb76e555f47a1892e6d4af",
+        "evaluations/tier2/gold/cloudgoat-secrets_in_the_cloud.yaml": "949df85172e1811b008ba80a797fc1e4cb6fc1a3b4ff2f24a3a9625d551f0565",
+        "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml": "2aa01b4aeeb27bcf871ac95c582e1bf3730958e49045ed316bb342ef8cab86ee"
+      }
+    },
+    "gold_commit": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+    "gold_files": {
+      "evaluations/tier2/gold/cloudgoat-beanstalk_secrets.yaml": "d4d6fa5e85ea7c9df66a83baad9d74038c7e8a64ec3168e208418f46489f71b2",
+      "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml": "9217133604280c6c8b44db6913351a5ba93518b42770706c0cbdf8ef02f230fb",
+      "evaluations/tier2/gold/cloudgoat-rds_snapshot.yaml": "7a73b438f6def4bb6e79b65296a90b48461d687295cb76e555f47a1892e6d4af",
+      "evaluations/tier2/gold/cloudgoat-secrets_in_the_cloud.yaml": "949df85172e1811b008ba80a797fc1e4cb6fc1a3b4ff2f24a3a9625d551f0565",
+      "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml": "2aa01b4aeeb27bcf871ac95c582e1bf3730958e49045ed316bb342ef8cab86ee"
+    },
+    "tag": "heldout",
+    "tool_versions": {
+      "checkov": "3.3.20",
+      "terraform": "1.16.4",
+      "tfsec": "v1.28.14",
+      "trivy": "0.74.0"
+    }
+  },
+  "summary": {
+    "cases": 5,
+    "command": ".venv/bin/tapm tier2 --heldout --write-results",
+    "fn": 0,
+    "fp": 0,
+    "git_sha": {
+      "code": "70758b1db6895bc658f70c465089eb7540cc58b5",
+      "gold": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+      "gold_commit": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+      "gold_files": {
+        "evaluations/tier2/gold/cloudgoat-beanstalk_secrets.yaml": "d4d6fa5e85ea7c9df66a83baad9d74038c7e8a64ec3168e208418f46489f71b2",
+        "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml": "9217133604280c6c8b44db6913351a5ba93518b42770706c0cbdf8ef02f230fb",
+        "evaluations/tier2/gold/cloudgoat-rds_snapshot.yaml": "7a73b438f6def4bb6e79b65296a90b48461d687295cb76e555f47a1892e6d4af",
+        "evaluations/tier2/gold/cloudgoat-secrets_in_the_cloud.yaml": "949df85172e1811b008ba80a797fc1e4cb6fc1a3b4ff2f24a3a9625d551f0565",
+        "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml": "2aa01b4aeeb27bcf871ac95c582e1bf3730958e49045ed316bb342ef8cab86ee"
+      }
+    },
+    "gold_commit": "2a199ec35131be87bfa0c489516aad5cb38187d4",
+    "gold_files": {
+      "evaluations/tier2/gold/cloudgoat-beanstalk_secrets.yaml": "d4d6fa5e85ea7c9df66a83baad9d74038c7e8a64ec3168e208418f46489f71b2",
+      "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml": "9217133604280c6c8b44db6913351a5ba93518b42770706c0cbdf8ef02f230fb",
+      "evaluations/tier2/gold/cloudgoat-rds_snapshot.yaml": "7a73b438f6def4bb6e79b65296a90b48461d687295cb76e555f47a1892e6d4af",
+      "evaluations/tier2/gold/cloudgoat-secrets_in_the_cloud.yaml": "949df85172e1811b008ba80a797fc1e4cb6fc1a3b4ff2f24a3a9625d551f0565",
+      "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml": "2aa01b4aeeb27bcf871ac95c582e1bf3730958e49045ed316bb342ef8cab86ee"
+    },
+    "labeled_invalid": 0,
+    "labeled_valid": 2,
+    "paths_emitted": 9,
+    "paths_scored": 2,
+    "paths_unadjudicated": 0,
+    "reachability_precision": 1.0,
+    "reachability_recall": 1.0,
+    "tag": "heldout",
+    "tn": 0,
+    "tool_versions": {
+      "checkov": "3.3.20",
+      "terraform": "1.16.4",
+      "tfsec": "v1.28.14",
+      "trivy": "0.74.0"
+    },
+    "tp": 2
+  },
+  "tag": "heldout",
+  "tool_versions": {
+    "checkov": "3.3.20",
+    "terraform": "1.16.4",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  }
+}

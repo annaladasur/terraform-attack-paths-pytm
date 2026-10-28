@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terraform-attack-paths-pytm"
+version = "0.1.0"
+description = "Terraform plan -> typed security graph -> executable PyTM model -> attack paths, with evidence-bound AI enrichment."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "pytm==1.4.0",
+  "python-hcl2==8.1.4",
+  "jsonschema>=4.20,<5",
+  "PyYAML>=6.0,<7",
+]
+
+[project.optional-dependencies]
+scanners = ["checkov==3.3.20"]
+anthropic = ["anthropic>=0.40"]
+openai = ["openai>=1.50"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+tapm = "tapm.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+tapm = ["ai/*.json", "ai/prompts/*.md", "ai/vocab/*.json", "iam/data/*.json", "pytm_gen/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

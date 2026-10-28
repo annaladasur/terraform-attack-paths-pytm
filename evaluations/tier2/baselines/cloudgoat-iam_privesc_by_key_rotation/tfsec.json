@@ -1,0 +1,119 @@
+{
+  "results": [
+    {
+      "description": "IAM policy document uses sensitive action 'iam:UntagUser' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 62,
+        "filename": "iam_manager.tf",
+        "start_line": 62
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.manager_tag_resources",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 4,
+        "filename": "iam_manager.tf",
+        "start_line": 1
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.manager",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 10,
+        "filename": "iam_developer.tf",
+        "start_line": 3
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.developer",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 4,
+        "filename": "iam_admin.tf",
+        "start_line": 1
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.admin",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Secret explicitly uses the default key.",
+      "impact": "Using AWS managed keys reduces the flexibility and control over the encryption key",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ssm/secret-use-customer-key/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id"
+      ],
+      "location": {
+        "end_line": 6,
+        "filename": "secrets.tf",
+        "start_line": 2
+      },
+      "long_id": "aws-ssm-secret-use-customer-key",
+      "resolution": "Use customer managed keys",
+      "resource": "aws_secretsmanager_secret.primary_secret",
+      "rule_description": "Secrets Manager should use customer managed keys",
+      "rule_id": "AVD-AWS-0098",
+      "rule_provider": "aws",
+      "rule_service": "ssm",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

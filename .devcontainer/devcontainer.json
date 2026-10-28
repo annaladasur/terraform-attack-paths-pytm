@@ -1,0 +1,10 @@
+{
+  "name": "terraform-attack-paths-pytm",
+  "build": { "dockerfile": "../Dockerfile", "context": ".." },
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": { "extensions": ["hashicorp.terraform", "ms-python.python", "bierner.markdown-mermaid"] }
+  },
+  "postCreateCommand": "make test",
+  "remoteUser": "lab"
+}

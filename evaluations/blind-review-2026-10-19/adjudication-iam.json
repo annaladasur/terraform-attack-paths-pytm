@@ -1,0 +1,669 @@
+{
+  "reviewer": {
+    "identity": "Codex automated independent final IAM adjudicator /root/blind_cloudgoat",
+    "human_reviewer": false,
+    "phase": "post-seal adjudication; this adjudicator did not author the blinded IAM mapping"
+  },
+  "scope": "All and only IAM differing pairs from comparison.json; no original gold or benchmark result edits.",
+  "coverage": {
+    "differing_pairs": 14,
+    "adjudicated_pairs": 14,
+    "recommendation_counts": {
+      "OUT_OF_SCOPE": 10,
+      "INVALID": 3,
+      "VALID": 1
+    },
+    "proposed_gold_corrections": 6
+  },
+  "plan_sha256": "a4157877c79fe39608e7f33cc8c117b53316f9971e82714f831f185a962d8bc5",
+  "protocol": {
+    "source": "evaluations/tier2/gold/iam-vulnerable.yaml header",
+    "original_labels": [
+      "VALID",
+      "INVALID",
+      "OUT_OF_SCOPE"
+    ],
+    "interpretation": "VALID is a documented conditional exploitation route supported by required authorization, including attacker-created workloads. OUT_OF_SCOPE applies where essential credential-data, disabled module or runtime state cannot be established by this plan. INVALID applies where the exact named entry lacks required authorization/trust. PARTIALLY_VALID is mapped to these original categories; it is not silently treated as proof.",
+    "scope_inconsistency": "The gold used README Non-Default Modules Required=None as a proxy for VALID. No optional module is not equivalent to no missing runtime history, login profile, source event or usable role session. This adjudication gives explicit precedence to the header runtime-state exclusion and exact entry-to-target semantics.",
+    "documented_pattern_vs_plan": "README indeed documents all disputed original VALID techniques as supported with no optional module. Such documentation establishes intended technique, not the existence of missing role control/history/event sources in this particular plan."
+  },
+  "source_material": [
+    "evaluations/blind-review-2026-10-19/comparison.json",
+    "evaluations/blind-review-2026-10-19/iam-review.json",
+    "evaluations/tier2/gold/iam-vulnerable.yaml",
+    "evaluations/tier2/plans/iam-vulnerable.json.gz",
+    ".tools/tier2-repos/bishopfox/iam-vulnerable/README.md",
+    ".tools/tier2-repos/bishopfox/iam-vulnerable/main.tf",
+    ".tools/tier2-repos/bishopfox/iam-vulnerable/modules/free-resources/privesc-paths/privesc-AssumeRole.tf"
+  ],
+  "global_raw_evidence": {
+    "resource_type_counts": {
+      "aws_iam_access_key": 41,
+      "aws_iam_group": 3,
+      "aws_iam_group_membership": 3,
+      "aws_iam_group_policy_attachment": 1,
+      "aws_iam_instance_profile": 1,
+      "aws_iam_policy": 44,
+      "aws_iam_role": 45,
+      "aws_iam_role_policy_attachment": 45,
+      "aws_iam_user": 41,
+      "aws_iam_user_policy_attachment": 41
+    },
+    "supplemental_resources": [
+      {
+        "resource": "module.privesc-paths.aws_iam_role.privesc9-AttachRolePolicy-role",
+        "raw_plan_values": {
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:sts::123456789012:user/moto\"},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+          "description": null,
+          "force_detach_policies": false,
+          "max_session_duration": 3600,
+          "name": "privesc9-AttachRolePolicy-role",
+          "path": "/",
+          "permissions_boundary": null,
+          "tags": null
+        }
+      },
+      {
+        "resource": "module.privesc-paths.aws_iam_role.privesc12-PutRolePolicy-role",
+        "raw_plan_values": {
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:sts::123456789012:user/moto\"},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+          "description": null,
+          "force_detach_policies": false,
+          "max_session_duration": 3600,
+          "name": "privesc12-PutRolePolicy-role",
+          "path": "/",
+          "permissions_boundary": null,
+          "tags": null
+        }
+      },
+      {
+        "resource": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-starting-role",
+        "raw_plan_values": {
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:sts::123456789012:user/moto\"},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+          "description": null,
+          "force_detach_policies": false,
+          "max_session_duration": 3600,
+          "name": "privesc-AssumeRole-starting-role",
+          "path": "/",
+          "permissions_boundary": null,
+          "tags": null
+        }
+      },
+      {
+        "resource": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "raw_plan_values": {
+          "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":[\"ec2.amazonaws.com\",\"datapipeline.amazonaws.com\",\"cloudformation.amazonaws.com\",\"lambda.amazonaws.com\",\"glue.amazonaws.com\",\"ecs-tasks.amazonaws.com\",\"codebuild.amazonaws.com\",\"eks.amazonaws.com\",\"sagemaker.amazonaws.com\",\"elasticbeanstalk.amazonaws.com\"]},\"Sid\":\"\"}],\"Version\":\"2012-10-17\"}",
+          "description": null,
+          "force_detach_policies": false,
+          "max_session_duration": 3600,
+          "name": "privesc-high-priv-service-role",
+          "path": "/",
+          "permissions_boundary": null,
+          "tags": null
+        }
+      },
+      {
+        "resource": "module.privesc-paths.aws_iam_policy.privesc-high-priv-service-policy",
+        "raw_plan_values": {
+          "delay_after_policy_creation_in_ms": null,
+          "description": "High priv policy",
+          "name": "privesc-high-priv-service-policy",
+          "path": "/",
+          "policy": "{\"Statement\":[{\"Action\":\"*\",\"Effect\":\"Allow\",\"Resource\":\"*\"}],\"Version\":\"2012-10-17\"}",
+          "tags": null
+        }
+      },
+      {
+        "resource": "module.privesc-paths.aws_iam_instance_profile.privesc-high-priv-service-policy_profile",
+        "raw_plan_values": {
+          "name": "privesc-high-priv-service-profile",
+          "path": "/",
+          "role": "privesc-high-priv-service-role",
+          "tags": null
+        }
+      }
+    ],
+    "entry_authorization_audit": "All user attachments and group memberships were enumerated from the plan. AssumeRole-start-user has no attachment/membership. AttachRolePolicy and PutRolePolicy users have only their identically named mutation policies; ordinary role trust names arn:aws:sts::123456789012:user/moto. This deployment-caller placeholder is not any candidate user.",
+    "optional_modules": "main.tf comments out cloudformation, ec2, sagemaker, lambda, glue; plan contains only IAM resources and no instances/functions/stacks/notebooks/endpoints.",
+    "scope_warnings": [
+      "arn:aws:sts::123456789012:user/moto is a captured deployment-caller placeholder and should not be mistaken for a valid candidate IAM user ARN or a universal trust.",
+      "No AWS calls, actual exploitation or deployment performed. Named service availability and current enrollment requirements were not checked.",
+      "The retained Data Pipeline VALID recommendation is a conditional documented mechanism, not proof that the current account can deploy/run a pipeline."
+    ]
+  },
+  "adjudications": [
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Change original VALID to OUT_OF_SCOPE: rollback privilege is real, but the required privileged non-default version is runtime history absent from this fresh plan. README says no optional module, which does not supply that history.",
+      "difference_type": "gold scope inconsistency; documented conditional path is not plan-established",
+      "remaining_preconditions": [
+        "An attached policy must have a privileged non-default version; SetDefaultPolicyVersion cannot create one."
+      ],
+      "genuine_gold_problem": true,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc2-SetExistingDefaultPolicyVersion",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": "iam:SetDefaultPolicyVersion",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "propose correction in a separate reviewed gold revision; original untouched"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Change original VALID to OUT_OF_SCOPE: UpdateLoginProfile requires a pre-existing privileged login profile, and none is in this IAM-only plan. This is exactly a runtime-state dependency under the original header.",
+      "difference_type": "gold scope inconsistency",
+      "remaining_preconditions": [
+        "Existing administrator-equivalent login profile; usable console sign-in and no unavailable MFA."
+      ],
+      "genuine_gold_problem": true,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc6-UpdateLoginProfile",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": "iam:UpdateLoginProfile",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "propose correction in a separate reviewed gold revision; original untouched"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "INVALID",
+      "resolution": "Change original VALID to INVALID for this exact entry: attaching administrator policy to a role cannot make the entry administrative without an independently usable role. Every visible ordinary role trusts the deployment caller, not this user; entry lacks an assumption/execution grant.",
+      "difference_type": "genuine entry-to-target authorization gap",
+      "remaining_preconditions": [
+        "A matching direct user trust or separately authorized role/session/service execution would change the configuration."
+      ],
+      "genuine_gold_problem": true,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc9-AttachRolePolicy",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": "iam:AttachRolePolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": false,
+      "gold_action": "propose correction in a separate reviewed gold revision; original untouched"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "INVALID",
+      "resolution": "Change original VALID to INVALID for this exact entry: PutRolePolicy changes permissions of a role but not its trust or the entry identity. No usable privileged role session is reachable from the named user.",
+      "difference_type": "genuine entry-to-target authorization gap",
+      "remaining_preconditions": [
+        "A controlled role session or independently authorized execution path, not merely a role that can be modified."
+      ],
+      "genuine_gold_problem": true,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc12-PutRolePolicy",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": "iam:PutRolePolicy",
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": false,
+      "gold_action": "propose correction in a separate reviewed gold revision; original untouched"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Change original VALID to OUT_OF_SCOPE: the user can create/wire privileged Lambda code but cannot create/write DynamoDB, invoke the function, or point to any represented existing event source. The missing active source/producer is runtime state, not an ordinary consequence of the listed grants.",
+      "difference_type": "gold scope inconsistency and missing trigger capability",
+      "remaining_preconditions": [
+        "An existing supported stream/queue with arriving events and permissions for the execution role; an active mapping."
+      ],
+      "genuine_gold_problem": true,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "lambda:CreateFunction",
+                  "iam:PassRole",
+                  "lambda:CreateEventSourceMapping"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "propose correction in a separate reviewed gold revision; original untouched"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "VALID",
+      "resolution": "Retain original VALID as a conditional service-creation threat path. CreatePipeline, PutPipelineDefinition and ActivatePipeline let the attacker define an EC2 resource/task runner as part of the new pipeline, so absence of a pre-existing worker is not itself a missing optional target. PassRole covers the admin service role and existing profile.",
+      "difference_type": "blind review applied overly strict pre-existing-runtime requirement",
+      "remaining_preconditions": [
+        "Data Pipeline must be available/enabled for the account/region; a valid attacker pipeline definition must provision or use an executable worker and run commands. Service quota, networking, bootstrap and execution must succeed."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc21-PassExistingRoleToNewDataPipeline",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": "iam:PassRole",
+                "Effect": "Allow",
+                "Resource": "*"
+              },
+              {
+                "Action": [
+                  "datapipeline:CreatePipeline",
+                  "datapipeline:PutPipelineDefinition",
+                  "datapipeline:ActivatePipeline"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "blind_automated_label": "INVALID",
+      "recommended_label": "INVALID",
+      "resolution": "Change original VALID to INVALID for this exact entry. Source defines the user and key but gives it no identity policy or group membership; starting-role trust names the deployment caller instead. Intermediate/ending trust links do not repair the missing first hop.",
+      "difference_type": "genuine incorrect entry identity in gold",
+      "remaining_preconditions": [
+        "A starting-role session or changed trust granting this user access would be a different entry/configuration."
+      ],
+      "genuine_gold_problem": true,
+      "raw_policy_evidence": [],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": false,
+      "gold_action": "propose correction in a separate reviewed gold revision; original untouched"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: the CloudFormation module is disabled, no stack or stack service-role binding exists in plan, and UpdateStack alone cannot create it.",
+      "difference_type": "protocol mismatch; dangerous primitive without disabled target",
+      "remaining_preconditions": [
+        "An existing updateable stack already using an administrative service role; attacker-controlled valid template changes."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-CloudFormationUpdateStack",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "cloudformation:UpdateStack",
+                  "cloudformation:DescribeStacks"
+                ],
+                "Effect": "Allow",
+                "Resource": "*",
+                "Sid": "VisualEditor0"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: EC2 module is disabled and plan has no instance/SSH or serial-console channel. Public-key sending permission is not an existing OS session or account-admin role binding.",
+      "difference_type": "protocol mismatch; missing disabled module",
+      "remaining_preconditions": [
+        "Compatible reachable EC2 target with privileged profile, functioning Instance Connect/SSH or serial-console access, known OS user and necessary channel setup."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-ec2InstanceConnect-policy",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ec2-instance-connect:SendSSHPublicKey",
+                  "ec2-instance-connect:SendSerialConsoleSSHPublicKey"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: SageMaker module is disabled, so there is no notebook or execution-role association for the presigned URL primitive to exploit.",
+      "difference_type": "protocol mismatch; missing disabled module",
+      "remaining_preconditions": [
+        "Existing usable notebook with an administrative execution role and accessible presigned session."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-sageMakerCreatePresignedNotebookURL-policy",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "sagemaker:CreatePresignedNotebookInstanceUrl",
+                  "sagemaker:ListNotebookInstances"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: EC2 module is disabled; managed-instance core policy on a role is not a registered host. No instance exists for the command primitive.",
+      "difference_type": "protocol mismatch; missing disabled module",
+      "remaining_preconditions": [
+        "A registered managed instance with working SSM agent/connectivity, applicable command document permissions and an administrative instance role."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-ssmSendCommand-policy",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ssm:listCommands",
+                  "ssm:listCommandInvocations",
+                  "ssm:sendCommand"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: no managed instance exists because EC2 module is disabled; StartSession authorization alone cannot provide a host or credentials.",
+      "difference_type": "protocol mismatch; missing disabled module",
+      "remaining_preconditions": [
+        "Session-capable managed instance with working agent/connectivity, accessible session document and administrative profile."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc-ssmStartSession-policy",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "ec2:DescribeInstances",
+                  "ssm:StartSession",
+                  "ssm:DescribeSessions",
+                  "ssm:GetConnectionStatus",
+                  "ssm:DescribeInstanceProperties",
+                  "ssm:TerminateSession",
+                  "ssm:ResumeSession"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: Lambda module is disabled. UpdateFunctionCode/Configuration cannot create the missing function and no trigger is represented.",
+      "difference_type": "protocol mismatch; missing disabled module",
+      "remaining_preconditions": [
+        "Existing privileged function plus invocation/trigger that actually executes attacker code."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc17-EditExistingLambdaFunctionWithRole",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "lambda:UpdateFunctionCode",
+                  "lambda:UpdateFunctionConfiguration"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+      "target": "aws:account-admin",
+      "original_label": "OUT_OF_SCOPE",
+      "blind_automated_label": "PARTIALLY_VALID",
+      "recommended_label": "OUT_OF_SCOPE",
+      "resolution": "Retain original OUT_OF_SCOPE: Glue module is disabled, and no endpoint exists for UpdateDevEndpoint/GetDevEndpoint to exploit.",
+      "difference_type": "protocol mismatch; missing disabled module",
+      "remaining_preconditions": [
+        "Existing reachable Glue development endpoint with a privileged execution role; successful key update and login."
+      ],
+      "genuine_gold_problem": false,
+      "raw_policy_evidence": [
+        {
+          "resource": "module.privesc-paths.aws_iam_policy.privesc19-UpdateExistingGlueDevEndpoint",
+          "raw_plan_policy": {
+            "Statement": [
+              {
+                "Action": [
+                  "glue:UpdateDevEndpoint",
+                  "glue:GetDevEndpoint"
+                ],
+                "Effect": "Allow",
+                "Resource": "*"
+              }
+            ],
+            "Version": "2012-10-17"
+          }
+        }
+      ],
+      "blind_assessment_reference": {
+        "file": "iam-review.json",
+        "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user"
+      },
+      "full_plan_only_proof": false,
+      "conditional_threat_path": true,
+      "gold_action": "retain original label; add explicit preconditions if documentation is revised"
+    }
+  ]
+}

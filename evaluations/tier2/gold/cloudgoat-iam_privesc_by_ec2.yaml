@@ -1,0 +1,14 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: cloudgoat-iam_privesc_by_ec2
+documented_by: README.md, Walkthrough - IAM User cg_dev_user
+targets:
+- aws:account-admin
+expected:
+- entry: aws_iam_user.dev_user
+  target: aws:account-admin
+  label: VALID
+  route: dev_user deletes the protecting tag (ec2:DeleteTags), assumes ec2_management_role, modifies admin_ec2 user data (ec2:ModifyInstanceAttribute,
+    Stop/Start) to run code with the instance's admin role

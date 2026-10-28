@@ -1,0 +1,212 @@
+{
+  "results": [
+    {
+      "description": "Security group explicitly uses the default description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 20,
+        "filename": "main.tf",
+        "start_line": 10
+      },
+      "long_id": "aws-ec2-add-description-to-security-group",
+      "resolution": "Add descriptions for all security groups",
+      "resource": "aws_security_group.worker",
+      "rule_description": "Missing description for security group.",
+      "rule_id": "AVD-AWS-0099",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule does not have a description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group-rule/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 19,
+        "filename": "main.tf",
+        "start_line": 14
+      },
+      "long_id": "aws-ec2-add-description-to-security-group-rule",
+      "resolution": "Add descriptions for all security groups rules",
+      "resource": "aws_security_group.worker",
+      "rule_description": "Missing description for security group rule.",
+      "rule_id": "AVD-AWS-0124",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Root block device is not encrypted.",
+      "impact": "The block device could be compromised and read from",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/enable-at-rest-encryption/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices"
+      ],
+      "location": {
+        "end_line": 69,
+        "filename": "main.tf",
+        "start_line": 58
+      },
+      "long_id": "aws-ec2-enable-at-rest-encryption",
+      "resolution": "Turn on encryption for all block devices",
+      "resource": "aws_instance.worker",
+      "rule_description": "Instance with unencrypted block device.",
+      "rule_id": "AVD-AWS-0131",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Instance does not require IMDS access to require a token",
+      "impact": "Instance metadata service can be interacted with freely",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/enforce-http-token-imds/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#metadata-options"
+      ],
+      "location": {
+        "end_line": 67,
+        "filename": "main.tf",
+        "start_line": 67
+      },
+      "long_id": "aws-ec2-enforce-http-token-imds",
+      "resolution": "Enable HTTP token requirement for IMDS",
+      "resource": "aws_instance.worker",
+      "rule_description": "aws_instance should activate session tokens for Instance Metadata Service.",
+      "rule_id": "AVD-AWS-0028",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "VPC Flow Logs is not enabled for VPC ",
+      "impact": "Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/"
+      ],
+      "location": {
+        "end_line": 3,
+        "filename": "main.tf",
+        "start_line": 1
+      },
+      "long_id": "aws-ec2-require-vpc-flow-logs-for-all-vpcs",
+      "resolution": "Enable flow logs for VPC",
+      "resource": "aws_vpc.main",
+      "rule_description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "rule_id": "AVD-AWS-0178",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have encryption enabled",
+      "impact": "The bucket objects could be read if compromised",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/enable-bucket-encryption/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption"
+      ],
+      "location": {
+        "end_line": 77,
+        "filename": "main.tf",
+        "start_line": 71
+      },
+      "long_id": "aws-s3-enable-bucket-encryption",
+      "resolution": "Configure bucket encryption",
+      "resource": "aws_s3_bucket.payroll",
+      "rule_description": "Unencrypted S3 bucket.",
+      "rule_id": "AVD-AWS-0088",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have logging enabled",
+      "impact": "There is no way to determine the access to this bucket",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/enable-bucket-logging/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket"
+      ],
+      "location": {
+        "end_line": 77,
+        "filename": "main.tf",
+        "start_line": 71
+      },
+      "long_id": "aws-s3-enable-bucket-logging",
+      "resolution": "Add a logging block to the resource to enable access logging",
+      "resource": "aws_s3_bucket.payroll",
+      "rule_description": "S3 Bucket does not have logging enabled.",
+      "rule_id": "AVD-AWS-0089",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have versioning enabled",
+      "impact": "Deleted or modified data would not be recoverable",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/enable-versioning/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning"
+      ],
+      "location": {
+        "end_line": 77,
+        "filename": "main.tf",
+        "start_line": 71
+      },
+      "long_id": "aws-s3-enable-versioning",
+      "resolution": "Enable versioning to protect against accidental/malicious removal or modification",
+      "resource": "aws_s3_bucket.payroll",
+      "rule_description": "S3 Data should be versioned",
+      "rule_id": "AVD-AWS-0090",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not encrypt data with a customer managed key.",
+      "impact": "Using AWS managed keys does not allow for fine grained control",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/encryption-customer-key/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption"
+      ],
+      "location": {
+        "end_line": 77,
+        "filename": "main.tf",
+        "start_line": 71
+      },
+      "long_id": "aws-s3-encryption-customer-key",
+      "resolution": "Enable encryption using customer managed keys",
+      "resource": "aws_s3_bucket.payroll",
+      "rule_description": "S3 encryption should use Customer Managed Keys",
+      "rule_id": "AVD-AWS-0132",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

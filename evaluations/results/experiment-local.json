@@ -1,0 +1,1146 @@
+{
+  "backend": "ollama",
+  "command": ".venv/bin/tapm experiment 006 -n 10 --llm ollama --model qwen3-coder:30b --write-results --tag local",
+  "fixture": "006-public-workload-iam-sensitive-bucket",
+  "git_sha": {
+    "code": "f94d4c503d213473931c43467e650c74841ac6a5",
+    "gold": "f94d4c503d213473931c43467e650c74841ac6a5",
+    "gold_commit": "f94d4c503d213473931c43467e650c74841ac6a5"
+  },
+  "metadata": {
+    "command": ".venv/bin/tapm experiment 006 -n 10 --llm ollama --model qwen3-coder:30b --write-results --tag local",
+    "git_sha": {
+      "code": "f94d4c503d213473931c43467e650c74841ac6a5",
+      "gold": "f94d4c503d213473931c43467e650c74841ac6a5",
+      "gold_commit": "f94d4c503d213473931c43467e650c74841ac6a5"
+    },
+    "gold_commit": "f94d4c503d213473931c43467e650c74841ac6a5",
+    "tag": "local",
+    "tool_versions": {
+      "checkov": "3.3.20",
+      "terraform": "1.16.4",
+      "tfsec": "v1.28.14",
+      "trivy": "0.74.0"
+    }
+  },
+  "model": "qwen3-coder:30b",
+  "tag": "local",
+  "tool_versions": {
+    "checkov": "3.3.20",
+    "terraform": "1.16.4",
+    "tfsec": "v1.28.14",
+    "trivy": "0.74.0"
+  },
+  "v1": {
+    "cost_usd": 0.0,
+    "distinct_flow_sets": 2,
+    "distinct_outputs": 2,
+    "distinct_path_sets": 1,
+    "flow_precision": {
+      "max": 0.5556,
+      "mean": 0.5556,
+      "min": 0.5556
+    },
+    "flow_recall": {
+      "max": 0.5714,
+      "mean": 0.5428,
+      "min": 0.2857
+    },
+    "hallucinated_resources": [],
+    "mean_pairwise_flow_jaccard": 0.9273,
+    "median_latency_ms": 21451.5,
+    "parsed": 10,
+    "per_run": [
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.2857,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_security_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_security_group.alb"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 33777,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "ce212066c0cd70b2babe003b2faa0ba9a4a0a59e5c8be935d58af35370dd1fbd",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 0,
+        "seed": 42,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 19068,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 1,
+        "seed": 43,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 20938,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 2,
+        "seed": 44,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 20932,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 3,
+        "seed": 45,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 21965,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 4,
+        "seed": 46,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 20241,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 5,
+        "seed": 47,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 20805,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 6,
+        "seed": 48,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 22231,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 7,
+        "seed": 49,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 22611,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 8,
+        "seed": 50,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      },
+      {
+        "backend": "ollama",
+        "cost_usd": 0.0,
+        "elements": [
+          "aws_iam_instance_profile.app",
+          "aws_iam_role.app",
+          "aws_iam_role_policy.app_s3",
+          "aws_instance.app",
+          "aws_lb.web",
+          "aws_lb_target_group.app",
+          "aws_route_table.public",
+          "aws_s3_bucket.customer_data",
+          "aws_s3_bucket.reports",
+          "aws_security_group.alb",
+          "aws_security_group.app",
+          "aws_subnet.app",
+          "aws_subnet.public_a",
+          "aws_subnet.public_b",
+          "aws_vpc.main",
+          "internet"
+        ],
+        "flow_precision": 0.5556,
+        "flow_recall": 0.5714,
+        "flows": [
+          [
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3"
+          ],
+          [
+            "aws_iam_role.app",
+            "aws_instance.app"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_instance.app",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "internet"
+          ]
+        ],
+        "hallucinated_resources": [],
+        "latency_ms": 22395,
+        "model": "qwen3-coder:30b",
+        "output_sha256": "8b8b5d51ced1fc857ee3f3e8f190ec3626e3926b7734a2daae564c373df6cd6a",
+        "paths": [
+          [
+            "internet",
+            "aws_lb.web",
+            "aws_lb_target_group.app",
+            "aws_instance.app",
+            "aws_iam_role.app",
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ]
+        ],
+        "paths_exact": 0,
+        "paths_other": [],
+        "paths_right_target": 1,
+        "run": 9,
+        "seed": 51,
+        "unsupported_flows": [
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.customer_data"
+          ],
+          [
+            "aws_iam_role_policy.app_s3",
+            "aws_s3_bucket.reports"
+          ],
+          [
+            "aws_instance.app",
+            "aws_lb_target_group.app"
+          ],
+          [
+            "aws_lb.web",
+            "aws_lb_target_group.app"
+          ]
+        ]
+      }
+    ],
+    "runs": 10,
+    "runs_finding_the_deterministic_path_exactly": 0,
+    "runs_finding_the_deterministic_path_rate": "0.0% (0/10, 95% CI [0.0%, 27.8%])",
+    "runs_reaching_the_right_target": 10,
+    "runs_reaching_the_right_target_rate": "100.0% (10/10, 95% CI [72.2%, 100.0%])",
+    "runs_with_hallucinated_resources": 0,
+    "runs_with_hallucinated_resources_rate": "0.0% (0/10, 95% CI [0.0%, 27.8%])"
+  },
+  "v2": {
+    "ai": {
+      "annotations_total": 50,
+      "per_annotation": {
+        "PATH-001:finding_explainer": {
+          "distinct_texts": 1,
+          "statuses": [
+            "accepted"
+          ]
+        },
+        "PATH-001:framework_mapper": {
+          "distinct_texts": 1,
+          "statuses": [
+            "accepted"
+          ]
+        },
+        "PATH-001:path_narrator": {
+          "distinct_texts": 2,
+          "statuses": [
+            "accepted"
+          ]
+        },
+        "PATH-001:plain_explainer": {
+          "distinct_texts": 1,
+          "statuses": [
+            "accepted"
+          ]
+        },
+        "PATH-001:remediation": {
+          "distinct_texts": 1,
+          "statuses": [
+            "accepted"
+          ]
+        }
+      },
+      "rejected_total": 0,
+      "runs": 10,
+      "unsupported_rate": 0.0
+    },
+    "artifacts": {
+      "attack-paths.json": {
+        "distinct": 1,
+        "hash": "d24ffed1c1741865",
+        "identical": true
+      },
+      "dfd.dot": {
+        "distinct": 1,
+        "hash": "absent",
+        "identical": true
+      },
+      "evidence.json": {
+        "distinct": 1,
+        "hash": "147af9d73f598ff3",
+        "identical": true
+      },
+      "iam-relationships.json": {
+        "distinct": 1,
+        "hash": "50b814e07b80a64e",
+        "identical": true
+      },
+      "resource-graph.json": {
+        "distinct": 1,
+        "hash": "7276d576e8912d81",
+        "identical": true
+      },
+      "terraform-plan.json": {
+        "distinct": 1,
+        "hash": "effabdaa40cd59fb",
+        "identical": true
+      },
+      "threat-model.py": {
+        "distinct": 1,
+        "hash": "e9c24324478e3b69",
+        "identical": true
+      }
+    },
+    "deterministic_identical_rate": "100.0% (10/10, 95% CI [72.2%, 100.0%])",
+    "deterministic_identical_runs": 10,
+    "deterministic_paths": [
+      "e67244a5e4f5"
+    ],
+    "runs": 10
+  }
+}

@@ -1,0 +1,48 @@
+# Tier 2: real-world public Terraform, frozen commits (Plan §15). Never "latest main".
+# Plans are generated offline: fake credentials, provider filesystem mirror, and a local
+# moto server (AWS API mock) so data sources resolve without touching AWS.
+schema_version: 1
+mock_aws: http://127.0.0.1:5055   # moto_server with MOTO_IAM_LOAD_MANAGED_POLICIES=true and MOTO_AMIS_PATH (see scripts/start-moto.sh)
+repos:
+  terragoat:
+    url: https://github.com/bridgecrewio/terragoat
+    commit: 729f8da62c6a85ce4af5ad3d123de97776d954c4   # 2023-04-27, last commit; unmaintained
+    license: Apache-2.0
+  iam-vulnerable:
+    url: https://github.com/BishopFox/iam-vulnerable
+    commit: 0f298666f9b7cfa01488b86912afdb211773188a   # 2025-09-11
+    license: MIT
+  cloudgoat:
+    url: https://github.com/RhinoSecurityLabs/cloudgoat
+    commit: abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed   # v2.5.0, 2026-03-20
+    license: BSD-3-Clause
+cases:
+  - id: terragoat-aws
+    repo: terragoat
+    path: terraform/aws
+    terraform: legacy          # Terraform 0.14.11 + hashicorp/aws 4.67.0: the code does not parse on Terraform >= 0.15
+    variables: {profile: default, region: us-west-2}
+    options: {heuristic_sensitivity: true, user_entries: true}
+    gold: gold/terragoat-aws.yaml
+  - id: iam-vulnerable
+    repo: iam-vulnerable
+    path: .
+    terraform: current         # Terraform 1.16.4 + hashicorp/aws 6.66.0
+    options: {user_entries: true}
+    gold: gold/iam-vulnerable.yaml
+  - {id: cloudgoat-iam_privesc_by_attachment, repo: cloudgoat, path: cloudgoat/scenarios/aws/iam_privesc_by_attachment/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default}, options: {user_entries: true}, gold: gold/cloudgoat-iam_privesc_by_attachment.yaml}
+  - {id: cloudgoat-iam_privesc_by_key_rotation, repo: cloudgoat, path: cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default}, options: {user_entries: true}, gold: gold/cloudgoat-iam_privesc_by_key_rotation.yaml}
+  - {id: cloudgoat-lambda_privesc, repo: cloudgoat, path: cloudgoat/scenarios/aws/lambda_privesc/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default}, options: {user_entries: true}, gold: gold/cloudgoat-lambda_privesc.yaml}
+  - {id: cloudgoat-iam_privesc_by_ec2, repo: cloudgoat, path: cloudgoat/scenarios/aws/iam_privesc_by_ec2/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default, cg_whitelist: '["203.0.113.10/32"]'}, options: {user_entries: true}, gold: gold/cloudgoat-iam_privesc_by_ec2.yaml}
+  - {id: cloudgoat-cloud_breach_s3, repo: cloudgoat, path: cloudgoat/scenarios/aws/cloud_breach_s3/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default, cg_whitelist: '["203.0.113.10/32"]', ssh-public-key-for-ec2: '{T2}/dummy-cloudgoat.pub'}, options: {user_entries: true}, gold: gold/cloudgoat-cloud_breach_s3.yaml}
+  - {id: cloudgoat-ec2_ssrf, repo: cloudgoat, path: cloudgoat/scenarios/aws/ec2_ssrf/terraform, terraform: current, context: '..',
+     variables: {cgid: tapm, profile: default, cg_whitelist: '["203.0.113.10/32"]', ssh_public_key: '{T2}/dummy-cloudgoat.pub'}, options: {user_entries: true}, gold: gold/cloudgoat-ec2_ssrf.yaml}
+  - {id: cloudgoat-data_secrets, repo: cloudgoat, path: cloudgoat/scenarios/aws/data_secrets/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default, cg_whitelist: '["203.0.113.10/32"]'}, options: {user_entries: true}, gold: gold/cloudgoat-data_secrets.yaml}
+  - {id: cloudgoat-iam_privesc_by_rollback, repo: cloudgoat, path: cloudgoat/scenarios/aws/iam_privesc_by_rollback/terraform, terraform: current,
+     variables: {cgid: tapm, profile: default}, options: {user_entries: true}, gold: gold/cloudgoat-iam_privesc_by_rollback.yaml}

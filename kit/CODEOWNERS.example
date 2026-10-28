@@ -1,0 +1,11 @@
+# Add to .github/CODEOWNERS (GitHub) or CODEOWNERS (GitLab). Adjust the path to your Terraform directory.
+
+# Answers become evidence that rules pytm threats out: the app team owns them, AppSec reviews.
+/infra/threat-answers.yaml            @your-org/app-team @your-org/appsec
+
+# Accepted risks: from Level 4 (prevent), only AppSec can approve a change to this file.
+/infra/attack-path-exceptions.yaml    @your-org/appsec
+
+# The check itself.
+/.github/workflows/pr-security.yml    @your-org/appsec @your-org/platform
+/.github/workflows/nightly-canary.yml @your-org/appsec @your-org/platform

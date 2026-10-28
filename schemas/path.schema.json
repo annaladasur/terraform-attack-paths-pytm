@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/Attack path",
+  "title": "Attack path",
+  "description": "An attack path: typed hops from an entry condition to an asset; each hop FACT or ASSUMPTION.",
+  "type": "object",
+  "required": [
+    "id",
+    "key",
+    "entry",
+    "target",
+    "nodes",
+    "hops",
+    "preconditions",
+    "status",
+    "priority",
+    "evidence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^PATH-[0-9]{3,}$"
+    },
+    "key": {
+      "type": "string"
+    },
+    "entry": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2
+    },
+    "hops": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "edge",
+          "type",
+          "src",
+          "dst",
+          "status",
+          "evidence"
+        ],
+        "properties": {
+          "edge": {
+            "type": "string",
+            "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+          },
+          "type": {
+            "enum": [
+              "DEPENDS_ON",
+              "CONTAINS",
+              "ATTACHES",
+              "EXPOSES",
+              "ROUTES_TO",
+              "TRUSTS",
+              "ASSUMES",
+              "ALLOWS",
+              "READS",
+              "WRITES",
+              "ESCALATES",
+              "RESOLVES_TO"
+            ]
+          },
+          "src": {
+            "type": "string"
+          },
+          "dst": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "FACT",
+              "ASSUMPTION"
+            ]
+          },
+          "precondition": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+            }
+          }
+        }
+      }
+    },
+    "preconditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "enum": [
+        "direct",
+        "plausible",
+        "review"
+      ]
+    },
+    "priority": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "score": {
+      "type": "integer"
+    },
+    "target_sensitivity": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+      }
+    },
+    "summary": {
+      "type": "string"
+    }
+  }
+}

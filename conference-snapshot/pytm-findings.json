@@ -1,0 +1,3270 @@
+{
+  "findings": [
+    {
+      "class": "confirmed",
+      "condition": "(target.protocol == 'HTTP' or target.controls.isEncrypted is False) or target.usesVPN is False",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "target group protocol HTTP",
+          "evidence": [
+            "NET-005",
+            "TF-005",
+            "TF-007",
+            "TF-008",
+            "TF-009",
+            "TF-010"
+          ],
+          "on": "sink aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Sniffing Attacks",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_instance.app",
+        "source": "aws_lb.web"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE03",
+      "undecided": [
+        "usesVPN"
+      ]
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.imdsV1Allowed is True and target.hasInstanceRole is True",
+      "decided": {
+        "hasInstanceRole": {
+          "basis": "instance profile attached",
+          "evidence": [
+            "GRAPH-006",
+            "TF-005"
+          ],
+          "on": "element",
+          "value": true
+        },
+        "imdsV1Allowed": {
+          "basis": "http_tokens = optional, http_endpoint = enabled",
+          "evidence": [
+            "TF-004"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Instance role credentials reachable through SSRF (IMDSv1)",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 3,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pack",
+      "threat_id": "TAPM-EC2-01",
+      "undecided": []
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.internetReachable is True and target.hasInstanceRole is True",
+      "decided": {
+        "hasInstanceRole": {
+          "basis": "instance profile attached",
+          "evidence": [
+            "GRAPH-006",
+            "TF-005"
+          ],
+          "on": "element",
+          "value": true
+        },
+        "internetReachable": {
+          "basis": "reachable from the internet",
+          "evidence": [
+            "GRAPH-020"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Internet-reachable workload holds cloud credentials",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 3,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pack",
+      "threat_id": "TAPM-EC2-02",
+      "undecided": []
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.readsSensitiveData is True",
+      "decided": {
+        "readsSensitiveData": {
+          "basis": "role can read or write a confidential/restricted asset",
+          "evidence": [
+            "GRAPH-018"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Workload identity can read or write classified data",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pack",
+      "threat_id": "TAPM-IAM-01",
+      "undecided": []
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.internetWideIngress is True",
+      "decided": {
+        "internetWideIngress": {
+          "basis": "security group admits 0.0.0.0/0 or ::/0",
+          "evidence": [
+            "NET-003"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Internet-wide ingress to an entry point",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pack",
+      "threat_id": "TAPM-NET-01",
+      "undecided": []
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.controls.validatesInput is False or target.controls.implementsPOLP is False",
+      "decided": {
+        "controls.implementsPOLP": {
+          "basis": "reachable through wildcard-resource grants",
+          "evidence": [
+            "IAM-001"
+          ],
+          "on": "element",
+          "value": false
+        }
+      },
+      "description": "Audit Log Manipulation",
+      "element": "aws_s3_bucket.customer_data",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "DE04",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.readableViaWildcardGrant is True and target.storesSensitiveData is True",
+      "decided": {
+        "readableViaWildcardGrant": {
+          "basis": "a wildcard-resource grant covers this store",
+          "evidence": [
+            "IAM-001"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Classified data store reachable through a wildcard-resource grant",
+      "element": "aws_s3_bucket.customer_data",
+      "element_type": "Datastore",
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pack",
+      "threat_id": "TAPM-IAM-02",
+      "undecided": []
+    },
+    {
+      "class": "confirmed",
+      "condition": "target.controls.validatesInput is False or target.controls.implementsPOLP is False",
+      "decided": {
+        "controls.implementsPOLP": {
+          "basis": "reachable through wildcard-resource grants",
+          "evidence": [
+            "IAM-001"
+          ],
+          "on": "element",
+          "value": false
+        }
+      },
+      "description": "Audit Log Manipulation",
+      "element": "aws_s3_bucket.reports",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "DE04",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "((not target.source.controls.providesIntegrity or not target.sink.controls.providesIntegrity) and not target.controls.isEncrypted) or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation))",
+      "decided": {
+        "controls.authenticatesDestination": {
+          "basis": "TLS listener presents an ACM certificate",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "source aws_lb.web (pytm copies it to the flow)",
+          "value": true
+        },
+        "controls.isEncrypted": {
+          "basis": "target group protocol HTTP",
+          "evidence": [
+            "NET-005",
+            "TF-005",
+            "TF-007",
+            "TF-008",
+            "TF-009",
+            "TF-010"
+          ],
+          "on": "sink aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Content Spoofing",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_instance.app",
+        "source": "aws_lb.web"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC05",
+      "undecided": [
+        "controls.checksDestinationRevocation",
+        "sink.controls.providesIntegrity",
+        "source.controls.providesIntegrity"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.protocol != 'HTTPS' or target.usesVPN is False) and (target.controls.implementsAuthenticationScheme is False or target.controls.authorizesSource is False)",
+      "decided": {},
+      "description": "Communication Channel Manipulation",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_instance.app",
+        "source": "aws_lb.web"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR06",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.implementsAuthenticationScheme",
+        "usesVPN"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "target group protocol HTTP",
+          "evidence": [
+            "NET-005",
+            "TF-005",
+            "TF-007",
+            "TF-008",
+            "TF-009",
+            "TF-010"
+          ],
+          "on": "sink aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Client-Server Protocol Manipulation",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_instance.app",
+        "source": "aws_lb.web"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "CR08",
+      "undecided": [
+        "sink.minTLSVersion",
+        "tlsVersion"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation)) or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {
+        "controls.authenticatesDestination": {
+          "basis": "TLS listener presents an ACM certificate",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "source aws_lb.web (pytm copies it to the flow)",
+          "value": true
+        },
+        "controls.isEncrypted": {
+          "basis": "target group protocol HTTP",
+          "evidence": [
+            "NET-005",
+            "TF-005",
+            "TF-007",
+            "TF-008",
+            "TF-009",
+            "TF-010"
+          ],
+          "on": "sink aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Interception",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_instance.app",
+        "source": "aws_lb.web"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE01",
+      "undecided": [
+        "controls.checksDestinationRevocation",
+        "sink.minTLSVersion",
+        "tlsVersion"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "((not target.source.controls.providesIntegrity or not target.sink.controls.providesIntegrity) and not target.controls.isEncrypted) or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation))",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "every listener terminates TLS",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "sink aws_lb.web (pytm copies it to the flow)",
+          "value": true
+        }
+      },
+      "description": "Content Spoofing",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_lb.web",
+        "source": "Internet client"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC05",
+      "undecided": [
+        "controls.authenticatesDestination",
+        "controls.checksDestinationRevocation",
+        "sink.controls.providesIntegrity",
+        "source.controls.providesIntegrity"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.protocol != 'HTTPS' or target.usesVPN is False) and (target.controls.implementsAuthenticationScheme is False or target.controls.authorizesSource is False)",
+      "decided": {},
+      "description": "Communication Channel Manipulation",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_lb.web",
+        "source": "Internet client"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR06",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.implementsAuthenticationScheme",
+        "usesVPN"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation)) or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "every listener terminates TLS",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "sink aws_lb.web (pytm copies it to the flow)",
+          "value": true
+        },
+        "sink.minTLSVersion": {
+          "basis": "ssl_policy ELBSecurityPolicy-TLS13-1-2-2021-06",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "sink aws_lb.web",
+          "value": "TLSVersion.TLSv12"
+        },
+        "tlsVersion": {
+          "basis": "the listener refuses anything below its policy minimum (ssl_policy ELBSecurityPolicy-TLS13-1-2-2021-06)",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "element",
+          "value": "TLSVersion.TLSv12"
+        }
+      },
+      "description": "Interception",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_lb.web",
+        "source": "Internet client"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE01",
+      "undecided": [
+        "controls.authenticatesDestination",
+        "controls.checksDestinationRevocation"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.protocol == 'HTTP' or target.controls.isEncrypted is False) or target.usesVPN is False",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "every listener terminates TLS",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "sink aws_lb.web (pytm copies it to the flow)",
+          "value": true
+        }
+      },
+      "description": "Sniffing Attacks",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_lb.web",
+        "source": "Internet client"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE03",
+      "undecided": [
+        "usesVPN"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.authenticatesSource is False",
+      "decided": {},
+      "description": "Authentication Abuse/ByPass",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AA01",
+      "undecided": [
+        "controls.authenticatesSource"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.authenticatesSource is False",
+      "decided": {},
+      "description": "Principal Spoof",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AA02",
+      "undecided": [
+        "controls.authenticatesSource"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.providesIntegrity is False or target.controls.authenticatesSource is False or target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Exploitation of Trusted Credentials",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "AA03",
+      "undecided": [
+        "controls.authenticatesSource",
+        "controls.providesIntegrity",
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsServerSideValidation is False and (target.controls.providesIntegrity is False or target.controls.authorizesSource is False)",
+      "decided": {},
+      "description": "Exploiting Trust in Client",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "AA04",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.implementsServerSideValidation",
+        "controls.providesIntegrity"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False or target.controls.authorizesSource is False",
+      "decided": {},
+      "description": "Privilege Abuse",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC01",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.isHardened is False or target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Using Malicious Files",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "AC06",
+      "undecided": [
+        "controls.hasAccessControl",
+        "controls.isHardened"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Exploiting Incorrectly Configured Access Control Security Levels",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC07",
+      "undecided": [
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Manipulate Registry Information",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC08",
+      "undecided": [
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False or target.controls.authorizesSource is False",
+      "decided": {},
+      "description": "Functionality Misuse",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC09",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Session Credential Falsification through Manipulation",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC11",
+      "undecided": [
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Session Credential Falsification through Prediction",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "AC16",
+      "undecided": [
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Session Hijacking - ServerSide",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "AC17",
+      "undecided": [
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsAuthenticationScheme is False",
+      "decided": {},
+      "description": "Dictionary-based Password Attack",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR03",
+      "undecided": [
+        "controls.implementsAuthenticationScheme"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesEncryptionAlgorithm != 'RSA' and target.controls.usesEncryptionAlgorithm != 'AES'",
+      "decided": {},
+      "description": "Encryption Brute Forcing",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "CR05",
+      "undecided": [
+        "controls.usesEncryptionAlgorithm"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Double Encoding",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE02",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.handlesResourceConsumption is False or target.controls.isResilient is False",
+      "decided": {},
+      "description": "Flooding",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DO01",
+      "undecided": [
+        "controls.handlesResourceConsumption",
+        "controls.isResilient"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.handlesResourceConsumption is False",
+      "decided": {},
+      "description": "Excessive Allocation",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DO02",
+      "undecided": [
+        "controls.handlesResourceConsumption"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.controls.sanitizesInput is False or target.controls.validatesInput is False) or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "Excavation",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DS01",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.isHardened is False",
+      "decided": {},
+      "description": "Footprinting",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very Low",
+      "source": "pytm",
+      "threat_id": "DS03",
+      "undecided": [
+        "controls.isHardened"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.encodesOutput is False or target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "XSS Targeting Error Pages",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DS04",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False and target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Path Traversal",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "HA01",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesHeaders is False or target.controls.encodesOutput is False or target.controls.isHardened is False",
+      "decided": {},
+      "description": "Web Application Fingerprinting",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "HA03",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.isHardened",
+        "controls.validatesHeaders"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "Server Side Include (SSI) Injection",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP03",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.controls.validatesInput is False or target.controls.validatesHeaders is False) and target.protocol =='HTTP'",
+      "decided": {},
+      "description": "HTTP Request Splitting",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP04",
+      "undecided": [
+        "controls.validatesHeaders",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "Command Line Execution through SQL Injection",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "INP05",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Format String Injection",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP08",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "LDAP Injection",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP09",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "Parameter Injection",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP10",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Relative Path Traversal",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP11",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "Input Data Manipulation",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP14",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "PHP Remote File Inclusion",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP16",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesContentType is False or target.controls.invokesScriptFilters is False",
+      "decided": {},
+      "description": "XSS Using MIME Type Mismatch",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP17",
+      "undecided": [
+        "controls.invokesScriptFilters",
+        "controls.validatesContentType"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "Fuzzing and observing application log data/errors for application mapping",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "INP18",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.usesXMLParser is False or target.controls.disablesDTD is False",
+      "decided": {},
+      "description": "XML External Entities Blowup",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP19",
+      "undecided": [
+        "controls.disablesDTD",
+        "usesXMLParser"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.usesXMLParser is False or target.controls.disablesDTD is False",
+      "decided": {},
+      "description": "DTD Injection",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP21",
+      "undecided": [
+        "controls.disablesDTD",
+        "usesXMLParser"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.usesXMLParser is False or target.controls.disablesDTD is False",
+      "decided": {},
+      "description": "XML Attribute Blowup",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP22",
+      "undecided": [
+        "controls.disablesDTD",
+        "usesXMLParser"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Targeting URI Placeholders",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP28",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Using Doubled Characters",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP29",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.checksInputBounds is False",
+      "decided": {},
+      "description": "SOAP Array Overflow",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP34",
+      "undecided": [
+        "controls.checksInputBounds"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsStrictHTTPValidation is False and target.controls.encodesHeaders is False",
+      "decided": {},
+      "description": "HTTP Response Smuggling",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP36",
+      "undecided": [
+        "controls.encodesHeaders",
+        "controls.implementsStrictHTTPValidation"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsStrictHTTPValidation is False and target.controls.encodesHeaders is False",
+      "decided": {},
+      "description": "HTTP Request Smuggling",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP37",
+      "undecided": [
+        "controls.encodesHeaders",
+        "controls.implementsStrictHTTPValidation"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Targeting Non-Script Elements",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "SC02",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False or target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Embedding Scripts within Scripts",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "SC03",
+      "undecided": [
+        "controls.hasAccessControl",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.sanitizesInput is False or target.controls.validatesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Using Alternate Syntax",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "SC04",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.providesIntegrity is False or target.controls.usesCodeSigning is False",
+      "decided": {},
+      "description": "Removing Important Client Functionality",
+      "element": "aws_instance.app",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 2,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "SC05",
+      "undecided": [
+        "controls.providesIntegrity",
+        "controls.usesCodeSigning"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.authenticatesSource is False",
+      "decided": {},
+      "description": "Authentication Abuse/ByPass",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AA01",
+      "undecided": [
+        "controls.authenticatesSource"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.authenticatesSource is False",
+      "decided": {},
+      "description": "Principal Spoof",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AA02",
+      "undecided": [
+        "controls.authenticatesSource"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.providesIntegrity is False or target.controls.authenticatesSource is False or target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Exploitation of Trusted Credentials",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "AA03",
+      "undecided": [
+        "controls.authenticatesSource",
+        "controls.providesIntegrity",
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsServerSideValidation is False and (target.controls.providesIntegrity is False or target.controls.authorizesSource is False)",
+      "decided": {},
+      "description": "Exploiting Trust in Client",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "AA04",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.implementsServerSideValidation",
+        "controls.providesIntegrity"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False or target.controls.authorizesSource is False",
+      "decided": {},
+      "description": "Privilege Abuse",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC01",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.isHardened is False or target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Using Malicious Files",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "AC06",
+      "undecided": [
+        "controls.hasAccessControl",
+        "controls.isHardened"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Exploiting Incorrectly Configured Access Control Security Levels",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC07",
+      "undecided": [
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Manipulate Registry Information",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC08",
+      "undecided": [
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.hasAccessControl is False or target.controls.authorizesSource is False",
+      "decided": {},
+      "description": "Functionality Misuse",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC09",
+      "undecided": [
+        "controls.authorizesSource",
+        "controls.hasAccessControl"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Session Credential Falsification through Manipulation",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC11",
+      "undecided": [
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Session Credential Falsification through Prediction",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "AC16",
+      "undecided": [
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesStrongSessionIdentifiers is False",
+      "decided": {},
+      "description": "Session Hijacking - ServerSide",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "AC17",
+      "undecided": [
+        "controls.usesStrongSessionIdentifiers"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsAuthenticationScheme is False",
+      "decided": {},
+      "description": "Dictionary-based Password Attack",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR03",
+      "undecided": [
+        "controls.implementsAuthenticationScheme"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.usesEncryptionAlgorithm != 'RSA' and target.controls.usesEncryptionAlgorithm != 'AES'",
+      "decided": {},
+      "description": "Encryption Brute Forcing",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "CR05",
+      "undecided": [
+        "controls.usesEncryptionAlgorithm"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Double Encoding",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE02",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.handlesResourceConsumption is False or target.controls.isResilient is False",
+      "decided": {},
+      "description": "Flooding",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DO01",
+      "undecided": [
+        "controls.handlesResourceConsumption",
+        "controls.isResilient"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.handlesResourceConsumption is False",
+      "decided": {},
+      "description": "Excessive Allocation",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DO02",
+      "undecided": [
+        "controls.handlesResourceConsumption"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.controls.sanitizesInput is False or target.controls.validatesInput is False) or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "Excavation",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DS01",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.isHardened is False",
+      "decided": {},
+      "description": "Footprinting",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very Low",
+      "source": "pytm",
+      "threat_id": "DS03",
+      "undecided": [
+        "controls.isHardened"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.encodesOutput is False or target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "XSS Targeting Error Pages",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DS04",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False and target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Path Traversal",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "HA01",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesHeaders is False or target.controls.encodesOutput is False or target.controls.isHardened is False",
+      "decided": {
+        "controls.validatesHeaders": {
+          "basis": "drop_invalid_header_fields = true",
+          "evidence": [
+            "TF-007"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Web Application Fingerprinting",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "HA03",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.isHardened"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "Server Side Include (SSI) Injection",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP03",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "Command Line Execution through SQL Injection",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "INP05",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Format String Injection",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP08",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "LDAP Injection",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP09",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "Parameter Injection",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP10",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False",
+      "decided": {},
+      "description": "Relative Path Traversal",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP11",
+      "undecided": [
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "Input Data Manipulation",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP14",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False",
+      "decided": {},
+      "description": "PHP Remote File Inclusion",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP16",
+      "undecided": [
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesContentType is False or target.controls.invokesScriptFilters is False",
+      "decided": {},
+      "description": "XSS Using MIME Type Mismatch",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP17",
+      "undecided": [
+        "controls.invokesScriptFilters",
+        "controls.validatesContentType"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "Fuzzing and observing application log data/errors for application mapping",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "INP18",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.usesXMLParser is False or target.controls.disablesDTD is False",
+      "decided": {},
+      "description": "XML External Entities Blowup",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP19",
+      "undecided": [
+        "controls.disablesDTD",
+        "usesXMLParser"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.usesXMLParser is False or target.controls.disablesDTD is False",
+      "decided": {},
+      "description": "DTD Injection",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP21",
+      "undecided": [
+        "controls.disablesDTD",
+        "usesXMLParser"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.usesXMLParser is False or target.controls.disablesDTD is False",
+      "decided": {},
+      "description": "XML Attribute Blowup",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP22",
+      "undecided": [
+        "controls.disablesDTD",
+        "usesXMLParser"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Targeting URI Placeholders",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP28",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Using Doubled Characters",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP29",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.checksInputBounds is False",
+      "decided": {},
+      "description": "SOAP Array Overflow",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP34",
+      "undecided": [
+        "controls.checksInputBounds"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsStrictHTTPValidation is False and target.controls.encodesHeaders is False",
+      "decided": {
+        "controls.implementsStrictHTTPValidation": {
+          "basis": "desync_mitigation_mode = defensive",
+          "evidence": [
+            "TF-007"
+          ],
+          "on": "element",
+          "value": false
+        }
+      },
+      "description": "HTTP Response Smuggling",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "INP36",
+      "undecided": [
+        "controls.encodesHeaders"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.implementsStrictHTTPValidation is False and target.controls.encodesHeaders is False",
+      "decided": {
+        "controls.implementsStrictHTTPValidation": {
+          "basis": "desync_mitigation_mode = defensive",
+          "evidence": [
+            "TF-007"
+          ],
+          "on": "element",
+          "value": false
+        }
+      },
+      "description": "HTTP Request Smuggling",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "INP37",
+      "undecided": [
+        "controls.encodesHeaders"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Targeting Non-Script Elements",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "SC02",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.validatesInput is False or target.controls.sanitizesInput is False or target.controls.hasAccessControl is False",
+      "decided": {},
+      "description": "Embedding Scripts within Scripts",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "SC03",
+      "undecided": [
+        "controls.hasAccessControl",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.sanitizesInput is False or target.controls.validatesInput is False or target.controls.encodesOutput is False",
+      "decided": {},
+      "description": "XSS Using Alternate Syntax",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "SC04",
+      "undecided": [
+        "controls.encodesOutput",
+        "controls.sanitizesInput",
+        "controls.validatesInput"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.providesIntegrity is False or target.controls.usesCodeSigning is False",
+      "decided": {},
+      "description": "Removing Important Client Functionality",
+      "element": "aws_lb.web",
+      "element_type": "Server",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 1,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "SC05",
+      "undecided": [
+        "controls.providesIntegrity",
+        "controls.usesCodeSigning"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.handlesResourceConsumption is False",
+      "decided": {},
+      "description": "Excessive Allocation",
+      "element": "aws_s3_bucket.customer_data",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DO02",
+      "undecided": [
+        "controls.handlesResourceConsumption"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.controls.handlesResourceConsumption is False",
+      "decided": {},
+      "description": "Excessive Allocation",
+      "element": "aws_s3_bucket.reports",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DO02",
+      "undecided": [
+        "controls.handlesResourceConsumption"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.hasDataLeaks()",
+      "decided": {},
+      "description": "Data Leak",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "IMDS of aws_instance.app",
+        "source": "aws_instance.app"
+      },
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 3,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "DS06",
+      "undecided": [
+        "hasDataLeaks"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "((not target.source.controls.providesIntegrity or not target.sink.controls.providesIntegrity) and not target.controls.isEncrypted) or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation))",
+      "decided": {},
+      "description": "Content Spoofing",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC05",
+      "undecided": [
+        "controls.authenticatesDestination",
+        "controls.checksDestinationRevocation",
+        "controls.isEncrypted",
+        "sink.controls.providesIntegrity",
+        "source.controls.providesIntegrity"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {},
+      "description": "Client-Server Protocol Manipulation",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "CR08",
+      "undecided": [
+        "controls.isEncrypted",
+        "sink.minTLSVersion",
+        "tlsVersion"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation)) or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {},
+      "description": "Interception",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE01",
+      "undecided": [
+        "controls.authenticatesDestination",
+        "controls.checksDestinationRevocation",
+        "controls.isEncrypted",
+        "sink.minTLSVersion",
+        "tlsVersion"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.protocol == 'HTTP' or target.controls.isEncrypted is False) or target.usesVPN is False",
+      "decided": {},
+      "description": "Sniffing Attacks",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE03",
+      "undecided": [
+        "controls.isEncrypted",
+        "usesVPN"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.hasDataLeaks() or any(d.isCredentials or d.isPII for d in target.data)) and (not target.controls.isEncrypted or (not target.isResponse and any(d.isStored and d.isDestEncryptedAtRest for d in target.data)) or (target.isResponse and any(d.isStored and d.isSourceEncryptedAtRest for d in target.data)))",
+      "decided": {
+        "data:aws_s3_bucket.customer_data contents.isDestEncryptedAtRest": {
+          "basis": "server-side encryption configured",
+          "evidence": [
+            "TF-015",
+            "TF-020"
+          ],
+          "on": "sink aws_s3_bucket.customer_data (pytm copies it to the data)",
+          "value": true
+        },
+        "data:aws_s3_bucket.customer_data contents.isSourceEncryptedAtRest": {
+          "basis": "every EBS volume has encrypted = true",
+          "evidence": [
+            "TF-005"
+          ],
+          "on": "source aws_instance.app (pytm copies it to the data)",
+          "value": true
+        },
+        "data:aws_s3_bucket.customer_data contents.isStored": {
+          "basis": "held in the data store",
+          "evidence": [
+            "TF-015"
+          ],
+          "on": "data aws_s3_bucket.customer_data contents",
+          "value": true
+        }
+      },
+      "description": "Unprotected Sensitive Data",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "DR01",
+      "undecided": [
+        "controls.isEncrypted",
+        "data:aws_s3_bucket.customer_data contents.isCredentials",
+        "data:aws_s3_bucket.customer_data contents.isPII",
+        "hasDataLeaks"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "target.hasDataLeaks()",
+      "decided": {},
+      "description": "Data Leak",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": false,
+      "on_paths": [
+        {
+          "hop": 4,
+          "path": "PATH-001"
+        }
+      ],
+      "severity": "Very High",
+      "source": "pytm",
+      "threat_id": "DS06",
+      "undecided": [
+        "hasDataLeaks"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "((not target.source.controls.providesIntegrity or not target.sink.controls.providesIntegrity) and not target.controls.isEncrypted) or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation))",
+      "decided": {},
+      "description": "Content Spoofing",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.reports",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC05",
+      "undecided": [
+        "controls.authenticatesDestination",
+        "controls.checksDestinationRevocation",
+        "controls.isEncrypted",
+        "sink.controls.providesIntegrity",
+        "source.controls.providesIntegrity"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {},
+      "description": "Client-Server Protocol Manipulation",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.reports",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "CR08",
+      "undecided": [
+        "controls.isEncrypted",
+        "sink.minTLSVersion",
+        "tlsVersion"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "not target.controls.isEncrypted or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation)) or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {},
+      "description": "Interception",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.reports",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE01",
+      "undecided": [
+        "controls.authenticatesDestination",
+        "controls.checksDestinationRevocation",
+        "controls.isEncrypted",
+        "sink.minTLSVersion",
+        "tlsVersion"
+      ]
+    },
+    {
+      "class": "needs_app_team",
+      "condition": "(target.protocol == 'HTTP' or target.controls.isEncrypted is False) or target.usesVPN is False",
+      "decided": {},
+      "description": "Sniffing Attacks",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.reports",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE03",
+      "undecided": [
+        "controls.isEncrypted",
+        "usesVPN"
+      ]
+    },
+    {
+      "class": "ruled_out",
+      "condition": "not target.controls.isEncrypted or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "every listener terminates TLS",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "sink aws_lb.web (pytm copies it to the flow)",
+          "value": true
+        },
+        "sink.minTLSVersion": {
+          "basis": "ssl_policy ELBSecurityPolicy-TLS13-1-2-2021-06",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "sink aws_lb.web",
+          "value": "TLSVersion.TLSv12"
+        },
+        "tlsVersion": {
+          "basis": "the listener refuses anything below its policy minimum (ssl_policy ELBSecurityPolicy-TLS13-1-2-2021-06)",
+          "evidence": [
+            "TF-007",
+            "TF-008"
+          ],
+          "on": "element",
+          "value": "TLSVersion.TLSv12"
+        }
+      },
+      "description": "Client-Server Protocol Manipulation",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_lb.web",
+        "source": "Internet client"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "CR08",
+      "undecided": []
+    },
+    {
+      "class": "ruled_out",
+      "condition": "target.controls.hasAccessControl is False or target.controls.authorizesSource is False",
+      "decided": {
+        "controls.authorizesSource": {
+          "basis": "IAM authorises the caller",
+          "evidence": [
+            "TF-015"
+          ],
+          "on": "element",
+          "value": true
+        },
+        "controls.hasAccessControl": {
+          "basis": "every request needs IAM authorisation",
+          "evidence": [
+            "TF-015"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Privilege Abuse",
+      "element": "aws_s3_bucket.customer_data",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC01",
+      "undecided": []
+    },
+    {
+      "class": "ruled_out",
+      "condition": "target.controls.usesEncryptionAlgorithm != 'RSA' and target.controls.usesEncryptionAlgorithm != 'AES'",
+      "decided": {
+        "controls.usesEncryptionAlgorithm": {
+          "basis": "AES-256 (server-side encryption configured)",
+          "evidence": [
+            "TF-015",
+            "TF-020"
+          ],
+          "on": "element",
+          "value": "AES"
+        }
+      },
+      "description": "Encryption Brute Forcing",
+      "element": "aws_s3_bucket.customer_data",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "CR05",
+      "undecided": []
+    },
+    {
+      "class": "ruled_out",
+      "condition": "target.controls.hasAccessControl is False or target.controls.authorizesSource is False",
+      "decided": {
+        "controls.authorizesSource": {
+          "basis": "IAM authorises the caller",
+          "evidence": [
+            "TF-017"
+          ],
+          "on": "element",
+          "value": true
+        },
+        "controls.hasAccessControl": {
+          "basis": "every request needs IAM authorisation",
+          "evidence": [
+            "TF-017"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Privilege Abuse",
+      "element": "aws_s3_bucket.reports",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC01",
+      "undecided": []
+    },
+    {
+      "class": "ruled_out",
+      "condition": "target.controls.usesEncryptionAlgorithm != 'RSA' and target.controls.usesEncryptionAlgorithm != 'AES'",
+      "decided": {
+        "controls.usesEncryptionAlgorithm": {
+          "basis": "AES-256 (S3 encrypts new objects with SSE-S3 by default (since January 2023))",
+          "evidence": [
+            "TF-017"
+          ],
+          "on": "element",
+          "value": "AES"
+        }
+      },
+      "description": "Encryption Brute Forcing",
+      "element": "aws_s3_bucket.reports",
+      "element_type": "Datastore",
+      "in_generic": true,
+      "severity": "Low",
+      "source": "pytm",
+      "threat_id": "CR05",
+      "undecided": []
+    },
+    {
+      "assumption": "IMDS is link-local: requests to 169.254.169.254 never leave the host, so network interception does not apply",
+      "class": "ruled_out",
+      "condition": "((not target.source.controls.providesIntegrity or not target.sink.controls.providesIntegrity) and not target.controls.isEncrypted) or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation))",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "IMDS answers over link-local HTTP (169.254.169.254)",
+          "evidence": [
+            "TF-004"
+          ],
+          "on": "sink IMDS of aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Content Spoofing",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "IMDS of aws_instance.app",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "AC05",
+      "undecided": []
+    },
+    {
+      "assumption": "IMDS is link-local: requests to 169.254.169.254 never leave the host, so network interception does not apply",
+      "class": "ruled_out",
+      "condition": "(target.protocol != 'HTTPS' or target.usesVPN is False) and (target.controls.implementsAuthenticationScheme is False or target.controls.authorizesSource is False)",
+      "decided": {},
+      "description": "Communication Channel Manipulation",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "IMDS of aws_instance.app",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR06",
+      "undecided": []
+    },
+    {
+      "assumption": "IMDS is link-local: requests to 169.254.169.254 never leave the host, so network interception does not apply",
+      "class": "ruled_out",
+      "condition": "not target.controls.isEncrypted or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "IMDS answers over link-local HTTP (169.254.169.254)",
+          "evidence": [
+            "TF-004"
+          ],
+          "on": "sink IMDS of aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Client-Server Protocol Manipulation",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "IMDS of aws_instance.app",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "CR08",
+      "undecided": []
+    },
+    {
+      "assumption": "IMDS is link-local: requests to 169.254.169.254 never leave the host, so network interception does not apply",
+      "class": "ruled_out",
+      "condition": "not target.controls.isEncrypted or (target.source.inScope and not target.isResponse and (not target.controls.authenticatesDestination or not target.controls.checksDestinationRevocation)) or target.tlsVersion < target.sink.minTLSVersion",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "IMDS answers over link-local HTTP (169.254.169.254)",
+          "evidence": [
+            "TF-004"
+          ],
+          "on": "sink IMDS of aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Interception",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "IMDS of aws_instance.app",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE01",
+      "undecided": []
+    },
+    {
+      "assumption": "IMDS is link-local: requests to 169.254.169.254 never leave the host, so network interception does not apply",
+      "class": "ruled_out",
+      "condition": "(target.protocol == 'HTTP' or target.controls.isEncrypted is False) or target.usesVPN is False",
+      "decided": {
+        "controls.isEncrypted": {
+          "basis": "IMDS answers over link-local HTTP (169.254.169.254)",
+          "evidence": [
+            "TF-004"
+          ],
+          "on": "sink IMDS of aws_instance.app (pytm copies it to the flow)",
+          "value": false
+        }
+      },
+      "description": "Sniffing Attacks",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "IMDS of aws_instance.app",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "Medium",
+      "source": "pytm",
+      "threat_id": "DE03",
+      "undecided": []
+    },
+    {
+      "class": "ruled_out",
+      "condition": "(target.protocol != 'HTTPS' or target.usesVPN is False) and (target.controls.implementsAuthenticationScheme is False or target.controls.authorizesSource is False)",
+      "decided": {
+        "controls.authorizesSource": {
+          "basis": "IAM authorises every AWS API request",
+          "evidence": [
+            "IAM-001",
+            "IAM-002",
+            "TF-001",
+            "TF-002",
+            "TF-004",
+            "TF-005",
+            "TF-015"
+          ],
+          "on": "element",
+          "value": true
+        },
+        "controls.implementsAuthenticationScheme": {
+          "basis": "SigV4",
+          "evidence": [
+            "IAM-001",
+            "IAM-002",
+            "TF-001",
+            "TF-002",
+            "TF-004",
+            "TF-005",
+            "TF-015"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Communication Channel Manipulation",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.customer_data",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR06",
+      "undecided": []
+    },
+    {
+      "class": "ruled_out",
+      "condition": "(target.protocol != 'HTTPS' or target.usesVPN is False) and (target.controls.implementsAuthenticationScheme is False or target.controls.authorizesSource is False)",
+      "decided": {
+        "controls.authorizesSource": {
+          "basis": "IAM authorises every AWS API request",
+          "evidence": [
+            "IAM-001",
+            "IAM-002",
+            "TF-001",
+            "TF-002",
+            "TF-004",
+            "TF-005",
+            "TF-017"
+          ],
+          "on": "element",
+          "value": true
+        },
+        "controls.implementsAuthenticationScheme": {
+          "basis": "SigV4",
+          "evidence": [
+            "IAM-001",
+            "IAM-002",
+            "TF-001",
+            "TF-002",
+            "TF-004",
+            "TF-005",
+            "TF-017"
+          ],
+          "on": "element",
+          "value": true
+        }
+      },
+      "description": "Communication Channel Manipulation",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "element_type": "Dataflow",
+      "flow": {
+        "sink": "aws_s3_bucket.reports",
+        "source": "aws_instance.app"
+      },
+      "in_generic": true,
+      "severity": "High",
+      "source": "pytm",
+      "threat_id": "CR06",
+      "undecided": []
+    }
+  ],
+  "summary": {
+    "added_by_evidence": 3,
+    "confirmed": 8,
+    "confirmed_on_path_hops": 7,
+    "decided_by_answers": 0,
+    "generic": 122,
+    "mitigated": 0,
+    "needs_app_team": 110,
+    "on_path_hops": 112,
+    "pack": 5,
+    "pack_threats": [
+      "TAPM-EC2-01",
+      "TAPM-EC2-02",
+      "TAPM-IAM-01",
+      "TAPM-IAM-02",
+      "TAPM-LMB-01",
+      "TAPM-NET-01",
+      "TAPM-S3-01"
+    ],
+    "published": 118,
+    "ruled_out": 12
+  }
+}

@@ -1,0 +1,138 @@
+# Adopt this in your own repository: attack-path review on every Terraform pull request.
+#
+# Supply-chain hygiene (see CVE-2026-33634, the March 2026 trivy-action compromise):
+#   * pin every action to a FULL COMMIT SHA, not a tag (replace each @vN below after verifying the SHA);
+#   * give the plan step read-only cloud credentials via OIDC; never long-lived keys;
+#   * treat plan.json as a secret: it can hold sensitive values in cleartext.
+#
+# Adoption level (kit/adoption-ladder.md): set the repository variable TAPM_LEVEL to observe, recommend, validate or
+# prevent. Start at observe; `tapm gate` only fails the job (exit 3) at validate and prevent. Accepted risks live in
+# $TF_DIR/attack-path-exceptions.yaml and answers in $TF_DIR/threat-answers.yaml; put both under CODEOWNERS.
+#
+# Trigger matrix (docs/architecture.md, §5):
+#   * PR touches *.tf, *.tfvars, *.tfvars.json, .terraform.lock.hcl:
+#     runs plan, scanners, deterministic engine, AI explanations, verified remediation (--remediate), gate.
+#   * PR touches only attack-path-exceptions.yaml or threat-answers.yaml:
+#     fast gate re-evaluation from cached attack-paths (no new plan needed).
+#   * Re-push with no change to evidence: cache hit.
+name: Terraform attack-path review
+
+on:
+  pull_request:
+    paths:
+      - "infra/**.tf"
+      - "infra/**.tfvars"
+      - "infra/**.tfvars.json"
+      - "infra/**.terraform.lock.hcl"
+      - "infra/**/.terraform.lock.hcl"
+      - "infra/.terraform.lock.hcl"
+      - "infra/**attack-path-exceptions.yaml"
+      - "infra/**/attack-path-exceptions.yaml"
+      - "infra/attack-path-exceptions.yaml"
+      - "infra/**threat-answers.yaml"
+      - "infra/**/threat-answers.yaml"
+      - "infra/threat-answers.yaml"
+
+permissions:
+  contents: read
+  id-token: write          # OIDC for read-only plan credentials
+  pull-requests: write     # PR comment
+  security-events: write   # SARIF upload
+
+env:
+  TF_DIR: infra
+
+jobs:
+  attack-paths:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4                       # pin to full SHA
+      - uses: hashicorp/setup-terraform@v3              # pin to full SHA
+        with: { terraform_version: 1.16.4, terraform_wrapper: false }
+      - uses: actions/setup-python@v5                   # pin to full SHA
+        with: { python-version: "3.12" }
+
+      - name: Cache attack paths for exception and answer re-evaluation
+        id: path-cache
+        uses: actions/cache@v4                          # pin to full SHA
+        with:
+          path: attack-paths
+          key: attack-paths-${{ hashFiles('infra/**.tf', 'infra/**.tfvars', 'infra/**.tfvars.json', 'infra/**.terraform.lock.hcl', 'infra/**/.terraform.lock.hcl', 'infra/.terraform.lock.hcl') }}
+
+      - uses: aws-actions/configure-aws-credentials@v4  # pin to full SHA; role with ReadOnlyAccess only
+        if: steps.path-cache.outputs.cache-hit != 'true'
+        with: { role-to-assume: "${{ vars.PLAN_ROLE_ARN }}", aws-region: us-east-1 }
+
+      - name: Install
+        run: |
+          python -m pip install "terraform-attack-paths-pytm @ git+https://github.com/<you>/terraform-attack-paths-pytm@<sha>"
+          python -m venv .venv-scanners && .venv-scanners/bin/pip install checkov==3.3.20
+
+      - name: Terraform plan (JSON)
+        if: steps.path-cache.outputs.cache-hit != 'true'
+        working-directory: ${{ env.TF_DIR }}
+        run: |
+          terraform init -input=false
+          terraform plan -input=false -lock=false -out=tfplan
+          terraform show -json tfplan > "$RUNNER_TEMP/plan.json"
+          rm -f tfplan
+
+      - name: Scanner baseline
+        if: steps.path-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/baselines"
+          .venv-scanners/bin/checkov -d "$TF_DIR" --framework terraform -o json --quiet --compact > "$RUNNER_TEMP/baselines/checkov.json" || true
+
+      - name: Attack paths (deterministic) + bounded AI annotations + verified remediation
+        if: steps.path-cache.outputs.cache-hit != 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # optional; omit to run without AI
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}     # optional
+        run: |
+          LLM=off; [ -n "$ANTHROPIC_API_KEY" ] && LLM=anthropic
+          JEV=local; [ -n "$TYPESAFE_API_KEY" ] && JEV=typesafe
+          tapm run "$TF_DIR" --plan "$RUNNER_TEMP/plan.json" --baselines "$RUNNER_TEMP/baselines" \
+            --out attack-paths --llm "$LLM" --jev "$JEV" --sarif-prefix "$TF_DIR" --remediate
+
+      - name: Attack-path check at this repository's adoption level
+        id: gate
+        run: tapm gate attack-paths --tf-dir "$TF_DIR" --level "${{ vars.TAPM_LEVEL || 'observe' }}" --fail-on high
+
+      - name: Job summary and PR comment
+        if: always() && vars.TAPM_LEVEL != 'observe' && vars.TAPM_LEVEL != ''
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          cat attack-paths/gate.md attack-paths/report.md > comment.md
+          cat comment.md >> "$GITHUB_STEP_SUMMARY"
+          gh pr comment "${{ github.event.pull_request.number }}" --body-file comment.md --edit-last \
+            || gh pr comment "${{ github.event.pull_request.number }}" --body-file comment.md
+
+      - name: Job summary (observe)
+        if: always() && (vars.TAPM_LEVEL == 'observe' || vars.TAPM_LEVEL == '')
+        run: cat attack-paths/gate.md attack-paths/report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Counts for the kit worksheet (no plan data)
+        if: always()
+        run: tapm measure attack-paths --json > attack-paths/measure.json
+
+      - uses: github/codeql-action/upload-sarif@v3      # pin to full SHA
+        if: always()
+        with: { sarif_file: attack-paths/attack-paths.sarif, category: attack-paths }
+
+      - uses: actions/upload-artifact@v4                # pin to full SHA; do NOT upload plan.json
+        if: always()
+        with:
+          name: attack-paths
+          path: |
+            attack-paths/report.md
+            attack-paths/attack-paths.json
+            attack-paths/evidence.json
+            attack-paths/threat-model.py
+            attack-paths/dfd.png
+            attack-paths/ai-annotations.json
+            attack-paths/validation.json
+            attack-paths/remediations.json
+            attack-paths/remediation-*.diff
+            attack-paths/gate.json
+            attack-paths/gate.md
+            attack-paths/measure.json

@@ -1,0 +1,119 @@
+{
+  "results": [
+    {
+      "description": "Security group explicitly uses the default description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 41,
+        "filename": "main.tf",
+        "start_line": 30
+      },
+      "long_id": "aws-ec2-add-description-to-security-group",
+      "resolution": "Add descriptions for all security groups",
+      "resource": "aws_security_group.bastion",
+      "rule_description": "Missing description for security group.",
+      "rule_id": "AVD-AWS-0099",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Root block device is not encrypted.",
+      "impact": "The block device could be compromised and read from",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/enable-at-rest-encryption/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices"
+      ],
+      "location": {
+        "end_line": 54,
+        "filename": "main.tf",
+        "start_line": 43
+      },
+      "long_id": "aws-ec2-enable-at-rest-encryption",
+      "resolution": "Turn on encryption for all block devices",
+      "resource": "aws_instance.bastion",
+      "rule_description": "Instance with unencrypted block device.",
+      "rule_id": "AVD-AWS-0131",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule allows ingress from public internet.",
+      "impact": "Your port exposed to the internet",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-public-ingress-sgr/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule#cidr_blocks"
+      ],
+      "location": {
+        "end_line": 39,
+        "filename": "main.tf",
+        "start_line": 39
+      },
+      "long_id": "aws-ec2-no-public-ingress-sgr",
+      "resolution": "Set a more restrictive cidr range",
+      "resource": "aws_security_group.bastion",
+      "rule_description": "An ingress security group rule allows traffic from /0.",
+      "rule_id": "AVD-AWS-0107",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Subnet associates public IP address.",
+      "impact": "The instance is publicly accessible",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-public-ip-subnet/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet#map_public_ip_on_launch"
+      ],
+      "location": {
+        "end_line": 13,
+        "filename": "main.tf",
+        "start_line": 13
+      },
+      "long_id": "aws-ec2-no-public-ip-subnet",
+      "resolution": "Set the instance to not be publicly accessible",
+      "resource": "aws_subnet.public",
+      "rule_description": "Instances in a subnet should not receive a public IP address by default.",
+      "rule_id": "AVD-AWS-0164",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "VPC Flow Logs is not enabled for VPC ",
+      "impact": "Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/"
+      ],
+      "location": {
+        "end_line": 3,
+        "filename": "main.tf",
+        "start_line": 1
+      },
+      "long_id": "aws-ec2-require-vpc-flow-logs-for-all-vpcs",
+      "resolution": "Enable flow logs for VPC",
+      "resource": "aws_vpc.main",
+      "rule_description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "rule_id": "AVD-AWS-0178",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

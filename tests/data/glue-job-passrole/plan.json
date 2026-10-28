@@ -1,0 +1,467 @@
+{
+ "applyable": true,
+ "complete": true,
+ "configuration": {
+  "provider_config": {
+   "aws": {
+    "expressions": {
+     "region": {
+      "constant_value": "us-east-1"
+     },
+     "skip_credentials_validation": {
+      "constant_value": true
+     },
+     "skip_metadata_api_check": {
+      "constant_value": true
+     },
+     "skip_region_validation": {
+      "constant_value": true
+     },
+     "skip_requesting_account_id": {
+      "constant_value": true
+     }
+    },
+    "full_name": "registry.terraform.io/hashicorp/aws",
+    "name": "aws"
+   }
+  },
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_iam_role.job",
+     "expressions": {
+      "assume_role_policy": {},
+      "name": {
+       "constant_value": "glue-job"
+      }
+     },
+     "mode": "managed",
+     "name": "job",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_role"
+    },
+    {
+     "address": "aws_iam_role_policy.job",
+     "expressions": {
+      "name": {
+       "constant_value": "read-parameter"
+      },
+      "policy": {
+       "references": [
+        "aws_ssm_parameter.db_password.arn",
+        "aws_ssm_parameter.db_password"
+       ]
+      },
+      "role": {
+       "references": [
+        "aws_iam_role.job.id",
+        "aws_iam_role.job"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "job",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_role_policy"
+    },
+    {
+     "address": "aws_iam_user.etl",
+     "expressions": {
+      "name": {
+       "constant_value": "etl-operator"
+      }
+     },
+     "mode": "managed",
+     "name": "etl",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_user"
+    },
+    {
+     "address": "aws_iam_user_policy.etl",
+     "expressions": {
+      "name": {
+       "constant_value": "glue-jobs"
+      },
+      "policy": {
+       "references": [
+        "aws_iam_role.job.arn",
+        "aws_iam_role.job"
+       ]
+      },
+      "user": {
+       "references": [
+        "aws_iam_user.etl.name",
+        "aws_iam_user.etl"
+       ]
+      }
+     },
+     "mode": "managed",
+     "name": "etl",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_iam_user_policy"
+    },
+    {
+     "address": "aws_ssm_parameter.db_password",
+     "expressions": {
+      "name": {
+       "constant_value": "/prod/db/password"
+      },
+      "type": {
+       "constant_value": "SecureString"
+      },
+      "value": {
+       "constant_value": "not-a-real-secret"
+      }
+     },
+     "mode": "managed",
+     "name": "db_password",
+     "provider_config_key": "aws",
+     "schema_version": 0,
+     "type": "aws_ssm_parameter"
+    }
+   ]
+  }
+ },
+ "errored": false,
+ "format_version": "1.2",
+ "planned_values": {
+  "root_module": {
+   "resources": [
+    {
+     "address": "aws_iam_role.job",
+     "identity": {
+      "account_id": null,
+      "name": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "job",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "inline_policy": [],
+      "managed_policy_arns": [],
+      "tags_all": {}
+     },
+     "type": "aws_iam_role",
+     "values": {
+      "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"glue.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+      "description": null,
+      "force_detach_policies": false,
+      "max_session_duration": 3600,
+      "name": "glue-job",
+      "path": "/",
+      "permissions_boundary": null,
+      "tags": null
+     }
+    },
+    {
+     "address": "aws_iam_role_policy.job",
+     "identity": {
+      "account_id": null,
+      "name": null,
+      "role": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "job",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_iam_role_policy",
+     "values": {
+      "name": "read-parameter"
+     }
+    },
+    {
+     "address": "aws_iam_user.etl",
+     "identity": {
+      "account_id": null,
+      "name": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "etl",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "tags_all": {}
+     },
+     "type": "aws_iam_user",
+     "values": {
+      "force_destroy": false,
+      "name": "etl-operator",
+      "path": "/",
+      "permissions_boundary": null,
+      "tags": null
+     }
+    },
+    {
+     "address": "aws_iam_user_policy.etl",
+     "identity": {
+      "account_id": null,
+      "name": null,
+      "user": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "etl",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {},
+     "type": "aws_iam_user_policy",
+     "values": {
+      "name": "glue-jobs",
+      "user": "etl-operator"
+     }
+    },
+    {
+     "address": "aws_ssm_parameter.db_password",
+     "identity": {
+      "account_id": null,
+      "name": null,
+      "region": null
+     },
+     "identity_schema_version": 0,
+     "mode": "managed",
+     "name": "db_password",
+     "provider_name": "registry.terraform.io/hashicorp/aws",
+     "schema_version": 0,
+     "sensitive_values": {
+      "tags_all": {},
+      "value": true,
+      "value_wo": true
+     },
+     "type": "aws_ssm_parameter",
+     "values": {
+      "allowed_pattern": null,
+      "description": null,
+      "name": "/prod/db/password",
+      "overwrite": null,
+      "region": "us-east-1",
+      "tags": null,
+      "type": "SecureString",
+      "value": "not-a-real-secret",
+      "value_wo": null,
+      "value_wo_version": null
+     }
+    }
+   ]
+  }
+ },
+ "relevant_attributes": [
+  {
+   "attribute": [
+    "arn"
+   ],
+   "resource": "aws_iam_role.job"
+  },
+  {
+   "attribute": [
+    "id"
+   ],
+   "resource": "aws_iam_role.job"
+  },
+  {
+   "attribute": [
+    "arn"
+   ],
+   "resource": "aws_ssm_parameter.db_password"
+  },
+  {
+   "attribute": [
+    "name"
+   ],
+   "resource": "aws_iam_user.etl"
+  }
+ ],
+ "resource_changes": [
+  {
+   "address": "aws_iam_role.job",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "assume_role_policy": "{\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"glue.amazonaws.com\"}}],\"Version\":\"2012-10-17\"}",
+     "description": null,
+     "force_detach_policies": false,
+     "max_session_duration": 3600,
+     "name": "glue-job",
+     "path": "/",
+     "permissions_boundary": null,
+     "tags": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null
+    },
+    "after_sensitive": {
+     "inline_policy": [],
+     "managed_policy_arns": [],
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "create_date": true,
+     "id": true,
+     "inline_policy": true,
+     "managed_policy_arns": true,
+     "name_prefix": true,
+     "tags_all": true,
+     "unique_id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "job",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_role"
+  },
+  {
+   "address": "aws_iam_role_policy.job",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "name": "read-parameter"
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null,
+     "role": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "id": true,
+     "name_prefix": true,
+     "policy": true,
+     "role": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "job",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_role_policy"
+  },
+  {
+   "address": "aws_iam_user.etl",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "force_destroy": false,
+     "name": "etl-operator",
+     "path": "/",
+     "permissions_boundary": null,
+     "tags": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null
+    },
+    "after_sensitive": {
+     "tags_all": {}
+    },
+    "after_unknown": {
+     "arn": true,
+     "id": true,
+     "tags_all": true,
+     "unique_id": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "etl",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_user"
+  },
+  {
+   "address": "aws_iam_user_policy.etl",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "name": "glue-jobs",
+     "user": "etl-operator"
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null,
+     "user": null
+    },
+    "after_sensitive": {},
+    "after_unknown": {
+     "id": true,
+     "name_prefix": true,
+     "policy": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "etl",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_iam_user_policy"
+  },
+  {
+   "address": "aws_ssm_parameter.db_password",
+   "change": {
+    "actions": [
+     "create"
+    ],
+    "after": {
+     "allowed_pattern": null,
+     "description": null,
+     "name": "/prod/db/password",
+     "overwrite": null,
+     "region": "us-east-1",
+     "tags": null,
+     "type": "SecureString",
+     "value": "not-a-real-secret",
+     "value_wo": null,
+     "value_wo_version": null
+    },
+    "after_identity": {
+     "account_id": null,
+     "name": null,
+     "region": null
+    },
+    "after_sensitive": {
+     "tags_all": {},
+     "value": true,
+     "value_wo": true
+    },
+    "after_unknown": {
+     "arn": true,
+     "data_type": true,
+     "has_value_wo": true,
+     "id": true,
+     "insecure_value": true,
+     "key_id": true,
+     "tags_all": true,
+     "tier": true,
+     "version": true
+    },
+    "before": null,
+    "before_sensitive": false
+   },
+   "mode": "managed",
+   "name": "db_password",
+   "provider_name": "registry.terraform.io/hashicorp/aws",
+   "type": "aws_ssm_parameter"
+  }
+ ],
+ "terraform_version": "1.16.4"
+}

@@ -1,0 +1,61 @@
+# Head-to-head on TerrARA's relevance benchmark (Tran et al., CODASPY '25, Table 4): the same nine
+# vulnerable-by-design Terraform samples, at frozen commits. Never "latest main".
+#
+# TerrARA's own numbers are quoted from the paper and its evaluation workbook
+# (evaluation/TerrARA_evaluation.xlsx at the pinned TerrARA commit); we do not re-run TerrARA.
+# TerrARA's repository has no LICENSE: its hand-crafted samples are cloned at the pinned commit
+# and planned locally, and neither their sources nor their plans are committed here.
+schema_version: 1
+mock_aws: http://127.0.0.1:5055
+terrara:
+  url: https://github.com/DistriNet/TerrARA
+  commit: a896de6935fe80a83354def6974c8b4c532815d4
+  paper: "Tran, Sion, Yskout, Joosen. TerrARA: Automated Security Threat Modeling for Infrastructure as Code. ACM CODASPY 2025."
+repos:
+  terrara:
+    url: https://github.com/DistriNet/TerrARA
+    commit: a896de6935fe80a83354def6974c8b4c532815d4
+    license: none            # all rights reserved: run locally, never redistribute
+    redistribute: false
+  cloudgoat:
+    url: https://github.com/RhinoSecurityLabs/cloudgoat
+    commit: abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed   # v2.5.0, 2026-03-20 (same pin as Tier 2)
+    license: BSD-3-Clause
+    redistribute: true
+  kaimonkey:
+    url: https://github.com/tenable/KaiMonkey
+    commit: 3feb0bf1a5ab81a79f225407a5ed16db3acd59a4   # 2023-12-18, last commit
+    license: Apache-2.0
+    redistribute: true
+  awsgoat:
+    url: https://github.com/ine-labs/AWSGoat
+    commit: b24869ad455ed8d1393d00ecdc15ee638d1c1332   # 2025-05-20
+    license: MIT
+    redistribute: true
+# targets: assets a sample's own walkthrough names as the goal (added after the first run, as Tier 2 does for
+# CloudGoat): glue_privesc's goal is the SSM parameter "flag"; AWSGoat module 1's manual 04 says the users table
+# holds emails, password hashes and addresses. Untagged, neither is classified by default.
+# mirror: which provider mirror plans the sample. "current" = Terraform 1.16.4 + hashicorp/aws 6.66.0;
+# "terrara" = the same Terraform with hashicorp/aws 3.76.1 and 5.24.0, for samples that pin those and for
+# TerrARA's unpinned hand-crafted samples (written for aws 5.x, the provider of TerrARA's time; aws 6 removed
+# arguments they use). Fetch it with scripts/fetch-tools.sh --terrara.
+samples:
+  - {id: isolated_process, group: hand-crafted, repo: terrara, path: evaluation/dataset/isolated_process, mirror: terrara,
+     terrara: {threats: 20, vulns: 1, covered: 1}}
+  - {id: isolated_datastore, group: hand-crafted, repo: terrara, path: evaluation/dataset/isolated_datastore, mirror: terrara,
+     terrara: {threats: 18, vulns: 1, covered: 1}}
+  - {id: simple_dataflow, group: hand-crafted, repo: terrara, path: evaluation/dataset/simple_dataflow, mirror: terrara,
+     terrara: {threats: 32, vulns: 1, covered: 1}}
+  - {id: cross_trust_boundary, group: hand-crafted, repo: terrara, path: evaluation/dataset/cross_trust_boundary, mirror: terrara,
+     terrara: {threats: 45, vulns: 1, covered: 1}}
+  - {id: nested_subnet, group: hand-crafted, repo: terrara, path: evaluation/dataset/nested_subnet, mirror: terrara,
+     terrara: {threats: 44, vulns: 1, covered: 1}}
+  - {id: cloudgoat-glue_privesc, group: public, repo: cloudgoat, path: cloudgoat/scenarios/aws/glue_privesc/terraform, mirror: current,
+     context: '..', variables: {cgid: tapm, profile: default, cg_whitelist: '["203.0.113.10/32"]', ssh_public_key: '{T2}/dummy-cloudgoat.pub'},
+     options: {user_entries: true}, targets: [aws_ssm_parameter.flag], terrara: {threats: 228, vulns: 2, covered: 2}}
+  - {id: kaimonkey, group: public, repo: kaimonkey, path: terraform/aws, mirror: terrara,
+     terrara: {threats: 68, vulns: 9, covered: 7}}
+  - {id: awsgoat-module-1, group: public, repo: awsgoat, path: modules/module-1, mirror: terrara,
+     targets: [aws_dynamodb_table.users_table], terrara: {threats: 184, vulns: 7, covered: 7}}
+  - {id: awsgoat-module-2, group: public, repo: awsgoat, path: modules/module-2, mirror: terrara,
+     terrara: {threats: 76, vulns: 4, covered: 4}}

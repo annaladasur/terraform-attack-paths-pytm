@@ -1,0 +1,127 @@
+# Known vulnerabilities of TerrARA's benchmark samples, written from each sample's own walkthrough and its
+# Terraform source BEFORE this pipeline was run on the samples (pre-registered; changes after the first run are
+# listed at the bottom with the reason). TerrARA's workbook gives only per-sample counts, so our list can
+# differ from theirs; where a sample documents no vulnerabilities we score nothing.
+#
+# layer:     cloud      the vulnerability is in the Terraform (a permission, an exposure, a setting)
+#            app+cloud  an application bug whose impact the Terraform decides (which keys, which data)
+#            app        an application bug; Terraform shows only where it would live
+# elements:  the Terraform resources the vulnerability involves
+# path:      an attack path through `elements` covers it (reaching `target`, if given)
+# threats:   pytm / cloud-pack threat IDs of the vulnerability's kind (regexes); a plan-confirmed one on an
+#            element covers it, a merely generic one is TerrARA's own criterion ("a threat exists")
+# controls:  pytm controls whose yes/no question on an element points the app team at it
+schema_version: 1
+classes:
+  sqli: &sqli {threats: ["^INP(05|06|10)$"], controls: [validatesInput, sanitizesInput, usesParameterizedInput]}
+  xss: &xss {threats: ["^(INP(17|27|28|29|30|38|39|40)|SC0[234]|DS04)$"], controls: [encodesOutput, sanitizesInput, validatesInput]}
+  idor: &idor {threats: ["^(AC0[17]|AC12|AA0[1-4])$"], controls: [authorizesSource, hasAccessControl]}
+  exposure: &exposure {threats: ["^(AC0[17]|AA01|DS06|DR01|TAPM-IAM-0[12])$"], controls: [authenticatesSource, authorizesSource, hasAccessControl, storesPII]}
+  ssrf: &ssrf {threats: ["^(INP2[356]|HA01|TAPM-EC2-0[12])$"], controls: [validatesInput, sanitizesInput]}
+  upload: &upload {threats: ["^(AC06|INP2[36])$"], controls: [validatesInput, sanitizesInput, validatesContentType]}
+  breakout: &breakout {threats: ["^(AC1[23]|TAPM-EC2-0[12])$"], controls: [isHardened]}
+  privesc: &privesc {threats: ["^(AC01|AC12|AA03|TAPM-IAM-0[12]|TAPM-EC2-0[12])$"], controls: []}
+samples:
+  isolated_process: {note: "TerrARA's hand-crafted samples each contain one vulnerability that the paper and workbook do not name"}
+  isolated_datastore: {note: "TerrARA's hand-crafted samples each contain one vulnerability that the paper and workbook do not name"}
+  simple_dataflow: {note: "TerrARA's hand-crafted samples each contain one vulnerability that the paper and workbook do not name"}
+  cross_trust_boundary: {note: "TerrARA's hand-crafted samples each contain one vulnerability that the paper and workbook do not name"}
+  nested_subnet: {note: "TerrARA's hand-crafted samples each contain one vulnerability that the paper and workbook do not name"}
+  kaimonkey: {note: "KaiMonkey ships no walkthrough; TerrARA counts 9 vulnerabilities without naming them"}
+
+  cloudgoat-glue_privesc:
+    source: https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/glue_privesc/README.md
+    vulns:
+      - id: GP-1
+        title: SQL injection in the web page on EC2 exposes the Glue manager's access keys stored in RDS
+        walkthrough: README, route step 1
+        layer: app
+        elements: [aws_instance.linux_ec2, aws_db_instance.rds]
+        <<: *sqli
+      - id: GP-2
+        title: the Glue manager can pass a role to a new Glue job and read the SSM parameter through it
+        walkthrough: README, route steps 2-6
+        layer: cloud
+        elements: [aws_iam_user.glue_admin, aws_iam_role.ssm_parameter_role, aws_ssm_parameter.flag]
+        path: {target: aws_ssm_parameter.flag}
+        <<: *privesc
+
+  awsgoat-module-1:
+    source: https://github.com/ine-labs/AWSGoat/tree/b24869ad455ed8d1393d00ecdc15ee638d1c1332/attack-manuals/module-1
+    vulns:
+      - id: AG1-1
+        title: reflected XSS in the blog's search
+        walkthrough: 01-Reflected XSS.md
+        layer: app
+        elements: [aws_lambda_function.react_lambda_app, aws_lambda_function.lambda_ba_data]
+        <<: *xss
+      - id: AG1-2
+        title: injection in the users search returns every user's record
+        walkthrough: 02-SQL Injection.md
+        layer: app
+        elements: [aws_lambda_function.lambda_ba_data, aws_dynamodb_table.users_table]
+        <<: *sqli
+      - id: AG1-3
+        title: IDOR lets any user change another user's password
+        walkthrough: 03-Insecure Direct Object Reference.md
+        layer: app
+        elements: [aws_lambda_function.lambda_ba_data, aws_api_gateway_rest_api.apiLambda_ba]
+        <<: *idor
+      - id: AG1-4
+        title: an unauthenticated API endpoint dumps all users' data
+        walkthrough: 04-Sensitive Data Exposure.md
+        layer: app+cloud
+        elements: [aws_api_gateway_rest_api.apiLambda_ba, aws_lambda_function.lambda_ba_data, aws_dynamodb_table.users_table]
+        <<: *exposure
+      - id: AG1-5
+        title: SSRF in the post image URL reads local files of the Lambda environment
+        walkthrough: 05-Server Side Request Forgery Part 1.md
+        layer: app
+        elements: [aws_lambda_function.lambda_ba_data]
+        <<: *ssrf
+      - id: AG1-6
+        title: SSRF reads the Lambda's role credentials, whose dynamodb:* on * lets the attacker add an admin user to the users table
+        walkthrough: 06-Server Side Request Forgery Part 2.md
+        layer: app+cloud
+        elements: [aws_lambda_function.lambda_ba_data, aws_iam_role.blog_app_lambda_python, aws_dynamodb_table.users_table]
+        path: {target: aws_dynamodb_table.users_table}
+        <<: *ssrf
+      - id: AG1-7
+        title: a public dev bucket leaks an SSH key; the EC2 role can attach policies to the Lambda role and update its code, reaching account admin
+        walkthrough: 07-IAM Privilege Escalation.md
+        layer: cloud
+        elements: [aws_s3_bucket.dev, aws_instance.goat_instance, aws_iam_role.goat_role, aws_iam_role.blog_app_lambda_python, aws_lambda_function.lambda_ba_data]
+        path: {target: ACCOUNT_ADMIN}
+        <<: *privesc
+
+  awsgoat-module-2:
+    source: https://github.com/ine-labs/AWSGoat/tree/b24869ad455ed8d1393d00ecdc15ee638d1c1332/attack-manuals/module-2
+    vulns:
+      - id: AG2-1
+        title: SQL injection on the login page
+        walkthrough: 01-SQL Injection.md
+        layer: app
+        elements: [aws_ecs_service.worker, aws_ecs_task_definition.task_definition, aws_db_instance.database-instance]
+        <<: *sqli
+      - id: AG2-2
+        title: unrestricted file upload gives a shell in the task, and task metadata gives the task role's credentials
+        walkthrough: 02-File Upload and Task Metadata.md
+        layer: app+cloud
+        elements: [aws_ecs_service.worker, aws_ecs_task_definition.task_definition, aws_iam_role.ecs-task-role]
+        <<: *upload
+      - id: AG2-3
+        title: SYS_PTRACE lets the shell break out of the container and read the host's role credentials from IMDS
+        walkthrough: 03-ECS Breakout and Instance Metadata.md
+        layer: app+cloud
+        elements: [aws_ecs_task_definition.task_definition, aws_launch_template.ecs_launch_template, aws_autoscaling_group.ecs_asg, aws_iam_role.ecs-instance-role]
+        path: {}
+        <<: *breakout
+      - id: AG2-4
+        title: the ECS instance role has IAMFullAccess, so its credentials can create an administrator
+        walkthrough: 04-IAM Privilege Escalation.md
+        layer: cloud
+        elements: [aws_iam_role.ecs-instance-role]
+        path: {target: ACCOUNT_ADMIN}
+        <<: *privesc
+
+# Changes after the first run: none yet.

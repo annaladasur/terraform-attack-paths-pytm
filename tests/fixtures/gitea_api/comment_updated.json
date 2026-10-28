@@ -1,0 +1,14 @@
+{
+  "id": 101,
+  "html_url": "http://gitea:3000/demo-org/infra-demo/pulls/42#issuecomment-101",
+  "pull_request_url": "http://gitea:3000/demo-org/infra-demo/pulls/42",
+  "issue_url": "http://gitea:3000/demo-org/infra-demo/issues/42",
+  "user": {
+    "id": 2,
+    "login": "tapm-bot",
+    "username": "tapm-bot"
+  },
+  "body": "## Attack path check: BLOCKED\n\n1 attack path detected.\n\n### AI Annotations\n- PATH-001 narrated\n\n<!-- tapm:attack-paths -->",
+  "created_at": "2026-10-08T10:00:00Z",
+  "updated_at": "2026-10-08T10:06:00Z"
+}

@@ -1,0 +1,22 @@
+# generated per run (a frozen copy lives in conference-snapshot/)
+artifacts/
+.venv/
+.venv-scanners/
+.venv-pytm-main/
+.venv-moto/
+.tools/
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.cache/
+# live Terraform material must never be committed (see SECURITY.md)
+*.tfstate
+*.tfstate.*
+tfplan
+*.tfplan
+.terraform/
+.terraform.lock.hcl
+# audience lab scratch copy (labs/lab.sh reset)
+labs/workspace/
+.env
+*.env

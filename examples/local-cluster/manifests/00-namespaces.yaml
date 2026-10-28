@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: git
+  labels:
+    app.kubernetes.io/part-of: tapm-local-cluster
+    app.kubernetes.io/component: git-server
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ci
+  labels:
+    app.kubernetes.io/part-of: tapm-local-cluster
+    app.kubernetes.io/component: ci-runner
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tapm
+  labels:
+    app.kubernetes.io/part-of: tapm-local-cluster
+    app.kubernetes.io/component: analysis-service

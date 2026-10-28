@@ -1,0 +1,27 @@
+{
+  "beanstalk_secrets": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "codebuild_secrets": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "rds_snapshot": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "secrets_in_the_cloud": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  },
+  "vpc_peering_overexposed": {
+    "pinned": "1.16.4",
+    "terraform_bin": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/bin/terraform",
+    "terraform_version": "1.16.4"
+  }
+}

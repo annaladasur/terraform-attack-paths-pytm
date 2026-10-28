@@ -1,0 +1,18 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 004-wildcard-iam
+summary: Admin-equivalent role (AdministratorAccess) behind a non-exposed Lambda, and an IAM user with iam:* on *. Critical scanner findings, no internet-reachable path.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: ASSUMES, src: aws_lambda_function.deploy, dst: aws_iam_role.deployer}
+  - {type: TRUSTS, src: aws_iam_role.deployer, dst: "principal:service:lambda.amazonaws.com"}
+  - {type: ESCALATES, src: aws_iam_role.deployer, dst: "aws:account-admin"}
+  - {type: ESCALATES, src: aws_iam_user.ci, dst: "aws:account-admin"}
+expected_iam: []
+expected_paths: []
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

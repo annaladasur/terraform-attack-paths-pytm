@@ -1,0 +1,55 @@
+{
+  "_comment": "Actions the evaluator checks per asset type. 'class' is this project's semantic access class (list/read/write/admin), not AWS's official access-level taxonomy. 'form' is the resource ARN form the action applies to.",
+  "aws_s3_bucket": {
+    "s3:ListBucket": {"class": "list", "form": "bucket"},
+    "s3:ListBucketVersions": {"class": "list", "form": "bucket"},
+    "s3:GetObject": {"class": "read", "form": "object"},
+    "s3:GetObjectVersion": {"class": "read", "form": "object"},
+    "s3:PutObject": {"class": "write", "form": "object"},
+    "s3:DeleteObject": {"class": "write", "form": "object"},
+    "s3:DeleteObjectVersion": {"class": "write", "form": "object"},
+    "s3:DeleteBucket": {"class": "write", "form": "bucket"},
+    "s3:PutBucketPolicy": {"class": "admin", "form": "bucket"},
+    "s3:DeleteBucketPolicy": {"class": "admin", "form": "bucket"},
+    "s3:PutBucketAcl": {"class": "admin", "form": "bucket"},
+    "s3:PutObjectAcl": {"class": "admin", "form": "object"},
+    "s3:PutBucketPublicAccessBlock": {"class": "admin", "form": "bucket"}
+  },
+  "aws_secretsmanager_secret": {
+    "secretsmanager:DescribeSecret": {"class": "list", "form": "secret"},
+    "secretsmanager:GetSecretValue": {"class": "read", "form": "secret"},
+    "secretsmanager:PutSecretValue": {"class": "write", "form": "secret"},
+    "secretsmanager:DeleteSecret": {"class": "write", "form": "secret"},
+    "secretsmanager:PutResourcePolicy": {"class": "admin", "form": "secret"}
+  },
+  "aws_ssm_parameter": {
+    "ssm:GetParameter": {"class": "read", "form": "parameter"},
+    "ssm:GetParameters": {"class": "read", "form": "parameter"},
+    "ssm:PutParameter": {"class": "write", "form": "parameter"},
+    "ssm:DeleteParameter": {"class": "write", "form": "parameter"}
+  },
+  "aws_kms_key": {
+    "kms:Decrypt": {"class": "read", "form": "key"},
+    "kms:Encrypt": {"class": "write", "form": "key"},
+    "kms:GenerateDataKey": {"class": "write", "form": "key"},
+    "kms:ScheduleKeyDeletion": {"class": "write", "form": "key"},
+    "kms:PutKeyPolicy": {"class": "admin", "form": "key"}
+  },
+  "aws_dynamodb_table": {
+    "dynamodb:GetItem": {"class": "read", "form": "table"},
+    "dynamodb:BatchGetItem": {"class": "read", "form": "table"},
+    "dynamodb:Query": {"class": "read", "form": "table"},
+    "dynamodb:Scan": {"class": "read", "form": "table"},
+    "dynamodb:PutItem": {"class": "write", "form": "table"},
+    "dynamodb:UpdateItem": {"class": "write", "form": "table"},
+    "dynamodb:DeleteItem": {"class": "write", "form": "table"},
+    "dynamodb:BatchWriteItem": {"class": "write", "form": "table"},
+    "dynamodb:DeleteTable": {"class": "write", "form": "table"}
+  },
+  "aws_db_instance": {
+    "rds:CreateDBSnapshot": {"class": "read", "form": "db"},
+    "rds:DeleteDBInstance": {"class": "write", "form": "db"},
+    "rds:RebootDBInstance": {"class": "write", "form": "db"},
+    "rds:ModifyDBInstance": {"class": "admin", "form": "db"}
+  }
+}

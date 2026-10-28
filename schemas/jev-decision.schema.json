@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/Decision record",
+  "title": "Decision record",
+  "description": "Typed decisions taken before and after agents run. Wire answers follow TypeSafe Jev's choice/score/noul shapes.",
+  "type": "object",
+  "required": [
+    "subject",
+    "backend",
+    "outputs",
+    "raw"
+  ],
+  "properties": {
+    "subject": {
+      "type": "string"
+    },
+    "backend": {
+      "type": "string"
+    },
+    "state": {
+      "type": "object"
+    },
+    "outputs": {
+      "type": "object",
+      "required": [
+        "annotation_required",
+        "route",
+        "evidence_sufficiency",
+        "agents",
+        "human_review"
+      ],
+      "properties": {
+        "annotation_required": {
+          "type": "boolean"
+        },
+        "route": {
+          "enum": [
+            "NARRATE_PATH",
+            "EXPLAIN",
+            "HUMAN_REVIEW",
+            "NO_AI"
+          ]
+        },
+        "evidence_sufficiency": {
+          "enum": [
+            "YES",
+            "REVIEW",
+            "NO"
+          ]
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "human_review": {
+          "type": "boolean"
+        }
+      }
+    },
+    "raw": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "choice",
+              "score",
+              "noul"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

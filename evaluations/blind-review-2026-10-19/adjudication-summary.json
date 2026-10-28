@@ -1,0 +1,76 @@
+{
+  "supplied_pairs": 63,
+  "reviewed_pairs": 63,
+  "different_initial_classifications": 28,
+  "independently_adjudicated_differences": 28,
+  "proposed_gold_corrections": [
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "proposed_label": "OUT_OF_SCOPE",
+      "evidence": "adjudication-iam.json"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "proposed_label": "OUT_OF_SCOPE",
+      "evidence": "adjudication-iam.json"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "proposed_label": "INVALID",
+      "evidence": "adjudication-iam.json"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "proposed_label": "INVALID",
+      "evidence": "adjudication-iam.json"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "proposed_label": "OUT_OF_SCOPE",
+      "evidence": "adjudication-iam.json"
+    },
+    {
+      "case": "iam-vulnerable",
+      "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+      "target": "aws:account-admin",
+      "original_label": "VALID",
+      "proposed_label": "INVALID",
+      "evidence": "adjudication-iam.json"
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "entry": "aws_iam_user.solus",
+      "target": "aws_lambda_function.lambda_function",
+      "original_label": "OUT_OF_SCOPE",
+      "proposed_label": "VALID",
+      "evidence": "adjudication-cloud-network.json"
+    },
+    {
+      "case": "cloudgoat-secrets_in_the_cloud",
+      "entry": "aws_iam_user.low_priv_user",
+      "target": "aws_secretsmanager_secret.this",
+      "original_label": "OUT_OF_SCOPE",
+      "proposed_label": "VALID",
+      "evidence": "adjudication-cloud-network.json"
+    }
+  ],
+  "gold_modified": false,
+  "human_review": false,
+  "status": "automated mapping and adjudication complete; owner label-policy approval and Git verification pending",
+  "caveat": "These are proposed changes, not established new ground truth or updated benchmark metrics. Some restate previously logged disputes. Missing runtime assumptions remain explicit."
+}

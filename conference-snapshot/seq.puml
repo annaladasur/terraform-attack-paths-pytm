@@ -1,0 +1,29 @@
+@startuml
+entity process_IMDSofawsinstanceapp_35f103beb7 as "IMDS of aws_instance.app"
+actor actor_Internetclient_9bb2ec1041 as "Internet client"
+entity server_awsinstanceapp_b554b0b5a5 as "aws_instance.app"
+entity server_awslbweb_c9cf0d3ceb as "aws_lb.web"
+database datastore_awssbucketcustomerdata_79ecf145f7 as "aws_s3_bucket.customer_data"
+database datastore_awssbucketreports_6b6e700377 as "aws_s3_bucket.reports"
+
+actor_Internetclient_9bb2ec1041 -> server_awslbweb_c9cf0d3ceb: (1) HTTPS/443 (GRAPH-017)
+note left
+EXPOSES internet -> aws_lb.web; evidence: NET-001, NET-003, TF-007, TF-008
+end note
+server_awslbweb_c9cf0d3ceb -> server_awsinstanceapp_b554b0b5a5: (2) HTTP/8080 (GRAPH-020)
+note left
+ROUTES_TO aws_lb.web -> aws_instance.app; evidence: NET-005, TF-005, TF-007, TF-008, TF-009, TF-010
+end note
+server_awsinstanceapp_b554b0b5a5 -> process_IMDSofawsinstanceapp_35f103beb7: (3) role credentials for aws_iam_role.app (GRAPH-003)
+note left
+ASSUMES aws_instance.app -> aws_iam_role.app; evidence: IAM-002, TF-001, TF-002, TF-004, TF-005; precondition: workload_ssrf
+end note
+server_awsinstanceapp_b554b0b5a5 -> datastore_awssbucketcustomerdata_79ecf145f7: (4) s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)
+note left
+READS aws_instance.app -> aws_s3_bucket.customer_data; evidence: IAM-001, IAM-002, TF-001, TF-002, TF-004, TF-005, TF-015
+end note
+server_awsinstanceapp_b554b0b5a5 -> datastore_awssbucketreports_6b6e700377: (5) s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)
+note left
+READS aws_instance.app -> aws_s3_bucket.reports; evidence: IAM-001, IAM-002, TF-001, TF-002, TF-004, TF-005, TF-017
+end note
+@enduml

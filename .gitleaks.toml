@@ -1,0 +1,42 @@
+# Gitleaks configuration for terraform-attack-paths-pytm
+# Enforces secret scanning over all plans, baselines, fixtures, and source code.
+# Task A23 / Finding F32 / Check C16
+
+title = "gitleaks config for terraform-attack-paths-pytm"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlist AWS documentation example keys, Moto STS mock identifiers, and benchmark dummy fixtures"
+regexes = [
+    # Standard AWS documentation example access key ID (used in Moto STS mock get_caller_identity and CloudGoat/IAM-Vulnerable plans)
+    '''AKIAIOSFODNN7EXAMPLE''',
+    # Standard AWS documentation example key variant retained in TerraGoat intentionally vulnerable EC2 user_data and baseline scanner outputs
+    '''AKIAIOSFODNN7EXAMAAA''',
+    # Standard AWS documentation example secret key paired with AKIAIOSFODNN7EXAMAAA in TerraGoat EC2 user_data
+    '''wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMAAAKEY''',
+    # CloudGoat VPC peering scenario dummy RDS password
+    '''Sup3rSecr3tPassw0rd1''',
+    # AWSGoat module 2 dummy database password
+    '''T2kVB3zgeN3YbrKS''',
+    # AWSGoat module 1 dummy blog key (32-char hex MD5)
+    '''655877f0f8ade541e1d21a48fe396ddb''',
+    # CVE identifier in PyTM threat library
+    '''CVE-1999-0428Merak''',
+    # AWS SDK static bundle unsigned body constant
+    '''v4-unsigned-body''',
+    # Terraform resource type name false positive in generic-api-key
+    '''s3_bucket_policy''',
+    # SHA-256 cache keys in plan-cache baselines
+    '''^[0-9a-f]{64}$''',
+]
+paths = [
+    '''(^|/)\.venv.*''',
+    '''(^|/)\.tools.*''',
+    '''(^|/)__pycache__/.*''',
+    '''(^|/)\.pytest_cache/.*''',
+    '''(^|/)artifacts/.*''',
+    '''(^|/)node_modules/.*''',
+    '''(^|/)\.env.*''',
+]

@@ -1,0 +1,142 @@
+{
+  "results": [
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:Get*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 57,
+        "filename": "main.tf",
+        "start_line": 57
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.auditor",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'iam:Get*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 57,
+        "filename": "main.tf",
+        "start_line": 57
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.auditor",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'iam:Get*' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 57,
+        "filename": "main.tf",
+        "start_line": 57
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.auditor",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'ec2:RunInstances' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 10,
+        "filename": "main.tf",
+        "start_line": 10
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.dev",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 50,
+        "filename": "main.tf",
+        "start_line": 48
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.auditor",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 3,
+        "filename": "main.tf",
+        "start_line": 1
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.dev",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

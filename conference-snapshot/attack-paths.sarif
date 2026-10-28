@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "alb.tf"
+                },
+                "region": {
+                  "endLine": 3,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "plausible path from internet to confidential asset aws_s3_bucket.customer_data: internet -> aws_lb.web -> aws_instance.app -> aws_iam_role.app -> aws_s3_bucket.customer_data; requires: workload_ssrf. Scanner findings on its hops: SCAN-016, SCAN-018, SCAN-020, SCAN-022, SCAN-023, SCAN-031, SCAN-032"
+          },
+          "partialFingerprints": {
+            "attackPathKey": "e67244a5e4f5"
+          },
+          "properties": {
+            "nodes": [
+              "internet",
+              "aws_lb.web",
+              "aws_instance.app",
+              "aws_iam_role.app",
+              "aws_s3_bucket.customer_data"
+            ],
+            "path_id": "PATH-001",
+            "preconditions": [
+              "workload_ssrf"
+            ],
+            "status": "plausible"
+          },
+          "relatedLocations": [
+            {
+              "id": 0,
+              "message": {
+                "text": "NET-001: aws_lb.web is internet-facing (internal = false)"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "alb.tf"
+                },
+                "region": {
+                  "endLine": 3,
+                  "startLine": 3
+                }
+              }
+            },
+            {
+              "id": 1,
+              "message": {
+                "text": "NET-003: aws_security_group.alb ingress tcp/443 from 0.0.0.0/0"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "network.tf"
+                },
+                "region": {
+                  "endLine": 78,
+                  "startLine": 72
+                }
+              }
+            },
+            {
+              "id": 2,
+              "message": {
+                "text": "NET-005: aws_security_group.app ingress tcp/8080 from sg:aws_security_group.alb"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "network.tf"
+                },
+                "region": {
+                  "endLine": 100,
+                  "startLine": 94
+                }
+              }
+            },
+            {
+              "id": 3,
+              "message": {
+                "text": "IAM-002: aws_iam_role.app statement 0: Allow sts:AssumeRole on this role (trust policy) for Service:ec2.amazonaws.com"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "iam.tf"
+                },
+                "region": {
+                  "endLine": 13,
+                  "startLine": 4
+                }
+              }
+            },
+            {
+              "id": 4,
+              "message": {
+                "text": "IAM-001: aws_iam_role_policy.app_s3 statement 0 (ReadReports): Allow s3:GetObject, s3:ListBucket on arn:aws:s3:::*"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "iam.tf"
+                },
+                "region": {
+                  "endLine": 35,
+                  "startLine": 25
+                }
+              }
+            }
+          ],
+          "ruleId": "TAPM-PATH-HIGH"
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "terraform-attack-paths-pytm",
+          "rules": [
+            {
+              "helpUri": "https://example.invalid/terraform-attack-paths-pytm/docs/methodology.md#attack-path",
+              "id": "TAPM-PATH-HIGH",
+              "name": "AttackPathHigh",
+              "shortDescription": {
+                "text": "high priority attack path to a classified asset"
+              }
+            }
+          ],
+          "version": "0.1.0"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

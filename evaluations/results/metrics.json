@@ -1,0 +1,3052 @@
+{
+  "per_fixture": {
+    "001-clean": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 11,
+          "total": 11,
+          "with_source_location": 11
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "80757d7302874a97",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "2011a13bca52a327",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "9afc970be3c74ca6",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "52be2b3ea4745210",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "213eaae47c87046f",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "002-public-s3": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": null,
+          "correct": 0,
+          "expected": 0,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "principal:any",
+                "aws_s3_bucket.exports"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 1,
+            "hops": 2
+          },
+          "with_pack": {
+            "covered": 1,
+            "hops": 2
+          }
+        },
+        "resources": {
+          "modeled": 7,
+          "total": 7,
+          "with_source_location": 7
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 2
+          },
+          "tfsec": {
+            "covered": 1,
+            "hops": 2
+          },
+          "trivy": {
+            "covered": 1,
+            "hops": 2
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": null,
+              "hop": 0,
+              "n": 1,
+              "reasons": [
+                "no further safe edit inside the cited blocks; the fix may need a new resource or a design change, which is left to a human"
+              ],
+              "status": "GAVE_UP",
+              "what_if_predicted": null
+            }
+          ],
+          "path": "PATH-001",
+          "result": "NO_VERIFIED_FIX"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "091d28e16b5cc1cd",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "f005cb754822d752",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "c1a3ff8e54757de8",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "cd8f8d158ae254bf",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "e1531e6645c48fec",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "e37f001de2d0986f",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "003-open-ingress": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": null,
+          "correct": 0,
+          "expected": 0,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 7,
+          "total": 7,
+          "with_source_location": 7
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "0c785d86ee4e86f6",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "cb4198525c97656d",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "a2b8db4903fae2f2",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "41d0f6d1eb7fb68d",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "4f2b5244a76f0257",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "004-wildcard-iam": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 4
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": null,
+          "correct": 0,
+          "expected": 0,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 5,
+          "total": 5,
+          "with_source_location": 5
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "9b5209b8cc3c85cc",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "bc6fe8b8dc1c890a",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "b8569acdf280eb1d",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "8ca396fb371e1d80",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "f8ed289dcd466825",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "005-public-workload-iam-role": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 4
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 11,
+          "total": 11,
+          "with_source_location": 11
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "3645bbf8068c9b3a",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "444a0b431a85ce2a",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "8e7ea54461a3cd61",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "40ef8c9f81dc154f",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "4445d000cfa389c2",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "006-public-workload-iam-sensitive-bucket": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app",
+                "aws_iam_role.app",
+                "aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 2,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 4,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 23,
+          "total": 23,
+          "with_source_location": 23
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 3,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 2,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d24ffed1c1741865",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "147af9d73f598ff3",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "50b814e07b80a64e",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "7276d576e8912d81",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "effabdaa40cd59fb",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "e9c24324478e3b69",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "007-instance-profile": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 9,
+          "total": 9,
+          "with_source_location": 9
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "552927a453f8c9b0",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "c27ca0c6fce4eff5",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "ae98dbe1ecd50a48",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "ffd2fc6f12172492",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "0cd8930f67204abe",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "008-role-trust": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_rce"
+              ],
+              "gold_priority": "medium",
+              "nodes": [
+                "internet",
+                "aws_lambda_function.frontend",
+                "aws_iam_role.frontend",
+                "aws_iam_role.data_reader",
+                "aws_secretsmanager_secret.db"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_rce"
+              ],
+              "preconditions_ok": true,
+              "priority": "medium",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 1,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 7,
+          "total": 7,
+          "with_source_location": 7
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 0,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 0,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": null,
+              "hop": 0,
+              "n": 1,
+              "reasons": [
+                "no further safe edit inside the cited blocks; the fix may need a new resource or a design change, which is left to a human"
+              ],
+              "status": "GAVE_UP",
+              "what_if_predicted": null
+            }
+          ],
+          "path": "PATH-001",
+          "result": "NO_VERIFIED_FIX"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d6c6dabad5f748a7",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "ca3138de656d375a",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "1ec29e5934e5e018",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "ca764c21d2a1cd1d",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "d91c3651181f337e",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "5fc30ed82523c6ff",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "009-resource-policy": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 4
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_rce"
+              ],
+              "gold_priority": "medium",
+              "nodes": [
+                "internet",
+                "aws_instance.api",
+                "aws_iam_role.app",
+                "aws_s3_bucket.ledger"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_rce"
+              ],
+              "preconditions_ok": true,
+              "priority": "medium",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 3
+          },
+          "with_pack": {
+            "covered": 3,
+            "hops": 3
+          }
+        },
+        "resources": {
+          "modeled": 12,
+          "total": 12,
+          "with_source_location": 12
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 3
+          },
+          "tfsec": {
+            "covered": 1,
+            "hops": 3
+          },
+          "trivy": {
+            "covered": 0,
+            "hops": 3
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "breaks_path",
+              "hop": 1,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "65203784998c11e1",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "e752dd7f98d03f56",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "471fd6ecfd2a2f9b",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "aaeb3c3f759d002f",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "72f53f0baa107a7f",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "4134e1e88a3e39c7",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "010-explicit-deny": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 5
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 22,
+          "total": 22,
+          "with_source_location": 22
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "52a91d8481dc47f7",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "1e9f2b765c82bc74",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "92cfda911b4e366f",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "23a47e106a593990",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "8bc3bcd09bcc9423",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "011-iam-condition": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 5,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf",
+                "condition_satisfied"
+              ],
+              "gold_priority": "medium",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app",
+                "aws_iam_role.app",
+                "aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf",
+                "condition_satisfied"
+              ],
+              "preconditions_ok": true,
+              "priority": "medium",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 2,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 4,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 23,
+          "total": 23,
+          "with_source_location": 23
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 3,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 2,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "cfc78c93464897fd",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "bc538a5f668f3024",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "6c6f90f043176d30",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "b026060aa5964d45",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "bcc8d2f8fc94e2c7",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "675094cb9dce7022",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "012-for-each": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 7
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 3,
+          "expected": 3,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app",
+                "aws_iam_role.app",
+                "aws_s3_bucket.data[\"invoices\"]"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 2,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 4,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 21,
+          "total": 21,
+          "with_source_location": 21
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 3,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 2,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "5444ec7c101931b3",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "9b6d1edb0ed98a2c",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "deecc711ecb124af",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "4b58208321e831ea",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "5e7f20edffc0030f",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "7f9d5efad0f6af14",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "013-count": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 12,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 20,
+        "llm_latency_ms_total": 0,
+        "model_calls": 20,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 10,
+        "evidence_backed": 10,
+        "generated": 10,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 8
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_rce"
+              ],
+              "gold_priority": "medium",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app[0]",
+                "aws_iam_role.app",
+                "aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_rce"
+              ],
+              "preconditions_ok": true,
+              "priority": "medium",
+              "priority_ok": true
+            },
+            {
+              "gold_preconditions": [
+                "workload_rce"
+              ],
+              "gold_priority": "medium",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app[1]",
+                "aws_iam_role.app",
+                "aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-002",
+              "preconditions": [
+                "workload_rce"
+              ],
+              "preconditions_ok": true,
+              "priority": "medium",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 2
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 4,
+            "hops": 8
+          },
+          "with_pack": {
+            "covered": 8,
+            "hops": 8
+          }
+        },
+        "resources": {
+          "modeled": 25,
+          "total": 25,
+          "with_source_location": 25
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 0,
+            "hops": 8
+          },
+          "tfsec": {
+            "covered": 4,
+            "hops": 8
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 8
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        },
+        {
+          "attempts": [
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-002",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "827652cc6b84fce4",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "2663acd412b388f6",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "71d83def56cd6c14",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "acac03379b56b3e6",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "1a24e462ca6e6bb0",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "fa7148dce6146ad3",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "014-modules": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "module.orders.aws_lb.web",
+                "module.orders.aws_instance.app",
+                "module.orders.aws_iam_role.app",
+                "module.orders.aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 2,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 4,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 23,
+          "total": 23,
+          "with_source_location": 23
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 3,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 2,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "ddae9ed826327601",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "45bd4c712a472217",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "cc22df21a71bc155",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "7cc73173dd393b2c",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "2e97f2da4610dc12",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "8c9c7872d147c00a",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "015-dynamic-blocks": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 4
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "aws_instance.api",
+                "aws_iam_role.app",
+                "aws_dynamodb_table.customers"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 1,
+            "hops": 3
+          },
+          "with_pack": {
+            "covered": 3,
+            "hops": 3
+          }
+        },
+        "resources": {
+          "modeled": 11,
+          "total": 11,
+          "with_source_location": 11
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 3,
+            "hops": 3
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 3
+          },
+          "trivy": {
+            "covered": 1,
+            "hops": 3
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "breaks_path",
+              "hop": 1,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "696696b820c8d069",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "65f664e94952ae64",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "f33bfabd41b999fa",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "da135e3554fc3390",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "0d02979e122e555a",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "408c86d5e81aef55",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "016-unknown-values": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app",
+                "aws_iam_role.app",
+                "aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 1,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 4,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 20,
+          "total": 20,
+          "with_source_location": 20
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 2,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 3,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": null,
+              "hop": 1,
+              "n": 2,
+              "reasons": [
+                "find appears 2 times in network.tf (must be exactly once)"
+              ],
+              "status": "REJECTED",
+              "what_if_predicted": null
+            },
+            {
+              "effect": null,
+              "hop": 1,
+              "n": 3,
+              "reasons": [
+                "find appears 2 times in network.tf (must be exactly once)"
+              ],
+              "status": "REJECTED",
+              "what_if_predicted": null
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_DOWNGRADE"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "a073e4a6f3981754",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "3102812a59404126",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "54ad85fb17b3c4b7",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "8a8f31de6d32fbf9",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "004c272da54ed0e5",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "97605de96341e2e0",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "017-cross-module-references": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 4
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "module.web.aws_instance.this",
+                "module.iam.aws_iam_role.this",
+                "module.data.aws_s3_bucket.this"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 3
+          },
+          "with_pack": {
+            "covered": 3,
+            "hops": 3
+          }
+        },
+        "resources": {
+          "modeled": 12,
+          "total": 12,
+          "with_source_location": 12
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 2,
+            "hops": 3
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 3
+          },
+          "trivy": {
+            "covered": 1,
+            "hops": 3
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 2,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": "breaks_path",
+              "hop": 1,
+              "n": 2,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "f54f354632e8c80b",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "920118bac40bde8a",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "6e086bc4f961d0be",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "f937566369974bae",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "aa33f3a1226fddc0",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "6aa17c8dc6cd9a08",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "018-noisy-false-positives": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 4
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 16,
+          "total": 16,
+          "with_source_location": 16
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "cbc20c2cab2db091",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "2410287ac627c421",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "e814ff3529f353d4",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "8d783c2565016519",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "885ece3c2d5d59a6",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "019-prompt-injection-comments": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 6
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 2,
+          "expected": 2,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "workload_ssrf"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "internet",
+                "aws_lb.web",
+                "aws_instance.app",
+                "aws_iam_role.app",
+                "aws_s3_bucket.customer_data"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "workload_ssrf"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 2,
+            "hops": 4
+          },
+          "with_pack": {
+            "covered": 4,
+            "hops": 4
+          }
+        },
+        "resources": {
+          "modeled": 23,
+          "total": 23,
+          "with_source_location": 23
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 1,
+            "hops": 4
+          },
+          "tfsec": {
+            "covered": 3,
+            "hops": 4
+          },
+          "trivy": {
+            "covered": 2,
+            "hops": 4
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": "downgrades_path",
+              "hop": 3,
+              "n": 1,
+              "reasons": [],
+              "status": "PROVEN_DOWNGRADE",
+              "what_if_predicted": "downgrades_path"
+            },
+            {
+              "effect": "breaks_path",
+              "hop": 4,
+              "n": 2,
+              "reasons": [],
+              "status": "PROVEN_BREAK",
+              "what_if_predicted": "breaks_path"
+            }
+          ],
+          "path": "PATH-001",
+          "result": "PROVEN_BREAK"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "e21163b194bc854e",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "1ae04ffdef73104a",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "df96bd737e744f0b",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "d9fd1c4e068ba41e",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "effabdaa40cd59fb",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "0be04c01f7183d8a",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "020-benign-security-comments": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0,
+        "input_tokens": 0,
+        "jev_calls": 0,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 0,
+        "llm_latency_ms_total": 0,
+        "model_calls": 0,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 0,
+        "evidence_backed": 0,
+        "generated": 0,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": 1.0,
+          "correct": 1,
+          "expected": 1,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [],
+          "precision": null,
+          "recall": null,
+          "tp": 0
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 0
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 0
+          }
+        },
+        "resources": {
+          "modeled": 11,
+          "total": 11,
+          "with_source_location": 11
+        },
+        "scanner_hop_coverage": {}
+      },
+      "remediation": null,
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "d84c2d88307a9f0a",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "9dfae502f9f554b1",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "660be364470632a8",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "e1c9c71e4ea68416",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "52be2b3ea4745210",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "de8a071be949d06a",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    },
+    "021-passrole-escalation": {
+      "ai_metrics": {
+        "cache_hits": 0,
+        "cost_usd": 0.0,
+        "input_tokens": 0,
+        "jev_calls": 6,
+        "jev_latency_ms_total": 0,
+        "llm_calls": 10,
+        "llm_latency_ms_total": 0,
+        "model_calls": 10,
+        "output_tokens": 0
+      },
+      "ai_summary": {
+        "accepted": 5,
+        "evidence_backed": 5,
+        "generated": 5,
+        "human_review": 0,
+        "rejected": 0,
+        "unsupported": 0
+      },
+      "metrics": {
+        "edges": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 3
+        },
+        "false_paths_found": [],
+        "iam": {
+          "accuracy": null,
+          "correct": 0,
+          "expected": 0,
+          "mismatches": []
+        },
+        "paths": {
+          "fn": 0,
+          "fn_items": [],
+          "fp": 0,
+          "fp_items": [],
+          "matched": [
+            {
+              "gold_preconditions": [
+                "credential_compromise"
+              ],
+              "gold_priority": "high",
+              "nodes": [
+                "aws_iam_user.dev",
+                "aws_iam_role.ops",
+                "aws:account-admin"
+              ],
+              "path_id": "PATH-001",
+              "preconditions": [
+                "credential_compromise"
+              ],
+              "preconditions_ok": true,
+              "priority": "high",
+              "priority_ok": true
+            }
+          ],
+          "precision": 1.0,
+          "recall": 1.0,
+          "tp": 1
+        },
+        "pytm_hop_coverage": {
+          "builtin": {
+            "covered": 0,
+            "hops": 2
+          },
+          "with_pack": {
+            "covered": 0,
+            "hops": 2
+          }
+        },
+        "resources": {
+          "modeled": 6,
+          "total": 6,
+          "with_source_location": 6
+        },
+        "scanner_hop_coverage": {
+          "checkov": {
+            "covered": 0,
+            "hops": 2
+          },
+          "tfsec": {
+            "covered": 0,
+            "hops": 2
+          },
+          "trivy": {
+            "covered": 0,
+            "hops": 2
+          }
+        }
+      },
+      "remediation": [
+        {
+          "attempts": [
+            {
+              "effect": null,
+              "hop": 0,
+              "n": 1,
+              "reasons": [
+                "no further safe edit inside the cited blocks; the fix may need a new resource or a design change, which is left to a human"
+              ],
+              "status": "GAVE_UP",
+              "what_if_predicted": null
+            }
+          ],
+          "path": "PATH-001",
+          "result": "NO_VERIFIED_FIX"
+        }
+      ],
+      "replay": {
+        "artifacts": {
+          "attack-paths.json": {
+            "distinct": 1,
+            "hash": "052c014050d28192",
+            "identical": true
+          },
+          "dfd.dot": {
+            "distinct": 1,
+            "hash": "absent",
+            "identical": true
+          },
+          "evidence.json": {
+            "distinct": 1,
+            "hash": "2152d6c2b3bea18d",
+            "identical": true
+          },
+          "iam-relationships.json": {
+            "distinct": 1,
+            "hash": "ad4417ddbb2c58b6",
+            "identical": true
+          },
+          "resource-graph.json": {
+            "distinct": 1,
+            "hash": "ddac8672ad9b07a8",
+            "identical": true
+          },
+          "terraform-plan.json": {
+            "distinct": 1,
+            "hash": "2f52022af6151b8c",
+            "identical": true
+          },
+          "threat-model.py": {
+            "distinct": 1,
+            "hash": "9c54b3af9fa29618",
+            "identical": true
+          }
+        },
+        "identical_runs": 10,
+        "runs": 10
+      }
+    }
+  },
+  "summary": {
+    "ai": {
+      "accepted": 65,
+      "backend": "simulated",
+      "backends": [
+        "simulated"
+      ],
+      "cost_usd": 0.0,
+      "generated": 70,
+      "human_review": 5,
+      "jev_calls": 84,
+      "llm_calls": 140,
+      "rejected_unsupported": 0
+    },
+    "deterministic_replay": "21/21 fixtures fully identical",
+    "edge_precision": 1.0,
+    "edge_recall": 1.0,
+    "false_paths_reported": 0,
+    "fixtures": 21,
+    "iam_mapping_accuracy": 1.0,
+    "median_runtime_ms": 723,
+    "p95_runtime_ms": 864,
+    "path_precision": 1.0,
+    "path_recall": 1.0,
+    "paths": {
+      "fn": 0,
+      "fp": 0,
+      "tp": 14
+    },
+    "pytm_evidence": {
+      "confirmed": 93,
+      "hop_coverage_builtin": 0.3469,
+      "hop_coverage_with_pack": 0.8776,
+      "mitigated": 1,
+      "needs_app_team": 1515,
+      "pack": 61,
+      "ruled_out": 176,
+      "threats": 1609
+    },
+    "pytm_only": {
+      "attack_paths": 0,
+      "threats": 1682
+    },
+    "remediation": {
+      "attempts": 22,
+      "break": 10,
+      "downgrade_only": 1,
+      "no_fix": 3,
+      "paths": 14,
+      "rejected": 2,
+      "unverified": 0,
+      "whatif_agree": 17,
+      "whatif_checked": 17
+    },
+    "scanner_findings": {
+      "checkov": 354,
+      "tfsec": 282,
+      "trivy": 222
+    },
+    "scanner_hop_coverage_on_gold_paths": {
+      "checkov": 0.2857,
+      "tfsec": 0.5918,
+      "trivy": 0.3469
+    }
+  }
+}

@@ -1,0 +1,94 @@
+name: Terraform attack-path review
+
+"on":
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  attack-paths:
+    name: attack-paths
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+        continue-on-error: true
+
+      - name: Locate or generate Terraform plan JSON
+        id: plan
+        run: |
+          mkdir -p /tmp/tapm-run
+          if [ -f plan.json ]; then
+            echo "Using committed plan.json"
+            cp plan.json /tmp/tapm-run/plan.json
+          elif [ -f tfplan.json ]; then
+            echo "Using committed tfplan.json"
+            cp tfplan.json /tmp/tapm-run/plan.json
+          elif command -v terraform >/dev/null 2>&1; then
+            echo "Running terraform plan..."
+            terraform init -input=false
+            terraform plan -input=false -lock=false -out=/tmp/tapm-run/tfplan
+            terraform show -json /tmp/tapm-run/tfplan > /tmp/tapm-run/plan.json
+            rm -f /tmp/tapm-run/tfplan
+          else
+            echo "Error: No plan.json found and terraform CLI is not installed." >&2
+            exit 1
+          fi
+
+      - name: Submit plan to TAPM analysis service
+        env:
+          TAPM_SERVER_URL: ${{ vars.TAPM_SERVER_URL || 'http://tapm-service.tapm.svc.cluster.local:8080' }}
+          TAPM_SERVER_TOKEN: ${{ secrets.TAPM_SERVER_TOKEN || 'demo-secret-token' }}
+          TAPM_LEVEL: ${{ vars.TAPM_LEVEL || 'validate' }}
+        run: |
+          mkdir -p ./artifacts
+          PR_NUM="${{ github.event.pull_request.number }}"
+          [ -z "$PR_NUM" ] && PR_NUM="0"
+
+          echo "Submitting plan to ${TAPM_SERVER_URL} (level=${TAPM_LEVEL}, PR=${PR_NUM})..."
+
+          if command -v tapm >/dev/null 2>&1; then
+            tapm submit /tmp/tapm-run/plan.json \
+              --server "${TAPM_SERVER_URL}" \
+              --token "${TAPM_SERVER_TOKEN}" \
+              --level "${TAPM_LEVEL}" \
+              --repo "${{ github.repository }}" \
+              --pr "${PR_NUM}" \
+              --sha "${{ github.sha }}" \
+              --out ./artifacts \
+              --timeout 120
+          else
+            echo "tapm CLI not found on runner host; using curl runner client..."
+            JOB_ID=$(curl -sf -X POST "${TAPM_SERVER_URL}/v1/jobs" \
+              -H "Authorization: Bearer ${TAPM_SERVER_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"repo\": \"${{ github.repository }}\", \"pr\": ${PR_NUM}, \"sha\": \"${{ github.sha }}\", \"root_module\": \".\", \"level\": \"${TAPM_LEVEL}\", \"plan_json\": $(cat /tmp/tapm-run/plan.json)}" \
+              | grep -o '"job_id":"[^"]*' | cut -d'"' -f4)
+
+            echo "Job submitted: ${JOB_ID}"
+            STATUS="queued"
+            for i in $(seq 1 30); do
+              RESP=$(curl -sf "${TAPM_SERVER_URL}/v1/jobs/${JOB_ID}" -H "Authorization: Bearer ${TAPM_SERVER_TOKEN}")
+              STATUS=$(echo "$RESP" | grep -o '"status":"[^"]*' | cut -d'"' -f4)
+              VERDICT=$(echo "$RESP" | grep -o '"gate_verdict":"[^"]*' | cut -d'"' -f4)
+              if [ "$STATUS" = "completed" ] || [ "$STATUS" = "enriched" ]; then
+                echo "Job completed with verdict: ${VERDICT}"
+                if [ "$VERDICT" = "blocked" ]; then
+                  echo "Gate blocked by unaccepted attack paths." >&2
+                  exit 3
+                fi
+                exit 0
+              fi
+              sleep 2
+            done
+            echo "Timeout waiting for job completion" >&2
+            exit 1
+          fi

@@ -1,0 +1,18 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: cloudgoat-vpc_peering_overexposed
+documented_by: README.md, cheat_sheet.md
+targets:
+- aws_db_instance.customer_db
+expected:
+- entry: internet
+  target: aws_db_instance.customer_db
+  label: OUT_OF_SCOPE
+  precondition: attacker source IP is in whitelisted IPs; SSH key to dev_ec2
+  route: internet (whitelisted IP) -> SSH to dev_ec2 -> IMDSv1 steals dev_ec2_role -> dev_ec2_role uses ssm:StartSession to access prod_ec2 -> extracts database credentials from web server config files on prod_ec2 -> accesses customer_db over VPC peering connection (depends on host-level credentials in config and SSM session execution)
+- entry: aws_iam_user.initial_user
+  target: aws_db_instance.customer_db
+  label: OUT_OF_SCOPE
+  route: initial_user has only read-only ec2:Describe* permissions; lateral movement to prod_ec2 and customer_db requires SSH key and stolen host-level credentials

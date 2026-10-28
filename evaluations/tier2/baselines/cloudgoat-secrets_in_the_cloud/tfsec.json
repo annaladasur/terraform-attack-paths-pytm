@@ -1,0 +1,605 @@
+{
+  "results": [
+    {
+      "description": "Log group is not encrypted.",
+      "impact": "Log data may be leaked if the logs are compromised. No auditing of who have viewed the logs.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/cloudwatch/log-group-customer-key/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group#kms_key_id"
+      ],
+      "location": {
+        "end_line": 10,
+        "filename": "lambda_function.tf",
+        "start_line": 6
+      },
+      "long_id": "aws-cloudwatch-log-group-customer-key",
+      "resolution": "Enable CMK encryption of CloudWatch Log Groups",
+      "resource": "aws_cloudwatch_log_group.lambda",
+      "rule_description": "CloudWatch log groups should be encrypted using CMK",
+      "rule_id": "AVD-AWS-0017",
+      "rule_provider": "aws",
+      "rule_service": "cloudwatch",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Point-in-time recovery is not enabled.",
+      "impact": "Accidental or malicious writes and deletes can't be rolled back",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/dynamodb/enable-recovery/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#point_in_time_recovery"
+      ],
+      "location": {
+        "end_line": 24,
+        "filename": "dynamodb.tf",
+        "start_line": 6
+      },
+      "long_id": "aws-dynamodb-enable-recovery",
+      "resolution": "Enable point in time recovery",
+      "resource": "aws_dynamodb_table.secrets_table",
+      "rule_description": "Point in time recovery should be enabled to protect DynamoDB table",
+      "rule_id": "AVD-AWS-0024",
+      "rule_provider": "aws",
+      "rule_service": "dynamodb",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Table encryption explicitly uses the default KMS key.",
+      "impact": "Using AWS managed keys does not allow for fine grained control",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/dynamodb/table-customer-key/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table#server_side_encryption"
+      ],
+      "location": {
+        "end_line": 19,
+        "filename": "dynamodb.tf",
+        "start_line": 17
+      },
+      "long_id": "aws-dynamodb-table-customer-key",
+      "resolution": "Enable server side encryption with a customer managed key",
+      "resource": "aws_dynamodb_table.secrets_table",
+      "rule_description": "DynamoDB tables should use at rest encryption with a Customer Managed Key",
+      "rule_id": "AVD-AWS-0025",
+      "rule_provider": "aws",
+      "rule_service": "dynamodb",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule does not have a description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group-rule/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 78,
+        "filename": "ec2_instance.tf",
+        "start_line": 73
+      },
+      "long_id": "aws-ec2-add-description-to-security-group-rule",
+      "resolution": "Add descriptions for all security groups rules",
+      "resource": "aws_security_group.web_app_sg",
+      "rule_description": "Missing description for security group rule.",
+      "rule_id": "AVD-AWS-0124",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule does not have a description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group-rule/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 71,
+        "filename": "ec2_instance.tf",
+        "start_line": 66
+      },
+      "long_id": "aws-ec2-add-description-to-security-group-rule",
+      "resolution": "Add descriptions for all security groups rules",
+      "resource": "aws_security_group.web_app_sg",
+      "rule_description": "Missing description for security group rule.",
+      "rule_id": "AVD-AWS-0124",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule does not have a description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group-rule/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 64,
+        "filename": "ec2_instance.tf",
+        "start_line": 59
+      },
+      "long_id": "aws-ec2-add-description-to-security-group-rule",
+      "resolution": "Add descriptions for all security groups rules",
+      "resource": "aws_security_group.web_app_sg",
+      "rule_description": "Missing description for security group rule.",
+      "rule_id": "AVD-AWS-0124",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule does not have a description.",
+      "impact": "Descriptions provide context for the firewall rule reasons",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/add-description-to-security-group-rule/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule"
+      ],
+      "location": {
+        "end_line": 57,
+        "filename": "ec2_instance.tf",
+        "start_line": 52
+      },
+      "long_id": "aws-ec2-add-description-to-security-group-rule",
+      "resolution": "Add descriptions for all security groups rules",
+      "resource": "aws_security_group.web_app_sg",
+      "rule_description": "Missing description for security group rule.",
+      "rule_id": "AVD-AWS-0124",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Root block device is not encrypted.",
+      "impact": "The block device could be compromised and read from",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/enable-at-rest-encryption/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#ebs-ephemeral-and-root-block-devices"
+      ],
+      "location": {
+        "end_line": 45,
+        "filename": "ec2_instance.tf",
+        "start_line": 18
+      },
+      "long_id": "aws-ec2-enable-at-rest-encryption",
+      "resolution": "Turn on encryption for all block devices",
+      "resource": "aws_instance.web_app",
+      "rule_description": "Instance with unencrypted block device.",
+      "rule_id": "AVD-AWS-0131",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Security group rule allows egress to multiple public internet addresses.",
+      "impact": "Your port is egressing data to the internet",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-public-egress-sgr/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group"
+      ],
+      "location": {
+        "end_line": 77,
+        "filename": "ec2_instance.tf",
+        "start_line": 77
+      },
+      "long_id": "aws-ec2-no-public-egress-sgr",
+      "resolution": "Set a more restrictive cidr range",
+      "resource": "aws_security_group.web_app_sg",
+      "rule_description": "An egress security group rule allows traffic to /0.",
+      "rule_id": "AVD-AWS-0104",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "CRITICAL",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Subnet associates public IP address.",
+      "impact": "The instance is publicly accessible",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/no-public-ip-subnet/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet#map_public_ip_on_launch"
+      ],
+      "location": {
+        "end_line": 19,
+        "filename": "vpc.tf",
+        "start_line": 19
+      },
+      "long_id": "aws-ec2-no-public-ip-subnet",
+      "resolution": "Set the instance to not be publicly accessible",
+      "resource": "aws_subnet.subnet",
+      "rule_description": "Instances in a subnet should not receive a public IP address by default.",
+      "rule_id": "AVD-AWS-0164",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "VPC Flow Logs is not enabled for VPC ",
+      "impact": "Without VPC flow logs, you risk not having enough information about network traffic flow to investigate incidents or identify security issues.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ec2/require-vpc-flow-logs-for-all-vpcs/"
+      ],
+      "location": {
+        "end_line": 6,
+        "filename": "vpc.tf",
+        "start_line": 1
+      },
+      "long_id": "aws-ec2-require-vpc-flow-logs-for-all-vpcs",
+      "resolution": "Enable flow logs for VPC",
+      "resource": "aws_vpc.vpc",
+      "rule_description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "rule_id": "AVD-AWS-0178",
+      "rule_provider": "aws",
+      "rule_service": "ec2",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'logs:CreateLogStream' on wildcarded resource 'ef895e1b-c808-464e-b9e5-90fa54214121:log-stream:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 57,
+        "filename": "lambda_function.tf",
+        "start_line": 57
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_role_policy.lambda_policy",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses wildcarded action 'dynamodb:*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 170,
+        "filename": "iam.tf",
+        "start_line": 170
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_policy.dynamodb_policy",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "IAM policy document uses sensitive action 'secretsmanager:DescribeSecret' on wildcarded resource '*'",
+      "impact": "Overly permissive policies may grant access to sensitive resources",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-policy-wildcards/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document"
+      ],
+      "location": {
+        "end_line": 114,
+        "filename": "iam.tf",
+        "start_line": 114
+      },
+      "long_id": "aws-iam-no-policy-wildcards",
+      "resolution": "Specify the exact permissions required, and to which resources they should apply instead of using wildcards.",
+      "resource": "aws_iam_user_policy.secrets_manager_user_policy",
+      "rule_description": "IAM policy should avoid use of wildcards and instead apply the principle of least privilege",
+      "rule_id": "AVD-AWS-0057",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "One or more policies are attached directly to a user",
+      "impact": "Complex access control is difficult to manage and maintain.",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/iam/no-user-attached-policies/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user"
+      ],
+      "location": {
+        "end_line": 103,
+        "filename": "iam.tf",
+        "start_line": 101
+      },
+      "long_id": "aws-iam-no-user-attached-policies",
+      "resolution": "Grant policies at the group level instead.",
+      "resource": "aws_iam_user.secrets_manager_user",
+      "rule_description": "IAM policies should not be granted directly to users.",
+      "rule_id": "AVD-AWS-0143",
+      "rule_provider": "aws",
+      "rule_service": "iam",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Function does not have tracing enabled.",
+      "impact": "Without full tracing enabled it is difficult to trace the flow of logs",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/lambda/enable-tracing/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function#mode"
+      ],
+      "location": {
+        "end_line": 33,
+        "filename": "lambda_function.tf",
+        "start_line": 12
+      },
+      "long_id": "aws-lambda-enable-tracing",
+      "resolution": "Enable tracing",
+      "resource": "aws_lambda_function.this",
+      "rule_description": "Lambda functions should have X-Ray tracing enabled",
+      "rule_id": "AVD-AWS-0066",
+      "rule_provider": "aws",
+      "rule_service": "lambda",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "No public access block so not blocking public acls",
+      "impact": "PUT calls with public ACLs specified can make objects public",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/block-public-acls/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_acls"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-block-public-acls",
+      "resolution": "Enable blocking any PUT calls with a public ACL specified",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 Access block should block public ACL",
+      "rule_id": "AVD-AWS-0086",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "No public access block so not blocking public policies",
+      "impact": "Users could put a policy that allows public access",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/block-public-policy/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#block_public_policy"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-block-public-policy",
+      "resolution": "Prevent policies that allow public access being PUT",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 Access block should block public policy",
+      "rule_id": "AVD-AWS-0087",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have encryption enabled",
+      "impact": "The bucket objects could be read if compromised",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/enable-bucket-encryption/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-enable-bucket-encryption",
+      "resolution": "Configure bucket encryption",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "Unencrypted S3 bucket.",
+      "rule_id": "AVD-AWS-0088",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have logging enabled",
+      "impact": "There is no way to determine the access to this bucket",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/enable-bucket-logging/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-enable-bucket-logging",
+      "resolution": "Add a logging block to the resource to enable access logging",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 Bucket does not have logging enabled.",
+      "rule_id": "AVD-AWS-0089",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have versioning enabled",
+      "impact": "Deleted or modified data would not be recoverable",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/enable-versioning/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-enable-versioning",
+      "resolution": "Enable versioning to protect against accidental/malicious removal or modification",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 Data should be versioned",
+      "rule_id": "AVD-AWS-0090",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "MEDIUM",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not encrypt data with a customer managed key.",
+      "impact": "Using AWS managed keys does not allow for fine grained control",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/encryption-customer-key/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#enable-default-server-side-encryption"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-encryption-customer-key",
+      "resolution": "Enable encryption using customer managed keys",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 encryption should use Customer Managed Keys",
+      "rule_id": "AVD-AWS-0132",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "No public access block so not ignoring public acls",
+      "impact": "PUT calls with public ACLs specified can make objects public",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/ignore-public-acls/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#ignore_public_acls"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-ignore-public-acls",
+      "resolution": "Enable ignoring the application of public ACLs in PUT calls",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 Access Block should Ignore Public Acl",
+      "rule_id": "AVD-AWS-0091",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "No public access block so not restricting public buckets",
+      "impact": "Public buckets can be accessed by anyone",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/no-public-buckets/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#restrict_public_buckets¡"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-no-public-buckets",
+      "resolution": "Limit the access to public buckets to only the owner or AWS Services (eg; CloudFront)",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 Access block should restrict public bucket to limit access",
+      "rule_id": "AVD-AWS-0093",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "HIGH",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Bucket does not have a corresponding public access block.",
+      "impact": "Public access policies may be applied to sensitive data buckets",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/s3/specify-public-access-block/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block#bucket"
+      ],
+      "location": {
+        "end_line": 11,
+        "filename": "s3_bucket.tf",
+        "start_line": 5
+      },
+      "long_id": "aws-s3-specify-public-access-block",
+      "resolution": "Define a aws_s3_bucket_public_access_block for the given bucket to control public access policies",
+      "resource": "aws_s3_bucket.secrets_bucket",
+      "rule_description": "S3 buckets should each define an aws_s3_bucket_public_access_block",
+      "rule_id": "AVD-AWS-0094",
+      "rule_provider": "aws",
+      "rule_service": "s3",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    },
+    {
+      "description": "Secret explicitly uses the default key.",
+      "impact": "Using AWS managed keys reduces the flexibility and control over the encryption key",
+      "links": [
+        "https://aquasecurity.github.io/tfsec/v1.28.14/checks/aws/ssm/secret-use-customer-key/",
+        "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret#kms_key_id"
+      ],
+      "location": {
+        "end_line": 10,
+        "filename": "secrets_manager.tf",
+        "start_line": 7
+      },
+      "long_id": "aws-ssm-secret-use-customer-key",
+      "resolution": "Use customer managed keys",
+      "resource": "aws_secretsmanager_secret.this",
+      "rule_description": "Secrets Manager should use customer managed keys",
+      "rule_id": "AVD-AWS-0098",
+      "rule_provider": "aws",
+      "rule_service": "ssm",
+      "severity": "LOW",
+      "status": 0,
+      "warning": false
+    }
+  ]
+}

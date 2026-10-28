@@ -1,0 +1,147 @@
+{
+  "annotations": [
+    {
+      "annotation_id": "ANN-001",
+      "checks": {
+        "evidence_exists": true,
+        "evidence_in_bundle": true,
+        "evidence_present": true,
+        "no_actions": true,
+        "no_exploit_claim": true,
+        "no_suppression": true,
+        "no_untrusted_echo": true,
+        "path_exists": true,
+        "permissions_exist": true,
+        "relationships_exist": true,
+        "resources_exist": true,
+        "schema": true,
+        "severity_unchanged": true
+      },
+      "escalation": {
+        "publish_without_human": 1.0,
+        "threshold": 0.7
+      },
+      "rejections": [],
+      "review": {
+        "confidence": 0.8,
+        "issues": [],
+        "verdict": "accept"
+      },
+      "status": "accepted"
+    },
+    {
+      "annotation_id": "ANN-002",
+      "checks": {
+        "evidence_exists": true,
+        "evidence_in_bundle": true,
+        "evidence_present": true,
+        "no_actions": true,
+        "no_exploit_claim": true,
+        "no_suppression": true,
+        "no_untrusted_echo": true,
+        "path_exists": true,
+        "permissions_exist": true,
+        "relationships_exist": true,
+        "resources_exist": true,
+        "schema": true
+      },
+      "escalation": {
+        "publish_without_human": 1.0,
+        "threshold": 0.7
+      },
+      "rejections": [],
+      "review": {
+        "confidence": 0.8,
+        "issues": [],
+        "verdict": "accept"
+      },
+      "status": "accepted"
+    },
+    {
+      "annotation_id": "ANN-003",
+      "checks": {
+        "evidence_exists": true,
+        "evidence_in_bundle": true,
+        "evidence_present": true,
+        "no_actions": true,
+        "no_exploit_claim": true,
+        "no_suppression": true,
+        "no_untrusted_echo": true,
+        "path_exists": true,
+        "permissions_exist": true,
+        "relationships_exist": true,
+        "resources_exist": true,
+        "schema": true
+      },
+      "escalation": {
+        "publish_without_human": 1.0,
+        "threshold": 0.7
+      },
+      "rejections": [],
+      "review": {
+        "confidence": 0.8,
+        "issues": [],
+        "verdict": "accept"
+      },
+      "status": "accepted"
+    },
+    {
+      "annotation_id": "ANN-004",
+      "checks": {
+        "evidence_exists": true,
+        "evidence_in_bundle": true,
+        "evidence_present": true,
+        "no_actions": true,
+        "no_exploit_claim": true,
+        "no_suppression": true,
+        "no_untrusted_echo": true,
+        "path_exists": true,
+        "permissions_exist": true,
+        "relationships_exist": true,
+        "remediation_targets_existing": true,
+        "resources_exist": true,
+        "schema": true
+      },
+      "escalation": {
+        "publish_without_human": 1.0,
+        "threshold": 0.7
+      },
+      "rejections": [],
+      "review": {
+        "confidence": 0.8,
+        "issues": [],
+        "verdict": "accept"
+      },
+      "status": "accepted"
+    },
+    {
+      "annotation_id": "ANN-005",
+      "checks": {
+        "evidence_exists": true,
+        "evidence_in_bundle": true,
+        "evidence_present": true,
+        "framework_ids_known": true,
+        "no_actions": true,
+        "no_exploit_claim": true,
+        "no_suppression": true,
+        "no_untrusted_echo": true,
+        "path_exists": true,
+        "permissions_exist": true,
+        "relationships_exist": true,
+        "resources_exist": true,
+        "schema": true
+      },
+      "escalation": {
+        "publish_without_human": 1.0,
+        "threshold": 0.7
+      },
+      "rejections": [],
+      "review": {
+        "confidence": 0.8,
+        "issues": [],
+        "verdict": "accept"
+      },
+      "status": "accepted"
+    }
+  ]
+}

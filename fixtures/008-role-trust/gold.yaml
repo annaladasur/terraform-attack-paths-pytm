@@ -1,0 +1,27 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 008-role-trust
+summary: Unauthenticated Lambda function URL -> execution role -> sts:AssumeRole into a role whose trust policy names it -> database secret.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: aws_lambda_function.frontend}
+  - {type: ASSUMES, src: aws_lambda_function.frontend, dst: aws_iam_role.frontend}
+  - {type: TRUSTS, src: aws_iam_role.frontend, dst: "principal:service:lambda.amazonaws.com"}
+  - {type: ASSUMES, src: aws_iam_role.frontend, dst: aws_iam_role.data_reader}
+  - {type: TRUSTS, src: aws_iam_role.data_reader, dst: aws_iam_role.frontend}
+  - {type: ALLOWS, src: aws_iam_role.data_reader, dst: aws_secretsmanager_secret.db}
+expected_iam:
+  - {principal: aws_iam_role.data_reader, resource: aws_secretsmanager_secret.db, access: [read]}
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: aws_secretsmanager_secret.db
+    hops: [internet, aws_lambda_function.frontend, aws_iam_role.frontend, aws_iam_role.data_reader, aws_secretsmanager_secret.db]
+    preconditions: [workload_rce]
+    priority: medium
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

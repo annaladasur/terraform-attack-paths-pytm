@@ -1,0 +1,3210 @@
+{
+  "task": "A36 independent benchmark provenance investigation",
+  "reviewer": "Codex automated provenance critic /root/blind_iam; blind IAM mapping sealed before expanding read scope",
+  "review_date": "2026-10-19",
+  "conclusion": "Current available source reproduces 38 paths on three runs. The previously recorded 37-path observation is not reproducible in this workspace. No exact dropped path or causal code change can be established from the available historical artifacts.",
+  "status": "historical discrepancy documented; current 38 count reproduced; historical cause unresolved",
+  "historical": {
+    "artifact": "evaluations/results/tier2-second-run.json",
+    "sha256": "5e30c21f9596d5fd2d026c79e9ecbf8a11337faad88e3b9711087435c698e788",
+    "paths": 38,
+    "runtime_ms": 982,
+    "score": {
+      "fn": 3,
+      "fp": 1,
+      "out_of_scope": 7,
+      "out_of_scope_found": 0,
+      "rows": [
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+          "found": false,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+          "found": false,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+          "found": false,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+          "found": false,
+          "label": "OUT_OF_SCOPE",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+          "found": true,
+          "label": "VALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+          "found": false,
+          "label": "INVALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+          "found": false,
+          "label": "INVALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+          "found": false,
+          "label": "INVALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+          "found": false,
+          "label": "INVALID",
+          "target": "aws:account-admin"
+        },
+        {
+          "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+          "found": true,
+          "label": "INVALID",
+          "target": "aws:account-admin"
+        }
+      ],
+      "tn": 4,
+      "tp": 26,
+      "unlabeled_paths": []
+    },
+    "benchmark_source_commit_claim": "0f298666f9b7cfa01488b86912afdb211773188a",
+    "provenance_note": "Historical JSON records benchmark repository commit, not a verifiable engine-code revision; Git metadata inaccessible. It stores counts and labeled entry/target reachability, not detailed path IDs, node sequences or hop lists."
+  },
+  "observed_replays": [
+    {
+      "artifact": "artifacts/tier2-forensic-drift-2026-10-19.json",
+      "sha256": "f3fa15870847cfeaddd3b99b8e304a1dce587839863f7890b5fbefbd393584c7",
+      "command": ".venv/bin/tapm tier2 iam-vulnerable --llm off --tag forensic-drift-2026-10-19",
+      "paths": 38,
+      "resources": 265,
+      "runtime_ms": 1018,
+      "score": {
+        "fn": 3,
+        "fp": 1,
+        "out_of_scope": 7,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+            "found": true,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 4,
+        "tp": 26,
+        "unlabeled_paths": []
+      },
+      "tool_versions": {
+        "checkov": "3.3.20",
+        "terraform": "1.16.4",
+        "tfsec": "v1.28.14",
+        "trivy": "0.74.0"
+      },
+      "git_sha_reported": {
+        "code": "unknown",
+        "gold": "unknown",
+        "gold_commit": "unknown",
+        "gold_files": {
+          "evaluations/tier2/gold/iam-vulnerable.yaml": "38c4bf09f9c7683b9db5510ce3ab16f1c4351d790e5cbd3263db5ed646f620b4"
+        }
+      },
+      "llm": "off",
+      "model": null
+    },
+    {
+      "artifact": "artifacts/tier2-forensic-drift-2026-10-19-repeat.json",
+      "sha256": "43d553a915f77551e21c0b19a9c70c4b8c5e91c7a7e226b2780d8a365110ae2b",
+      "command": ".venv/bin/tapm tier2 iam-vulnerable --llm off --tag forensic-drift-2026-10-19-repeat",
+      "paths": 38,
+      "resources": 265,
+      "runtime_ms": 815,
+      "score": {
+        "fn": 3,
+        "fp": 1,
+        "out_of_scope": 7,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+            "found": true,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 4,
+        "tp": 26,
+        "unlabeled_paths": []
+      },
+      "tool_versions": {
+        "checkov": "3.3.20",
+        "terraform": "1.16.4",
+        "tfsec": "v1.28.14",
+        "trivy": "0.74.0"
+      },
+      "git_sha_reported": {
+        "code": "unknown",
+        "gold": "unknown",
+        "gold_commit": "unknown",
+        "gold_files": {
+          "evaluations/tier2/gold/iam-vulnerable.yaml": "38c4bf09f9c7683b9db5510ce3ab16f1c4351d790e5cbd3263db5ed646f620b4"
+        }
+      },
+      "llm": "off",
+      "model": null
+    },
+    {
+      "artifact": "artifacts/tier2-forensic-drift-2026-10-19-confirm.json",
+      "sha256": "31d7c5d68e546b0c104964f3cfbee6559e57577a7f2a9844461b412ca2204d12",
+      "command": ".venv/bin/tapm tier2 iam-vulnerable --llm off --tag forensic-drift-2026-10-19-confirm",
+      "paths": 38,
+      "resources": 265,
+      "runtime_ms": 796,
+      "score": {
+        "fn": 3,
+        "fp": 1,
+        "out_of_scope": 7,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+            "found": true,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 4,
+        "tp": 26,
+        "unlabeled_paths": []
+      },
+      "tool_versions": {
+        "checkov": "3.3.20",
+        "terraform": "1.16.4",
+        "tfsec": "v1.28.14",
+        "trivy": "0.74.0"
+      },
+      "git_sha_reported": {
+        "code": "unknown",
+        "gold": "unknown",
+        "gold_commit": "unknown",
+        "gold_files": {
+          "evaluations/tier2/gold/iam-vulnerable.yaml": "38c4bf09f9c7683b9db5510ce3ab16f1c4351d790e5cbd3263db5ed646f620b4"
+        }
+      },
+      "llm": "off",
+      "model": null
+    }
+  ],
+  "comparisons": {
+    "resources": {
+      "historical": 265,
+      "current": 265,
+      "equal": true
+    },
+    "modeled": {
+      "historical": 265,
+      "current": 265,
+      "equal": true
+    },
+    "paths": {
+      "historical": 38,
+      "current": 38,
+      "equal": true
+    },
+    "semantic_edges": {
+      "historical": 554,
+      "current": 560,
+      "equal": false
+    },
+    "unresolved_policies": {
+      "historical": 0,
+      "current": 0,
+      "equal": true
+    },
+    "scanner_findings": {
+      "historical": {
+        "checkov": 269,
+        "tfsec": 59,
+        "trivy": 62
+      },
+      "current": {
+        "checkov": 269,
+        "tfsec": 59,
+        "trivy": 62
+      },
+      "equal": true
+    },
+    "score": {
+      "historical": {
+        "fn": 3,
+        "fp": 1,
+        "out_of_scope": 7,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+            "found": true,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 4,
+        "tp": 26,
+        "unlabeled_paths": []
+      },
+      "current": {
+        "fn": 3,
+        "fp": 1,
+        "out_of_scope": 7,
+        "out_of_scope_found": 0,
+        "rows": [
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user",
+            "found": false,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-CloudFormationUpdateStack-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ec2InstanceConnect-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreatePresignedNotebookURL-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmSendCommand-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-ssmStartSession-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc17-EditExistingLambdaFunctionWithRole-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc19-UpdateExistingGlueDevEndpoint-user",
+            "found": false,
+            "label": "OUT_OF_SCOPE",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+            "found": true,
+            "label": "VALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp1-allow-and-deny-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp2-allow-and-deny-multiple-policies-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp3-deny-iam-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp4-nonExploitableResourceConstraint-user",
+            "found": false,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          },
+          {
+            "entry": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+            "found": true,
+            "label": "INVALID",
+            "target": "aws:account-admin"
+          }
+        ],
+        "tn": 4,
+        "tp": 26,
+        "unlabeled_paths": []
+      },
+      "equal": true
+    }
+  },
+  "path_comparison": {
+    "current_run2_vs_run3": {
+      "identical_ids_keys_nodes_hops_status_preconditions": true,
+      "full_attack_paths_json_sha256_run2": "4a05491324be0783aceee1bdfa11f7daa7f1aa69f092c4d92b23a257cb2a5e7f",
+      "full_attack_paths_json_sha256_run3": "4a05491324be0783aceee1bdfa11f7daa7f1aa69f092c4d92b23a257cb2a5e7f",
+      "same_full_json": true
+    },
+    "historical_vs_current_exact_node_sequences": "UNAVAILABLE: tier2-second-run.json contains no detailed path node sequences/IDs. Equal counts and row reachability cannot establish equality of full historical path sets.",
+    "historical_37_dropped_path": null,
+    "explanation": "Do not invent an edge or path as the cause. Multiple paths per entry/target pair can change a raw count without changing scoring; this is a general explanation, not a finding that such a change caused this discrepancy.",
+    "unique_current_entry_target_pairs": 27
+  },
+  "current_paths": [
+    {
+      "id": "PATH-001",
+      "key": "4bb9e3523fee",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc-sre-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-485",
+          "evidence": [
+            "IAM-008",
+            "TF-152"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-002",
+      "key": "447277513118",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-486",
+          "evidence": [
+            "IAM-009",
+            "TF-155"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-003",
+      "key": "29cbe16b4677",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-487",
+          "evidence": [
+            "IAM-010",
+            "TF-156"
+          ],
+          "label": "PE-PUT-USER-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-004",
+      "key": "8ee1807ee01c",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-488",
+          "evidence": [
+            "IAM-011",
+            "TF-157"
+          ],
+          "label": "PE-PUT-GROUP-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc11-PutGroupPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-005",
+      "key": "68439d3cc730",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-489",
+          "evidence": [
+            "IAM-013",
+            "TF-159"
+          ],
+          "label": "PE-ADD-USER-TO-GROUP",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc13-AddUserToGroup-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-006",
+      "key": "3ce2b464d66b",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-490",
+          "evidence": [
+            "IAM-018",
+            "TF-166"
+          ],
+          "label": "PE-SET-DEFAULT-POLICY-VERSION",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc2-SetExistingDefaultPolicyVersion-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-007",
+      "key": "f65f910d8301",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-491",
+          "evidence": [
+            "IAM-026",
+            "TF-173"
+          ],
+          "label": "PE-ATTACH-USER-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc7-AttachUserPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-008",
+      "key": "8c48ea360a39",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-492",
+          "evidence": [
+            "IAM-027",
+            "TF-174"
+          ],
+          "label": "PE-ATTACH-GROUP-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc8-AttachGroupPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-009",
+      "key": "d3aa0dbb87fd",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-499",
+          "evidence": [
+            "IAM-032",
+            "TF-249"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": null,
+          "src": "module.tool-testing.aws_iam_user.fn2-exploitableResourceConstraint-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-010",
+      "key": "a2175a63a851",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-501",
+          "evidence": [
+            "IAM-034",
+            "TF-251"
+          ],
+          "label": "PE-ADD-USER-TO-GROUP",
+          "precondition": null,
+          "src": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-011",
+      "key": "732e7848af8e",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-502",
+          "evidence": [
+            "IAM-034",
+            "IAM-047",
+            "TF-081",
+            "TF-251"
+          ],
+          "label": "PE-POLICY-ON-ASSUMABLE-ROLE(module.privesc-paths.aws_iam_role.privesc-high-priv-service-role)",
+          "precondition": null,
+          "src": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-012",
+      "key": "b7a0b6606282",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-503",
+          "evidence": [
+            "IAM-034",
+            "TF-251"
+          ],
+          "label": "PE-PUT-GROUP-POLICY",
+          "precondition": null,
+          "src": "module.tool-testing.aws_iam_user.fn4-exploitableNotAction-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-013",
+      "key": "0a530d0d43ff",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-183",
+          "evidence": [
+            "IAM-002",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-CODEBUILD",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-codeBuildCreateProjectPassRole-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-014",
+      "key": "b56e70095254",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-184",
+          "evidence": [
+            "IAM-004",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-SAGEMAKER-NOTEBOOK",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateNotebookPassRole-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-015",
+      "key": "3aa4cec44e5b",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-185",
+          "evidence": [
+            "IAM-006",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-SAGEMAKER-PROCESSING",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateProcessingJobPassRole-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-016",
+      "key": "afa076186be4",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-186",
+          "evidence": [
+            "IAM-007",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-SAGEMAKER-TRAINING",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sageMakerCreateTrainingJobPassRole-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-017",
+      "key": "e2fa479500b9",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc-sre-user",
+        "module.privesc-paths.aws_iam_role.privesc-sre-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-sre-role",
+          "edge": "GRAPH-187",
+          "evidence": [
+            "IAM-052",
+            "TF-086"
+          ],
+          "label": "sts:AssumeRole",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-480",
+          "evidence": [
+            "IAM-008",
+            "TF-086"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-sre-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-018",
+      "key": "87b83a75d197",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+        "module.privesc-paths.aws_iam_role.privesc-AssumeRole-ending-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-ending-role",
+          "edge": "GRAPH-188",
+          "evidence": [
+            "IAM-014",
+            "TF-075"
+          ],
+          "label": "PE-UPDATE-ASSUME-ROLE-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-478",
+          "evidence": [
+            "IAM-001",
+            "TF-075"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-AssumeRole-ending-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-019",
+      "key": "1e4872ccfefb",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-194",
+          "evidence": [
+            "IAM-014",
+            "TF-081"
+          ],
+          "label": "PE-UPDATE-ASSUME-ROLE-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-020",
+      "key": "6da763c7b426",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+        "module.privesc-paths.aws_iam_role.privesc-sre-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-sre-role",
+          "edge": "GRAPH-199",
+          "evidence": [
+            "IAM-014",
+            "TF-086"
+          ],
+          "label": "PE-UPDATE-ASSUME-ROLE-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc14-UpdatingAssumeRolePolicy-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-480",
+          "evidence": [
+            "IAM-008",
+            "TF-086"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-sre-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-021",
+      "key": "52ce343e5072",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-234",
+          "evidence": [
+            "IAM-015",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-LAMBDA-INVOKE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc15-PassExistingRoleToNewLambdaThenInvoke-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-022",
+      "key": "486fc8c33a53",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-235",
+          "evidence": [
+            "IAM-016",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-LAMBDA-ESM",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc16-PassRoleToNewLambdaThenTriggerWithNewDynamo-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-023",
+      "key": "837f8b51fbfd",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-236",
+          "evidence": [
+            "IAM-017",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-GLUE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc18-PassExistingRoleToNewGlueDevEndpoint-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-024",
+      "key": "aeff8eaa16a2",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-237",
+          "evidence": [
+            "IAM-019",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-CLOUDFORMATION",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc20-PassExistingRoleToCloudFormation-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-025",
+      "key": "24eb0971bc3d",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-238",
+          "evidence": [
+            "IAM-020",
+            "IAM-021",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-DATAPIPELINE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc21-PassExistingRoleToNewDataPipeline-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-026",
+      "key": "a82e5c226285",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-239",
+          "evidence": [
+            "IAM-022",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-EC2",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc3-CreateEC2WithExistingInstanceProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-027",
+      "key": "cfe7a987b0f2",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+        "module.privesc-paths.aws_iam_user.privesc-sre-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "edge": "GRAPH-248",
+          "evidence": [
+            "IAM-023",
+            "TF-152"
+          ],
+          "label": "PE-CREATE-ACCESS-KEY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-485",
+          "evidence": [
+            "IAM-008",
+            "TF-152"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-028",
+      "key": "f80e5c9bb703",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+        "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "edge": "GRAPH-251",
+          "evidence": [
+            "IAM-023",
+            "TF-155"
+          ],
+          "label": "PE-CREATE-ACCESS-KEY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-486",
+          "evidence": [
+            "IAM-009",
+            "TF-155"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-029",
+      "key": "dd951715e5dd",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+        "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "edge": "GRAPH-252",
+          "evidence": [
+            "IAM-023",
+            "TF-156"
+          ],
+          "label": "PE-CREATE-ACCESS-KEY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc4-CreateAccessKey-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-487",
+          "evidence": [
+            "IAM-010",
+            "TF-156"
+          ],
+          "label": "PE-PUT-USER-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-030",
+      "key": "758e74db707e",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+        "module.privesc-paths.aws_iam_user.privesc-sre-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "edge": "GRAPH-288",
+          "evidence": [
+            "IAM-024",
+            "TF-152"
+          ],
+          "label": "PE-CREATE-LOGIN-PROFILE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-485",
+          "evidence": [
+            "IAM-008",
+            "TF-152"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-031",
+      "key": "1f01ac9e9059",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+        "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "edge": "GRAPH-291",
+          "evidence": [
+            "IAM-024",
+            "TF-155"
+          ],
+          "label": "PE-CREATE-LOGIN-PROFILE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-486",
+          "evidence": [
+            "IAM-009",
+            "TF-155"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-032",
+      "key": "cbd7977c8fd6",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+        "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "edge": "GRAPH-292",
+          "evidence": [
+            "IAM-024",
+            "TF-156"
+          ],
+          "label": "PE-CREATE-LOGIN-PROFILE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc5-CreateLoginProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-487",
+          "evidence": [
+            "IAM-010",
+            "TF-156"
+          ],
+          "label": "PE-PUT-USER-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-033",
+      "key": "fddcaf17313a",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+        "module.privesc-paths.aws_iam_user.privesc-sre-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "edge": "GRAPH-328",
+          "evidence": [
+            "IAM-025",
+            "TF-152"
+          ],
+          "label": "PE-UPDATE-LOGIN-PROFILE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-485",
+          "evidence": [
+            "IAM-008",
+            "TF-152"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc-sre-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-034",
+      "key": "01e97edd07bb",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+        "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "edge": "GRAPH-331",
+          "evidence": [
+            "IAM-025",
+            "TF-155"
+          ],
+          "label": "PE-UPDATE-LOGIN-PROFILE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-486",
+          "evidence": [
+            "IAM-009",
+            "TF-155"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc1-CreateNewPolicyVersion-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-035",
+      "key": "bf68a3da3f18",
+      "nodes": [
+        "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+        "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "edge": "GRAPH-332",
+          "evidence": [
+            "IAM-025",
+            "TF-156"
+          ],
+          "label": "PE-UPDATE-LOGIN-PROFILE",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc6-UpdateLoginProfile-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-487",
+          "evidence": [
+            "IAM-010",
+            "TF-156"
+          ],
+          "label": "PE-PUT-USER-POLICY",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_user.privesc10-PutUserPolicy-user",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-036",
+      "key": "190daedd83c5",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+        "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "edge": "GRAPH-375",
+          "evidence": [
+            "IAM-030",
+            "IAM-031",
+            "IAM-047",
+            "TF-081"
+          ],
+          "label": "PE-PASSROLE-EC2",
+          "precondition": null,
+          "src": "module.tool-testing.aws_iam_user.fn1-privesc3-partial-user",
+          "status": "FACT",
+          "type": "ASSUMES"
+        },
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-479",
+          "evidence": [
+            "IAM-003",
+            "TF-081"
+          ],
+          "label": "admin_equivalent_policy",
+          "precondition": null,
+          "src": "module.privesc-paths.aws_iam_role.privesc-high-priv-service-role",
+          "status": "FACT",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "plausible",
+      "preconditions": [
+        "credential_compromise"
+      ]
+    },
+    {
+      "id": "PATH-037",
+      "key": "64259c74496e",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-500",
+          "evidence": [
+            "IAM-033",
+            "TF-250"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": "condition_satisfied",
+          "src": "module.tool-testing.aws_iam_user.fn3-exploitableConditionConstraint-user",
+          "status": "ASSUMPTION",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "review",
+      "preconditions": [
+        "credential_compromise",
+        "condition_satisfied"
+      ]
+    },
+    {
+      "id": "PATH-038",
+      "key": "3e968f3a630d",
+      "nodes": [
+        "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+        "aws:account-admin"
+      ],
+      "hops": [
+        {
+          "dst": "aws:account-admin",
+          "edge": "GRAPH-506",
+          "evidence": [
+            "IAM-040",
+            "TF-256"
+          ],
+          "label": "PE-CREATE-POLICY-VERSION",
+          "precondition": "condition_satisfied",
+          "src": "module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user",
+          "status": "ASSUMPTION",
+          "type": "ESCALATES"
+        }
+      ],
+      "status": "review",
+      "preconditions": [
+        "credential_compromise",
+        "condition_satisfied"
+      ]
+    }
+  ],
+  "source_hashes": {
+    "src/tapm/cli.py": "c9ba2d182c8d9c6b0a8fb69bb7cb1bb79faa456805f4f3e8ce10559694d4eee5",
+    "src/tapm/eval/tier2.py": "574666413a26847ed3a521fd09068ff16da6921ac9c6172637633ad77929931e",
+    "src/tapm/pipeline.py": "89c82619fbcd6f4efbdfb11b4072cc102e4af7a272491078d0e0182c9194d07c",
+    "src/tapm/iam/evaluator.py": "ee75a3cdb0c37f6c745f6fee8217b7345047fa51cf74f650f320a079d54b736b",
+    "src/tapm/iam/policy.py": "2761d397a4b41212befc09d0662686938cb48c0a5ac3a5ca2155c27a484d8466",
+    "src/tapm/iam/data/escalation.json": "99bd7e16dc7853f8a50b61bb2987a2ec303bdae3cf702c95d0b8727629577a62",
+    "src/tapm/paths/engine.py": "0cba8cae461ceb97d30a94cb369c586de7bc3c204038002e9a3b6d05d638bcbe",
+    "evaluations/tier2/manifest.yaml": "e275e11ebf77e71bf92156ac825f1d2eacefe200d3cedf6edf4a968092dd5555"
+  },
+  "plan": {
+    "compressed": "evaluations/tier2/plans/iam-vulnerable.json.gz",
+    "sha256": "a4157877c79fe39608e7f33cc8c117b53316f9971e82714f831f185a962d8bc5",
+    "decompressed_sha256": "71b7a1acd7540516112c27bbf21fc40b38793a567064301365598e6e599d4b54"
+  },
+  "execution_identity": {
+    "cli": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.venv/bin/tapm",
+    "imported_evaluator": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/src/tapm/iam/evaluator.py",
+    "llm": "off",
+    "model": null,
+    "cli_out_flag": "Unsupported; --help confirmed no --out option. Used default artifacts output and unique --tag; no --write-results."
+  },
+  "semantics": [
+    {
+      "symbol": "tapm.cli.cmd_tier2",
+      "source": "src/tapm/cli.py:1247",
+      "meaning": "When --llm off, ai_cfg remains None; no AI harness requested."
+    },
+    {
+      "symbol": "tapm.eval.tier2.run_tier2",
+      "source": "src/tapm/eval/tier2.py:141",
+      "meaning": "Calls run_deterministic on cached plan; paths is len(res.paths), runtime_ms is measured per run, and results default to artifacts without --write-results."
+    },
+    {
+      "symbol": "tapm.eval.tier2.score",
+      "source": "src/tapm/eval/tier2.py:72",
+      "meaning": "Scores set of (entry,target), so raw path count can differ without any scored-pair change."
+    },
+    {
+      "symbol": "tapm.paths.engine.PathOptions / find_paths",
+      "source": "src/tapm/paths/engine.py:140",
+      "meaning": "Deterministic sorted-neighbor BFS, simple paths, up to 3 per entry/target pair by default; final score/target/length/nodes sort and sequential PATH IDs. Numeric IDs are not stable historical identities across graph changes."
+    },
+    {
+      "symbol": "tapm.iam.evaluator.evaluate_escalation / _self_admin",
+      "source": "src/tapm/iam/evaluator.py:657",
+      "meaning": "Rule-based creation of self-admin edges, PassRole with service trust, user takeover, trust takeover and workload takeover. _self_admin tests action/resources on attached policies or group/self scope; it does not establish version history or runtime existing-workload prerequisites."
+    },
+    {
+      "symbol": "tapm.iam.policy.Statement.conditional / matches_action",
+      "source": "src/tapm/iam/policy.py:42",
+      "meaning": "Condition presence marks assumptions; values are not evaluated. NotAction complements matching actions. Current PATH-037 and PATH-038 are conditional CreatePolicyVersion paths for fn3 and fp5; the latter is the historically documented FP, not an identified dropped path."
+    }
+  ],
+  "historical_documentation": {
+    "adjudication_relevant": [
+      {
+        "line": 3,
+        "text": "Gold labels were written by reviewer 1 (author draft) from each project's documentation before the engine ran. Where the engine and the labels disagree after the second run, the disagreement is recorded here **without changing the gold file**. Reviewer 2 decides; until then the headline numbers use the labels as written."
+      },
+      {
+        "line": 9,
+        "text": "| `module.privesc-paths.aws_iam_user.privesc9-AttachRolePolicy-user` | VALID | no path | The user's only permission is `iam:AttachRolePolicy` on `*`. It has no `sts:AssumeRole`, and no role in the plan trusts it. It can attach a policy to a role but cannot then use that role. The matching **role** (`privesc9-AttachRolePolicy-role`) is self-escalating and the engine reports it. | Re-label the *user* entry OUT_OF_SCOPE (\"requires a second principal\"); keep the role as VALID. |"
+      },
+      {
+        "line": 10,
+        "text": "| `module.privesc-paths.aws_iam_user.privesc12-PutRolePolicy-user` | VALID | no path | Same shape: `iam:PutRolePolicy` on `*`, no way to use a role. | Same as above. |"
+      },
+      {
+        "line": 11,
+        "text": "| `module.privesc-paths.aws_iam_user.privesc-AssumeRole-start-user` | VALID | no path | The start user has **no policy attached**. The chain's first role trusts `var.aws_assume_role_arn` (the operator running Terraform), not this user. The path exists for the operator's principal, which is outside the plan. | Re-label OUT_OF_SCOPE (\"entry is the lab operator's principal, not in the plan\"). |"
+      },
+      {
+        "line": 19,
+        "text": "| `module.tool-testing.aws_iam_user.fp5-nonExploitableConditionConstraint-user` | INVALID | path, status `review`, precondition `condition_satisfied` | The grant's Condition cannot be met in practice, but the engine does not evaluate Condition values (runtime context is not in a plan). It reports the path as needing review rather than asserting it. Strict scoring counts it as FP. |"
+      },
+      {
+        "line": 103,
+        "text": "### Retracted: \"Reviewer 2 disposition & confirmation\" (Tasks A27 and E4, retracted by A28 on Oct 15, 2026)"
+      },
+      {
+        "line": 105,
+        "text": "Earlier versions of this section (commit `aabd71e`, Oct 13, and commit `3382ecc`, Oct 15) said \"Reviewer 2"
+      },
+      {
+        "line": 107,
+        "text": "60/63 agreement (95.2%) and Cohen's kappa 0.9167, and said no `Reviewer 2: PENDING` entries remained. None of"
+      },
+      {
+        "line": 110,
+        "text": "- The owner is Reviewer 1, the author of the labels. On Oct 15 the owner confirmed that no person did a Reviewer 2"
+      },
+      {
+        "line": 115,
+        "text": "- All 15 Tier-2 gold files still say \"Reviewer 2: PENDING\" in their header. The 5 benign files have no Reviewer 2"
+      }
+    ],
+    "critic_37_observation": [
+      {
+        "line": 143,
+        "text": "| F5 | P1 | Beat 10: the runbook prints a typed \"265 resources -> 38 paths in ~1 second\"; the real command at this commit prints `res=265 paths=37 \u2026 652 ms`, while `evaluations/RESULTS.md:114` (committed second run) says 38 paths, 982 ms. Either the engine changed since the committed run or the run is not reproducible (C10 on that row). | New row: re-derive the Tier-2 iam-vulnerable result at HEAD and fix the runbook's beat 10 to run the command. Not touched here (`evaluations/` is out of scope). | Open |"
+      },
+      {
+        "line": 229,
+        "text": "- **Beat 10.** `tapm tier2 iam-vulnerable --llm off`, run 3 times offline: `res=265 paths=37 TP=26 FN=3 FP=1 TN=4"
+      }
+    ],
+    "tracker_37_observation": [
+      {
+        "line": 267,
+        "text": "| A36 | Tier-2 iam-vulnerable reproduces: at HEAD `tapm tier2 iam-vulnerable --llm off` emits 37 paths in 672 ms, while committed `tier2-second-run.json` (`309f8a1`, Sept 29) and RESULTS.md:114 say 38 paths, 982 ms; TP 26, FN 3, FP 1 are the same. Find the dropped path and why, regenerate or explain; beat 10 runs the command instead of printing a typed line (`demo/demo-live.sh:638`, `:642`); `talk/QA-PREP.md:151` matches. C10, C12 | Cloud | \u2014 | Oct 22 | In progress | critic/A36.md | [2026-10-15 21:45:00-05:00] Added from W5.2's critic record (demo/W5.2 @ 0ee8482, its finding F5; the G5 session re-ran it offline and got the same 37 paths, 672 ms).  [2026-10-19] Codex readiness session claimed; CC-0 written. Git metadata inaccessible; no branch/commit verified. |"
+      },
+      {
+        "line": 331,
+        "text": "| F50 | P1 | Tier-2 iam-vulnerable emits 37 paths at HEAD vs 38 committed; beat 10 prints a typed result (W5.2 F5; re-run by the G5 session) | A36 |"
+      }
+    ],
+    "test_count_tolerance": [
+      {
+        "line": 11,
+        "text": "8. Hard comment size limit <= 65,535 chars (GitHub & Gitea limit) verified on IAM-Vulnerable (37 test paths / 41 blind eval paths);"
+      },
+      {
+        "line": 132,
+        "text": "    \"\"\"Even on IAM-Vulnerable (265 resources, 37 test paths / 41 blind eval paths), comment is strictly <= 65,535 chars.\"\"\""
+      },
+      {
+        "line": 153,
+        "text": "    # Validate path count from data: 37 test paths (vs 41 blind in strata evaluation)"
+      },
+      {
+        "line": 154,
+        "text": "    assert num_paths in (37, 38, 41) or num_paths >= 30, f\"Expected 37-41 paths from data, got {num_paths}\""
+      }
+    ],
+    "assessment": "The old 37 count was explicitly documented in critic W5.2, tracker A36/F50, recording notes, and developer-report tests/comments. No examined record identifies an exact removed node sequence or causal change. ADJUDICATION documents three user-entry disagreements and conditional-policy FP; it does not explain a 38-to-37 delta."
+  },
+  "limitations": [
+    "Git metadata is inaccessible. No claim is made about current HEAD/branch, engine revision ancestry, Sept29/Oct15 commits, or a merge causing the discrepancy.",
+    "No detailed 37-path artifact was available among the examined historical records.",
+    "No engine code, committed evaluation result, or gold label was modified. Default ignored artifacts were regenerated as authorized.",
+    "Runtimes are current per-run measurements (1018, 815, 796 ms); historical 982 ms remains a separately attributed historical figure."
+  ]
+}

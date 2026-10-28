@@ -1,0 +1,335 @@
+% CODASPY 2027 draft. Build: latexmk -pdf main.tex   (after: python make_numbers.py)
+% Submission uses [sigconf,review,anonymous]; camera-ready drops review,anonymous.
+\documentclass[sigconf,review,anonymous]{acmart}
+
+\usepackage{xspace}
+\usepackage{booktabs}
+\usepackage{listings}
+\input{numbers}
+
+\newcommand{\sys}{\textsc{PlanPath}\xspace}   % anonymized tool name for review; see README.md
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\conf}{\textsf{confirmed}\xspace}
+\newcommand{\ask}{\textsf{app-team}\xspace}
+\newcommand{\ruled}{\textsf{ruled-out}\xspace}
+\setlength{\emergencystretch}{2em}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true,columns=fullflexible,frame=single}
+
+\setcopyright{none}
+\acmConference[CODASPY '27]{Seventeenth ACM Conference on Data and Application Security and Privacy}{June 14--17, 2027}{Fort Collins, CO, USA}
+\acmBooktitle{CODASPY '27}
+
+\begin{document}
+
+\title{From Terraform Plans to Attack Paths:\\Evidence-Fed Threat Modeling that Developers Can Answer}
+
+\author{Anonymous Author(s)}
+\affiliation{\institution{Anonymous Institution}\country{}}
+
+\begin{abstract}
+Infrastructure as code (IaC) put the cloud architecture of most applications into files that developers review every day,
+yet threat modeling still happens elsewhere, if at all. IaC scanners report isolated misconfigurations; threat modeling
+tools that read IaC report every threat an architecture could have. Neither tells a developer which few changes in
+\emph{this} pull request let an outsider reach sensitive data, nor asks them the handful of questions only they can answer.
+
+We present \sys, which turns a Terraform plan into (i)~\emph{attack paths}: chains of network and IAM relationships from an
+attacker-controlled entry to a classified asset, where every hop cites plan or source evidence and every assumption is named;
+(ii)~an \emph{evidence-fed} threat model: an unmodified OWASP pytm threat library whose element attributes are set from the
+plan, with each threat classified as \emph{confirmed} by the plan, \emph{ruled out} by it, or \emph{open}; and (iii)~a few
+plain yes/no questions, selected greedily, that settle the open threats on the paths first. Answers become attested evidence
+that can never change a path. Language models only re-tell what the evidence establishes, under a validator, or propose a patch
+that the pipeline re-plans and proves.
+
+On \NumTOneFixtures synthetic fixtures \sys recovers every labeled path (\NumTOnePathTP/\NumTOnePathTP); on \NumTTwoCases
+public vulnerable-by-design cases its reachability precision and recall are \NumTTwoPrecision and \NumTTwoRecall. On the
+samples of TerrARA's relevance benchmark that document their vulnerabilities, it points at all \NumTBDeveloper of
+\NumTBVulns known vulnerabilities with \NumTBItems items to read, where TerrARA reports \NumTBTerraraThreats threats;
+\NumTBPath of them as attack paths that match the published walkthrough. \todo{developer study result, one sentence.}
+\end{abstract}
+
+\maketitle
+
+%======================================================================
+\section{Introduction}
+%======================================================================
+
+A pull request that changes Terraform is an architecture change. It can open a security group, attach a role to a server,
+widen an IAM policy with a wildcard, or put a public API in front of a function. Each of these is a line a reviewer can see;
+whether they \emph{combine} into a way in is not. That combination is what threat modeling is for, and it is the part
+developers are least equipped to do: few have been trained in it, and the artifacts it produces---data flow diagrams,
+STRIDE tables, lists of threats---are written for security specialists~\cite{shostack2014threat,tahaei2019survey}.
+
+Two families of tools read IaC today. \emph{Misconfiguration scanners} (Checkov, tfsec, Trivy) check resources against
+rules and report findings one resource at a time; on our synthetic corpus they emit \NumTOneCheckov, \NumTOneTfsec and
+\NumTOneTrivy findings, and at best \NumTOneHopTfsec of the hops on the labeled attack paths carry a finding at all.
+\emph{Threat modeling tools} extract an architecture from IaC and apply a threat library to it. TerrARA~\cite{tran2025terrara},
+the closest published work, builds an enriched DFD from Terraform and elicits threats with SPARTA; on its relevance benchmark it
+covers 26 of 28 known vulnerabilities with 715 threats. Architecture-only threat models are necessarily generic: without the
+plan's values they cannot tell a wildcard grant from a scoped one, or an instance that requires IMDSv2 from one that does not,
+so they must report every threat the architecture \emph{could} have. The same is true of pytm~\cite{pytm} run on a model
+generated from the plan: \NumTOnePytmOnly threats on our corpus, none of them connected into a path.
+
+We argue that the plan already contains much of what these tools leave open, and that what it does not contain can be
+reduced to a few questions a developer can answer. Concretely:
+
+\begin{itemize}
+\item \textbf{Attack paths with evidence (\S\ref{sec:paths}).} A typed security graph built from the plan's values
+  \emph{and} its configuration references, with network and IAM semantics evaluated deterministically. An attack path is a
+  chain of relationships from an attacker-controlled entry to a classified asset; every hop cites evidence records that point
+  at a file and line, and every hop that needs more than the configuration shows carries a named precondition.
+\item \textbf{Evidence-fed threat modeling (\S\ref{sec:classify}).} We generate an executable pytm model from the same graph,
+  set element attributes from plan evidence, and classify each (threat, element) pair of pytm's unmodified library as
+  \conf by the plan, \ruled by it, or \ask---open until someone who knows the application answers.
+\item \textbf{Questions instead of threat lists (\S\ref{sec:questions}).} The open threats are reduced to plain yes/no
+  questions on (element, control) pairs, chosen greedily and path-first. Answers are committed next to the Terraform, become
+  attested evidence, re-decide the threats, and by construction never add, remove or change an attack path.
+\item \textbf{Output for people who do not threat-model (\S\ref{sec:people}).} Each path is also rendered as a one-screen
+  card in plain language, for a developer (with the line to change) or for anyone. Language models may re-tell a path or
+  propose a patch, but an annotation is accepted only if a validator finds every claim backed by cited evidence, and a patch
+  only if the pipeline re-plans it and proves its effect.
+\item \textbf{Evaluation (\S\ref{sec:eval}).} Path accuracy on \NumTOneFixtures synthetic fixtures and \NumTTwoCases public
+  cases; a head-to-head on TerrARA's benchmark with a ground truth committed before the first run; reviewer load; and the
+  protocol of a developer comprehension study. \todo{study results.}
+\end{itemize}
+
+%======================================================================
+\section{Motivating example}\label{sec:example}
+%======================================================================
+
+Figure~\ref{fig:card} shows what \sys reports for a 23-resource plan: an internet-facing load balancer forwards to an EC2
+instance whose metadata service accepts IMDSv1; the instance profile's role has \texttt{s3:GetObject} on
+\texttt{arn:aws:s3:::*}; one bucket is tagged confidential. Every scanner flags some of these resources. None says that they
+form one path, that the wildcard is what makes the path reach \emph{that} bucket, or that requiring IMDSv2 only lowers its
+priority while scoping the grant removes it. pytm on the architecture alone reports \NumDemoGeneric threats for this
+plan. Fed with the plan, \NumDemoConfirmed are confirmed (one on every hop of the path), \NumDemoRuledOut are ruled out,
+and six yes/no questions settle \NumDemoSixSettle of the \NumDemoOpen that remain open.
+
+\begin{figure*}[t]
+\begin{lstlisting}
+HIGH: Someone on the internet could list and read the customer-data bucket
+(aws_s3_bucket.customer_data), which holds confidential data, if they find a
+way to make the app server (aws_instance.app) fetch a web address for them
+(an SSRF bug) or run code on it.
+ 1. Anyone on the internet can reach the web load balancer (HTTPS/443).  alb.tf:3
+ 2. The web load balancer passes those requests on to the app server.  network.tf:94-100
+ 3. The app server can fetch the cloud keys of the app role from a local
+    address (IMDS). Because the older IMDS setting is allowed, a request
+    someone tricks the server into making can fetch them too.
+    (only if the condition above holds)  app.tf:10-13
+ 4. Those keys are allowed to list and read the customer-data bucket because
+    the permission covers everything of that kind (a wildcard).  iam.tf:25-35
+ Fix: Narrow the permission of the app role to the resources it needs.
+    The path engine re-ran itself with this change: the path disappears.
+ ? Does the customer-data bucket hold personal data?
+ ? Does the app server check every request's input before using it?
+\end{lstlisting}
+\caption{The developer card for the demo plan (abridged). Every sentence is generated from evidence records.}
+\label{fig:card}
+\end{figure*}
+
+%======================================================================
+\section{From plan to attack paths}\label{sec:paths}
+%======================================================================
+
+\paragraph{Input.} \texttt{terraform show -json} on a saved plan gives planned values, unknown-after-apply markers, and the
+configuration's unevaluated expressions with their references~\cite{tf-json}. Plans are produced offline with fake
+credentials, a provider filesystem mirror, and an AWS API mock for data sources; no cloud account is involved.
+
+\paragraph{Security graph.} Each resource becomes a node (modeled or not, so coverage stays measurable). Edges are typed:
+\texttt{EXPOSES} (internet to load balancer, public instance, public database, unauthenticated function URL or API route),
+\texttt{ROUTES\_TO} (listener to target group to instance or ECS service; API integration to backend), \texttt{ASSUMES}
+(workload to role via instance profile, execution role, task role, or container host; principal to role via trust or a
+privilege-escalation primitive), \texttt{ALLOWS} (principal to asset with an access class), and \texttt{ESCALATES}
+(principal to account administrator). IAM evaluation implements the stated subset of AWS policy
+logic~\cite{aws-iam-eval}: explicit deny, NotAction/NotResource, permission boundaries, resource policies, conditions (kept
+as preconditions, not evaluated), and a catalogue of escalation primitives~\cite{rhino-privesc,iamvulnerable}. Policies
+whose documents are unknown at plan time are recovered \emph{symbolically} from source, replacing interpolations such as
+\texttt{\$\{aws\_s3\_bucket.x.arn\}} by tokens that match only that resource.
+
+\paragraph{Attack path.} \emph{An attack path is a sequence of typed graph relationships connecting an attacker-controlled
+entry condition to a security-relevant asset, where every edge is supported by deterministic evidence and any
+non-deterministic assumption is explicitly labeled.} Entries are the internet and, optionally, IAM users (credential
+compromise). Assets are data stores classified by tag or type, and the account administrator. A hop is a \emph{fact} when the
+edge suffices, an \emph{assumption} when crossing it needs a named precondition: SSRF or code execution in the
+workload, an escape from a container, stolen user credentials, a satisfied IAM condition, or traffic from an allowed public
+range. Priority is a documented integer score of target class, entry and preconditions.
+
+\paragraph{What-if.} For each hop, the corresponding fix is applied to a copy of the graph and the search re-run; the report
+says whether the change breaks the path, downgrades it, or leaves an alternative route.
+
+\paragraph{Evidence ledger.} Every edge, fact and path refers to ledger records (\texttt{TF-}, \texttt{NET-}, \texttt{IAM-},
+\texttt{GRAPH-}, \texttt{PATH-}, \texttt{SCAN-}, \texttt{APP-}) with a source location. Record IDs are assigned after the run in
+sorted order, so the same plan yields byte-identical artifacts.
+
+%======================================================================
+\section{Evidence-fed threat classification}\label{sec:classify}
+%======================================================================
+
+pytm represents a threat $t$ as a target class and a condition $\varphi_t$, a Python expression over attributes of the element
+(or of a data flow's source, sink and data). Attributes default to \texttt{False}; a finding is reported when $\varphi_t$
+evaluates true. \sys generates a pytm model from the graph (servers, functions, datastores, flows, data objects, boundaries,
+and the IMDS credential hop) and sets attributes from evidence, e.g.\ \texttt{isEncrypted} from a listener's protocol,
+\texttt{hasAccessControl} from a bucket policy, \texttt{authenticatesSource} from IMDS settings.
+
+\paragraph{Formalization.} Fix an element $e$ and threat $t$. Let $V_t$ be the attributes $\varphi_t$ reads. The plan
+decides $D \subseteq V_t$ with values $\sigma: D \to \mathit{Val}$, each value backed by evidence; $U = V_t \setminus D$ is
+undecided. Write $\varphi_t(\sigma, \tau)$ for the condition under $\sigma$ and an assignment $\tau$ to $U$, and $\mathbf{0}$
+for pytm's defaults. Let $\mathbf{0}_V$ be the architecture-only model, in which every evidence-set attribute is also reset to
+its default. Then, for the pairs that pytm reports on either model:
+\[
+\mathrm{class}(t,e) =
+\begin{cases}
+\conf & \text{if } \forall \tau \in \{0,1\}^U: \varphi_t(\sigma,\tau) \\
+\ask & \text{if } \varphi_t(\sigma,\mathbf{0}) \wedge \exists \tau: \neg\varphi_t(\sigma,\tau)\\
+\ruled & \text{if } \varphi_t(\mathbf{0}_V) \wedge \neg\varphi_t(\sigma,\mathbf{0})
+\end{cases}
+\]
+\conf is thus the Kleene-true case of $\varphi_t$ under partial knowledge~\cite{kleene1952}, restricted to boolean
+undecided attributes; a threat that reads a non-boolean undecided attribute (a data classification on a flow, a client's TLS
+version) is never \conf. Evidence-backed overrides (e.g.\ S3 Block Public Access) are reported as \emph{mitigated}. The
+enumeration is exponential in $|U|$, which is bounded by the attributes a single condition reads; we cap it at $2^{12}$
+assignments per pair and conservatively leave a pair with more undecided attributes open (\ask).
+\todo{report the observed max and mean $|U|$ over the corpus, and how often the cap is hit.} Every \conf finding carries the evidence of the
+attributes that decided it and is linked to the path hop it speaks about.
+
+\paragraph{Cloud pack.} pytm's library targets application threats. A pack of \NumPackThreats cloud threats in pytm's own
+format, whose conditions read attributes such as \texttt{imdsV1Allowed} and \texttt{hasInstanceRole}, lets the same
+classifier speak about path hops (\NumTOnePackFindings pack findings on the synthetic corpus). Because the pack's attributes come from the same graph as the paths, its
+agreement with the paths is not independent evidence; we report pytm's library and the pack separately.
+
+%======================================================================
+\section{Questions instead of threat lists}\label{sec:questions}
+%======================================================================
+
+An open finding $(t,e)$ needs a set $Q_{t,e}$ of (element, control) keys---the undecided attributes, mapped to the element
+that can answer them (a flow's copied attributes are asked of its sink; data attributes of the store holding the data).
+Answering all of $Q_{t,e}$ decides the finding either way. \sys asks the key that settles the most findings when added to
+the keys already chosen, counting findings on an attack path twice, and repeats while some key settles something:
+\[
+q_{k+1} = \arg\max_{q} \sum_{(t,e) \in S_k(q)} w(t,e), \qquad A_{k+1} = A_k \cup \{q_{k+1}\},
+\]
+where $S_k(q) = \{(t,e) : Q_{t,e} \not\subseteq A_k,\ Q_{t,e} \subseteq A_k \cup \{q\}\}$ are the findings that $q$
+completes and $w(t,e)$ is 2 on a path and 1 elsewhere.
+Unlike maximum coverage, the objective (findings whose \emph{whole} key set is asked) is not submodular, so the classic
+$(1-1/e)$ guarantee of greedy selection~\cite{nemhauser1978} does not apply, and a finding that needs two new keys at once is
+never credited by a single step. \todo{quantify: share of open findings with $|Q|=1$; compare with an exact ILP on the demo
+plan.} Questions are phrased in plain language from a fixed table; data questions (``does this bucket hold personal
+data?'') are listed separately because they inform findings that yes/no alone cannot settle.
+
+\paragraph{Answers.} Answers live in \texttt{threat-answers.yaml} next to the Terraform, are reviewed like code, and become
+\texttt{APP-} evidence records with trust \emph{attested}. They only set attributes the plan leaves undecided (the plan wins),
+malformed or unknown entries are reported, and paths are computed before and independently of them.
+
+%======================================================================
+\section{Output for people who do not threat-model}\label{sec:people}
+%======================================================================
+
+\paragraph{Path cards.} Each path is rendered deterministically as the card in Figure~\ref{fig:card}: a headline with the
+asset, its class and the precondition in words; one sentence per hop with the file and line to change; the smallest fix the
+what-if proved; and the first questions on the path's elements. An \emph{everyone} version drops file names, resource
+addresses and evidence IDs and adds a short glossary.
+
+\paragraph{Bounded AI.} Six agents (path narrator, plain explainer, remediation, framework mapper, finding explainer, patch
+author) receive an evidence bundle, have no tools, and return JSON. A validator accepts an annotation only if its schema is
+valid, every cited ID exists and was in the bundle, and its claims do not exceed the evidence (no new resources, no stronger
+access, no severity escalation, no instructions from untrusted comments)~\cite{owasp-llm01,ms2026threatai}. Accepted
+annotations are displayed next to, never merged into, the deterministic artifacts.
+
+\paragraph{Verified remediation.} The patch author proposes an edit to the Terraform; \sys checks it against an edit policy,
+applies it to a copy, re-plans offline, and re-runs paths and classification. A patch is accepted only if the path is gone
+(or downgraded) and nothing got worse: no new path, removed resource, added or widened relationship, or new confirmed threat.
+
+%======================================================================
+\section{Evaluation}\label{sec:eval}
+%======================================================================
+
+\todo{Pin the evaluation commit and the run manifest (tool versions). All numbers below are macros generated from
+committed results by \texttt{paper/make\_numbers.py}.}
+
+\paragraph{RQ1: Are the paths right?} \emph{Tier 1:} \NumTOneFixtures synthetic fixtures covering IAM wildcards, trust,
+resource policies, explicit deny, conditions, \texttt{for\_each}, \texttt{count}, modules, dynamic blocks, unknown values,
+and prompt-injection comments; gold labels were committed before the engine ran on each. Path precision
+\NumTOnePathPrecision, recall \NumTOnePathRecall (\NumTOnePathTP TP, \NumTOnePathFP FP, \NumTOnePathFN FN); median runtime
+\NumTOneMedianMs\,ms. These fixtures were written by the tool's authors and demonstrate consistency, not accuracy.
+\emph{Tier 2:} \NumTTwoCases cases from TerraGoat, IAM Vulnerable and CloudGoat~\cite{terragoat,iamvulnerable,cloudgoat} at frozen
+commits, labeled per (entry, target) pair from each scenario's documentation: \NumTTwoTP TP, \NumTTwoFN FN, \NumTTwoFP FP,
+\NumTTwoTN TN (precision \NumTTwoPrecision, recall \NumTTwoRecall). \todo{second labeler and agreement ($\kappa$).}
+
+\paragraph{RQ2: Does the output cover known vulnerabilities? (vs.\ TerrARA)} We ran TerrARA's nine benchmark
+samples~\cite{terrara-repo,cloudgoat,kaimonkey,awsgoat}. TerrARA publishes per-sample counts but not which vulnerabilities it
+counted, so we wrote the list for the samples whose walkthroughs document them (CloudGoat \texttt{glue\_privesc}, AWSGoat
+modules 1 and 2: \NumTBVulns vulnerabilities) and committed it, with the matching rules, before the first run. A vulnerability
+is covered by a \emph{path} through its resources, a \emph{confirmed} threat of its kind on them, a yes/no question
+(\emph{asked}) about a control it names on them, or---TerrARA's own criterion---merely a generic threat of its kind.
+
+The first run found \NumTBFirstRunPaths paths on all nine samples and covered \NumTBFirstRunCovered of \NumTBVulns. The misses
+were general AWS semantics missing from the engine: unauthenticated API Gateway routes as entries, ECS services and their
+task and host roles, Glue-job PassRole, writing a policy onto a role one can take over, and quoted keys in
+\texttt{jsonencode}. After adding them---with Tier~1 and Tier~2 results unchanged---\sys covers \NumTBDeveloper of
+\NumTBVulns: \NumTBPath by an attack path matching the walkthrough and \NumTBAsked by a question on the right resource
+(\NumTBFirstScreen on the first screen). It asks the reader to look at \NumTBItems items (\NumTBItemsPerVuln per covered
+vulnerability; \NumTBItemsFirst on the first screen), against \NumTBTerraraThreats threats from TerrARA
+(\NumTBTerraraPerVuln per covered vulnerability) and \NumTBScannerFindings scanner findings. Application bugs (SQL injection,
+XSS, IDOR) are invisible in any IaC; the best an IaC tool can do is point at the element and control, which is what the
+questions do. \todo{Re-run TerrARA itself (Memgraph + Docker) on the same commits for a like-for-like count.}
+
+\paragraph{RQ3: How much does the plan decide?} On the synthetic corpus, the architecture-only pytm model reports
+\NumTOnePytmOnly threats. Fed with plan evidence: \NumTOnePytmDecided decided by the plan, \NumTOnePytmRuledOut ruled out, and
+\NumTOnePytmAppTeam open for the app team. On the demo plan, six questions settle \NumDemoSixSettle of \NumDemoOpen open
+findings. \todo{distribution over fixtures and Tier 2 of questions needed to settle 50\%/90\%.}
+
+\paragraph{RQ4: Does the AI boundary hold?} Negative tests (fabricated IDs, unsupported claims, escalation, injected
+instructions), a prompt-injection fixture, and a pytm model of the AI layer itself. \todo{live-model numbers (two providers,
+recorded cassettes), not only the simulated backend: \NumTOneAIGenerated generated, \NumTOneAIAccepted accepted,
+\NumTOneAIHeld held.}
+
+\paragraph{RQ5: Are patches proven?} Over \NumTOneRemPaths paths, \NumTOneRemBreak verified breaks and \NumTOneRemRejected
+rejected patches; the static what-if agreed with the re-planned result \NumTOneRemWhatIfAgree/\NumTOneRemWhatIfChecked times.
+\todo{live patch author.}
+
+\paragraph{RQ6: Can developers act on it?} A within-subjects study (\texttt{paper/study/}) compares three presentations of
+the same plan---scanner findings, a pytm threat list, and \sys's card with questions---on whether participants identify the
+path, the line to change and the right fix, and how long it takes. \todo{run the study (target $n \ge 24$, half without
+security training); report accuracy, time, confidence and SUS~\cite{brooke1996sus}.}
+
+%======================================================================
+\section{Discussion and threats to validity}
+%======================================================================
+
+\textbf{Construct.} ``Covered by a question'' is weaker than ``covered by a path'': a question directs attention, it does not
+show that the bug exists. We report the categories separately and never add them silently. Items to read differ in kind
+(a path, a threat, a question); counts are indicative. \textbf{Internal.} The Tier~1 fixtures and the TerrARA ground truth
+were written by the authors; both were committed before the runs they score, and the TerrARA engine changes are reported with
+the first-run result. \textbf{External.} AWS only; Terraform only; classification needs tags (or declared targets);
+application logic is out of reach by design. \textbf{Reliability.} Plans, scanner baselines and results are committed and
+the deterministic artifacts are byte-identical across runs.
+
+%======================================================================
+\section{Related work}
+%======================================================================
+
+\emph{Threat modeling from IaC.} TerrARA~\cite{tran2025terrara} extracts an enriched DFD and elicits threats with
+SPARTA~\cite{sion2018sparta}; its limitations section names implicit relationships in policies and threat prioritization as
+open problems, which the IAM evaluation and the classification address. StartLeft and IriusRisk import IaC into a rules
+engine~\cite{startleft,iriusrisk-terraform}. pytm~\cite{pytm} is threat modeling as code; agent skills now build pytm models
+interactively~\cite{tmskills}, complementary to the CI setting here. \emph{Attack graphs.} MulVAL and earlier model-checking
+approaches~\cite{ou2005mulval,sheyner2002attackgraphs} compute multi-step attacks over hosts and vulnerabilities; cloud IAM
+graph tools (PMapper, Cloudsplaining~\cite{pmapper,cloudsplaining}) analyze deployed accounts. We compute paths before
+deployment, from the plan, and attach them to source lines. \emph{IaC analysis.} Security smells~\cite{rahman2019sevensins}
+and policy scanners~\cite{checkov,trivy} are per-resource. \emph{Developer-centred security.} Developers act on what their
+tools put in front of them~\cite{acar2016sources,tahaei2019survey}; our cards and questions are designed for that.
+\emph{LLMs and threat modeling.} Microsoft's guidance on threat modeling AI applications~\cite{ms2026threatai} motivates
+keeping the model out of the decision path. \todo{survey 2025--26 LLM-for-threat-modeling papers; verify each citation.}
+
+%======================================================================
+\section{Conclusion}
+%======================================================================
+
+The plan already knows most of what a threat model needs about the infrastructure. Feeding that evidence into an existing
+threat library turns hundreds of generic threats into a few paths, a few confirmed threats, and a few questions---and the
+questions are ones a developer can answer. \todo{artifact availability statement (anonymized repository).}
+
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{refs}
+
+\end{document}

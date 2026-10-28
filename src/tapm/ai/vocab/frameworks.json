@@ -1,0 +1,49 @@
+{
+  "_comment": "Controlled vocabulary for the framework-mapping agent. An identifier not listed here is rejected by the validator. Names verified 2026-09-29 (see talk/CITATIONS.md).",
+  "CWE": {
+    "version": "CWE 4.20",
+    "ids": {
+      "CWE-200": "Exposure of Sensitive Information to an Unauthorized Actor",
+      "CWE-250": "Execution with Unnecessary Privileges",
+      "CWE-269": "Improper Privilege Management",
+      "CWE-284": "Improper Access Control",
+      "CWE-306": "Missing Authentication for Critical Function",
+      "CWE-311": "Missing Encryption of Sensitive Data",
+      "CWE-668": "Exposure of Resource to Wrong Sphere",
+      "CWE-732": "Incorrect Permission Assignment for Critical Resource",
+      "CWE-918": "Server-Side Request Forgery (SSRF)",
+      "CWE-1188": "Initialization of a Resource with an Insecure Default",
+      "CWE-1220": "Insufficient Granularity of Access Control"
+    }
+  },
+  "ATTACK": {
+    "version": "MITRE ATT&CK Enterprise v19.2",
+    "ids": {
+      "T1190": "Exploit Public-Facing Application",
+      "T1552.005": "Unsecured Credentials: Cloud Instance Metadata API",
+      "T1078.004": "Valid Accounts: Cloud Accounts",
+      "T1530": "Data from Cloud Storage"
+    }
+  },
+  "NIST-800-53r5": {
+    "version": "NIST SP 800-53 Rev. 5 (OSCAL 5.2.0)",
+    "ids": {
+      "AC-3": "Access Enforcement",
+      "AC-4": "Information Flow Enforcement",
+      "AC-6": "Least Privilege",
+      "AC-17": "Remote Access",
+      "CM-7": "Least Functionality",
+      "SA-11": "Developer Testing and Evaluation",
+      "SC-7": "Boundary Protection",
+      "SC-8": "Transmission Confidentiality and Integrity",
+      "SC-28": "Protection of Information at Rest",
+      "SI-10": "Information Input Validation"
+    }
+  },
+  "OWASP-LLM-2025": {
+    "version": "OWASP Top 10 for LLM Applications 2025",
+    "ids": {
+      "LLM01:2025": "Prompt Injection"
+    }
+  }
+}

@@ -1,0 +1,47 @@
+# Tier-2 held-out blind evaluation (Plan §6 E4): 5 unused CloudGoat scenarios.
+# Ground-truth reachability labels committed to git prior to engine run (commit 2a199ec).
+schema_version: 1
+mock_aws: http://127.0.0.1:5055
+repos:
+  cloudgoat:
+    url: https://github.com/RhinoSecurityLabs/cloudgoat
+    commit: abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed   # v2.5.0, 2026-03-20
+    license: BSD-3-Clause
+cases:
+  - id: cloudgoat-beanstalk_secrets
+    repo: cloudgoat
+    path: cloudgoat/scenarios/aws/beanstalk_secrets/terraform
+    terraform: current
+    variables: {cgid: tapmcg, profile: default, cg_whitelist: '["203.0.113.10/32"]'}
+    options: {user_entries: true}
+    gold: gold/cloudgoat-beanstalk_secrets.yaml
+  - id: cloudgoat-secrets_in_the_cloud
+    repo: cloudgoat
+    path: cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform
+    terraform: current
+    variables: {cgid: tapmcg, profile: default, cg_whitelist: '["203.0.113.10/32"]'}
+    options: {user_entries: true}
+    gold: gold/cloudgoat-secrets_in_the_cloud.yaml
+  - id: cloudgoat-vpc_peering_overexposed
+    repo: cloudgoat
+    path: cloudgoat/scenarios/aws/vpc_peering_overexposed/terraform
+    terraform: current
+    variables: {cgid: tapmcg, profile: default, cg_whitelist: '["203.0.113.10/32"]'}
+    options: {user_entries: true}
+    gold: gold/cloudgoat-vpc_peering_overexposed.yaml
+  - id: cloudgoat-rds_snapshot
+    repo: cloudgoat
+    path: cloudgoat/scenarios/aws/rds_snapshot/terraform
+    terraform: current
+    context: '..'
+    variables: {cgid: tapmcg, profile: default, cg_whitelist: '["203.0.113.10/32"]'}
+    options: {user_entries: true}
+    gold: gold/cloudgoat-rds_snapshot.yaml
+  - id: cloudgoat-codebuild_secrets
+    repo: cloudgoat
+    path: cloudgoat/scenarios/aws/codebuild_secrets/terraform
+    terraform: current
+    context: '..'
+    variables: {cgid: tapm, profile: default, cg_whitelist: '["203.0.113.10/32"]'}
+    options: {user_entries: true}
+    gold: gold/cloudgoat-codebuild_secrets.yaml

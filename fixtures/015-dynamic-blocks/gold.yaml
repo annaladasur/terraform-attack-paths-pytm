@@ -1,0 +1,25 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 015-dynamic-blocks
+summary: Security group ingress built with a dynamic block (absent from plan configuration, present in planned values). Public API -> role -> restricted DynamoDB table.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: EXPOSES, src: internet, dst: aws_instance.api}
+  - {type: ASSUMES, src: aws_instance.api, dst: aws_iam_role.app}
+  - {type: TRUSTS, src: aws_iam_role.app, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ALLOWS, src: aws_iam_role.app, dst: aws_dynamodb_table.customers}
+expected_iam:
+  - {principal: aws_iam_role.app, resource: aws_dynamodb_table.customers, access: [read]}
+expected_paths:
+  - label: VALID
+    entry: internet
+    target: aws_dynamodb_table.customers
+    hops: [internet, aws_instance.api, aws_iam_role.app, aws_dynamodb_table.customers]
+    preconditions: [workload_ssrf]
+    priority: high
+expected_false_paths: []
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

@@ -1,0 +1,288 @@
+[
+  {
+    "condition": "target.processesUntrustedInput is True and target.hasContentFiltering is False",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "comments and values reach the model unfiltered",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)",
+          "src/tapm/ai/injection.py (the unsafe stand-in)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "processesUntrustedInput": {
+        "basis": "the raw pull-request diff is pasted into the prompt",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)",
+          "src/tapm/ai/injection.py (the unsafe stand-in)"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Direct Prompt Injection",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM01",
+    "undecided": []
+  },
+  {
+    "condition": "target.hasRAG is True and target.hasContentFiltering is False",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "comments and values reach the model unfiltered",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)",
+          "src/tapm/ai/injection.py (the unsafe stand-in)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "hasRAG": {
+        "basis": "retrieves repository files for context",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Indirect Prompt Injection via Retrieved Content",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM02",
+    "undecided": []
+  },
+  {
+    "condition": "target.isThirdParty is True and target.processesPersonalData is True and target.controls.providesConfidentiality is False",
+    "decided": {
+      "controls.providesConfidentiality": {
+        "basis": "the full plan leaves the organisation",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "isThirdParty": {
+        "basis": "hosted model API",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "processesPersonalData": {
+        "basis": "the full plan output: plans can contain secrets in cleartext",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)",
+          "SECURITY.md"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Sensitive Data Leakage to Third-Party Provider",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM03",
+    "undecided": []
+  },
+  {
+    "condition": "target.hasFineTuning is True and target.controls.providesIntegrity is False",
+    "decided": {
+      "hasFineTuning": {
+        "basis": "a hosted base model",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Training Data Poisoning",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": false,
+    "severity": "High",
+    "source": "pytm",
+    "status": "cannot_fire",
+    "threat_id": "LLM04",
+    "undecided": [
+      "controls.providesIntegrity"
+    ]
+  },
+  {
+    "condition": "target.hasAgentCapabilities is True and target.hasAccessToSensitiveSystems is True and target.controls.implementsPOLP is False",
+    "decided": {
+      "controls.implementsPOLP": {
+        "basis": "one broad CI token",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "hasAccessToSensitiveSystems": {
+        "basis": "the CI token can write to the repository; cloud credentials are in the runner",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "hasAgentCapabilities": {
+        "basis": "posts comments, approves pull requests, runs commands",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Excessive Agency via Unauthorized Tool Use",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "Very High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM05",
+    "undecided": []
+  },
+  {
+    "condition": "target.executesCode is True and target.controls.isHardened is False",
+    "decided": {
+      "controls.isHardened": {
+        "basis": "commands run on the CI runner",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "executesCode": {
+        "basis": "runs the terraform commands it suggests",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Arbitrary Code Execution via LLM Agent",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "Very High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM06",
+    "undecided": []
+  },
+  {
+    "condition": "target.hasContentFiltering is False and target.hasSystemPrompt is True",
+    "decided": {
+      "hasContentFiltering": {
+        "basis": "comments and values reach the model unfiltered",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)",
+          "src/tapm/ai/injection.py (the unsafe stand-in)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "hasSystemPrompt": {
+        "basis": "a reviewer persona prompt",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Jailbreaking and Safety Bypass",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM07",
+    "undecided": []
+  },
+  {
+    "condition": "target.processesPersonalData is True and target.controls.encodesOutput is False",
+    "decided": {
+      "controls.encodesOutput": {
+        "basis": "model text is posted verbatim",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": false
+      },
+      "processesPersonalData": {
+        "basis": "the full plan output: plans can contain secrets in cleartext",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)",
+          "SECURITY.md"
+        ],
+        "on": "element",
+        "value": true
+      }
+    },
+    "description": "Sensitive Information Disclosure Through Output",
+    "element": "Review model (hosted)",
+    "element_type": "LLM",
+    "fires_with_defaults": true,
+    "severity": "High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM08",
+    "undecided": []
+  },
+  {
+    "condition": "target.usesExternalTools is True and target.validatesToolLaunchConfig is False",
+    "decided": {
+      "usesExternalTools": {
+        "basis": "tool servers (MCP) for the repository and the cloud",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": true
+      },
+      "validatesToolLaunchConfig": {
+        "basis": "tool servers are configured from files the pull request can change",
+        "evidence": [
+          "hypothetical design (not a measurement of any product)"
+        ],
+        "on": "element",
+        "value": false
+      }
+    },
+    "description": "Untrusted Tool Launch Configuration",
+    "element": "Review agent",
+    "element_type": "Agent",
+    "fires_with_defaults": true,
+    "severity": "High",
+    "source": "pytm",
+    "status": "fires",
+    "threat_id": "LLM09",
+    "undecided": []
+  }
+]

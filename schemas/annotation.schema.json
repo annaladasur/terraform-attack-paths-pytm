@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/AI annotation",
+  "title": "AI annotation",
+  "description": "A proposed annotation after harness processing. Only status=accepted appears in reports.",
+  "type": "object",
+  "required": [
+    "annotation_id",
+    "type",
+    "agent",
+    "statement",
+    "evidence_refs",
+    "status",
+    "backend",
+    "prompt_version",
+    "bundle_hash"
+  ],
+  "properties": {
+    "annotation_id": {
+      "type": "string",
+      "pattern": "^ANN-[0-9]{3,}$"
+    },
+    "type": {
+      "enum": [
+        "attack_path_explanation",
+        "plain_explanation",
+        "remediation",
+        "framework_mapping",
+        "finding_explanation"
+      ]
+    },
+    "agent": {
+      "enum": [
+        "path_narrator",
+        "remediation",
+        "framework_mapper",
+        "finding_explainer",
+        "plain_explainer"
+      ]
+    },
+    "statement": {
+      "type": "string"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "path_ref": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "severity": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "confidence": {
+      "type": "number"
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "rejected",
+        "human_review"
+      ]
+    },
+    "rejections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "backend": {
+      "type": "string"
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "prompt_version": {
+      "type": "string"
+    },
+    "bundle_hash": {
+      "type": "string"
+    }
+  }
+}

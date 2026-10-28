@@ -1,0 +1,227 @@
+{
+  "edges": [
+    {
+      "conditional": false,
+      "data": {
+        "access": [
+          "list",
+          "read"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "denied": [],
+        "symbolic": false
+      },
+      "dst": "aws_s3_bucket.customer_data",
+      "evidence": [
+        "IAM-001",
+        "TF-002",
+        "TF-015"
+      ],
+      "id": "GRAPH-001",
+      "label": "list,read",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "ALLOWS"
+    },
+    {
+      "conditional": false,
+      "data": {
+        "access": [
+          "list",
+          "read"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "denied": [],
+        "symbolic": false
+      },
+      "dst": "aws_s3_bucket.reports",
+      "evidence": [
+        "IAM-001",
+        "TF-002",
+        "TF-017"
+      ],
+      "id": "GRAPH-002",
+      "label": "list,read",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "ALLOWS"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role.app",
+      "evidence": [
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "id": "GRAPH-003",
+      "label": "instance_profile",
+      "precondition": "workload_ssrf",
+      "src": "aws_instance.app",
+      "type": "ASSUMES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role.app",
+      "evidence": [
+        "TF-001",
+        "TF-002"
+      ],
+      "id": "GRAPH-004",
+      "label": "role",
+      "precondition": null,
+      "src": "aws_iam_instance_profile.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_role_policy.app_s3",
+      "evidence": [
+        "TF-002",
+        "TF-003"
+      ],
+      "id": "GRAPH-005",
+      "label": "policy",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_iam_instance_profile.app",
+      "evidence": [
+        "TF-001",
+        "TF-005"
+      ],
+      "id": "GRAPH-006",
+      "label": "iam_instance_profile",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.app",
+      "evidence": [
+        "TF-005",
+        "TF-022"
+      ],
+      "id": "GRAPH-007",
+      "label": "security_group",
+      "precondition": null,
+      "src": "aws_instance.app",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "aws_security_group.alb",
+      "evidence": [
+        "TF-007",
+        "TF-021"
+      ],
+      "id": "GRAPH-008",
+      "label": "security_group",
+      "precondition": null,
+      "src": "aws_lb.web",
+      "type": "ATTACHES"
+    },
+    {
+      "conditional": false,
+      "data": {},
+      "dst": "principal:service:ec2.amazonaws.com",
+      "evidence": [
+        "IAM-002",
+        "TF-002"
+      ],
+      "id": "GRAPH-021",
+      "label": "",
+      "precondition": null,
+      "src": "aws_iam_role.app",
+      "type": "TRUSTS"
+    }
+  ],
+  "schema_version": "1",
+  "scope": "Terraform-visible identity, resource, trust and boundary policies; conditions are flagged, not evaluated; SCPs/RCPs/session policies out of scope.",
+  "statements": [
+    {
+      "data": {
+        "approximate": false,
+        "policy": "aws_iam_role_policy.app_s3",
+        "policy_kind": "inline",
+        "provenance": "plan",
+        "statement": {
+          "actions": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "effect": "Allow",
+          "index": 0,
+          "resources": [
+            "arn:aws:s3:::*"
+          ],
+          "sid": "ReadReports"
+        }
+      },
+      "id": "IAM-001",
+      "kind": "IAM",
+      "refs": [
+        "TF-003"
+      ],
+      "source": {
+        "end_line": 35,
+        "file": "iam.tf",
+        "focus_line": 29,
+        "start_line": 25
+      },
+      "summary": "aws_iam_role_policy.app_s3 statement 0 (ReadReports): Allow s3:GetObject, s3:ListBucket on arn:aws:s3:::*",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "approximate": false,
+        "policy": "aws_iam_role.app",
+        "policy_kind": "trust",
+        "provenance": "plan",
+        "statement": {
+          "actions": [
+            "sts:AssumeRole"
+          ],
+          "effect": "Allow",
+          "index": 0,
+          "principals": {
+            "Service": [
+              "ec2.amazonaws.com"
+            ]
+          }
+        }
+      },
+      "id": "IAM-002",
+      "kind": "IAM",
+      "refs": [
+        "TF-002"
+      ],
+      "source": {
+        "end_line": 13,
+        "file": "iam.tf",
+        "focus_line": 9,
+        "start_line": 4
+      },
+      "summary": "aws_iam_role.app statement 0: Allow sts:AssumeRole on this role (trust policy) for Service:ec2.amazonaws.com",
+      "trust": "trusted"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+# Gold labels: written from the fixture's design intent BEFORE the engine was run.
+# Reviewer 1: author draft. Reviewer 2: PENDING (see docs/methodology.md#ground-truth).
+schema_version: 1
+fixture: 001-clean
+summary: Private worker with IMDSv2 and a narrow read grant on an internal config bucket. Nothing reaches the confidential bucket.
+labeled_edge_types: [EXPOSES, ROUTES_TO, ASSUMES, ALLOWS, TRUSTS, ESCALATES]
+expected_edges:
+  - {type: ASSUMES, src: aws_instance.worker, dst: aws_iam_role.worker}
+  - {type: TRUSTS, src: aws_iam_role.worker, dst: "principal:service:ec2.amazonaws.com"}
+  - {type: ALLOWS, src: aws_iam_role.worker, dst: aws_s3_bucket.config}
+expected_iam:
+  - {principal: aws_iam_role.worker, resource: aws_s3_bucket.config, access: [read]}
+expected_paths: []
+expected_false_paths:
+  - {reason: private instance, no public address, internal-only security group, hops: [internet, aws_instance.worker]}
+review:
+  reviewer_1: {who: author-draft, status: labeled}
+  reviewer_2: {who: null, status: pending}
+  adjudicated: false

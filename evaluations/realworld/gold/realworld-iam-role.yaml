@@ -1,0 +1,12 @@
+# Real-world benign modules gold labels: reachability (entry -> target).
+# Derived from module documentation and declared sensitive targets before engine run.
+# VALID = documented as exploitable; INVALID = documented as not exploitable (benign / quiet); OUT_OF_SCOPE = unmodeled.
+case: realworld-iam-role
+documented_by: README.md, examples/iam-role/main.tf
+targets:
+  - module.iam_roles["admin"].aws_iam_role.this[0]
+expected:
+  - entry: internet
+    target: module.iam_roles["admin"].aws_iam_role.this[0]
+    label: INVALID
+    route: trust relationship restricts sts:AssumeRole to specific trusted principal ARN with MFA required; no untrusted access

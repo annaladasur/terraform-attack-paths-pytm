@@ -1,0 +1,163 @@
+{
+  "retrieved_date": "2026-10-28",
+  "licenses": [
+    {
+      "repository": "RhinoSecurityLabs/cloudgoat",
+      "revision": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/RhinoSecurityLabs--cloudgoat--LICENSE",
+      "sha256": "ede91ac947753ad23dca4d729429a26a04832c8df38a4e1bd5b58c6d95934854",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "bridgecrewio/terragoat",
+      "revision": "729f8da62c6a85ce4af5ad3d123de97776d954c4",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/bridgecrewio--terragoat--LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "BishopFox/iam-vulnerable",
+      "revision": "0f298666f9b7cfa01488b86912afdb211773188a",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/BishopFox--iam-vulnerable--LICENSE",
+      "sha256": "fdbbe8a4aba8b53bb87e7e945a163922b357bb20d628b2608b42c93340b94d70",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "tenable/KaiMonkey",
+      "revision": "3feb0bf1a5ab81a79f225407a5ed16db3acd59a4",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/tenable--KaiMonkey--LICENSE",
+      "sha256": "8bfba524679d607794974a5ab53b87764db581794b51bf4a6851457f0827d5c2",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "ine-labs/AWSGoat",
+      "revision": "b24869ad455ed8d1393d00ecdc15ee638d1c1332",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/ine-labs--AWSGoat--LICENSE",
+      "sha256": "12087e711c4abb1843b8f3ea0ced3926824683b63be0cae3959abd829aa9ad68",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "terraform-aws-modules/terraform-aws-vpc",
+      "revision": "b3abd6df2ecf052451a361ed55b8f06f8742a795",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/terraform-aws-modules--terraform-aws-vpc--LICENSE",
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "terraform-aws-modules/terraform-aws-security-group",
+      "revision": "b3c1b2e8beff9671960f874f5569d77c803b0127",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/terraform-aws-modules--terraform-aws-security-group--LICENSE",
+      "sha256": "f2afd2180c83fc2b9faad741599dfe2095fd2557df2e479873bf87af62cf111d",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "terraform-aws-modules/terraform-aws-s3-bucket",
+      "revision": "8a0b697adfbc673e6135c70246cff7f8052ad95a",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/terraform-aws-modules--terraform-aws-s3-bucket--LICENSE",
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "terraform-aws-modules/terraform-aws-rds",
+      "revision": "7c83995e3898fff639c74ce4cc7a72e61e7952c6",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/terraform-aws-modules--terraform-aws-rds--LICENSE",
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    },
+    {
+      "repository": "terraform-aws-modules/terraform-aws-iam",
+      "revision": "da8e6a8673933ee651f0f0fe611d5ac6b9f9bcb9",
+      "upstream_path": "LICENSE",
+      "local_path": "third-party/terraform-aws-modules--terraform-aws-iam--LICENSE",
+      "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "root_notice_paths": [
+        "LICENSE"
+      ]
+    }
+  ],
+  "reference_corrections": [
+    {
+      "repository": "terraform-aws-modules/terraform-aws-s3-bucket",
+      "original_unresolvable_full_revision": "8a0b69784e27f09a3fc3d2d9ad0c1032df3f487e",
+      "verified_revision": "8a0b697adfbc673e6135c70246cff7f8052ad95a",
+      "reason": "Correct erroneous full expansion of documented short revision; source bytes match exactly. No labels, plans, scanner outputs or scores changed.",
+      "files": [
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-s3-bucket-complete/main.tf",
+          "upstream_path": "examples/complete/main.tf",
+          "sha256": "dbd3542725c66a4b59213580e51ce9c7ac2dbd557da2932d7ccf987c22f4b567"
+        },
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-s3-bucket-complete/outputs.tf",
+          "upstream_path": "examples/complete/outputs.tf",
+          "sha256": "73b891c709b9e92a7104598740f390d8329a39b95099c0db5951d2c6957d16d1"
+        },
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-s3-bucket-complete/variables.tf",
+          "upstream_path": "examples/complete/variables.tf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-s3-bucket-complete/versions.tf",
+          "upstream_path": "examples/complete/versions.tf",
+          "sha256": "cbcf9a84704fa458159a03e77dc2abef946cac280a387a8acfe688c874f28de6"
+        }
+      ]
+    },
+    {
+      "repository": "terraform-aws-modules/terraform-aws-rds",
+      "original_unresolvable_full_revision": "7c839958ad3d8d6411516e87b7a1a08ea2257904",
+      "verified_revision": "7c83995e3898fff639c74ce4cc7a72e61e7952c6",
+      "reason": "Correct erroneous full expansion of documented short revision; source bytes match exactly. No labels, plans, scanner outputs or scores changed.",
+      "files": [
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-rds-complete/main.tf",
+          "upstream_path": "examples/complete-postgres/main.tf",
+          "sha256": "cb1d0c030f06896a851cf4c0b7d44502e13166e2e5efe9f610f3a79668baf7ae"
+        },
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-rds-complete/outputs.tf",
+          "upstream_path": "examples/complete-postgres/outputs.tf",
+          "sha256": "293a4acb33b090f50b56b8ccffe085a617f6291c350700c804e9281ee4858eda"
+        },
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-rds-complete/variables.tf",
+          "upstream_path": "examples/complete-postgres/variables.tf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "vendored_path": "evaluations/realworld/sources/realworld-rds-complete/versions.tf",
+          "upstream_path": "examples/complete-postgres/versions.tf",
+          "sha256": "4c078df608bedb1a5c01b5d4069b36dc0fd8cca2e720d516bb5265b6ab62f6a0"
+        }
+      ]
+    }
+  ]
+}

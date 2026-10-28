@@ -1,0 +1,198 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-09-29T03:01:48.491044544Z",
+  "ReportID": "01a0eb1c-7f4b-70a3-abd0-fa95bedcad25",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 52
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 2,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_lambda_function\" \"frontend\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_lambda_function\"\u001b[0m \u001b[38;5;37m\"frontend\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 16,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  function_name = \"orders-frontend\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mfunction_name\u001b[0m = \u001b[38;5;37m\"orders-frontend\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 17,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  role          = aws_iam_role.frontend.arn",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mrole\u001b[0m          = aws_iam_role.frontend.arn",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 18,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  runtime       = \"python3.12\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mruntime\u001b[0m       = \u001b[38;5;37m\"python3.12\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 19,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  handler       = \"app.handler\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mhandler\u001b[0m       = \u001b[38;5;37m\"app.handler\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 20,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  s3_bucket     = \"artifacts-111122223333\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245ms3_bucket\u001b[0m     = \u001b[38;5;37m\"artifacts-111122223333\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 21,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  s3_key        = \"frontend.zip\"",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245ms3_key\u001b[0m        = \u001b[38;5;37m\"frontend.zip\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 22,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 23,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 23,
+            "Provider": "AWS",
+            "Resource": "aws_lambda_function.frontend",
+            "Service": "lambda",
+            "StartLine": 16
+          },
+          "Description": "X-Ray tracing enables end-to-end debugging and analysis of all function activity. This will allow for identifying bottlenecks, slow downs and timeouts.\n",
+          "ID": "AWS-0066",
+          "Message": "Function does not have tracing enabled.",
+          "Namespace": "builtin.aws.lambda.aws0066",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0066",
+          "Query": "data.builtin.aws.lambda.aws0066.deny",
+          "References": [
+            "https://docs.aws.amazon.com/lambda/latest/dg/services-xray.html",
+            "https://avd.aquasec.com/misconfig/aws-0066"
+          ],
+          "Resolution": "Enable tracing",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Lambda functions should have X-Ray tracing enabled",
+          "Type": "Terraform Security Check"
+        },
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_secretsmanager_secret\" \"db\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_secretsmanager_secret\"\u001b[0m \u001b[38;5;37m\"db\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 77,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  name = \"prod/orders/db\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mname\u001b[0m = \u001b[38;5;37m\"prod/orders/db\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 78,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 79,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 79,
+            "Provider": "AWS",
+            "Resource": "aws_secretsmanager_secret.db",
+            "Service": "ssm",
+            "StartLine": 77
+          },
+          "Description": "Secrets Manager encrypts secrets by default using a default key created by AWS. To ensure control and granularity of secret encryption, CMK's should be used explicitly.\n",
+          "ID": "AWS-0098",
+          "Message": "Secret explicitly uses the default key.",
+          "Namespace": "builtin.aws.ssm.aws0098",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0098",
+          "Query": "data.builtin.aws.ssm.aws0098.deny",
+          "References": [
+            "https://docs.aws.amazon.com/kms/latest/developerguide/services-secrets-manager.html#asm-encrypt",
+            "https://avd.aquasec.com/misconfig/aws-0098"
+          ],
+          "Resolution": "Use customer managed keys",
+          "Severity": "LOW",
+          "Status": "FAIL",
+          "Title": "Secrets Manager should use customer managed keys",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "main.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

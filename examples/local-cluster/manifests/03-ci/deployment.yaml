@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tapm-runner
+  namespace: ci
+  labels:
+    app.kubernetes.io/name: act-runner
+    app.kubernetes.io/part-of: tapm-local-cluster
+    app.kubernetes.io/component: ci-runner
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: act-runner
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: act-runner
+        app.kubernetes.io/part-of: tapm-local-cluster
+        app.kubernetes.io/component: ci-runner
+    spec:
+      serviceAccountName: tapm-runner
+      containers:
+        - name: runner
+          image: gitea/act_runner:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GITEA_INSTANCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: runner-config
+                  key: GITEA_INSTANCE_URL
+            - name: GITEA_RUNNER_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: runner-config
+                  key: GITEA_RUNNER_NAME
+            - name: GITEA_RUNNER_LABELS
+              valueFrom:
+                configMapKeyRef:
+                  name: runner-config
+                  key: GITEA_RUNNER_LABELS
+            - name: DOCKER_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: runner-config
+                  key: DOCKER_HOST
+            - name: CONFIG_FILE
+              value: "/etc/act-runner/config.yaml"
+            - name: GITEA_RUNNER_REGISTRATION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: runner-secret
+                  key: runner-token
+                  optional: true
+          volumeMounts:
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
+            - name: runner-data
+              mountPath: /data
+            - name: runner-config-volume
+              mountPath: /etc/act-runner/config.yaml
+              subPath: config.yaml
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+      volumes:
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+        - name: runner-data
+          emptyDir: {}
+        - name: runner-config-volume
+          configMap:
+            name: runner-config

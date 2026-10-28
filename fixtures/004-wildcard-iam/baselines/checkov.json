@@ -1,0 +1,608 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "failed_checks": [
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "role": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_role.deployer",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMManagedAdminPolicy",
+        "check_id": "CKV_AWS_274",
+        "check_len": null,
+        "check_name": "Disallow IAM roles, users, and groups from using the AWS AdministratorAccess policy",
+        "check_result": {
+          "evaluated_keys": [
+            "policy_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          16,
+          19
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_role_policy_attachment.deployer_admin",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaDLQConfigured",
+        "check_id": "CKV_AWS_116",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured for a Dead Letter Queue(DLQ)",
+        "check_result": {
+          "evaluated_keys": [
+            "dead_letter_config/[0]/target_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.deploy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaInVPC",
+        "check_id": "CKV_AWS_117",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured inside a VPC",
+        "check_result": {
+          "evaluated_keys": [
+            "vpc_config"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.deploy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaFunctionLevelConcurrentExecutionLimit",
+        "check_id": "CKV_AWS_115",
+        "check_len": null,
+        "check_name": "Ensure that AWS Lambda function is configured for function-level concurrent execution limit",
+        "check_result": {
+          "evaluated_keys": [
+            "reserved_concurrent_executions/[0]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.deploy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaCodeSigningConfigured",
+        "check_id": "CKV_AWS_272",
+        "check_len": null,
+        "check_name": "Ensure AWS Lambda function is configured to validate code-signing",
+        "check_result": {
+          "evaluated_keys": [
+            "code_signing_config_arn"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.deploy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.LambdaXrayEnabled",
+        "check_id": "CKV_AWS_50",
+        "check_len": null,
+        "check_name": "X-Ray tracing is enabled for Lambda",
+        "check_result": {
+          "evaluated_keys": [
+            "tracing_config/[0]/mode"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          21,
+          28
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_lambda_function.deploy",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMUserNotUsedForAccess",
+        "check_id": "CKV_AWS_273",
+        "check_len": null,
+        "check_name": "Ensure access is controlled through SSO and not AWS IAM defined users",
+        "check_result": {
+          "evaluated_keys": [],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          30,
+          32
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "user": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_user.ci",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPrivilegeEscalation",
+        "check_id": "CKV_AWS_286",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow privilege escalation",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          48
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user_policy.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "user": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_user.ci",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPermissionsManagement",
+        "check_id": "CKV_AWS_289",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow permissions management / resource exposure without constraints",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          48
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user_policy.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "user": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_user.ci",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMPolicyAttachedToGroupOrRoles",
+        "check_id": "CKV_AWS_40",
+        "check_len": null,
+        "check_name": "Ensure IAM policies are attached only to groups or roles (Reducing access management complexity may in-turn reduce opportunity for a principal to inadvertently receive or retain excessive privileges.)",
+        "check_result": {
+          "evaluated_keys": [
+            "user"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          48
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user_policy.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "user": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_user.ci",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMCredentialsExposure",
+        "check_id": "CKV_AWS_287",
+        "check_len": null,
+        "check_name": "Ensure IAM policies does not allow credentials exposure",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          48
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user_policy.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "user": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_user.ci",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.terraform.checks.resource.aws.IAMStarResourcePolicyDocument",
+        "check_id": "CKV_AWS_355",
+        "check_len": null,
+        "check_name": "Ensure no IAM policies documents allow \"*\" as a statement's resource for restrictable actions",
+        "check_result": {
+          "evaluated_keys": [
+            "policy/Statement/[0]/Action"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          48
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user_policy.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      },
+      {
+        "bc_category": null,
+        "bc_check_id": null,
+        "benchmarks": {},
+        "breadcrumbs": {
+          "user": [
+            {
+              "module_connection": false,
+              "name": "aws_iam_user.ci",
+              "path": "main.tf",
+              "type": "resource"
+            }
+          ]
+        },
+        "caller_file_line_range": null,
+        "caller_file_path": null,
+        "check_class": "checkov.common.graph.checks_infra.base_check",
+        "check_id": "CKV2_AWS_40",
+        "check_len": null,
+        "check_name": "Ensure AWS IAM policy does not allow full IAM privileges",
+        "check_result": {
+          "entity": {
+            "aws_iam_user_policy": {
+              "ci": {
+                "__address__": "aws_iam_user_policy.ci",
+                "__end_line__": 48,
+                "__start_line__": 34,
+                "name": [
+                  "ci-everything"
+                ],
+                "policy": [
+                  {
+                    "Statement": [
+                      {
+                        "Action": [
+                          "iam:*"
+                        ],
+                        "Effect": "Allow",
+                        "Resource": "*"
+                      }
+                    ],
+                    "Version": "2012-10-17"
+                  }
+                ],
+                "user": [
+                  "ci-deployer"
+                ]
+              }
+            }
+          },
+          "evaluated_keys": [
+            "statement[?(@/effect == Allow)]/actions[*]",
+            "inline_policy/Statement[?(@/Effect == Allow)]/Action[*]",
+            "policy/Statement[?(@/Effect == Allow)]/Action[*]"
+          ],
+          "result": "FAILED"
+        },
+        "code_block": null,
+        "connected_node": null,
+        "definition_context_file_path": "main.tf",
+        "description": null,
+        "details": [],
+        "entity_tags": null,
+        "evaluations": null,
+        "file_abs_path": "main.tf",
+        "file_line_range": [
+          34,
+          48
+        ],
+        "file_path": "/main.tf",
+        "fixed_definition": null,
+        "guideline": null,
+        "repo_file_path": "/main.tf",
+        "resource": "aws_iam_user_policy.ci",
+        "resource_address": null,
+        "severity": null,
+        "short_description": null,
+        "vulnerability_details": null
+      }
+    ]
+  },
+  "summary": {
+    "checkov_version": "3.3.20",
+    "failed": 13,
+    "parsing_errors": 0,
+    "passed": 15,
+    "resource_count": 5,
+    "skipped": 0
+  }
+}

@@ -1,0 +1,49 @@
+# GitLab equivalent. Plan with a read-only role, keep plan.json out of artifacts.
+# Trigger matrix (docs/architecture.md, §5):
+#   * MR touches *.tf, *.tfvars, lock file: runs plan, tapm run --remediate, gate.
+#   * MR touches only exceptions or answers: fast gate re-evaluation from cache (no new plan needed).
+attack-paths:
+  image: python:3.12-slim-bookworm
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - "infra/**/*.tf"
+        - "infra/*.tf"
+        - "infra/**/*.tfvars"
+        - "infra/*.tfvars"
+        - "infra/**/*.tfvars.json"
+        - "infra/*.tfvars.json"
+        - "infra/**/.terraform.lock.hcl"
+        - "infra/.terraform.lock.hcl"
+        - "infra/**/attack-path-exceptions.yaml"
+        - "infra/attack-path-exceptions.yaml"
+        - "infra/**/threat-answers.yaml"
+        - "infra/threat-answers.yaml"
+  cache:
+    key:
+      files:
+        - "infra/*.tf"
+        - "infra/**/*.tf"
+        - "infra/*.tfvars"
+        - "infra/**/*.tfvars"
+        - "infra/.terraform.lock.hcl"
+    paths:
+      - attack-paths/
+  before_script:
+    - apt-get update && apt-get install -y --no-install-recommends graphviz curl unzip git make
+    - pip install "terraform-attack-paths-pytm @ git+https://github.com/<you>/terraform-attack-paths-pytm@<sha>"
+    - bash <(curl -fsSL https://raw.githubusercontent.com/<you>/terraform-attack-paths-pytm/<sha>/scripts/fetch-tools.sh)
+  script:
+    - |
+      if [ ! -f attack-paths/attack-paths.json ]; then
+        cd infra && terraform init -input=false && terraform plan -input=false -out=tfplan && terraform show -json tfplan > /tmp/plan.json && rm -f tfplan && cd ..
+        tapm run infra --plan /tmp/plan.json --out attack-paths --remediate
+      fi
+    # TAPM_LEVEL (CI/CD variable): observe | recommend | validate | prevent (kit/adoption-ladder.md)
+    - tapm gate attack-paths --tf-dir infra --level "${TAPM_LEVEL:-observe}" --fail-on high
+    - tapm measure attack-paths --json > attack-paths/measure.json
+  artifacts:
+    when: always
+    paths: [attack-paths/report.md, attack-paths/gate.md, attack-paths/gate.json, attack-paths/measure.json,
+            attack-paths/attack-paths.json, attack-paths/evidence.json, attack-paths/dfd.png,
+            attack-paths/remediations.json, attack-paths/remediation-*.diff]

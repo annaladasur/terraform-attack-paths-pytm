@@ -1,0 +1,2017 @@
+{
+  "records": [
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_iam_instance_profile"
+      },
+      "id": "TF-001",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 19,
+        "file": "iam.tf",
+        "start_line": 16
+      },
+      "summary": "aws_iam_instance_profile.app (AWS::IAM::InstanceProfile) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_iam_role"
+      },
+      "id": "TF-002",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 14,
+        "file": "iam.tf",
+        "start_line": 1
+      },
+      "summary": "aws_iam_role.app (AWS::IAM::Role) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_iam_role_policy"
+      },
+      "id": "TF-003",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 36,
+        "file": "iam.tf",
+        "start_line": 21
+      },
+      "summary": "aws_iam_role_policy.app_s3 (AWS::IAM::RolePolicy) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "http_endpoint": "enabled",
+        "http_tokens": "optional"
+      },
+      "id": "TF-004",
+      "kind": "TF",
+      "refs": [
+        "TF-005"
+      ],
+      "source": {
+        "end_line": 13,
+        "file": "app.tf",
+        "start_line": 10
+      },
+      "summary": "aws_instance.app: IMDSv1 allowed (http_tokens = optional)",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_instance"
+      },
+      "id": "TF-005",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 23,
+        "file": "app.tf",
+        "start_line": 1
+      },
+      "summary": "aws_instance.app (AWS::EC2::Instance) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_internet_gateway"
+      },
+      "id": "TF-006",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 13,
+        "file": "network.tf",
+        "start_line": 11
+      },
+      "summary": "aws_internet_gateway.main (AWS::EC2::InternetGateway) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_lb"
+      },
+      "id": "TF-007",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 8,
+        "file": "alb.tf",
+        "start_line": 1
+      },
+      "summary": "aws_lb.web (AWS::ElasticLoadBalancingV2::LoadBalancer) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_lb_listener"
+      },
+      "id": "TF-008",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 32,
+        "file": "alb.tf",
+        "start_line": 21
+      },
+      "summary": "aws_lb_listener.https (AWS::ElasticLoadBalancingV2::Listener) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_lb_target_group"
+      },
+      "id": "TF-009",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 19,
+        "file": "alb.tf",
+        "start_line": 10
+      },
+      "summary": "aws_lb_target_group.app (AWS::ElasticLoadBalancingV2::TargetGroup) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_lb_target_group_attachment"
+      },
+      "id": "TF-010",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 38,
+        "file": "alb.tf",
+        "start_line": 34
+      },
+      "summary": "aws_lb_target_group_attachment.app (AWS::ElasticLoadBalancingV2::TargetGroupAttachment) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_route_table"
+      },
+      "id": "TF-011",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 55,
+        "file": "network.tf",
+        "start_line": 48
+      },
+      "summary": "aws_route_table.public (AWS::EC2::RouteTable) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_route_table_association"
+      },
+      "id": "TF-012",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 60,
+        "file": "network.tf",
+        "start_line": 57
+      },
+      "summary": "aws_route_table_association.public_a (AWS::EC2::SubnetRouteTableAssociation) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_route_table_association"
+      },
+      "id": "TF-013",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 65,
+        "file": "network.tf",
+        "start_line": 62
+      },
+      "summary": "aws_route_table_association.public_b (AWS::EC2::SubnetRouteTableAssociation) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "level": "confidential",
+        "tag": "DataClassification",
+        "value": "confidential"
+      },
+      "id": "TF-014",
+      "kind": "TF",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 5,
+        "file": "storage.tf",
+        "start_line": 5
+      },
+      "summary": "aws_s3_bucket.customer_data tagged DataClassification = confidential",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_s3_bucket"
+      },
+      "id": "TF-015",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "aws_s3_bucket.customer_data (AWS::S3::Bucket) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "level": "internal",
+        "tag": "DataClassification",
+        "value": "internal"
+      },
+      "id": "TF-016",
+      "kind": "TF",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 32,
+        "file": "storage.tf",
+        "start_line": 32
+      },
+      "summary": "aws_s3_bucket.reports tagged DataClassification = internal",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_s3_bucket"
+      },
+      "id": "TF-017",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "aws_s3_bucket.reports (AWS::S3::Bucket) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_s3_bucket_public_access_block"
+      },
+      "id": "TF-018",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 16,
+        "file": "storage.tf",
+        "start_line": 10
+      },
+      "summary": "aws_s3_bucket_public_access_block.customer_data (AWS::S3::PublicAccessBlock) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_s3_bucket_public_access_block"
+      },
+      "id": "TF-019",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 42,
+        "file": "storage.tf",
+        "start_line": 36
+      },
+      "summary": "aws_s3_bucket_public_access_block.reports (AWS::S3::PublicAccessBlock) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_s3_bucket_server_side_encryption_configuration"
+      },
+      "id": "TF-020",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 26,
+        "file": "storage.tf",
+        "start_line": 18
+      },
+      "summary": "aws_s3_bucket_server_side_encryption_configuration.customer_data (AWS::S3::BucketEncryption) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_security_group"
+      },
+      "id": "TF-021",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 87,
+        "file": "network.tf",
+        "start_line": 67
+      },
+      "summary": "aws_security_group.alb (AWS::EC2::SecurityGroup) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_security_group"
+      },
+      "id": "TF-022",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 109,
+        "file": "network.tf",
+        "start_line": 89
+      },
+      "summary": "aws_security_group.app (AWS::EC2::SecurityGroup) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_subnet"
+      },
+      "id": "TF-023",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 46,
+        "file": "network.tf",
+        "start_line": 37
+      },
+      "summary": "aws_subnet.app (AWS::EC2::Subnet) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_subnet"
+      },
+      "id": "TF-024",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 24,
+        "file": "network.tf",
+        "start_line": 15
+      },
+      "summary": "aws_subnet.public_a (AWS::EC2::Subnet) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_subnet"
+      },
+      "id": "TF-025",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 35,
+        "file": "network.tf",
+        "start_line": 26
+      },
+      "summary": "aws_subnet.public_b (AWS::EC2::Subnet) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "create"
+        ],
+        "module": "",
+        "type": "aws_vpc"
+      },
+      "id": "TF-026",
+      "kind": "TF",
+      "refs": [],
+      "source": {
+        "end_line": 9,
+        "file": "network.tf",
+        "start_line": 1
+      },
+      "summary": "aws_vpc.main (AWS::EC2::VPC) planned: create",
+      "trust": "trusted"
+    },
+    {
+      "data": {},
+      "id": "NET-001",
+      "kind": "NET",
+      "refs": [
+        "TF-007"
+      ],
+      "source": {
+        "end_line": 3,
+        "file": "alb.tf",
+        "start_line": 3
+      },
+      "summary": "aws_lb.web is internet-facing (internal = false)",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "ambiguous": false,
+        "cidrs": [
+          "10.20.10.0/24"
+        ],
+        "direction": "egress",
+        "from_port": 8080,
+        "internet": false,
+        "protocol": "tcp",
+        "public_cidrs": [],
+        "security_group": "aws_security_group.alb",
+        "source_security_groups": [],
+        "to_port": 8080
+      },
+      "id": "NET-002",
+      "kind": "NET",
+      "refs": [
+        "TF-021"
+      ],
+      "source": {
+        "end_line": 86,
+        "file": "network.tf",
+        "start_line": 80
+      },
+      "summary": "aws_security_group.alb egress tcp/8080 to 10.20.10.0/24",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "ambiguous": false,
+        "cidrs": [
+          "0.0.0.0/0"
+        ],
+        "direction": "ingress",
+        "from_port": 443,
+        "internet": true,
+        "protocol": "tcp",
+        "public_cidrs": [],
+        "security_group": "aws_security_group.alb",
+        "source_security_groups": [],
+        "to_port": 443
+      },
+      "id": "NET-003",
+      "kind": "NET",
+      "refs": [
+        "TF-021"
+      ],
+      "source": {
+        "end_line": 78,
+        "file": "network.tf",
+        "start_line": 72
+      },
+      "summary": "aws_security_group.alb ingress tcp/443 from 0.0.0.0/0",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "ambiguous": false,
+        "cidrs": [
+          "0.0.0.0/0"
+        ],
+        "direction": "egress",
+        "from_port": 443,
+        "internet": true,
+        "protocol": "tcp",
+        "public_cidrs": [],
+        "security_group": "aws_security_group.app",
+        "source_security_groups": [],
+        "to_port": 443
+      },
+      "id": "NET-004",
+      "kind": "NET",
+      "refs": [
+        "TF-022"
+      ],
+      "source": {
+        "end_line": 108,
+        "file": "network.tf",
+        "start_line": 102
+      },
+      "summary": "aws_security_group.app egress tcp/443 to 0.0.0.0/0",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "ambiguous": false,
+        "cidrs": [],
+        "direction": "ingress",
+        "from_port": 8080,
+        "internet": false,
+        "protocol": "tcp",
+        "public_cidrs": [],
+        "security_group": "aws_security_group.app",
+        "source_security_groups": [
+          "aws_security_group.alb"
+        ],
+        "to_port": 8080
+      },
+      "id": "NET-005",
+      "kind": "NET",
+      "refs": [
+        "TF-022"
+      ],
+      "source": {
+        "end_line": 100,
+        "file": "network.tf",
+        "start_line": 94
+      },
+      "summary": "aws_security_group.app ingress tcp/8080 from sg:aws_security_group.alb",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "approximate": false,
+        "policy": "aws_iam_role_policy.app_s3",
+        "policy_kind": "inline",
+        "provenance": "plan",
+        "statement": {
+          "actions": [
+            "s3:GetObject",
+            "s3:ListBucket"
+          ],
+          "effect": "Allow",
+          "index": 0,
+          "resources": [
+            "arn:aws:s3:::*"
+          ],
+          "sid": "ReadReports"
+        }
+      },
+      "id": "IAM-001",
+      "kind": "IAM",
+      "refs": [
+        "TF-003"
+      ],
+      "source": {
+        "end_line": 35,
+        "file": "iam.tf",
+        "focus_line": 29,
+        "start_line": 25
+      },
+      "summary": "aws_iam_role_policy.app_s3 statement 0 (ReadReports): Allow s3:GetObject, s3:ListBucket on arn:aws:s3:::*",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "approximate": false,
+        "policy": "aws_iam_role.app",
+        "policy_kind": "trust",
+        "provenance": "plan",
+        "statement": {
+          "actions": [
+            "sts:AssumeRole"
+          ],
+          "effect": "Allow",
+          "index": 0,
+          "principals": {
+            "Service": [
+              "ec2.amazonaws.com"
+            ]
+          }
+        }
+      },
+      "id": "IAM-002",
+      "kind": "IAM",
+      "refs": [
+        "TF-002"
+      ],
+      "source": {
+        "end_line": 13,
+        "file": "iam.tf",
+        "focus_line": 9,
+        "start_line": 4
+      },
+      "summary": "aws_iam_role.app statement 0: Allow sts:AssumeRole on this role (trust policy) for Service:ec2.amazonaws.com",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "access": [
+          "list",
+          "read"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "conditional": false,
+        "denied": [],
+        "dst": "aws_s3_bucket.customer_data",
+        "label": "list,read",
+        "precondition": null,
+        "src": "aws_iam_role.app",
+        "symbolic": false,
+        "type": "ALLOWS"
+      },
+      "id": "GRAPH-001",
+      "kind": "GRAPH",
+      "refs": [
+        "IAM-001",
+        "TF-002",
+        "TF-015"
+      ],
+      "source": null,
+      "summary": "aws_iam_role.app --ALLOWS(list,read)--> aws_s3_bucket.customer_data",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "access": [
+          "list",
+          "read"
+        ],
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "conditional": false,
+        "denied": [],
+        "dst": "aws_s3_bucket.reports",
+        "label": "list,read",
+        "precondition": null,
+        "src": "aws_iam_role.app",
+        "symbolic": false,
+        "type": "ALLOWS"
+      },
+      "id": "GRAPH-002",
+      "kind": "GRAPH",
+      "refs": [
+        "IAM-001",
+        "TF-002",
+        "TF-017"
+      ],
+      "source": null,
+      "summary": "aws_iam_role.app --ALLOWS(list,read)--> aws_s3_bucket.reports",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_iam_role.app",
+        "label": "instance_profile",
+        "precondition": "workload_ssrf",
+        "src": "aws_instance.app",
+        "type": "ASSUMES"
+      },
+      "id": "GRAPH-003",
+      "kind": "GRAPH",
+      "refs": [
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005"
+      ],
+      "source": null,
+      "summary": "aws_instance.app --ASSUMES(instance_profile)--> aws_iam_role.app [precondition: workload_ssrf]",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_iam_role.app",
+        "label": "role",
+        "precondition": null,
+        "src": "aws_iam_instance_profile.app",
+        "type": "ATTACHES"
+      },
+      "id": "GRAPH-004",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-001",
+        "TF-002"
+      ],
+      "source": null,
+      "summary": "aws_iam_instance_profile.app --ATTACHES(role)--> aws_iam_role.app",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_iam_role_policy.app_s3",
+        "label": "policy",
+        "precondition": null,
+        "src": "aws_iam_role.app",
+        "type": "ATTACHES"
+      },
+      "id": "GRAPH-005",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-002",
+        "TF-003"
+      ],
+      "source": null,
+      "summary": "aws_iam_role.app --ATTACHES(policy)--> aws_iam_role_policy.app_s3",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_iam_instance_profile.app",
+        "label": "iam_instance_profile",
+        "precondition": null,
+        "src": "aws_instance.app",
+        "type": "ATTACHES"
+      },
+      "id": "GRAPH-006",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-001",
+        "TF-005"
+      ],
+      "source": null,
+      "summary": "aws_instance.app --ATTACHES(iam_instance_profile)--> aws_iam_instance_profile.app",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_security_group.app",
+        "label": "security_group",
+        "precondition": null,
+        "src": "aws_instance.app",
+        "type": "ATTACHES"
+      },
+      "id": "GRAPH-007",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-005",
+        "TF-022"
+      ],
+      "source": null,
+      "summary": "aws_instance.app --ATTACHES(security_group)--> aws_security_group.app",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_security_group.alb",
+        "label": "security_group",
+        "precondition": null,
+        "src": "aws_lb.web",
+        "type": "ATTACHES"
+      },
+      "id": "GRAPH-008",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-007",
+        "TF-021"
+      ],
+      "source": null,
+      "summary": "aws_lb.web --ATTACHES(security_group)--> aws_security_group.alb",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_instance.app",
+        "label": "",
+        "precondition": null,
+        "src": "aws_subnet.app",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-009",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-005",
+        "TF-023"
+      ],
+      "source": null,
+      "summary": "aws_subnet.app --CONTAINS--> aws_instance.app",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_lb.web",
+        "label": "",
+        "precondition": null,
+        "src": "aws_subnet.public_a",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-010",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-007",
+        "TF-024"
+      ],
+      "source": null,
+      "summary": "aws_subnet.public_a --CONTAINS--> aws_lb.web",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_route_table_association.public_a",
+        "label": "",
+        "precondition": null,
+        "src": "aws_subnet.public_a",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-011",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-012",
+        "TF-024"
+      ],
+      "source": null,
+      "summary": "aws_subnet.public_a --CONTAINS--> aws_route_table_association.public_a",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_lb.web",
+        "label": "",
+        "precondition": null,
+        "src": "aws_subnet.public_b",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-012",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-007",
+        "TF-025"
+      ],
+      "source": null,
+      "summary": "aws_subnet.public_b --CONTAINS--> aws_lb.web",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_route_table_association.public_b",
+        "label": "",
+        "precondition": null,
+        "src": "aws_subnet.public_b",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-013",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-013",
+        "TF-025"
+      ],
+      "source": null,
+      "summary": "aws_subnet.public_b --CONTAINS--> aws_route_table_association.public_b",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_subnet.app",
+        "label": "",
+        "precondition": null,
+        "src": "aws_vpc.main",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-014",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-023",
+        "TF-026"
+      ],
+      "source": null,
+      "summary": "aws_vpc.main --CONTAINS--> aws_subnet.app",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_subnet.public_a",
+        "label": "",
+        "precondition": null,
+        "src": "aws_vpc.main",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-015",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-024",
+        "TF-026"
+      ],
+      "source": null,
+      "summary": "aws_vpc.main --CONTAINS--> aws_subnet.public_a",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_subnet.public_b",
+        "label": "",
+        "precondition": null,
+        "src": "aws_vpc.main",
+        "type": "CONTAINS"
+      },
+      "id": "GRAPH-016",
+      "kind": "GRAPH",
+      "refs": [
+        "TF-025",
+        "TF-026"
+      ],
+      "source": null,
+      "summary": "aws_vpc.main --CONTAINS--> aws_subnet.public_b",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_lb.web",
+        "label": "HTTPS/443",
+        "ports": [
+          443
+        ],
+        "precondition": null,
+        "src": "internet",
+        "type": "EXPOSES"
+      },
+      "id": "GRAPH-017",
+      "kind": "GRAPH",
+      "refs": [
+        "NET-001",
+        "NET-003",
+        "TF-007",
+        "TF-008"
+      ],
+      "source": null,
+      "summary": "internet --EXPOSES(HTTPS/443)--> aws_lb.web",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "conditional": false,
+        "dst": "aws_s3_bucket.customer_data",
+        "label": "via aws_iam_role.app",
+        "precondition": null,
+        "src": "aws_instance.app",
+        "type": "READS"
+      },
+      "id": "GRAPH-018",
+      "kind": "GRAPH",
+      "refs": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-015"
+      ],
+      "source": null,
+      "summary": "aws_instance.app --READS(via aws_iam_role.app)--> aws_s3_bucket.customer_data",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "actions": [
+          "s3:GetObject",
+          "s3:ListBucket"
+        ],
+        "conditional": false,
+        "dst": "aws_s3_bucket.reports",
+        "label": "via aws_iam_role.app",
+        "precondition": null,
+        "src": "aws_instance.app",
+        "type": "READS"
+      },
+      "id": "GRAPH-019",
+      "kind": "GRAPH",
+      "refs": [
+        "IAM-001",
+        "IAM-002",
+        "TF-001",
+        "TF-002",
+        "TF-004",
+        "TF-005",
+        "TF-017"
+      ],
+      "source": null,
+      "summary": "aws_instance.app --READS(via aws_iam_role.app)--> aws_s3_bucket.reports",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "aws_instance.app",
+        "label": "HTTP/8080",
+        "precondition": null,
+        "src": "aws_lb.web",
+        "type": "ROUTES_TO"
+      },
+      "id": "GRAPH-020",
+      "kind": "GRAPH",
+      "refs": [
+        "NET-005",
+        "TF-005",
+        "TF-007",
+        "TF-008",
+        "TF-009",
+        "TF-010"
+      ],
+      "source": null,
+      "summary": "aws_lb.web --ROUTES_TO(HTTP/8080)--> aws_instance.app",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "conditional": false,
+        "dst": "principal:service:ec2.amazonaws.com",
+        "label": "",
+        "precondition": null,
+        "src": "aws_iam_role.app",
+        "type": "TRUSTS"
+      },
+      "id": "GRAPH-021",
+      "kind": "GRAPH",
+      "refs": [
+        "IAM-002",
+        "TF-002"
+      ],
+      "source": null,
+      "summary": "aws_iam_role.app --TRUSTS--> principal:service:ec2.amazonaws.com",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_vpc.main",
+        "rule_id": "CKV2_AWS_11",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-001",
+      "kind": "SCAN",
+      "refs": [
+        "TF-026"
+      ],
+      "source": {
+        "end_line": 9,
+        "file": "network.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV2_AWS_11 (unrated) on aws_vpc.main: Ensure VPC flow logging is enabled in all VPCs",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_vpc.main",
+        "rule_id": "CKV2_AWS_12",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-002",
+      "kind": "SCAN",
+      "refs": [
+        "TF-026"
+      ],
+      "source": {
+        "end_line": 9,
+        "file": "network.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV2_AWS_12 (unrated) on aws_vpc.main: Ensure the default security group of every VPC restricts all traffic",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_lb.web",
+        "rule_id": "CKV2_AWS_28",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-003",
+      "kind": "SCAN",
+      "refs": [
+        "TF-007"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "alb.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV2_AWS_28 (unrated) on aws_lb.web: Ensure public facing ALB are protected by WAF",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "CKV2_AWS_61",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-004",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV2_AWS_61 (unrated) on aws_s3_bucket.customer_data: Ensure that an S3 bucket has a lifecycle configuration",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "CKV2_AWS_61",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-005",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "checkov CKV2_AWS_61 (unrated) on aws_s3_bucket.reports: Ensure that an S3 bucket has a lifecycle configuration",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "CKV2_AWS_62",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-006",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV2_AWS_62 (unrated) on aws_s3_bucket.customer_data: Ensure S3 buckets should have event notifications enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "CKV2_AWS_62",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-007",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "checkov CKV2_AWS_62 (unrated) on aws_s3_bucket.reports: Ensure S3 buckets should have event notifications enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "CKV_AWS_144",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-008",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV_AWS_144 (unrated) on aws_s3_bucket.customer_data: Ensure that S3 bucket has cross-region replication enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "CKV_AWS_144",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-009",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "checkov CKV_AWS_144 (unrated) on aws_s3_bucket.reports: Ensure that S3 bucket has cross-region replication enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "CKV_AWS_145",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-010",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "checkov CKV_AWS_145 (unrated) on aws_s3_bucket.reports: Ensure that S3 buckets are encrypted with KMS by default",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_lb.web",
+        "rule_id": "CKV_AWS_150",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-011",
+      "kind": "SCAN",
+      "refs": [
+        "TF-007"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "alb.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV_AWS_150 (unrated) on aws_lb.web: Ensure that Load Balancer has deletion protection enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "CKV_AWS_18",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-012",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV_AWS_18 (unrated) on aws_s3_bucket.customer_data: Ensure the S3 bucket has access logging enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "CKV_AWS_18",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-013",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "checkov CKV_AWS_18 (unrated) on aws_s3_bucket.reports: Ensure the S3 bucket has access logging enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "CKV_AWS_21",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-014",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV_AWS_21 (unrated) on aws_s3_bucket.customer_data: Ensure all data stored in the S3 bucket have versioning enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "CKV_AWS_21",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-015",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "checkov CKV_AWS_21 (unrated) on aws_s3_bucket.reports: Ensure all data stored in the S3 bucket have versioning enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "imds",
+        "node": "aws_instance.app",
+        "rule_id": "CKV_AWS_79",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-016",
+      "kind": "SCAN",
+      "refs": [
+        "TF-005"
+      ],
+      "source": {
+        "end_line": 23,
+        "file": "app.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV_AWS_79 (unrated) on aws_instance.app: Ensure Instance Metadata Service Version 1 is not enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_lb.web",
+        "rule_id": "CKV_AWS_91",
+        "severity": "unrated",
+        "tool": "checkov"
+      },
+      "id": "SCAN-017",
+      "kind": "SCAN",
+      "refs": [
+        "TF-007"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "alb.tf",
+        "start_line": 1
+      },
+      "summary": "checkov CKV_AWS_91 (unrated) on aws_lb.web: Ensure the ELBv2 (Application/Network) has access logging enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "imds",
+        "node": "aws_instance.app",
+        "rule_id": "aws-ec2-enforce-http-token-imds",
+        "severity": "high",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-018",
+      "kind": "SCAN",
+      "refs": [
+        "TF-005"
+      ],
+      "source": {
+        "end_line": 12,
+        "file": "app.tf",
+        "start_line": 12
+      },
+      "summary": "tfsec aws-ec2-enforce-http-token-imds (high) on aws_instance.app: Instance does not require IMDS access to require a token",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_security_group.app",
+        "rule_id": "aws-ec2-no-public-egress-sgr",
+        "severity": "critical",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-019",
+      "kind": "SCAN",
+      "refs": [
+        "TF-022"
+      ],
+      "source": {
+        "end_line": 107,
+        "file": "network.tf",
+        "start_line": 107
+      },
+      "summary": "tfsec aws-ec2-no-public-egress-sgr (critical) on aws_security_group.app: Security group rule allows egress to multiple public internet addresses.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "public_ingress",
+        "node": "aws_security_group.alb",
+        "rule_id": "aws-ec2-no-public-ingress-sgr",
+        "severity": "critical",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-020",
+      "kind": "SCAN",
+      "refs": [
+        "TF-021"
+      ],
+      "source": {
+        "end_line": 77,
+        "file": "network.tf",
+        "start_line": 77
+      },
+      "summary": "tfsec aws-ec2-no-public-ingress-sgr (critical) on aws_security_group.alb: Security group rule allows ingress from public internet.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_vpc.main",
+        "rule_id": "aws-ec2-require-vpc-flow-logs-for-all-vpcs",
+        "severity": "medium",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-021",
+      "kind": "SCAN",
+      "refs": [
+        "TF-026"
+      ],
+      "source": {
+        "end_line": 9,
+        "file": "network.tf",
+        "start_line": 1
+      },
+      "summary": "tfsec aws-ec2-require-vpc-flow-logs-for-all-vpcs (medium) on aws_vpc.main: VPC Flow Logs is not enabled for VPC ",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "public_lb",
+        "node": "aws_lb.web",
+        "rule_id": "aws-elb-alb-not-public",
+        "severity": "high",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-022",
+      "kind": "SCAN",
+      "refs": [
+        "TF-007"
+      ],
+      "source": {
+        "end_line": 3,
+        "file": "alb.tf",
+        "start_line": 3
+      },
+      "summary": "tfsec aws-elb-alb-not-public (high) on aws_lb.web: Load balancer is exposed publicly.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "iam_wildcard",
+        "node": "aws_iam_role_policy.app_s3",
+        "rule_id": "aws-iam-no-policy-wildcards",
+        "severity": "high",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-023",
+      "kind": "SCAN",
+      "refs": [
+        "TF-003"
+      ],
+      "source": {
+        "end_line": 26,
+        "file": "iam.tf",
+        "start_line": 26
+      },
+      "summary": "tfsec aws-iam-no-policy-wildcards (high) on aws_iam_role_policy.app_s3: IAM policy document uses sensitive action 's3:GetObject' on wildcarded resource 'arn:aws:s3:::*'",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "aws-s3-enable-bucket-encryption",
+        "severity": "high",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-024",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "tfsec aws-s3-enable-bucket-encryption (high) on aws_s3_bucket.reports: Bucket does not have encryption enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "aws-s3-enable-bucket-logging",
+        "severity": "medium",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-025",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "tfsec aws-s3-enable-bucket-logging (medium) on aws_s3_bucket.customer_data: Bucket does not have logging enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "aws-s3-enable-bucket-logging",
+        "severity": "medium",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-026",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "tfsec aws-s3-enable-bucket-logging (medium) on aws_s3_bucket.reports: Bucket does not have logging enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "aws-s3-enable-versioning",
+        "severity": "medium",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-027",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "tfsec aws-s3-enable-versioning (medium) on aws_s3_bucket.customer_data: Bucket does not have versioning enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "aws-s3-enable-versioning",
+        "severity": "medium",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-028",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "tfsec aws-s3-enable-versioning (medium) on aws_s3_bucket.reports: Bucket does not have versioning enabled",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "aws-s3-encryption-customer-key",
+        "severity": "high",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-029",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "tfsec aws-s3-encryption-customer-key (high) on aws_s3_bucket.reports: Bucket does not encrypt data with a customer managed key.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket_server_side_encryption_configuration.customer_data",
+        "rule_id": "aws-s3-encryption-customer-key",
+        "severity": "high",
+        "tool": "tfsec"
+      },
+      "id": "SCAN-030",
+      "kind": "SCAN",
+      "refs": [
+        "TF-020"
+      ],
+      "source": {
+        "end_line": 26,
+        "file": "storage.tf",
+        "start_line": 18
+      },
+      "summary": "tfsec aws-s3-encryption-customer-key (high) on aws_s3_bucket_server_side_encryption_configuration.customer_data: Bucket does not encrypt data with a customer managed key.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "imds",
+        "node": "aws_instance.app",
+        "rule_id": "AWS-0028",
+        "severity": "high",
+        "tool": "trivy"
+      },
+      "id": "SCAN-031",
+      "kind": "SCAN",
+      "refs": [
+        "TF-005"
+      ],
+      "source": {
+        "end_line": 12,
+        "file": "app.tf",
+        "start_line": 12
+      },
+      "summary": "trivy AWS-0028 (high) on aws_instance.app: aws_instance should activate session tokens for Instance Metadata Service.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": "public_lb",
+        "node": "aws_lb.web",
+        "rule_id": "AWS-0053",
+        "severity": "high",
+        "tool": "trivy"
+      },
+      "id": "SCAN-032",
+      "kind": "SCAN",
+      "refs": [
+        "TF-007"
+      ],
+      "source": {
+        "end_line": 3,
+        "file": "alb.tf",
+        "start_line": 3
+      },
+      "summary": "trivy AWS-0053 (high) on aws_lb.web: Load balancer is exposed to the internet.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "AWS-0089",
+        "severity": "low",
+        "tool": "trivy"
+      },
+      "id": "SCAN-033",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "trivy AWS-0089 (low) on aws_s3_bucket.customer_data: S3 Bucket Logging",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "AWS-0089",
+        "severity": "low",
+        "tool": "trivy"
+      },
+      "id": "SCAN-034",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "trivy AWS-0089 (low) on aws_s3_bucket.reports: S3 Bucket Logging",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.customer_data",
+        "rule_id": "AWS-0090",
+        "severity": "medium",
+        "tool": "trivy"
+      },
+      "id": "SCAN-035",
+      "kind": "SCAN",
+      "refs": [
+        "TF-015"
+      ],
+      "source": {
+        "end_line": 8,
+        "file": "storage.tf",
+        "start_line": 1
+      },
+      "summary": "trivy AWS-0090 (medium) on aws_s3_bucket.customer_data: S3 Data should be versioned",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "AWS-0090",
+        "severity": "medium",
+        "tool": "trivy"
+      },
+      "id": "SCAN-036",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "trivy AWS-0090 (medium) on aws_s3_bucket.reports: S3 Data should be versioned",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_security_group.app",
+        "rule_id": "AWS-0104",
+        "severity": "critical",
+        "tool": "trivy"
+      },
+      "id": "SCAN-037",
+      "kind": "SCAN",
+      "refs": [
+        "TF-022"
+      ],
+      "source": {
+        "end_line": 107,
+        "file": "network.tf",
+        "start_line": 107
+      },
+      "summary": "trivy AWS-0104 (critical) on aws_security_group.app: A security group rule should not allow unrestricted egress to any IP address.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket.reports",
+        "rule_id": "AWS-0132",
+        "severity": "high",
+        "tool": "trivy"
+      },
+      "id": "SCAN-038",
+      "kind": "SCAN",
+      "refs": [
+        "TF-017"
+      ],
+      "source": {
+        "end_line": 34,
+        "file": "storage.tf",
+        "start_line": 28
+      },
+      "summary": "trivy AWS-0132 (high) on aws_s3_bucket.reports: S3 encryption should use Customer Managed Keys",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_s3_bucket_server_side_encryption_configuration.customer_data",
+        "rule_id": "AWS-0132",
+        "severity": "high",
+        "tool": "trivy"
+      },
+      "id": "SCAN-039",
+      "kind": "SCAN",
+      "refs": [
+        "TF-020"
+      ],
+      "source": {
+        "end_line": 26,
+        "file": "storage.tf",
+        "start_line": 18
+      },
+      "summary": "trivy AWS-0132 (high) on aws_s3_bucket_server_side_encryption_configuration.customer_data: S3 encryption should use Customer Managed Keys",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "concern": null,
+        "node": "aws_vpc.main",
+        "rule_id": "AWS-0178",
+        "severity": "medium",
+        "tool": "trivy"
+      },
+      "id": "SCAN-040",
+      "kind": "SCAN",
+      "refs": [
+        "TF-026"
+      ],
+      "source": {
+        "end_line": 9,
+        "file": "network.tf",
+        "start_line": 1
+      },
+      "summary": "trivy AWS-0178 (medium) on aws_vpc.main: VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "trust": "trusted"
+    },
+    {
+      "data": {
+        "nodes": [
+          "internet",
+          "aws_lb.web",
+          "aws_instance.app",
+          "aws_iam_role.app",
+          "aws_s3_bucket.customer_data"
+        ],
+        "preconditions": [
+          "workload_ssrf"
+        ],
+        "priority": "high",
+        "status": "plausible",
+        "target": "aws_s3_bucket.customer_data"
+      },
+      "id": "PATH-001",
+      "kind": "PATH",
+      "refs": [
+        "GRAPH-001",
+        "GRAPH-003",
+        "GRAPH-017",
+        "GRAPH-020",
+        "SCAN-016",
+        "SCAN-018",
+        "SCAN-020",
+        "SCAN-022",
+        "SCAN-023",
+        "SCAN-031",
+        "SCAN-032"
+      ],
+      "source": null,
+      "summary": "plausible path from internet to confidential asset aws_s3_bucket.customer_data: internet -> aws_lb.web -> aws_instance.app -> aws_iam_role.app -> aws_s3_bucket.customer_data; requires: workload_ssrf",
+      "trust": "trusted"
+    }
+  ],
+  "schema_version": "1"
+}

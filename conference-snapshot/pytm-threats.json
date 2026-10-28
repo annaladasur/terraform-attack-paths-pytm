@@ -1,0 +1,815 @@
+{
+  "threat_count": 118,
+  "threats": [
+    {
+      "description": "Content Spoofing",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC05"
+    },
+    {
+      "description": "Communication Channel Manipulation",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "CR06"
+    },
+    {
+      "description": "Client-Server Protocol Manipulation",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "CR08"
+    },
+    {
+      "description": "Interception",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DE01"
+    },
+    {
+      "description": "Sniffing Attacks",
+      "element": "HTTP/8080 (GRAPH-020)",
+      "severity": "Medium",
+      "threat_id": "DE03"
+    },
+    {
+      "description": "Content Spoofing",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC05"
+    },
+    {
+      "description": "Communication Channel Manipulation",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "CR06"
+    },
+    {
+      "description": "Interception",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DE01"
+    },
+    {
+      "description": "Sniffing Attacks",
+      "element": "HTTPS/443 (GRAPH-017)",
+      "severity": "Medium",
+      "threat_id": "DE03"
+    },
+    {
+      "description": "Authentication Abuse/ByPass",
+      "element": "aws_instance.app",
+      "severity": "Medium",
+      "threat_id": "AA01"
+    },
+    {
+      "description": "Principal Spoof",
+      "element": "aws_instance.app",
+      "severity": "Medium",
+      "threat_id": "AA02"
+    },
+    {
+      "description": "Exploitation of Trusted Credentials",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "AA03"
+    },
+    {
+      "description": "Exploiting Trust in Client",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "AA04"
+    },
+    {
+      "description": "Privilege Abuse",
+      "element": "aws_instance.app",
+      "severity": "Medium",
+      "threat_id": "AC01"
+    },
+    {
+      "description": "Using Malicious Files",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "AC06"
+    },
+    {
+      "description": "Exploiting Incorrectly Configured Access Control Security Levels",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "AC07"
+    },
+    {
+      "description": "Manipulate Registry Information",
+      "element": "aws_instance.app",
+      "severity": "Medium",
+      "threat_id": "AC08"
+    },
+    {
+      "description": "Functionality Misuse",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC09"
+    },
+    {
+      "description": "Session Credential Falsification through Manipulation",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC11"
+    },
+    {
+      "description": "Session Credential Falsification through Prediction",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "AC16"
+    },
+    {
+      "description": "Session Hijacking - ServerSide",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "AC17"
+    },
+    {
+      "description": "Dictionary-based Password Attack",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "CR03"
+    },
+    {
+      "description": "Encryption Brute Forcing",
+      "element": "aws_instance.app",
+      "likelihood": "Low",
+      "severity": "Low",
+      "threat_id": "CR05"
+    },
+    {
+      "description": "Double Encoding",
+      "element": "aws_instance.app",
+      "likelihood": "Low",
+      "severity": "Medium",
+      "threat_id": "DE02"
+    },
+    {
+      "description": "Flooding",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "DO01"
+    },
+    {
+      "description": "Excessive Allocation",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DO02"
+    },
+    {
+      "description": "Excavation",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "DS01"
+    },
+    {
+      "description": "Footprinting",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Very Low",
+      "threat_id": "DS03"
+    },
+    {
+      "description": "XSS Targeting Error Pages",
+      "element": "aws_instance.app",
+      "severity": "Medium",
+      "threat_id": "DS04"
+    },
+    {
+      "description": "Path Traversal",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "HA01"
+    },
+    {
+      "description": "Web Application Fingerprinting",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Low",
+      "threat_id": "HA03"
+    },
+    {
+      "description": "Server Side Include (SSI) Injection",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP03"
+    },
+    {
+      "description": "HTTP Request Splitting",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "INP04"
+    },
+    {
+      "description": "Command Line Execution through SQL Injection",
+      "element": "aws_instance.app",
+      "likelihood": "Low",
+      "severity": "Very High",
+      "threat_id": "INP05"
+    },
+    {
+      "description": "Format String Injection",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP08"
+    },
+    {
+      "description": "LDAP Injection",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP09"
+    },
+    {
+      "description": "Parameter Injection",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP10"
+    },
+    {
+      "description": "Relative Path Traversal",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP11"
+    },
+    {
+      "description": "Input Data Manipulation",
+      "element": "aws_instance.app",
+      "severity": "Medium",
+      "threat_id": "INP14"
+    },
+    {
+      "description": "PHP Remote File Inclusion",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP16"
+    },
+    {
+      "description": "XSS Using MIME Type Mismatch",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP17"
+    },
+    {
+      "description": "Fuzzing and observing application log data/errors for application mapping",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Low",
+      "threat_id": "INP18"
+    },
+    {
+      "description": "XML External Entities Blowup",
+      "element": "aws_instance.app",
+      "likelihood": "Low",
+      "severity": "Medium",
+      "threat_id": "INP19"
+    },
+    {
+      "description": "DTD Injection",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP21"
+    },
+    {
+      "description": "XML Attribute Blowup",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP22"
+    },
+    {
+      "description": "XSS Targeting URI Placeholders",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP28"
+    },
+    {
+      "description": "XSS Using Doubled Characters",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP29"
+    },
+    {
+      "description": "SOAP Array Overflow",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "INP34"
+    },
+    {
+      "description": "HTTP Response Smuggling",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP36"
+    },
+    {
+      "description": "HTTP Request Smuggling",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "INP37"
+    },
+    {
+      "description": "XSS Targeting Non-Script Elements",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "SC02"
+    },
+    {
+      "description": "Embedding Scripts within Scripts",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "SC03"
+    },
+    {
+      "description": "XSS Using Alternate Syntax",
+      "element": "aws_instance.app",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "SC04"
+    },
+    {
+      "description": "Removing Important Client Functionality",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "SC05"
+    },
+    {
+      "description": "Instance role credentials reachable through SSRF (IMDSv1)",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "TAPM-EC2-01"
+    },
+    {
+      "description": "Internet-reachable workload holds cloud credentials",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "TAPM-EC2-02"
+    },
+    {
+      "description": "Workload identity can read or write classified data",
+      "element": "aws_instance.app",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "TAPM-IAM-01"
+    },
+    {
+      "description": "Authentication Abuse/ByPass",
+      "element": "aws_lb.web",
+      "severity": "Medium",
+      "threat_id": "AA01"
+    },
+    {
+      "description": "Principal Spoof",
+      "element": "aws_lb.web",
+      "severity": "Medium",
+      "threat_id": "AA02"
+    },
+    {
+      "description": "Exploitation of Trusted Credentials",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "AA03"
+    },
+    {
+      "description": "Exploiting Trust in Client",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "AA04"
+    },
+    {
+      "description": "Privilege Abuse",
+      "element": "aws_lb.web",
+      "severity": "Medium",
+      "threat_id": "AC01"
+    },
+    {
+      "description": "Using Malicious Files",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "AC06"
+    },
+    {
+      "description": "Exploiting Incorrectly Configured Access Control Security Levels",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "AC07"
+    },
+    {
+      "description": "Manipulate Registry Information",
+      "element": "aws_lb.web",
+      "severity": "Medium",
+      "threat_id": "AC08"
+    },
+    {
+      "description": "Functionality Misuse",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC09"
+    },
+    {
+      "description": "Session Credential Falsification through Manipulation",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC11"
+    },
+    {
+      "description": "Session Credential Falsification through Prediction",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "AC16"
+    },
+    {
+      "description": "Session Hijacking - ServerSide",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "AC17"
+    },
+    {
+      "description": "Dictionary-based Password Attack",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "CR03"
+    },
+    {
+      "description": "Encryption Brute Forcing",
+      "element": "aws_lb.web",
+      "likelihood": "Low",
+      "severity": "Low",
+      "threat_id": "CR05"
+    },
+    {
+      "description": "Double Encoding",
+      "element": "aws_lb.web",
+      "likelihood": "Low",
+      "severity": "Medium",
+      "threat_id": "DE02"
+    },
+    {
+      "description": "Flooding",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "DO01"
+    },
+    {
+      "description": "Excessive Allocation",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DO02"
+    },
+    {
+      "description": "Excavation",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "DS01"
+    },
+    {
+      "description": "Footprinting",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Very Low",
+      "threat_id": "DS03"
+    },
+    {
+      "description": "XSS Targeting Error Pages",
+      "element": "aws_lb.web",
+      "severity": "Medium",
+      "threat_id": "DS04"
+    },
+    {
+      "description": "Path Traversal",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "HA01"
+    },
+    {
+      "description": "Web Application Fingerprinting",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Low",
+      "threat_id": "HA03"
+    },
+    {
+      "description": "Server Side Include (SSI) Injection",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP03"
+    },
+    {
+      "description": "Command Line Execution through SQL Injection",
+      "element": "aws_lb.web",
+      "likelihood": "Low",
+      "severity": "Very High",
+      "threat_id": "INP05"
+    },
+    {
+      "description": "Format String Injection",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP08"
+    },
+    {
+      "description": "LDAP Injection",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP09"
+    },
+    {
+      "description": "Parameter Injection",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP10"
+    },
+    {
+      "description": "Relative Path Traversal",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP11"
+    },
+    {
+      "description": "Input Data Manipulation",
+      "element": "aws_lb.web",
+      "severity": "Medium",
+      "threat_id": "INP14"
+    },
+    {
+      "description": "PHP Remote File Inclusion",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP16"
+    },
+    {
+      "description": "XSS Using MIME Type Mismatch",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP17"
+    },
+    {
+      "description": "Fuzzing and observing application log data/errors for application mapping",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Low",
+      "threat_id": "INP18"
+    },
+    {
+      "description": "XML External Entities Blowup",
+      "element": "aws_lb.web",
+      "likelihood": "Low",
+      "severity": "Medium",
+      "threat_id": "INP19"
+    },
+    {
+      "description": "DTD Injection",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP21"
+    },
+    {
+      "description": "XML Attribute Blowup",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP22"
+    },
+    {
+      "description": "XSS Targeting URI Placeholders",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "INP28"
+    },
+    {
+      "description": "XSS Using Doubled Characters",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP29"
+    },
+    {
+      "description": "SOAP Array Overflow",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "INP34"
+    },
+    {
+      "description": "HTTP Response Smuggling",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "INP36"
+    },
+    {
+      "description": "HTTP Request Smuggling",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "INP37"
+    },
+    {
+      "description": "XSS Targeting Non-Script Elements",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "SC02"
+    },
+    {
+      "description": "Embedding Scripts within Scripts",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "SC03"
+    },
+    {
+      "description": "XSS Using Alternate Syntax",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "SC04"
+    },
+    {
+      "description": "Removing Important Client Functionality",
+      "element": "aws_lb.web",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "SC05"
+    },
+    {
+      "description": "Internet-wide ingress to an entry point",
+      "element": "aws_lb.web",
+      "likelihood": "High",
+      "severity": "Medium",
+      "threat_id": "TAPM-NET-01"
+    },
+    {
+      "description": "Audit Log Manipulation",
+      "element": "aws_s3_bucket.customer_data",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "DE04"
+    },
+    {
+      "description": "Excessive Allocation",
+      "element": "aws_s3_bucket.customer_data",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DO02"
+    },
+    {
+      "description": "Classified data store reachable through a wildcard-resource grant",
+      "element": "aws_s3_bucket.customer_data",
+      "likelihood": "Medium",
+      "severity": "High",
+      "threat_id": "TAPM-IAM-02"
+    },
+    {
+      "description": "Audit Log Manipulation",
+      "element": "aws_s3_bucket.reports",
+      "likelihood": "High",
+      "severity": "High",
+      "threat_id": "DE04"
+    },
+    {
+      "description": "Excessive Allocation",
+      "element": "aws_s3_bucket.reports",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DO02"
+    },
+    {
+      "description": "Data Leak",
+      "element": "role credentials for aws_iam_role.app (GRAPH-003)",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "DS06"
+    },
+    {
+      "description": "Content Spoofing",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC05"
+    },
+    {
+      "description": "Client-Server Protocol Manipulation",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "CR08"
+    },
+    {
+      "description": "Interception",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DE01"
+    },
+    {
+      "description": "Sniffing Attacks",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "severity": "Medium",
+      "threat_id": "DE03"
+    },
+    {
+      "description": "Unprotected Sensitive Data",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "likelihood": "Low",
+      "severity": "High",
+      "threat_id": "DR01"
+    },
+    {
+      "description": "Data Leak",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-018)",
+      "likelihood": "High",
+      "severity": "Very High",
+      "threat_id": "DS06"
+    },
+    {
+      "description": "Content Spoofing",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "AC05"
+    },
+    {
+      "description": "Client-Server Protocol Manipulation",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "CR08"
+    },
+    {
+      "description": "Interception",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "likelihood": "Medium",
+      "severity": "Medium",
+      "threat_id": "DE01"
+    },
+    {
+      "description": "Sniffing Attacks",
+      "element": "s3:GetObject,s3:ListBucket via aws_iam_role.app (GRAPH-019)",
+      "severity": "Medium",
+      "threat_id": "DE03"
+    }
+  ]
+}

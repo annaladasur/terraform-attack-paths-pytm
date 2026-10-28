@@ -1,0 +1,394 @@
+{
+  "answerable": 101,
+  "answers": [],
+  "data_questions": [
+    {
+      "control": "storesPII",
+      "element": "aws_s3_bucket.customer_data",
+      "informs": 1,
+      "question": "Does the customer-data bucket (aws_s3_bucket.customer_data) hold personal data (names, emails, addresses, account or ID numbers)?",
+      "why": "Personal data raises the stakes of every path to it, and brings legal duties."
+    },
+    {
+      "control": "storesCredentials",
+      "element": "aws_s3_bucket.customer_data",
+      "informs": 1,
+      "question": "Does the customer-data bucket (aws_s3_bucket.customer_data) hold passwords, keys or tokens?",
+      "why": "Stored credentials turn one leak into many."
+    }
+  ],
+  "not_yes_no": 9,
+  "open": 110,
+  "questions": [
+    {
+      "control": "validatesInput",
+      "cumulative": 5,
+      "element": "aws_instance.app",
+      "n": 1,
+      "question": "Does the app server (aws_instance.app) check every request's input (type, length, format) before using it?",
+      "settles": 5,
+      "settles_on_path": 5,
+      "why": "Unchecked input is how injection attacks start."
+    },
+    {
+      "control": "validatesInput",
+      "cumulative": 10,
+      "element": "aws_lb.web",
+      "n": 2,
+      "question": "Does the web load balancer (aws_lb.web) check every request's input (type, length, format) before using it? (For a load balancer: is a WAF rule doing this in front of the app?)",
+      "settles": 5,
+      "settles_on_path": 5,
+      "why": "Unchecked input is how injection attacks start."
+    },
+    {
+      "control": "sanitizesInput",
+      "cumulative": 14,
+      "element": "aws_instance.app",
+      "n": 3,
+      "question": "Does the app server (aws_instance.app) clean or escape input before it reaches a database, a shell or a template?",
+      "settles": 4,
+      "settles_on_path": 4,
+      "why": "Input that reaches a query or a command unescaped can run as code."
+    },
+    {
+      "control": "encodesOutput",
+      "cumulative": 22,
+      "element": "aws_instance.app",
+      "n": 4,
+      "question": "Does the app server (aws_instance.app) encode what it sends back (HTML/JSON escaping), so user data can't become code in a browser?",
+      "settles": 8,
+      "settles_on_path": 8,
+      "why": "Unencoded output is how cross-site scripting happens."
+    },
+    {
+      "control": "sanitizesInput",
+      "cumulative": 26,
+      "element": "aws_lb.web",
+      "n": 5,
+      "question": "Does the web load balancer (aws_lb.web) clean or escape input before it reaches a database, a shell or a template? (For a load balancer: is a WAF rule doing this in front of the app?)",
+      "settles": 4,
+      "settles_on_path": 4,
+      "why": "Input that reaches a query or a command unescaped can run as code."
+    },
+    {
+      "control": "encodesOutput",
+      "cumulative": 34,
+      "element": "aws_lb.web",
+      "n": 6,
+      "question": "Does the web load balancer (aws_lb.web) encode what it sends back (HTML/JSON escaping), so user data can't become code in a browser? (For a load balancer: is a WAF rule doing this in front of the app?)",
+      "settles": 8,
+      "settles_on_path": 8,
+      "why": "Unencoded output is how cross-site scripting happens."
+    },
+    {
+      "control": "hasAccessControl",
+      "cumulative": 37,
+      "element": "aws_instance.app",
+      "n": 7,
+      "question": "Does the app server (aws_instance.app) check what the caller is allowed to do before every action?",
+      "settles": 3,
+      "settles_on_path": 3,
+      "why": "Missing checks let one user read or change another user's data."
+    },
+    {
+      "control": "usesStrongSessionIdentifiers",
+      "cumulative": 40,
+      "element": "aws_instance.app",
+      "n": 8,
+      "question": "Are the session IDs issued by the app server (aws_instance.app) long, random and replaced at login?",
+      "settles": 3,
+      "settles_on_path": 3,
+      "why": "Guessable or fixed session IDs let attackers take over sessions."
+    },
+    {
+      "control": "hasAccessControl",
+      "cumulative": 43,
+      "element": "aws_lb.web",
+      "n": 9,
+      "question": "Does the web load balancer (aws_lb.web) check what the caller is allowed to do before every action?",
+      "settles": 3,
+      "settles_on_path": 3,
+      "why": "Missing checks let one user read or change another user's data."
+    },
+    {
+      "control": "isHardened",
+      "cumulative": 46,
+      "element": "aws_lb.web",
+      "n": 10,
+      "question": "Is the web load balancer (aws_lb.web) hardened: unused services off, patched, running as a least-privilege user?",
+      "settles": 3,
+      "settles_on_path": 3,
+      "why": "Every extra service or privilege is extra attack surface."
+    },
+    {
+      "control": "usesStrongSessionIdentifiers",
+      "cumulative": 49,
+      "element": "aws_lb.web",
+      "n": 11,
+      "question": "Are the session IDs issued by the web load balancer (aws_lb.web) long, random and replaced at login?",
+      "settles": 3,
+      "settles_on_path": 3,
+      "why": "Guessable or fixed session IDs let attackers take over sessions."
+    },
+    {
+      "control": "authenticatesSource",
+      "cumulative": 51,
+      "element": "aws_instance.app",
+      "n": 12,
+      "question": "Does the app server (aws_instance.app) require callers to prove who they are (login, token, mTLS)?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Anonymous callers can use anything that doesn't ask."
+    },
+    {
+      "control": "authorizesSource",
+      "cumulative": 53,
+      "element": "aws_instance.app",
+      "n": 13,
+      "question": "After authentication, does the app server (aws_instance.app) check that this caller may do this specific thing?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Authenticated is not the same as allowed."
+    },
+    {
+      "control": "isHardened",
+      "cumulative": 55,
+      "element": "aws_instance.app",
+      "n": 14,
+      "question": "Is the app server (aws_instance.app) hardened: unused services off, patched, running as a least-privilege user?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Every extra service or privilege is extra attack surface."
+    },
+    {
+      "control": "validatesHeaders",
+      "cumulative": 57,
+      "element": "aws_instance.app",
+      "n": 15,
+      "question": "Does the app server (aws_instance.app) reject malformed HTTP headers?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Malformed headers enable request smuggling."
+    },
+    {
+      "control": "authenticatesSource",
+      "cumulative": 59,
+      "element": "aws_lb.web",
+      "n": 16,
+      "question": "Does the web load balancer (aws_lb.web) require callers to prove who they are (login, token, mTLS)?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Anonymous callers can use anything that doesn't ask."
+    },
+    {
+      "control": "authorizesSource",
+      "cumulative": 61,
+      "element": "aws_lb.web",
+      "n": 17,
+      "question": "After authentication, does the web load balancer (aws_lb.web) check that this caller may do this specific thing?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Authenticated is not the same as allowed."
+    },
+    {
+      "control": "encodesHeaders",
+      "cumulative": 63,
+      "element": "aws_lb.web",
+      "n": 18,
+      "question": "Does the web load balancer (aws_lb.web) encode values it puts into HTTP headers?",
+      "settles": 2,
+      "settles_on_path": 2,
+      "why": "Header injection splits responses."
+    },
+    {
+      "control": "usesVPN",
+      "cumulative": 64,
+      "element": "HTTPS/443 (GRAPH-017)",
+      "n": 19,
+      "question": "Does traffic to HTTPS/443 (GRAPH-017) run over a VPN or private link?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Private links reduce who can reach it."
+    },
+    {
+      "control": "checksInputBounds",
+      "cumulative": 65,
+      "element": "aws_instance.app",
+      "n": 20,
+      "question": "Does the app server (aws_instance.app) check sizes and ranges of input (lengths, counts, numbers)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Out-of-range input causes crashes and memory bugs."
+    },
+    {
+      "control": "handlesResourceConsumption",
+      "cumulative": 66,
+      "element": "aws_instance.app",
+      "n": 21,
+      "question": "Does the app server (aws_instance.app) limit request sizes, rates and time per request?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Without limits, one client can exhaust the service."
+    },
+    {
+      "control": "implementsAuthenticationScheme",
+      "cumulative": 67,
+      "element": "aws_instance.app",
+      "n": 22,
+      "question": "Does the app server (aws_instance.app) use a standard authentication scheme (OIDC, SAML, signed tokens) rather than a home-made one?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Home-made authentication is easy to get subtly wrong."
+    },
+    {
+      "control": "isResilient",
+      "cumulative": 68,
+      "element": "aws_instance.app",
+      "n": 23,
+      "question": "Can the app server (aws_instance.app) keep working when a dependency fails (retries, fallbacks)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Cascading failures become outages."
+    },
+    {
+      "control": "providesIntegrity",
+      "cumulative": 69,
+      "element": "aws_instance.app",
+      "n": 24,
+      "question": "Does the app server (aws_instance.app) detect tampering with the data it handles (signatures, checksums)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Undetected tampering means you act on forged data."
+    },
+    {
+      "control": "implementsServerSideValidation",
+      "cumulative": 70,
+      "element": "aws_instance.app",
+      "n": 25,
+      "question": "Does the app server (aws_instance.app) repeat validation on the server, not only in the browser?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Browser checks are easily skipped."
+    },
+    {
+      "control": "usesCodeSigning",
+      "cumulative": 71,
+      "element": "aws_instance.app",
+      "n": 26,
+      "question": "Is the code the app server (aws_instance.app) runs signed and checked before it runs?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Unsigned code can be swapped."
+    },
+    {
+      "control": "usesEncryptionAlgorithm",
+      "cumulative": 72,
+      "element": "aws_instance.app",
+      "n": 27,
+      "question": "Is `usesEncryptionAlgorithm` true for the app server (aws_instance.app)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": ""
+    },
+    {
+      "control": "checksInputBounds",
+      "cumulative": 73,
+      "element": "aws_lb.web",
+      "n": 28,
+      "question": "Does the web load balancer (aws_lb.web) check sizes and ranges of input (lengths, counts, numbers)? (For a load balancer: is a WAF rule doing this in front of the app?)",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Out-of-range input causes crashes and memory bugs."
+    },
+    {
+      "control": "handlesResourceConsumption",
+      "cumulative": 74,
+      "element": "aws_lb.web",
+      "n": 29,
+      "question": "Does the web load balancer (aws_lb.web) limit request sizes, rates and time per request?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Without limits, one client can exhaust the service."
+    },
+    {
+      "control": "implementsAuthenticationScheme",
+      "cumulative": 75,
+      "element": "aws_lb.web",
+      "n": 30,
+      "question": "Does the web load balancer (aws_lb.web) use a standard authentication scheme (OIDC, SAML, signed tokens) rather than a home-made one?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Home-made authentication is easy to get subtly wrong."
+    },
+    {
+      "control": "isResilient",
+      "cumulative": 76,
+      "element": "aws_lb.web",
+      "n": 31,
+      "question": "Can the web load balancer (aws_lb.web) keep working when a dependency fails (retries, fallbacks)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Cascading failures become outages."
+    },
+    {
+      "control": "providesIntegrity",
+      "cumulative": 77,
+      "element": "aws_lb.web",
+      "n": 32,
+      "question": "Does the web load balancer (aws_lb.web) detect tampering with the data it handles (signatures, checksums)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Undetected tampering means you act on forged data."
+    },
+    {
+      "control": "implementsServerSideValidation",
+      "cumulative": 78,
+      "element": "aws_lb.web",
+      "n": 33,
+      "question": "Does the web load balancer (aws_lb.web) repeat validation on the server, not only in the browser?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Browser checks are easily skipped."
+    },
+    {
+      "control": "usesCodeSigning",
+      "cumulative": 79,
+      "element": "aws_lb.web",
+      "n": 34,
+      "question": "Is the code the web load balancer (aws_lb.web) runs signed and checked before it runs?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Unsigned code can be swapped."
+    },
+    {
+      "control": "usesEncryptionAlgorithm",
+      "cumulative": 80,
+      "element": "aws_lb.web",
+      "n": 35,
+      "question": "Is `usesEncryptionAlgorithm` true for the web load balancer (aws_lb.web)?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": ""
+    },
+    {
+      "control": "handlesResourceConsumption",
+      "cumulative": 81,
+      "element": "aws_s3_bucket.customer_data",
+      "n": 36,
+      "question": "Does the customer-data bucket (aws_s3_bucket.customer_data) limit request sizes, rates and time per request?",
+      "settles": 1,
+      "settles_on_path": 1,
+      "why": "Without limits, one client can exhaust the service."
+    },
+    {
+      "control": "handlesResourceConsumption",
+      "cumulative": 82,
+      "element": "aws_s3_bucket.reports",
+      "n": 37,
+      "question": "Does the reports bucket (aws_s3_bucket.reports) limit request sizes, rates and time per request?",
+      "settles": 1,
+      "settles_on_path": 0,
+      "why": "Without limits, one client can exhaust the service."
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+[
+ {
+  "SID": "TAPM-NET-01",
+  "target": ["Server"],
+  "description": "Internet-wide ingress to an entry point",
+  "details": "A security group admits 0.0.0.0/0 (or ::/0) to this element, so any internet client can reach it. On its own this is often intended (a public load balancer); it becomes the first hop of an attack path when what sits behind it holds credentials or data.",
+  "Likelihood Of Attack": "High",
+  "severity": "Medium",
+  "condition": "target.internetWideIngress is True",
+  "prerequisites": "None: reachable from any internet address.",
+  "mitigations": "Restrict ingress to known client ranges, place the entry point behind an authenticated edge (WAF, OIDC/Cognito listener), or make it internal.",
+  "example": "An ALB security group ingress rule with cidr_blocks = [\"0.0.0.0/0\"] on port 443.",
+  "references": "https://attack.mitre.org/techniques/T1190/, https://cwe.mitre.org/data/definitions/668.html"
+ },
+ {
+  "SID": "TAPM-EC2-01",
+  "target": ["Server"],
+  "description": "Instance role credentials reachable through SSRF (IMDSv1)",
+  "details": "The instance allows IMDSv1 and has an instance profile. Any server-side request forgery in the workload can fetch the role's temporary credentials from the instance metadata service without a session token.",
+  "Likelihood Of Attack": "Medium",
+  "severity": "High",
+  "condition": "target.imdsV1Allowed is True and target.hasInstanceRole is True",
+  "prerequisites": "workload_ssrf: the attacker can make the workload issue HTTP requests (SSRF) or execute code.",
+  "mitigations": "Require IMDSv2: metadata_options { http_tokens = \"required\" }. Scope the role to what the workload needs.",
+  "example": "metadata_options { http_tokens = \"optional\" } on an instance with iam_instance_profile set.",
+  "references": "https://attack.mitre.org/techniques/T1552/005/, https://cwe.mitre.org/data/definitions/918.html"
+ },
+ {
+  "SID": "TAPM-EC2-02",
+  "target": ["Server"],
+  "description": "Internet-reachable workload holds cloud credentials",
+  "details": "Traffic from the internet reaches this workload (directly or through a load balancer) and the workload runs with an IAM role. A compromise of the application becomes a compromise of the role.",
+  "Likelihood Of Attack": "Medium",
+  "severity": "Medium",
+  "condition": "target.internetReachable is True and target.hasInstanceRole is True",
+  "prerequisites": "workload_rce or workload_ssrf: the attacker can make the workload act on their behalf.",
+  "mitigations": "Keep internet-facing tiers free of data-plane permissions; move data access to a separate, non-exposed service; scope the role.",
+  "example": "An ALB forwarding to an EC2 instance whose instance profile grants S3 read.",
+  "references": "https://attack.mitre.org/techniques/T1078/004/, https://cwe.mitre.org/data/definitions/250.html"
+ },
+ {
+  "SID": "TAPM-IAM-01",
+  "target": ["Server", "Lambda"],
+  "description": "Workload identity can read or write classified data",
+  "details": "The IAM role this workload assumes is allowed to read or write a data store classified confidential or restricted.",
+  "Likelihood Of Attack": "Medium",
+  "severity": "High",
+  "condition": "target.readsSensitiveData is True",
+  "prerequisites": "The attacker obtains the workload's credentials or controls the workload.",
+  "mitigations": "Grant only the actions and resources the workload needs; separate roles for workloads that handle classified data.",
+  "example": "Resource = [\"arn:aws:s3:::*\"] on a role used by a web tier, with a bucket tagged DataClassification = confidential in the account.",
+  "references": "https://attack.mitre.org/techniques/T1530/, https://cwe.mitre.org/data/definitions/732.html"
+ },
+ {
+  "SID": "TAPM-IAM-02",
+  "target": ["Datastore"],
+  "description": "Classified data store reachable through a wildcard-resource grant",
+  "details": "An IAM statement with a wildcard resource (for example arn:aws:s3:::*) covers this classified data store, so access follows from the wildcard rather than from an intentional grant.",
+  "Likelihood Of Attack": "Medium",
+  "severity": "High",
+  "condition": "target.readableViaWildcardGrant is True and target.storesSensitiveData is True",
+  "prerequisites": "A principal holding the wildcard grant is compromised.",
+  "mitigations": "Name the resources in the grant; add an explicit Deny for classified stores to roles that should never touch them.",
+  "example": "Action = [\"s3:GetObject\"], Resource = [\"arn:aws:s3:::*\"].",
+  "references": "https://cwe.mitre.org/data/definitions/732.html, https://cwe.mitre.org/data/definitions/1220.html"
+ },
+ {
+  "SID": "TAPM-S3-01",
+  "target": ["Datastore"],
+  "description": "Bucket policy or ACL grants anonymous access",
+  "details": "A bucket policy or ACL allows any principal. If S3 Block Public Access does not neutralise it, anyone on the internet can use the granted actions.",
+  "Likelihood Of Attack": "High",
+  "severity": "High",
+  "condition": "target.publicPolicyGrant is True",
+  "prerequisites": "None when the grant is effective.",
+  "mitigations": "Remove the public grant, or enable block_public_policy / restrict_public_buckets (and block/ignore public ACLs).",
+  "example": "Principal = \"*\" with s3:GetObject in a bucket policy.",
+  "references": "https://attack.mitre.org/techniques/T1530/, https://cwe.mitre.org/data/definitions/732.html"
+ },
+ {
+  "SID": "TAPM-LMB-01",
+  "target": ["Lambda"],
+  "description": "Function URL without authentication",
+  "details": "The function has a URL with authorization_type = NONE, so anyone on the internet can invoke it and act with its role.",
+  "Likelihood Of Attack": "High",
+  "severity": "High",
+  "condition": "target.unauthenticatedUrl is True",
+  "prerequisites": "None.",
+  "mitigations": "Use authorization_type = \"AWS_IAM\", or put the function behind an authenticated API.",
+  "example": "resource \"aws_lambda_function_url\" { authorization_type = \"NONE\" }",
+  "references": "https://cwe.mitre.org/data/definitions/306.html"
+ }
+]

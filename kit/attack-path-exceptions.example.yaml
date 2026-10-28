@@ -1,0 +1,32 @@
+# attack-path-exceptions.yaml: accepted risks for attack paths. Keep it next to the Terraform it covers (tapm gate
+# --tf-dir reads it from there) and put it under CODEOWNERS. `tapm gate --draft` writes entries for the paths that
+# still need a decision; replace every TODO, because an entry with a TODO never counts.
+#
+# An entry covers every path from `entry` to `target` (and, with `via`, only paths through all of those nodes).
+# It never refers to a PATH-### number: those follow the ranking and change when unrelated resources change.
+#
+# Rules `tapm gate` enforces:
+#   disposition optional; 'accepted_risk' (default) or 'not_reachable'.
+#               Use 'disposition: not_reachable' to dispute a false path. Reviewed by AppSec through CODEOWNERS,
+#               treated as decided by the gate, and counted into metric M8 (false-path rate).
+#   accepted_risk  id, entry, target, owner, reason, expires (YYYY-MM-DD) are required; expired entries stop counting;
+#               expiry at most 90 days out (30 at prevent); at prevent also requires compensating_control and approved_by.
+#   not_reachable  id, entry, target, owner, reason are required; expires is optional; compensating_control not required.
+exceptions:
+  - id: RISK-042                                # your ticket or risk-register ID
+    entry: internet
+    target: aws_s3_bucket.customer_data
+    via: [aws_instance.app]                     # optional
+    owner: payments-platform                    # a team or a named person
+    reason: IMDSv1 is required by the legacy SDK until the upgrade in RISK-041 ships
+    compensating_control: WAF rule blocks requests with SSRF patterns to 169.254.169.254
+    expires: 2026-11-30
+    approved_by: appsec-oncall                  # required at prevent
+
+  # Example of disputing a false path (disposition: not_reachable, counted into M8):
+  - id: DISPUTE-001
+    disposition: not_reachable
+    entry: internet
+    target: aws_s3_bucket.internal_logs
+    owner: payments-platform
+    reason: Security group ingress is restricted to corporate VPN; not reachable from public internet

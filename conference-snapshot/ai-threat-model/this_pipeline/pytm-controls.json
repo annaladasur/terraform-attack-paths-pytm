@@ -1,0 +1,215 @@
+{
+  "Annotation model (anthropic)": {
+    "executesCode": {
+      "basis": "output is parsed as JSON against a schema and validated; nothing is executed",
+      "evidence": [
+        "src/tapm/ai/harness.py",
+        "src/tapm/ai/validator.py"
+      ],
+      "value": false
+    },
+    "hasAccessToSensitiveSystems": {
+      "basis": "no credentials and no write path: the harness only reads the graph, paths and evidence",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    },
+    "hasAgentCapabilities": {
+      "basis": "no tools, no function calling, no network or shell",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    },
+    "hasContentFiltering": {
+      "basis": "comments never reach the model, instruction-like plan values are withheld, and every output sentence must cite evidence or is rejected",
+      "evidence": [
+        "src/tapm/ai/bundle.py: comments withheld, _withhold() for instruction-like plan values",
+        "tests/test_ai_boundary.py::test_instruction_like_plan_values_are_withheld_from_the_model",
+        "src/tapm/ai/validator.py: 14 checks; make security-tests",
+        "make inject"
+      ],
+      "value": true
+    },
+    "hasFineTuning": {
+      "basis": "a hosted base model, no fine-tuning",
+      "evidence": [
+        "src/tapm/ai/llm.py"
+      ],
+      "value": false
+    },
+    "hasRAG": {
+      "basis": "the evidence bundle is built by code for each path; no retrieval",
+      "evidence": [
+        "src/tapm/ai/bundle.py: path_bundle()"
+      ],
+      "value": false
+    },
+    "hasSystemPrompt": {
+      "basis": "one system prompt per agent",
+      "evidence": [
+        "src/tapm/ai/prompts/"
+      ],
+      "value": true
+    },
+    "isSelfHosted": {
+      "basis": "not self-hosted",
+      "evidence": [
+        "src/tapm/ai/llm.py"
+      ],
+      "value": false
+    },
+    "isThirdParty": {
+      "basis": "anthropic API",
+      "evidence": [
+        "src/tapm/ai/llm.py"
+      ],
+      "value": true
+    },
+    "processesPersonalData": {
+      "basis": "an allowlisted view: addresses, evidence IDs and summaries; never the plan, state or secrets",
+      "evidence": [
+        "src/tapm/ai/bundle.py",
+        "src/tapm/terraform/sanitize.py",
+        "SECURITY.md"
+      ],
+      "value": false
+    },
+    "processesUntrustedInput": {
+      "basis": "a pull request is attacker-controlled: resource names, tags and values in the bundle come from it",
+      "evidence": [
+        "docs/threat-model.md"
+      ],
+      "value": true
+    }
+  },
+  "Decision model (TypeSafe Jev)": {
+    "executesCode": {
+      "basis": "decisions are enums checked by code",
+      "evidence": [
+        "src/tapm/ai/jev.py"
+      ],
+      "value": false
+    },
+    "hasAccessToSensitiveSystems": {
+      "basis": "no credentials",
+      "evidence": [
+        "src/tapm/ai/jev.py"
+      ],
+      "value": false
+    },
+    "hasAgentCapabilities": {
+      "basis": "returns a decision; the harness acts on it",
+      "evidence": [
+        "src/tapm/ai/jev.py"
+      ],
+      "value": false
+    },
+    "hasContentFiltering": {
+      "basis": "the only input is a typed feature vector",
+      "evidence": [
+        "src/tapm/ai/jev.py: path_state()"
+      ],
+      "value": true
+    },
+    "hasRAG": {
+      "basis": "no retrieval",
+      "evidence": [
+        "src/tapm/ai/jev.py"
+      ],
+      "value": false
+    },
+    "isThirdParty": {
+      "basis": "TypeSafe API",
+      "evidence": [
+        "src/tapm/ai/jev.py: TypeSafeJev"
+      ],
+      "value": true
+    },
+    "processesPersonalData": {
+      "basis": "no configuration values",
+      "evidence": [
+        "src/tapm/ai/jev.py: path_state()"
+      ],
+      "value": false
+    },
+    "processesUntrustedInput": {
+      "basis": "sees counts, enums and IDs derived by code, never configuration text",
+      "evidence": [
+        "src/tapm/ai/jev.py: path_state()"
+      ],
+      "value": false
+    }
+  },
+  "adversarial_reviewer agent": {
+    "usesExternalTools": {
+      "basis": "the agent is one prompt and one JSON reply; no tool servers",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    }
+  },
+  "finding_explainer agent": {
+    "usesExternalTools": {
+      "basis": "the agent is one prompt and one JSON reply; no tool servers",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    }
+  },
+  "framework_mapper agent": {
+    "usesExternalTools": {
+      "basis": "the agent is one prompt and one JSON reply; no tool servers",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    }
+  },
+  "path_narrator agent": {
+    "usesExternalTools": {
+      "basis": "the agent is one prompt and one JSON reply; no tool servers",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    }
+  },
+  "plain_explainer agent": {
+    "usesExternalTools": {
+      "basis": "the agent is one prompt and one JSON reply; no tool servers",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    }
+  },
+  "remediation agent": {
+    "usesExternalTools": {
+      "basis": "the agent is one prompt and one JSON reply; no tool servers",
+      "evidence": [
+        "src/tapm/ai/llm.py (single request, JSON schema, no tools)",
+        "run-manifest.json: tools_offered_to_models = []",
+        "tests/test_ai_boundary.py::test_ai_stage_cannot_mutate_security_truth"
+      ],
+      "value": false
+    }
+  }
+}

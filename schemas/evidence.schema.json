@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/tapm/Evidence ledger",
+  "title": "Evidence ledger",
+  "description": "Every deterministic fact, with a stable ID and source location. CMT records are always untrusted.",
+  "type": "object",
+  "required": [
+    "records"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "summary",
+          "source",
+          "data",
+          "refs",
+          "trust"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+          },
+          "kind": {
+            "enum": [
+              "TF",
+              "NET",
+              "IAM",
+              "GRAPH",
+              "SCAN",
+              "PATH",
+              "CMT",
+              "APP"
+            ]
+          },
+          "summary": {
+            "type": "string"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "file",
+                  "start_line",
+                  "end_line"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string"
+                  },
+                  "start_line": {
+                    "type": "integer"
+                  },
+                  "end_line": {
+                    "type": "integer"
+                  },
+                  "focus_line": {
+                    "type": "integer"
+                  }
+                }
+              }
+            ]
+          },
+          "data": {
+            "type": "object"
+          },
+          "refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(TF|NET|IAM|GRAPH|SCAN|PATH|CMT|APP)-[0-9]{3,}$"
+            }
+          },
+          "trust": {
+            "enum": [
+              "trusted",
+              "untrusted",
+              "attested"
+            ]
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "CMT"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "trust": {
+                  "const": "untrusted"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

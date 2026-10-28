@@ -1,0 +1,23 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: tapm-lab
+servers: 1
+ports:
+  - port: 3000:30000
+    nodeFilters:
+      - server:0
+  - port: 2222:30022
+    nodeFilters:
+      - server:0
+  - port: 8080:30080
+    nodeFilters:
+      - server:0
+options:
+  k3d:
+    wait: true
+    timeout: "120s"
+volumes:
+  - volume: /var/run/docker.sock:/var/run/docker.sock
+    nodeFilters:
+      - server:0

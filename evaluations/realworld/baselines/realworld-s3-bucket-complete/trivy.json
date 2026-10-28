@@ -1,0 +1,100 @@
+{
+  "ArtifactName": ".",
+  "ArtifactType": "filesystem",
+  "CreatedAt": "2026-10-11T14:29:27.318926-05:00",
+  "ReportID": "01a12c71-0716-7e1d-9f6c-8dcd4ac6c465",
+  "Results": [
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 0,
+        "Successes": 51
+      },
+      "Target": ".",
+      "Type": "terraform"
+    },
+    {
+      "Class": "config",
+      "MisconfSummary": {
+        "Failures": 1,
+        "Successes": 0
+      },
+      "Misconfigurations": [
+        {
+          "CauseMetadata": {
+            "Code": {
+              "Lines": [
+                {
+                  "Annotation": "",
+                  "Content": "resource \"aws_kms_key\" \"objects\" {",
+                  "FirstCause": true,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_kms_key\"\u001b[0m \u001b[38;5;37m\"objects\"\u001b[0m {",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 25,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  description             = \"KMS key is used to encrypt bucket objects\"",
+                  "FirstCause": false,
+                  "Highlighted": "  \u001b[38;5;245mdescription\u001b[0m             = \u001b[38;5;37m\"KMS key is used to encrypt bucket objects\"",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 26,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "  deletion_window_in_days = 7",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m  \u001b[38;5;245mdeletion_window_in_days\u001b[0m = \u001b[38;5;37m7",
+                  "IsCause": true,
+                  "LastCause": false,
+                  "Number": 27,
+                  "Truncated": false
+                },
+                {
+                  "Annotation": "",
+                  "Content": "}",
+                  "FirstCause": false,
+                  "Highlighted": "\u001b[0m}",
+                  "IsCause": true,
+                  "LastCause": true,
+                  "Number": 28,
+                  "Truncated": false
+                }
+              ]
+            },
+            "EndLine": 28,
+            "Provider": "AWS",
+            "Resource": "aws_kms_key.objects",
+            "Service": "kms",
+            "StartLine": 25
+          },
+          "Description": "You should configure your KMS keys to auto rotate to maintain security and defend against compromise.\n",
+          "ID": "AWS-0065",
+          "Message": "Key does not have rotation enabled.",
+          "Namespace": "builtin.aws.kms.aws0065",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/aws-0065",
+          "Query": "data.builtin.aws.kms.aws0065.deny",
+          "References": [
+            "https://docs.aws.amazon.com/kms/latest/developerguide/rotate-keys.html",
+            "https://avd.aquasec.com/misconfig/aws-0065"
+          ],
+          "Resolution": "Configure KMS key to auto rotate",
+          "Severity": "MEDIUM",
+          "Status": "FAIL",
+          "Title": "A KMS key is not configured to auto-rotate.",
+          "Type": "Terraform Security Check"
+        }
+      ],
+      "Target": "main.tf",
+      "Type": "terraform"
+    }
+  ],
+  "SchemaVersion": 2,
+  "Trivy": {
+    "Version": "0.74.0"
+  }
+}

@@ -1,0 +1,20 @@
+# Tier-2 gold labels: reachability (entry -> target), derived ONLY from the project's own documentation
+# and source, written before the engine ran on this case. Reviewer 2: PENDING.
+# VALID = documented as exploitable; INVALID = documented as not exploitable; OUT_OF_SCOPE = the documented
+# route depends on something the plan cannot show (credentials stored in data, disabled modules, runtime state).
+case: cloudgoat-ec2_ssrf
+documented_by: README.md, Walkthrough - IAM User Solus
+targets:
+- aws_s3_bucket.secret_bucket
+- aws_lambda_function.lambda_function
+expected:
+- entry: internet
+  target: aws_s3_bucket.secret_bucket
+  label: VALID
+  precondition: SSRF in the web app on ubuntu_ec2 (IMDSv1)
+  route: internet -> ubuntu_ec2 web app SSRF -> IMDS -> ec2_role -> secret_bucket (infrastructure-visible middle of the documented route)
+- entry: aws_iam_user.solus
+  target: aws_lambda_function.lambda_function
+  label: OUT_OF_SCOPE
+  route: 'solus reads wrex''s keys from Lambda environment variables; the bucket holds shepard''s keys: both hops are credentials stored in data,
+    not IAM relationships'
