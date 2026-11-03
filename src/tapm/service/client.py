@@ -396,6 +396,7 @@ class SubmitClient:
         exceptions_yaml: str | None = None,
         threat_answers_yaml: str | None = None,
         out_dir: Path | str | None = None,
+        source_dir: Path | str | None = None,
         **options: Any,
     ) -> SubmitResult:
         """Submit a plan, poll for completion, download artifacts, and apply level exit policy."""
@@ -451,6 +452,18 @@ class SubmitClient:
             "plan_json": plan_content,
             "auto_enrich": auto_enrich,
         }
+        if source_dir is not None:
+            from .sources import collect_source_files
+
+            try:
+                payload["source_files"] = collect_source_files(source_dir)
+            except (OSError, UnicodeError, ValueError) as e:
+                exit_code, failed_open = compute_exit_code(level, None, "error", is_error=True)
+                return SubmitResult(
+                    job_id=None, level=level, status="error", verdict=None,
+                    exit_code=exit_code, error=f"Cannot collect Terraform source: {e}",
+                    failed_open=failed_open,
+                )
         if exceptions_yaml:
             payload["exceptions_yaml"] = exceptions_yaml
         if threat_answers_yaml:

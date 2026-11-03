@@ -28,6 +28,9 @@ regexes = [
     '''v4-unsigned-body''',
     # Terraform resource type name false positive in generic-api-key
     '''s3_bucket_policy''',
+    # Exact truncated SHA-256 of the committed CloudGoat data_secrets gold file.
+    # generic-api-key extracts this 48-character digest substring, not a credential.
+    '''^59526cc04212678920f25f8580314b95981aa82944d2d848$''',
     # SHA-256 cache keys in plan-cache baselines
     '''^[0-9a-f]{64}$''',
 ]

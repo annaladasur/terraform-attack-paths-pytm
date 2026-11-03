@@ -49,7 +49,7 @@ def test_metrics_sample_contains_all_versions_no_unknown():
         assert val.lower() != "unknown", f"Version '{key}' must not be 'unknown' (F20)"
 
     # Specifically check pinned/known values
-    assert versions["tapm"] == __version__
+    assert versions["tapm"] == "0.1.0"  # Captured historical service run; do not relabel it as V2.
     assert versions["pytm"] == PYTM_VERSION
     assert versions["schema_version"] == SCHEMA_VERSION
     assert versions["prompt_version"] == PROMPT_VERSION
@@ -91,7 +91,7 @@ def test_platform_report_markdown_from_sample_has_no_unknown():
     assert "`unknown`" not in md, f"Found '`unknown`' in markdown report:\n{md}"
 
     # Verify version table rows
-    assert f"| `tapm` | `{__version__}` |" in md
+    assert f"| `tapm` | `{data['versions']['tapm']}` |" in md
     assert f"| `pytm` | `{PYTM_VERSION}` |" in md
     assert f"| `schema_version` | `{SCHEMA_VERSION}` |" in md
     assert f"| `prompt_version` | `{PROMPT_VERSION}` |" in md
@@ -127,7 +127,7 @@ def test_cli_report_with_metrics_sample_file(capsys):
     captured = capsys.readouterr()
     json_out = json.loads(captured.out)
     assert json_out["jobs_total"] >= 1
-    assert json_out["versions"]["tapm"] == __version__
+    assert json_out["versions"]["tapm"] == "0.1.0"  # Preserve the captured sample version.
 
 
 def test_live_metrics_collector_versions_no_unknown():

@@ -1,0 +1,897 @@
+{
+  "schema_version": 1,
+  "artifact_type": "post_hoc_prediction_candidate_pair_adjudications",
+  "selection_provenance": "Nine candidate pairs supplied by the coordinator after model development/output selection. This is post-hoc candidate adjudication, not a blind repository holdout and not new frozen gold.",
+  "reviewer_kind": "Independent AI AWS IAM/cloud threat analyst subagent; no human agreement claim.",
+  "independence": {
+    "engine_output_or_route_artifacts_read_before_seal": false,
+    "benchmark_verdicts_read_before_seal": false,
+    "original_gold_read": false,
+    "original_adjudication_read": false,
+    "protected_original_gold_or_eight_disputes_modified_by_reviewer": false
+  },
+  "scope": {
+    "iam_user_start": "A declared usable credential-compromise starting assumption applies to each named IAM user. This does not manufacture MFA, override inactive-key status, or imply control of other principals.",
+    "internet_start": "An unauthenticated network-origin external entry; API authentication and admitted source IP require separate evidence or explicit conditions.",
+    "judgment": "Static potential reachability under named preconditions. VALID never means a confirmed live exploit. Missing nontrivial authentication/application context is kept UNRESOLVED. These candidate judgments do not adjudicate the protected historical gold or eight original disputes.",
+    "account_admin": "Unconditional administrator-equivalent authorization in the supplied configuration; already-held permission can satisfy the capability target."
+  },
+  "methodology_references": [
+    {
+      "path": "docs/methodology.md",
+      "lines": [
+        12,
+        68
+      ],
+      "supports": "Potential paths explicitly record credential_compromise, condition_satisfied, workload_ssrf/workload_rce and source_ip_allowed."
+    }
+  ],
+  "candidate_hash": {
+    "algorithm": "sha256",
+    "canonicalization": "UTF-8 JSON of exactly {case,entry,target}, keys lexicographically sorted, no insignificant whitespace, ensure_ascii=false. Python equivalent: json.dumps(pair, sort_keys=True, separators=(\",\",\":\"), ensure_ascii=False).encode(\"utf-8\")"
+  },
+  "upstream_provenance": {
+    "repository": "https://github.com/RhinoSecurityLabs/cloudgoat",
+    "commit": "abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed",
+    "license": "BSD-3-Clause",
+    "cache_path": "/Users/trinity/Documents/solid-invention-main/OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm/.tools/tier2-repos/rhinosecuritylabs/cloudgoat",
+    "evidence_sources_verified_byte_equal_to_pinned_git_commit": true
+  },
+  "input_artifacts": [
+    {
+      "path": "evaluations/tier2/manifest.yaml",
+      "sha256": "e275e11ebf77e71bf92156ac825f1d2eacefe200d3cedf6edf4a968092dd5555"
+    },
+    {
+      "path": "evaluations/tier2/manifest-heldout.yaml",
+      "sha256": "790b37cca0db84e84c64a6a7b5f85f397643a19c060a014a37e3b2dc9f270b3a"
+    },
+    {
+      "path": "evaluations/tier2/plans/cloudgoat-iam_privesc_by_key_rotation.json.gz",
+      "gzip_sha256": "8d0865977d3ded371c723b271190d60b1503aaa5cd1fc123a07bf3d68fe49de3",
+      "json_sha256": "d550715e212649d462db8840bc4b3ec587602e2967d74832131ba9b187a43e0a"
+    },
+    {
+      "path": "evaluations/tier2/plans/cloudgoat-ec2_ssrf.json.gz",
+      "gzip_sha256": "5f5befc9fb730a352fafb0ded99da7840daedcf0e2492446e715be7c9b1cb608",
+      "json_sha256": "32964bf9620b92594111f6c7407e4a67a62d99136554f45b1a5e3af83e7820bc"
+    },
+    {
+      "path": "evaluations/tier2/plans/cloudgoat-data_secrets.json.gz",
+      "gzip_sha256": "43a5b21ddf52f09778cfe0612a4163395dcf0f7a4b4f39bc40af86e73ebef456",
+      "json_sha256": "a9b8d6ae63a984cce2883d585e34c12e1c68df5b8a4c8e707e180fbbe0f15ce7"
+    },
+    {
+      "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+      "gzip_sha256": "7148b7aa2154893ea2fe0a7233ca5584685ea7ba01fcc242e5f1e8b94c485843",
+      "json_sha256": "e3c72f5d83aa6bb2db5e97852b9a1c9348e3e04e9d86cf645f2ed942c8fcebdf"
+    },
+    {
+      "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+      "gzip_sha256": "abf7a0fa3c8cba48943ea3b605233fe89dd54585e86546c5e1c2fe69ec295212",
+      "json_sha256": "889497c9714dd018bd355ba7f0cdcc0eb940d5f09e6764c89413d1f255277dcd"
+    }
+  ],
+  "decisions": [
+    {
+      "case": "cloudgoat-iam_privesc_by_key_rotation",
+      "entry": "aws_iam_user.admin",
+      "target": "aws_secretsmanager_secret.primary_secret",
+      "candidate_sha256": "a0cb508c79ff0c70b8f337b7d27967e2011337f6cb2b4b64cb3011252b5e5d0b",
+      "disposition": "UNRESOLVED",
+      "reason": "The admin principal is allowed to assume the secret-reading role, but that role requires MFA. Generic credential compromise does not establish MFA. The two declared admin access keys are inactive. No self-service MFA-enrollment grant is declared for admin; the upstream walkthrough uses the separate manager principal to create and enable admin MFA. The relationship is feasible only with additional valid authentication/MFA context, so an unconditional positive is unsupported.",
+      "required_preconditions": [
+        "credential_compromise: a usable admin authentication credential/session, beyond the two inactive keys declared in this plan",
+        "condition_satisfied: valid MFA satisfying aws:MultiFactorAuthPresent=true for AssumeRole; control of the separate manager principal is not included in an admin-only start"
+      ],
+      "candidate_route": [
+        "admin identity policy -> MFA-gated sts:AssumeRole -> secretsmanager_role -> GetSecretValue(primary_secret)"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf",
+          "lines": [
+            6,
+            18
+          ],
+          "sha256": "e2a39a193726453d4d152f7d2732863826ee674245263a8e5692738b967fb045",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf#L6-L18",
+          "supports": "Both admin keys are inactive; the attached AWS managed policy is IAMReadOnlyAccess."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf",
+          "lines": [
+            21,
+            35
+          ],
+          "sha256": "e2a39a193726453d4d152f7d2732863826ee674245263a8e5692738b967fb045",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf#L21-L35",
+          "supports": "Admin has sts:AssumeRole scoped to secretsmanager_role."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf",
+          "lines": [
+            39,
+            64
+          ],
+          "sha256": "e2a39a193726453d4d152f7d2732863826ee674245263a8e5692738b967fb045",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf#L39-L64",
+          "supports": "Role trust permits the account only when aws:MultiFactorAuthPresent is true, and attaches role_read_secrets."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf",
+          "lines": [
+            67,
+            85
+          ],
+          "sha256": "e2a39a193726453d4d152f7d2732863826ee674245263a8e5692738b967fb045",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/terraform/iam_admin.tf#L67-L85",
+          "supports": "Role policy permits GetSecretValue on primary_secret."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/cheat_sheet.md",
+          "lines": [
+            70,
+            98
+          ],
+          "sha256": "31fbcd1fb70ef1294546283a25ff2f23a92861b4779caa0ed0b10f61f97220db",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/iam_privesc_by_key_rotation/cheat_sheet.md#L70-L98",
+          "supports": "Upstream explicitly documents a failed non-MFA assume and then uses manager to enroll MFA before the MFA-bearing assume."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-iam_privesc_by_key_rotation.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/assume_role_policy",
+          "resource": "aws_iam_role.secretsmanager_role",
+          "supports": "The literal MFA Bool condition is present in the raw plan."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-iam_privesc_by_key_rotation.json.gz",
+          "json_pointer": "/resource_changes/0/change/after/status",
+          "resource": "aws_iam_access_key.admin_one",
+          "supports": "Inactive in the raw plan."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-iam_privesc_by_key_rotation.json.gz",
+          "json_pointer": "/resource_changes/1/change/after/status",
+          "resource": "aws_iam_access_key.admin_two",
+          "supports": "Inactive in the raw plan."
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html",
+          "supports": "An MFA-gated trust rejects AssumeRole without valid MFA information; MFA device serial and code are explicit request inputs.",
+          "accessed_date": "2026-11-02"
+        }
+      ],
+      "confirmed_exploit": false,
+      "conditional_disposition": "VALID only if usable admin authentication and the MFA trust condition are established; INVALID for the declared inactive access keys alone or a non-MFA admin credential."
+    },
+    {
+      "case": "cloudgoat-ec2_ssrf",
+      "entry": "aws_iam_user.wrex",
+      "target": "aws_s3_bucket.secret_bucket",
+      "candidate_sha256": "2b9b55eb44cae63ebacbca488e4cc329b4f4aea7f22e20fb40b5fe2117d829ce",
+      "disposition": "VALID",
+      "reason": "A conditional workload-to-credential path is supported by the deployed application source and raw configuration. Wrex has ec2:*; it can discover the instance and modify its security-group ingress. The application performs an arbitrary URL GET and returns the response. With IMDSv1 allowed, that SSRF can disclose the attached EC2 role credentials, whose policy grants s3:* on all resources, including the private secret bucket. This is potential reachability, not a verified runtime exploit.",
+      "required_preconditions": [
+        "credential_compromise: usable Wrex credentials",
+        "workload_ssrf: the provisioned Node application is installed, running, and reachable; it must return IMDS responses",
+        "source_ip_allowed: traffic comes from the admitted CIDR, or Wrex uses its ec2:* authorization to admit the attack source",
+        "IMDS endpoint remains enabled with optional tokens, as planned; use complete temporary role credentials including the session token"
+      ],
+      "candidate_route": [
+        "wrex ec2:* -> discover instance / adjust ingress -> application URL fetch -> IMDS role credentials -> ec2_role s3:* -> secret_bucket object read"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/ec2_ssrf/terraform/iam.tf",
+          "lines": [
+            35,
+            62
+          ],
+          "sha256": "34d5e69203bd21e20c5c11f92084771127acd2085dcdaf7457d9ad3d721aaad2",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/ec2_ssrf/terraform/iam.tf#L35-L62",
+          "supports": "Wrex policy is ec2:* on * and attached to Wrex."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/ec2_ssrf/assets/ssrf_app/app.js",
+          "lines": [
+            16,
+            40
+          ],
+          "sha256": "e80cb4b3eca95a450ebe03b67a1b3eb588a73fd3e6673700ecf3d6fc0d8693f2",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/ec2_ssrf/assets/ssrf_app/app.js#L16-L40",
+          "supports": "The URL query parameter flows to needle.get and the successful body is returned to the requester."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/ec2_ssrf/terraform/ec2.tf",
+          "lines": [
+            1,
+            44
+          ],
+          "sha256": "874fef60a20d5f23af29f1baed98a6c3017d7fdf4e0b7d0126fefd759901265f",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/ec2_ssrf/terraform/ec2.tf#L1-L44",
+          "supports": "The EC2 role has s3:* on * and is bound to an instance profile."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/ec2_ssrf/terraform/ec2.tf",
+          "lines": [
+            85,
+            108
+          ],
+          "sha256": "874fef60a20d5f23af29f1baed98a6c3017d7fdf4e0b7d0126fefd759901265f",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/ec2_ssrf/terraform/ec2.tf#L85-L108",
+          "supports": "The public instance uses that profile and enables IMDS with optional tokens."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/ec2_ssrf/terraform/ec2.tf",
+          "lines": [
+            110,
+            131
+          ],
+          "sha256": "874fef60a20d5f23af29f1baed98a6c3017d7fdf4e0b7d0126fefd759901265f",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/ec2_ssrf/terraform/ec2.tf#L110-L131",
+          "supports": "Source provisions the app archive and attempts to launch the Node server."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/ec2_ssrf/terraform/s3.tf",
+          "lines": [
+            1,
+            18
+          ],
+          "sha256": "0db4793bf8f992e9c2eb2bc4910c8c56934cd15ebbc182eda004de60d8d00b5f",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/ec2_ssrf/terraform/s3.tf#L1-L18",
+          "supports": "The target bucket contains an object holding Shepard credentials."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-ec2_ssrf.json.gz",
+          "json_pointer": "/resource_changes/16/change/after/metadata_options",
+          "resource": "aws_instance.ubuntu_ec2",
+          "supports": "Raw plan has http_endpoint=enabled and http_tokens=optional."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-ec2_ssrf.json.gz",
+          "json_pointer": "/resource_changes/24/change/after/ingress",
+          "resource": "aws_security_group.ec2_security_group",
+          "supports": "Port 80 is admitted only from 203.0.113.10/32 before any authorized ingress mutation."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-ec2_ssrf.json.gz",
+          "json_pointer": "/resource_changes/4/change/after/policy",
+          "resource": "aws_iam_policy.ec2_policy",
+          "supports": "Raw role policy permits s3:* on *."
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-metadata-security-credentials.html",
+          "supports": "IMDS exposes temporary credentials for the attached role; HTTP proxy behavior can leak them, and IMDSv1 retrieval is a GET.",
+          "accessed_date": "2026-11-02"
+        }
+      ],
+      "confirmed_exploit": false,
+      "qualification": "Conditional application path; an ec2:* grant is not by itself a direct sts:AssumeRole authorization."
+    },
+    {
+      "case": "cloudgoat-data_secrets",
+      "entry": "aws_iam_user.lambda_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "candidate_sha256": "4b6689ecfd3648d52887b1a887763fd285771f68070dfce7e03f2d598773cbfc",
+      "disposition": "VALID",
+      "reason": "The declared starting principal directly has GetSecretValue on *. The final_flag resource and a secret version are declared. Earlier EC2, SSH, IMDS, and Lambda-environment pivots are unnecessary once compromise of lambda_user is the stated start.",
+      "required_preconditions": [
+        "credential_compromise: usable lambda_user credentials"
+      ],
+      "candidate_route": [
+        "lambda_user identity policy -> GetSecretValue(final_flag)"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/data_secrets/terraform/iam.tf",
+          "lines": [
+            86,
+            116
+          ],
+          "sha256": "f86bb86d6c2523ec79fba9c9b2a215d12ba1201a1633e836755bc8d6c42160fa",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/data_secrets/terraform/iam.tf#L86-L116",
+          "supports": "The inline lambda_user policy grants GetSecretValue, ListSecrets and DescribeSecret on *."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/data_secrets/terraform/secrets.tf",
+          "lines": [
+            1,
+            16
+          ],
+          "sha256": "d7273b1d0fcbfbe912dc7be7dd7d3c0bad71be0da5d3a22a50b48d910455e758",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/data_secrets/terraform/secrets.tf#L1-L16",
+          "supports": "The target secret and its stored flag version are declared."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-data_secrets.json.gz",
+          "json_pointer": "/resource_changes/8/change/after/policy",
+          "resource": "aws_iam_user_policy.lambda_user_policy",
+          "supports": "Literal raw-plan policy grants GetSecretValue on *."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-data_secrets.json.gz",
+          "json_pointer": "/resource_changes/0/change/after/status",
+          "resource": "aws_iam_access_key.lambda_user",
+          "supports": "The declared lambda_user key is Active."
+        }
+      ],
+      "confirmed_exploit": false
+    },
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "entry": "aws_iam_user.admin_user",
+      "target": "aws:account-admin",
+      "candidate_sha256": "a6e9efaf584651a8429f7fe9030950b44d80702074aa0bcfc44b7725d9977cdb",
+      "disposition": "VALID",
+      "reason": "The admin user already has unconditional administrator-equivalent permission in the supplied configuration. This is an already-held capability from the declared compromised principal, rather than a newly executed escalation.",
+      "required_preconditions": [
+        "credential_compromise: usable admin_user authentication; no admin access key is provisioned by this scenario, so the entry is the explicitly supplied compromise assumption"
+      ],
+      "candidate_route": [
+        "admin_user -> unconditional Action * / Resource * -> account-admin capability"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            5,
+            26
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L5-L26",
+          "supports": "Admin user receives the custom policy allowing Action * on Resource * without conditions or denies."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/policy",
+          "resource": "aws_iam_policy.admin_user_policy",
+          "supports": "The raw-plan admin policy is an unconditional Allow */*."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/configuration/root_module/resources/13/expressions/policy_arn",
+          "resource": "aws_iam_user_policy_attachment.admin_user_policy_attach",
+          "supports": "Raw configuration binds the policy reference to the admin user."
+        }
+      ],
+      "confirmed_exploit": false
+    },
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "entry": "aws_iam_user.admin_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "candidate_sha256": "9109577ba0e5f4e664c9d8a07563853590c7f09fc70d642ef82a8ef505c306c4",
+      "disposition": "VALID",
+      "reason": "The attached unconditional */* permission includes GetSecretValue on the declared final_flag secret. Given the requested starting credential-compromise assumption, no Beanstalk application exploit or secondary-user pivot is needed.",
+      "required_preconditions": [
+        "credential_compromise: usable admin_user authentication; the scenario does not itself provision an admin access key"
+      ],
+      "candidate_route": [
+        "admin_user */* identity policy -> GetSecretValue(final_flag)"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            5,
+            26
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L5-L26",
+          "supports": "Admin user receives the custom policy allowing Action * on Resource * without conditions or denies."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/policy",
+          "resource": "aws_iam_policy.admin_user_policy",
+          "supports": "The raw-plan admin policy is an unconditional Allow */*."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/configuration/root_module/resources/13/expressions/policy_arn",
+          "resource": "aws_iam_user_policy_attachment.admin_user_policy_attach",
+          "supports": "Raw configuration binds the policy reference to the admin user."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/secrets.tf",
+          "lines": [
+            1,
+            7
+          ],
+          "sha256": "034b319f2a277e0dc8ec400ac5d077134f2687a79765b532bd5fe0b8bf06c84f",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/secrets.tf#L1-L7",
+          "supports": "The target secret and its stored version are declared."
+        }
+      ],
+      "confirmed_exploit": false
+    },
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "entry": "aws_iam_user.secondary_user",
+      "target": "aws:account-admin",
+      "candidate_sha256": "93938112e108701cba79a69ae6f09da0e1836caca0406906c9eb3d3f6b190af6",
+      "disposition": "VALID",
+      "reason": "Secondary can create an access key for admin_user and receive its secret. Admin_user has unconditional administrator-equivalent permission. No admin access keys are declared, so the supplied resource set does not exhaust its two-key quota.",
+      "required_preconditions": [
+        "credential_compromise: usable secondary_user credentials",
+        "The admin user has an available IAM access-key slot, as supported by the declared fresh scenario; unmodeled preexisting keys could change this"
+      ],
+      "candidate_route": [
+        "secondary_user CreateAccessKey(admin_user) -> possession of new active admin credentials -> account-admin capability"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            85,
+            103
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L85-L103",
+          "supports": "The secondary principal has an access key and an unconditional iam:CreateAccessKey grant on *."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            105,
+            130
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L105-L130",
+          "supports": "Secondary can enumerate IAM users and attached policies; the secondary policy is attached to the user."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            5,
+            26
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L5-L26",
+          "supports": "Admin user receives the custom policy allowing Action * on Resource * without conditions or denies."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/policy",
+          "resource": "aws_iam_policy.admin_user_policy",
+          "supports": "The raw-plan admin policy is an unconditional Allow */*."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/configuration/root_module/resources/13/expressions/policy_arn",
+          "resource": "aws_iam_user_policy_attachment.admin_user_policy_attach",
+          "supports": "Raw configuration binds the policy reference to the admin user."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/resource_changes/7/change/after/policy",
+          "resource": "aws_iam_policy.secondary_policy",
+          "supports": "Raw plan grants CreateAccessKey on *."
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html",
+          "supports": "CreateAccessKey returns a new secret/access-key pair for the specified user, active by default; quota exhaustion can reject the operation.",
+          "accessed_date": "2026-11-02"
+        }
+      ],
+      "confirmed_exploit": false
+    },
+    {
+      "case": "cloudgoat-beanstalk_secrets",
+      "entry": "aws_iam_user.secondary_user",
+      "target": "aws_secretsmanager_secret.final_flag",
+      "candidate_sha256": "3a176cd8e1cef1ccc11ae484be38124c3ccb889bb624816ea483c03a0e83eeba",
+      "disposition": "VALID",
+      "reason": "Secondary can mint an admin_user access key through the unconditional CreateAccessKey grant. The resulting admin credentials can read final_flag under the admin */* policy. The Beanstalk configuration leak is an earlier route to the starting secondary credentials, not an additional requirement for this pair.",
+      "required_preconditions": [
+        "credential_compromise: usable secondary_user credentials",
+        "Admin access-key quota has capacity, as in the declared resource set"
+      ],
+      "candidate_route": [
+        "secondary_user CreateAccessKey(admin_user) -> admin credentials -> GetSecretValue(final_flag)"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            85,
+            103
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L85-L103",
+          "supports": "The secondary principal has an access key and an unconditional iam:CreateAccessKey grant on *."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            105,
+            130
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L105-L130",
+          "supports": "Secondary can enumerate IAM users and attached policies; the secondary policy is attached to the user."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf",
+          "lines": [
+            5,
+            26
+          ],
+          "sha256": "5108e4a279aef22452958c0038ec85cb4d6372f0d8a286ef8149dd214e794203",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/iam.tf#L5-L26",
+          "supports": "Admin user receives the custom policy allowing Action * on Resource * without conditions or denies."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/policy",
+          "resource": "aws_iam_policy.admin_user_policy",
+          "supports": "The raw-plan admin policy is an unconditional Allow */*."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/configuration/root_module/resources/13/expressions/policy_arn",
+          "resource": "aws_iam_user_policy_attachment.admin_user_policy_attach",
+          "supports": "Raw configuration binds the policy reference to the admin user."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-beanstalk_secrets.json.gz",
+          "json_pointer": "/resource_changes/7/change/after/policy",
+          "resource": "aws_iam_policy.secondary_policy",
+          "supports": "Raw plan grants CreateAccessKey on *."
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateAccessKey.html",
+          "supports": "CreateAccessKey returns a new secret/access-key pair for the specified user, active by default; quota exhaustion can reject the operation.",
+          "accessed_date": "2026-11-02"
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/beanstalk_secrets/terraform/secrets.tf",
+          "lines": [
+            1,
+            7
+          ],
+          "sha256": "034b319f2a277e0dc8ec400ac5d077134f2687a79765b532bd5fe0b8bf06c84f",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/beanstalk_secrets/terraform/secrets.tf#L1-L7",
+          "supports": "The final_flag target and its stored version are declared."
+        }
+      ],
+      "confirmed_exploit": false
+    },
+    {
+      "case": "cloudgoat-secrets_in_the_cloud",
+      "entry": "aws_iam_user.secrets_manager_user",
+      "target": "aws_secretsmanager_secret.this",
+      "candidate_sha256": "1372e04d0193954555ed43adbf9353af604f925ea598bd0e9f1c06193878cc40",
+      "disposition": "VALID",
+      "reason": "The specified compromised user directly has GetSecretValue on *. The unconditional identity policy suffices for the same-account declared target; no anonymous-public-policy shortcut or application compromise is required.",
+      "required_preconditions": [
+        "credential_compromise: usable secrets_manager_user credentials"
+      ],
+      "candidate_route": [
+        "secrets_manager_user identity policy -> GetSecretValue(this)"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/iam.tf",
+          "lines": [
+            101,
+            126
+          ],
+          "sha256": "c5cfca9f594b99cebefdeb9bcf2617fb6b3d59f058022da436847b5400c75af9",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/iam.tf#L101-L126",
+          "supports": "The secrets_manager_user inline policy permits GetSecretValue, DescribeSecret and ListSecrets on *."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/secrets_manager.tf",
+          "lines": [
+            7,
+            19
+          ],
+          "sha256": "8b0e1ed4ed6b28781706a13b396925d0eb7bda05e7663e36dfd17fdc0729130e",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/secrets_manager.tf#L7-L19",
+          "supports": "The target secret and its stored version are declared without a custom KMS key."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/17/change/after/policy",
+          "resource": "aws_iam_user_policy.secrets_manager_user_policy",
+          "supports": "Literal raw-plan identity policy permits GetSecretValue on *."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/status",
+          "resource": "aws_iam_access_key.secrets_manager_user_key",
+          "supports": "The declared secrets_manager_user key is Active."
+        }
+      ],
+      "confirmed_exploit": false
+    },
+    {
+      "case": "cloudgoat-secrets_in_the_cloud",
+      "entry": "internet",
+      "target": "aws_secretsmanager_secret.this",
+      "candidate_sha256": "13aa5a38ee95cb5ff103c65a4c332e8e8338ab726f07706719470a6d86a65465",
+      "disposition": "UNRESOLVED",
+      "reason": "The wildcard secret resource policy establishes a broad authorization risk but does not establish an unauthenticated Secrets Manager API read. The secret uses the default AWS managed key, which also prevents a cross-account value read based solely on an arbitrary external AWS identity. A separate application-mediated credential route is plausible: an admitted network client could obtain the hardcoded Vault token from a served app source file, retrieve the SSH key from Vault, then use host execution and IMDSv2 credentials to read DynamoDB-held secrets_manager_user keys. This route depends on source-IP admission and working bootstrap/application behavior that are not facts established by the raw plan; the pair is therefore conditional and unresolved, not a confirmed exploit or a blanket negative.",
+      "required_preconditions": [
+        "source_ip_allowed: internet-origin traffic must originate from 203.0.113.10/32 or another actually admitted source; no wildcard ingress is declared",
+        "workload/application preconditions: web app and Vault are installed, running and reachable; serving /app.py through Flask static_folder=. would need to expose the embedded Vault token, or another independently established application compromise must supply it",
+        "Credential acquisition must be explicit: use the Vault token to obtain the provisioned SSH private key and gain host access, then request an IMDSv2 token and retrieve complete instance-role credentials",
+        "The instance role must read the declared DynamoDB credential items and the recovered active secrets_manager_user keys must be used to authenticate GetSecretValue; API authentication cannot be assumed from network presence"
+      ],
+      "candidate_route": [
+        "conditional alternative: internet -> admitted web app/Vault -> token / SSH key -> host access -> IMDSv2 dynamodb_role credentials -> DynamoDB secrets_manager_user key pair -> authenticated GetSecretValue(this)"
+      ],
+      "evidence": [
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/secrets_manager.tf",
+          "lines": [
+            22,
+            33
+          ],
+          "sha256": "8b0e1ed4ed6b28781706a13b396925d0eb7bda05e7663e36dfd17fdc0729130e",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/secrets_manager.tf#L22-L33",
+          "supports": "Resource policy permits Principal * to GetSecretValue; it is not evidence of API authentication."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/ec2_instance.tf",
+          "lines": [
+            18,
+            40
+          ],
+          "sha256": "17495b77454141f25d3682226116c6cd90c889489a13f38f9de8276b4e3c1a31",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/ec2_instance.tf#L18-L40",
+          "supports": "Instance uses a DynamoDB profile and requires IMDSv2; user_data is base64encode(templatefile(...)) and its runtime application effect is not verified."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/ec2_instance.tf",
+          "lines": [
+            47,
+            70
+          ],
+          "sha256": "17495b77454141f25d3682226116c6cd90c889489a13f38f9de8276b4e3c1a31",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/ec2_instance.tf#L47-L70",
+          "supports": "8080, 8200 and 22 allow only the configured whitelist."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/templates/user_data.tpl",
+          "lines": [
+            83,
+            111
+          ],
+          "sha256": "21304ef24140e6b1dad485e4d26d72ab076527a2c0e995f4531726aa6a6b0292",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/templates/user_data.tpl#L83-L111",
+          "supports": "Flask uses static_folder=. and app source embeds the Vault token; source-file exposure is an application hypothesis, not a demonstrated response."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/templates/user_data.tpl",
+          "lines": [
+            140,
+            155
+          ],
+          "sha256": "21304ef24140e6b1dad485e4d26d72ab076527a2c0e995f4531726aa6a6b0292",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/templates/user_data.tpl#L140-L155",
+          "supports": "Bootstrap declares a Vault dev server with that token and stores the provisioned private key."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/iam.tf",
+          "lines": [
+            149,
+            194
+          ],
+          "sha256": "c5cfca9f594b99cebefdeb9bcf2617fb6b3d59f058022da436847b5400c75af9",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/iam.tf#L149-L194",
+          "supports": "The EC2 profile grants dynamodb:* on the scenario table."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/dynamodb.tf",
+          "lines": [
+            26,
+            49
+          ],
+          "sha256": "252a168f8955968e34095a8167bc113758c989dff4feb025d1978326888e537e",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/dynamodb.tf#L26-L49",
+          "supports": "Table items contain the secrets-manager user access-key ID and secret."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/iam.tf",
+          "lines": [
+            101,
+            126
+          ],
+          "sha256": "c5cfca9f594b99cebefdeb9bcf2617fb6b3d59f058022da436847b5400c75af9",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/iam.tf#L101-L126",
+          "supports": "The secrets_manager_user inline policy permits GetSecretValue, DescribeSecret and ListSecrets on *."
+        },
+        {
+          "kind": "upstream_source",
+          "path": "cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/secrets_manager.tf",
+          "lines": [
+            7,
+            19
+          ],
+          "sha256": "8b0e1ed4ed6b28781706a13b396925d0eb7bda05e7663e36dfd17fdc0729130e",
+          "matches_pinned_commit": true,
+          "url": "https://github.com/RhinoSecurityLabs/cloudgoat/blob/abf1ba8f5e47d7ced750fdfa025d51c99f1a43ed/cloudgoat/scenarios/aws/secrets_in_the_cloud/terraform/secrets_manager.tf#L7-L19",
+          "supports": "The target secret and its stored version are declared without a custom KMS key."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/17/change/after/policy",
+          "resource": "aws_iam_user_policy.secrets_manager_user_policy",
+          "supports": "Literal raw-plan identity policy permits GetSecretValue on *."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/5/change/after/status",
+          "resource": "aws_iam_access_key.secrets_manager_user_key",
+          "supports": "The declared secrets_manager_user key is Active."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/32/change/after/ingress",
+          "resource": "aws_security_group.web_app_sg",
+          "supports": "The raw plan restricts app/Vault/SSH ingress to 203.0.113.10/32."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/20/change/after_unknown/user_data",
+          "resource": "aws_instance.web_app",
+          "supports": "The generated bootstrap value is unknown in the raw plan."
+        },
+        {
+          "kind": "raw_plan",
+          "path": "evaluations/tier2/plans/cloudgoat-secrets_in_the_cloud.json.gz",
+          "json_pointer": "/resource_changes/29/change/after/kms_key_id",
+          "resource": "aws_secretsmanager_secret.this",
+          "supports": "No customer-managed KMS key is specified."
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html",
+          "supports": "Secrets Manager authenticates requester identities; broad authorization is distinct from the existence of a usable authenticated requester.",
+          "accessed_date": "2026-11-02"
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/secretsmanager/latest/apireference/CommonParameters.html",
+          "supports": "Secrets Manager documents SigV4 access-key credentials and signatures as API authentication inputs.",
+          "accessed_date": "2026-11-02"
+        },
+        {
+          "kind": "official_service_documentation",
+          "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access_examples_cross.html",
+          "supports": "Cross-account access requires caller-side permission as well as the secret policy, and cannot use the default aws/secretsmanager key.",
+          "accessed_date": "2026-11-02"
+        }
+      ],
+      "confirmed_exploit": false,
+      "route_specific_findings": [
+        {
+          "route": "Unauthenticated Internet -> Principal * resource policy -> secret value",
+          "disposition": "INVALID",
+          "reason": "Resource-policy breadth does not remove Secrets Manager authentication or establish KMS decryption."
+        },
+        {
+          "route": "Any external AWS identity -> wildcard resource policy -> value encrypted with default aws/secretsmanager",
+          "disposition": "INVALID",
+          "reason": "The required cross-account KMS configuration is absent."
+        },
+        {
+          "route": "Allowlisted network -> application/Vault -> host/IMDSv2 -> DynamoDB credentials -> authenticated secret read",
+          "disposition": "UNRESOLVED",
+          "reason": "Source supports the credential chain, but source admission, application source disclosure/bootstrap and usable host access are unverified."
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "candidate_pairs": 9,
+    "VALID": 7,
+    "INVALID": 0,
+    "OUT_OF_SCOPE": 0,
+    "UNRESOLVED": 2,
+    "unadjudicated_candidates": 0,
+    "whole_output_precision_claim_supported": false
+  },
+  "seal": {
+    "sealed_at_utc": "2026-11-03T02:55:17.141008+00:00",
+    "decisions_canonical_sha256": "aa0211ceea4c5dbaad66449e8bb101816536b3a408c7d3f0d4d6c33c3daa70c2",
+    "sealed_before_any_engine_prediction_or_original_adjudication_inspection": true
+  }
+}

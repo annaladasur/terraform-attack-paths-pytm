@@ -1,5 +1,7 @@
 # Terraform attack paths with PyTM
 
+V2 engineering release (package0.2.0): see [V2-RELEASE.md](V2-RELEASE.md) and [supplemental evidence](evaluations/v2/RESULTS.md). Historical benchmark results remain frozen.
+
 **From Terraform plan to attack paths: PyTM threat modeling in CI/CD, with LLMs on a leash.**
 
 A working research prototype for connecting cloud configuration findings into evidence-linked attack paths.

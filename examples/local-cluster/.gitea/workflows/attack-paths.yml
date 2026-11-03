@@ -60,6 +60,7 @@ jobs:
               --server "${TAPM_SERVER_URL}" \
               --token "${TAPM_SERVER_TOKEN}" \
               --level "${TAPM_LEVEL}" \
+              --source-dir . \
               --repo "${{ github.repository }}" \
               --pr "${PR_NUM}" \
               --sha "${{ github.sha }}" \
@@ -67,18 +68,42 @@ jobs:
               --timeout 120
           else
             echo "tapm CLI not found on runner host; using curl runner client..."
+            PR_NUM="${PR_NUM}" python3 - <<'PY_SOURCE'
+          import json, os, sys
+          from pathlib import Path
+          source_root = Path(".").resolve()
+          source_files = {}
+          def source_error(error):
+              raise error
+          for folder, dirs, names in os.walk(source_root, followlinks=False, onerror=source_error):
+              directory = Path(folder)
+              dirs[:] = sorted(d for d in dirs if d not in {".git", ".terraform"} and not (directory / d).is_symlink())
+              for name in sorted(names):
+                  if not name.endswith(".tf"):
+                      continue
+                  path = directory / name
+                  if path.is_symlink() or not path.is_file():
+                      raise ValueError("Terraform source must be a regular file")
+                  source_files[path.relative_to(source_root).as_posix()] = path.read_bytes().decode("utf-8")
+          with open("/tmp/tapm-run/plan.json", encoding="utf-8") as stream:
+              plan_data = json.load(stream)
+          with open("/tmp/tapm-run/request.json", "w", encoding="utf-8") as stream:
+              json.dump({"repo": "${{ github.repository }}", "pr": int(os.environ["PR_NUM"]),
+                         "sha": "${{ github.sha }}", "root_module": ".", "level": os.environ["TAPM_LEVEL"],
+                         "plan_json": plan_data, "source_files": source_files}, stream)
+          PY_SOURCE
             JOB_ID=$(curl -sf -X POST "${TAPM_SERVER_URL}/v1/jobs" \
               -H "Authorization: Bearer ${TAPM_SERVER_TOKEN}" \
               -H "Content-Type: application/json" \
-              -d "{\"repo\": \"${{ github.repository }}\", \"pr\": ${PR_NUM}, \"sha\": \"${{ github.sha }}\", \"root_module\": \".\", \"level\": \"${TAPM_LEVEL}\", \"plan_json\": $(cat /tmp/tapm-run/plan.json)}" \
-              | grep -o '"job_id":"[^"]*' | cut -d'"' -f4)
+              --data-binary @/tmp/tapm-run/request.json \
+              | python3 -c 'import json,sys; job=json.load(sys.stdin); print(job.get("id") or job["job_id"])')
 
             echo "Job submitted: ${JOB_ID}"
             STATUS="queued"
             for i in $(seq 1 30); do
               RESP=$(curl -sf "${TAPM_SERVER_URL}/v1/jobs/${JOB_ID}" -H "Authorization: Bearer ${TAPM_SERVER_TOKEN}")
-              STATUS=$(echo "$RESP" | grep -o '"status":"[^"]*' | cut -d'"' -f4)
-              VERDICT=$(echo "$RESP" | grep -o '"gate_verdict":"[^"]*' | cut -d'"' -f4)
+              STATUS=$(echo "$RESP" | python3 -c 'import json,sys; print(json.load(sys.stdin)["status"])')
+              VERDICT=$(echo "$RESP" | python3 -c 'import json,sys; job=json.load(sys.stdin); print(job.get("verdict") or job.get("gate_verdict") or "")')
               if [ "$STATUS" = "completed" ] || [ "$STATUS" = "enriched" ]; then
                 echo "Job completed with verdict: ${VERDICT}"
                 if [ "$VERDICT" = "blocked" ]; then

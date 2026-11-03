@@ -69,14 +69,77 @@ def case_plan(case: dict, src: Path, manifest: dict) -> Path:
     return plain
 
 
-def score(res, gold: dict) -> dict:
+def prediction_accounting(res, gold: dict, adjudications: list[dict] | None = None) -> dict:
+    """Account for unique pairs, without changing the historical gold-row score.
+
+    Adjudications are exact structured records, never substring matches in prose.
+    They may label previously unlabeled pairs, but cannot override frozen gold.
+    UNKNOWN and OUT_OF_SCOPE remain visible outside the precision denominator.
+    """
+    labels = {}
+    for row in gold.get("expected") or []:
+        pair = (row["entry"], row["target"])
+        label = row["label"] if row["label"] in {"VALID", "INVALID", "OUT_OF_SCOPE", "UNKNOWN"} else "UNKNOWN"
+        if pair in labels and labels[pair]["label"] != label:
+            raise ValueError(f"conflicting gold labels for {pair}")
+        labels[pair] = {"label": label, "source": "gold"}
+        if label != row["label"]:
+            labels[pair]["original_label"] = row["label"]
+    for row in adjudications or []:
+        if row.get("label") not in {"VALID", "INVALID", "OUT_OF_SCOPE", "UNKNOWN"}:
+            raise ValueError("adjudication requires VALID, INVALID, OUT_OF_SCOPE or UNKNOWN")
+        if not row.get("reason") or not isinstance(row.get("entry"), str) or not isinstance(row.get("target"), str):
+            raise ValueError("adjudication requires exact entry, target and reason")
+        pair = (row["entry"], row["target"])
+        if pair in labels and labels[pair]["label"] != row["label"]:
+            raise ValueError(f"adjudication cannot override an existing label for {pair}")
+        if pair not in labels:
+            labels[pair] = {"label": row["label"], "source": "adjudication", "reason": row["reason"]}
+    route_counts = {}
+    for path in res.paths:
+        pair = (path.entry, path.target)
+        route_counts[pair] = route_counts.get(pair, 0) + 1
+    displayed_pairs = set(route_counts)
+    verification = (getattr(res, "path_analysis", None) or {}).get("reachability") or {}
+    for pair in verification.get("pairs", []):
+        if pair.get("reachable") is True:
+            route_counts.setdefault((pair["entry"], pair["target"]), 0)
+    inventory = [
+        {"entry": entry, "target": target, "routes": count,
+         **labels.get((entry, target), {"label": "UNLABELED", "source": "none"})}
+        for (entry, target), count in sorted(route_counts.items())
+    ]
+    counts = {label: sum(row["label"] == label for row in inventory)
+              for label in ("VALID", "INVALID", "OUT_OF_SCOPE", "UNKNOWN", "UNLABELED")}
+    comparable = {pair: row for pair, row in labels.items() if row["label"] in {"VALID", "INVALID"}}
+    tp = sum(pair in route_counts and row["label"] == "VALID" for pair, row in comparable.items())
+    fp = sum(pair in route_counts and row["label"] == "INVALID" for pair, row in comparable.items())
+    fn = sum(pair not in route_counts and row["label"] == "VALID" for pair, row in comparable.items())
+    return {
+        "inventory": inventory, "unique_predicted_pairs": len(inventory),
+        "displayed_routes": len(res.paths), "duplicate_routes": len(res.paths) - len(displayed_pairs),
+        "undisplayed_reachable_pairs": len(set(route_counts) - displayed_pairs),
+        "verification_complete": verification.get("complete"),
+        "verification_unknown_pairs": sum(pair.get("reachable") is None for pair in verification.get("pairs", [])),
+        "by_label": counts,
+        "unadjudicated_pairs": counts["UNLABELED"] + counts["UNKNOWN"],
+        "coverage_score": {"tp": tp, "fp": fp, "fn": fn,
+                           "precision_numerator": tp, "precision_denominator": tp + fp,
+                           "recall_numerator": tp, "recall_denominator": tp + fn,
+                           "precision": round(tp / (tp + fp), 4) if tp + fp else None,
+                           "recall": round(tp / (tp + fn), 4) if tp + fn else None,
+                           "scope": "unique VALID/INVALID pairs only; unknown, unlabeled and out-of-scope predictions excluded"},
+    }
+
+
+def score(res, gold: dict, *, adjudications: list[dict] | None = None) -> dict:
     reach = {(p.entry, p.target) for p in res.paths}
     rows, tp, fn, fp, tn = [], 0, 0, 0, 0
     oos_found = 0
-    labeled_entries = set()
+    labeled_pairs = set()
     for e in gold.get("expected") or []:
         found = (e["entry"], e["target"]) in reach
-        labeled_entries.add(e["entry"])
+        labeled_pairs.add((e["entry"], e["target"]))
         lab = e["label"]
         if lab == "VALID":
             tp += found
@@ -87,14 +150,16 @@ def score(res, gold: dict) -> dict:
         else:
             oos_found += found
         rows.append({"entry": e["entry"], "target": e["target"], "label": lab, "found": found})
-    unlabeled = sorted({f"{p.entry} -> {p.target}" for p in res.paths if p.entry not in labeled_entries})
+    unlabeled = sorted(f"{entry} -> {target}" for entry, target in reach - labeled_pairs)
     return {"tp": tp, "fn": fn, "fp": fp, "tn": tn, "out_of_scope": sum(1 for r in rows if r["label"] == "OUT_OF_SCOPE"),
-            "out_of_scope_found": oos_found, "rows": rows, "unlabeled_paths": unlabeled}
+            "out_of_scope_found": oos_found, "rows": rows, "unlabeled_paths": unlabeled,
+            "prediction_accounting": prediction_accounting(res, gold, adjudications)}
 
 
 def run_tier2(only: list[str] | None = None, tag: str = "run", ai_cfg: dict | None = None,
               manifest_name: str = "manifest.yaml", out_dir: str | Path | None = None,
-              write_results: bool = False, command: str | None = None) -> dict:
+              write_results: bool = False, command: str | None = None,
+              adjudications: dict[str, list[dict]] | None = None) -> dict:
     from .metadata import get_eval_metadata
 
     manifest = yaml.safe_load((T2 / manifest_name).read_text())
@@ -146,7 +211,7 @@ def run_tier2(only: list[str] | None = None, tag: str = "run", ai_cfg: dict | No
             "semantic_edges": sum(1 for e in res.build.graph.edges.values() if e.type != "DEPENDS_ON"),
             "paths": len(res.paths), "unresolved_policies": len(res.build.unresolved_policies),
             "scanner_findings": {t: sum(1 for f in res.findings if f.tool == t) for t in ("checkov", "tfsec", "trivy")},
-            "score": score(res, gold),
+            "score": score(res, gold, adjudications=(adjudications or {}).get(case["id"])),
         })
         if ai_cfg:
             from ..ai.harness import run_ai
@@ -170,16 +235,9 @@ def run_tier2(only: list[str] | None = None, tag: str = "run", ai_cfg: dict | No
     labeled_valid = sum(sum(1 for row in r.get("score", {}).get("rows", []) if row.get("label") == "VALID") for r in results)
     labeled_invalid = sum(sum(1 for row in r.get("score", {}).get("rows", []) if row.get("label") == "INVALID") for r in results)
 
-    adj_file = T2 / "ADJUDICATION.md"
-    adj_text = adj_file.read_text(encoding="utf-8") if adj_file.exists() else ""
-    unadjudicated = 0
-    for r in results:
-        rows = r.get("score", {}).get("rows", [])
-        oos_found = [f"{row['entry']} -> {row['target']}" for row in rows if row.get("label") == "OUT_OF_SCOPE" and row.get("found")]
-        unscored = list(r.get("score", {}).get("unlabeled_paths", [])) + oos_found
-        for p in unscored:
-            if p not in adj_text and not all(part.strip() in adj_text for part in p.split("->")):
-                unadjudicated += 1
+    accounting = [r["score"]["prediction_accounting"] for r in results if "score" in r]
+    unadjudicated = sum(a["unadjudicated_pairs"] for a in accounting)
+    coverage = {key: sum(a["coverage_score"][key] for a in accounting) for key in ("tp", "fp", "fn")}
 
     summary = {
         "tag": tag,
@@ -187,6 +245,22 @@ def run_tier2(only: list[str] | None = None, tag: str = "run", ai_cfg: dict | No
         "paths_emitted": paths_emitted,
         "paths_scored": paths_scored,
         "paths_unadjudicated": unadjudicated,
+        "prediction_accounting": {
+            "unique_predicted_pairs": sum(a["unique_predicted_pairs"] for a in accounting),
+            "duplicate_routes": sum(a["duplicate_routes"] for a in accounting),
+            "undisplayed_reachable_pairs": sum(a["undisplayed_reachable_pairs"] for a in accounting),
+            "verification_unknown_pairs": sum(a["verification_unknown_pairs"] for a in accounting),
+            "by_label": {label: sum(a["by_label"][label] for a in accounting)
+                         for label in ("VALID", "INVALID", "OUT_OF_SCOPE", "UNKNOWN", "UNLABELED")},
+            "coverage_score": {
+                **coverage,
+                "precision_numerator": coverage["tp"], "precision_denominator": coverage["tp"] + coverage["fp"],
+                "recall_numerator": coverage["tp"], "recall_denominator": coverage["tp"] + coverage["fn"],
+                "precision": round(coverage["tp"] / (coverage["tp"] + coverage["fp"]), 4) if coverage["tp"] + coverage["fp"] else None,
+                "recall": round(coverage["tp"] / (coverage["tp"] + coverage["fn"]), 4) if coverage["tp"] + coverage["fn"] else None,
+            },
+            "scope": "displayed and verification-reachable predictions; exact structured labels only; legacy display-based gold-row metrics retained below",
+        },
         "labeled_valid": labeled_valid,
         "labeled_invalid": labeled_invalid,
         "tp": tp,
@@ -195,6 +269,9 @@ def run_tier2(only: list[str] | None = None, tag: str = "run", ai_cfg: dict | No
         "tn": tn,
         "reachability_precision": round(tp / (tp + fp), 4) if tp + fp else None,
         "reachability_recall": round(tp / (tp + fn), 4) if tp + fn else None,
+        "reachability_precision_denominator": tp + fp,
+        "reachability_recall_denominator": tp + fn,
+        "legacy_score_scope": "frozen gold rows against displayed routes; excludes out-of-scope and unlabeled predictions",
     }
     if ai_cfg:
         ai_cases = [r["ai"] for r in results if "ai" in r]

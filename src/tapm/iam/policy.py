@@ -4,8 +4,24 @@ Scope (stated on purpose): identity policies, resource policies (S3 bucket
 policies), trust policies and permissions boundaries that are *visible in the
 Terraform plan*. Action/NotAction, Resource/NotResource, Principal, explicit Deny
 and the presence of a Condition are evaluated. Condition *values* are not
-evaluated: a conditional grant produces a conditional edge, labelled as an
-assumption. SCPs, RCPs, session policies and runtime context are out of scope.
+evaluated: conditional grants and applicable conditional Deny restrictions
+produce conditional edges, labelled as assumptions. Unresolved policy documents
+and boundaries remain visible as uncertainty. A boundary intersects identity
+grants and direct role-ARN resource grants; direct same-account user-ARN resource
+grants bypass its implicit denial, while explicit boundary Deny still wins.
+STS session principals, SCPs, RCPs, session policies and runtime context are out of scope.
+NotPrincipal is parsed for visibility but not simulated; its presence is reported
+as unresolved analysis and taints otherwise applicable grants.
+Unknown policy sets, documents and assignments are inventoried even without an
+emitted path. Optional/computed role policy sets and S3/KMS policy readback are
+classified as omitted Terraform input only for new creates where both parsed
+full source and configuration establish omission. Writing a policy onto a
+bounded principal does not establish unrestricted account administration;
+boundary escape after the grant remains explicit uncertainty.
+Parsing alone does not establish recovery completeness: unresolved symbolic
+tokens, missing referenced resources and malformed policy structures remain
+unresolved. Policy-document configuration is checked before adapter defaults or
+dropped fields can erase restrictions.
 This is not a complete IAM policy simulator.
 """
 
@@ -78,15 +94,41 @@ def parse_document(doc: Any) -> PolicyDoc | None:
             return None
     if not isinstance(doc, dict):
         return None
+    raw_statements = doc.get("Statement")
+    if not isinstance(raw_statements, (dict, list)) or not raw_statements:
+        return None
+
+    def strings(value):
+        return isinstance(value, str) and bool(value) or (
+            isinstance(value, list) and bool(value) and all(isinstance(item, str) and item for item in value))
+
+    def principal(value):
+        return strings(value) or (isinstance(value, dict) and bool(value)
+                                  and all(isinstance(key, str) and strings(item) for key, item in value.items()))
+
     stmts = []
-    for i, st in enumerate(as_list(doc.get("Statement"))):
+    for i, st in enumerate(as_list(raw_statements)):
         if not isinstance(st, dict):
-            continue
+            return None
+        if st.get("Effect") not in ("Allow", "Deny"):
+            return None
+        if bool("Action" in st) == bool("NotAction" in st):
+            return None
+        if not all(strings(st[key]) for key in ("Action", "NotAction", "Resource", "NotResource") if key in st):
+            return None
+        if "Resource" in st and "NotResource" in st or "Principal" in st and "NotPrincipal" in st:
+            return None
+        if not all(principal(st[key]) for key in ("Principal", "NotPrincipal") if key in st):
+            return None
+        if "Condition" in st and not isinstance(st["Condition"], dict):
+            return None
+        if set(st) - {"Sid", "Effect", "Action", "NotAction", "Resource", "NotResource", "Principal", "NotPrincipal", "Condition"}:
+            return None
         stmts.append(
             Statement(
                 index=i,
                 sid=st.get("Sid"),
-                effect=str(st.get("Effect", "Allow")),
+                effect=st["Effect"],
                 actions=[str(a) for a in as_list(st.get("Action"))],
                 not_actions=[str(a) for a in as_list(st.get("NotAction"))],
                 resources=[str(r) for r in as_list(st.get("Resource"))],
@@ -148,6 +190,28 @@ def arn_matches(pattern: str, arn: str) -> bool:
 
 
 _TOKEN = re.compile(r"tf:((?:module\.[A-Za-z0-9_-]+\.)*(?:data\.)?[a-z0-9_]+\.[A-Za-z0-9_-]+(?:\[[^\]]*\])?)\.(arn|id|name|bucket)")
+
+
+def document_tokens(doc: PolicyDoc) -> tuple[list[str], bool]:
+    """Return symbolic resource references and whether opaque tokens remain."""
+    references, unresolved = [], False
+
+    def walk(value):
+        nonlocal unresolved
+        if isinstance(value, dict):
+            for key, item in value.items():
+                walk(key)
+                walk(item)
+        elif isinstance(value, list):
+            for item in value:
+                walk(item)
+        elif isinstance(value, str):
+            references.extend(match.group(1) for match in _TOKEN.finditer(value))
+            if "tf:" in _TOKEN.sub("", value) or "${" in value:
+                unresolved = True
+
+    walk(doc.raw)
+    return references, unresolved
 
 
 def concretize(pattern: str, node_base: str, node_name: str | None, node_arn: str | None,

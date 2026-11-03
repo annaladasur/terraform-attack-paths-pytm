@@ -422,7 +422,8 @@ def render_developer_comment(
                 for e in h.evidence:
                     r = recs.get(e)
                     if r and r.kind in ("NET", "IAM") or (r and r.kind == "TF" and "http_tokens" in (r.data or {})):
-                        ev.append(f"{e} `{_loc(r.source)}`")
+                        location = _loc(r.source)
+                        ev.append(f"{e} `{location}`" if location else f"{e} (location unavailable)")
                 status = h.status + (f" ({h.precondition})" if h.precondition else "")
                 label = f"({h.label})" if h.label else ""
                 w(f"| {i} | {_short(h.src)} —{h.type}{label}→ {_short(h.dst)} | {status} | {h.edge}" + (f"; {', '.join(ev)}" if ev else "") + " |")

@@ -49,7 +49,9 @@ def test_heldout_evaluation_offline_replay(tmp_path: Path):
     assert summary["cases"] == 5
     assert summary["paths_emitted"] == 9
     assert summary["paths_scored"] == 2
-    assert summary["paths_unadjudicated"] == 0
+    # Exact pair accounting replaces the previous prose-substring inference.
+    # These six predicted pairs are outside the frozen reference labels.
+    assert summary["paths_unadjudicated"] == 6
     assert summary["labeled_valid"] == 2
     assert summary["labeled_invalid"] == 0
     assert summary["tp"] == 2

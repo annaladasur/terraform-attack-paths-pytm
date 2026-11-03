@@ -224,7 +224,8 @@ def cmd_gate(a) -> None:
     exc_path = Path(a.exceptions) if a.exceptions else (Path(a.tf_dir) / EXCEPTIONS_FILE if a.tf_dir else None)
     entries, problems = load_exceptions(exc_path)
     today = dt.date.fromisoformat(a.today) if a.today else None
-    g = evaluate(ap["paths"], entries, level=a.level, fail_on=a.fail_on, today=today, file_problems=problems)
+    g = evaluate(ap["paths"], entries, level=a.level, fail_on=a.fail_on, today=today, file_problems=problems,
+                 analysis=ap.get("analysis") or {"complete": False})
     draft = draft_exceptions(g, ap["paths"]) if a.draft or g["without_decision"] else ""
     dump_json(g, out / "gate.json")
     (out / "gate.md").write_text(markdown(g, draft), encoding="utf-8")
@@ -698,6 +699,8 @@ def cmd_submit(a) -> None:
         print(f"Submitting plan to analysis service at {bold(client.server_url)} (level: {bold(a.level)})...")
 
     extra_options: dict[str, Any] = {}
+    if getattr(a, "source_dir", None) is not None:
+        extra_options["source_dir"] = a.source_dir
     if getattr(a, "trigger", None):
         extra_options["trigger"] = a.trigger
     if getattr(a, "plan_ms", None) is not None:
@@ -1534,6 +1537,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--pr", help="pull request or issue number (auto-detected if omitted)")
     p.add_argument("--sha", help="commit SHA (auto-detected if omitted)")
     p.add_argument("--root-module", default=".", help="root module path (default: .)")
+    p.add_argument("--source-dir", help="explicit local Terraform source directory for file/line traceability; sends regular .tf files to the analysis service")
     p.add_argument(
         "--level",
         choices=["observe", "recommend", "validate", "prevent"],

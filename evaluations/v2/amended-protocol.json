@@ -1,0 +1,1611 @@
+{
+  "evaluation_class": "amended-input known regression; not original sealed run or unseen evaluation",
+  "expected_checks_sha256": "990b249360a73244a822b91e8ea88942fd1681d97e0a11ca7a2b351c581bc7bc",
+  "materialized_iam_plans": [
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "8c61919ec3e74e4d48a9c16c1201c70fe8c8d5913a0d2fb92c75473a0f42f054",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "8c61919ec3e74e4d48a9c16c1201c70fe8c8d5913a0d2fb92c75473a0f42f054",
+      "changed": false,
+      "id": "identity-allow"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "8d3d07617209450ff5f72fe70bb51786776878a55726ec70f7f029d697f42f9f",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "8d3d07617209450ff5f72fe70bb51786776878a55726ec70f7f029d697f42f9f",
+      "changed": false,
+      "id": "identity-deny-overrides"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "1766471e5574d19c2461cea54736f972a5bd754fd760915155948ebf4e4ccc0e",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "1766471e5574d19c2461cea54736f972a5bd754fd760915155948ebf4e4ccc0e",
+      "changed": false,
+      "id": "boundary-intersection-allow"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Effect\": \"Allow\", \"Action\": \"s3:ListBucket\", \"Resource\": \"*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "3ea6467a4b1d4e7477535a2982d65a8213cfdde38143ab9dc461017e6275218f",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": []}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "fc9f0c042569c9a91bc601f973adf5b7ede7dfcaf332a96217b68808e6a524d4",
+      "changed": true,
+      "id": "boundary-implicit-deny"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "f30a7d1be12358ccbfc5c276ed46a4d6032700e54c58f5b6528f6b389143db11",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "f30a7d1be12358ccbfc5c276ed46a4d6032700e54c58f5b6528f6b389143db11",
+      "changed": false,
+      "id": "boundary-explicit-deny"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::unrelated/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "7e405408534f7891c797d26ada9ac570e67d5f256980ce66f24b17c77cc2b36a",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::unrelated/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "7e405408534f7891c797d26ada9ac570e67d5f256980ce66f24b17c77cc2b36a",
+      "changed": false,
+      "id": "boundary-nonmatching-deny"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Condition\": {\"StringEquals\": {\"aws:PrincipalTag/team\": \"blue\"}}, \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "5eda231c5bd5de723228ecd2bb9fd8811d30939c63b1308906a0a5275d281bba",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Condition\": {\"StringEquals\": {\"aws:PrincipalTag/team\": \"blue\"}}, \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "5eda231c5bd5de723228ecd2bb9fd8811d30939c63b1308906a0a5275d281bba",
+      "changed": false,
+      "id": "boundary-conditional-allow"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/not-in-plan"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "91789b0e6230a118fe20778cfc95dee3b63f03eec706fa18c83202cf0a1c08a6",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/not-in-plan"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "91789b0e6230a118fe20778cfc95dee3b63f03eec706fa18c83202cf0a1c08a6",
+      "changed": false,
+      "id": "unresolved-boundary-arn"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "resource_changes": [
+          {
+            "address": "aws_iam_user.tester",
+            "change": {
+              "actions": [
+                "create"
+              ],
+              "after": {
+                "arn": "arn:aws:iam::111122223333:user/tester",
+                "name": "tester"
+              },
+              "after_unknown": {
+                "permissions_boundary": true
+              }
+            },
+            "name": "tester",
+            "type": "aws_iam_user"
+          }
+        ],
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "49191f1a5fbbc21f82c122bcd81daf107164bf564a66332586bb4264e9b91b1d",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "resource_changes": [
+          {
+            "address": "aws_iam_user.tester",
+            "change": {
+              "actions": [
+                "create"
+              ],
+              "after": {
+                "arn": "arn:aws:iam::111122223333:user/tester",
+                "name": "tester"
+              },
+              "after_unknown": {
+                "permissions_boundary": true
+              }
+            },
+            "name": "tester",
+            "type": "aws_iam_user"
+          }
+        ],
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "49191f1a5fbbc21f82c122bcd81daf107164bf564a66332586bb4264e9b91b1d",
+      "changed": false,
+      "id": "unknown-boundary-after-apply"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Condition\": {\"StringEquals\": {\"aws:PrincipalTag/team\": \"blue\"}}, \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "59611d5a8daa3a3fb7b0ec7a3ad4532fbc82203d7bd584c8dbee5d2b9e9061d0",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_user_policy.identity",
+                "mode": "managed",
+                "name": "identity",
+                "type": "aws_iam_user_policy",
+                "values": {
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Condition\": {\"StringEquals\": {\"aws:PrincipalTag/team\": \"blue\"}}, \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}",
+                  "user": "tester"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "59611d5a8daa3a3fb7b0ec7a3ad4532fbc82203d7bd584c8dbee5d2b9e9061d0",
+      "changed": false,
+      "id": "identity-conditional-deny"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "2f5f4caa50992c88a4f9061a4579fdd14348b992b248dcca9205b177da781e60",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "2f5f4caa50992c88a4f9061a4579fdd14348b992b248dcca9205b177da781e60",
+      "changed": false,
+      "id": "public-resource-deny-overrides"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Condition\": {\"StringEquals\": {\"aws:PrincipalTag/team\": \"blue\"}}, \"Effect\": \"Deny\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "6b990a5251d599aab9291a729812e23509a9c6e19c0b7205a436163b15b67dfa",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Condition\": {\"StringEquals\": {\"aws:PrincipalTag/team\": \"blue\"}}, \"Effect\": \"Deny\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "6b990a5251d599aab9291a729812e23509a9c6e19c0b7205a436163b15b67dfa",
+      "changed": false,
+      "id": "public-resource-conditional-deny"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_role.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_role",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:role/tester",
+                  "assume_role_policy": "{\"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"Service\": \"ec2.amazonaws.com\"}, \"Action\": \"sts:AssumeRole\"}]}",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Effect\": \"Allow\", \"Action\": \"s3:ListBucket\", \"Resource\": \"*\"}]}"
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:role/tester\"}, \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "f6c06d9153c96441612d168b3f4aea2bba9d93ba884afcfd157e5fe378667521",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_role.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_role",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:role/tester",
+                  "assume_role_policy": "{\"Statement\": []}",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": []}"
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:role/tester\"}, \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "3f7ad26b1c7e1dcf56e8295383a2f0f658149e5ec1e33f8abf0ddc3d1093d97d",
+      "changed": true,
+      "id": "role-resource-boundary-implicit-deny"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Effect\": \"Allow\", \"Action\": \"s3:ListBucket\", \"Resource\": \"*\"}]}"
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:user/tester\"}, \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "ab56f2a2d8c5bd7f9805248f8211be37c983df8c4d20560ce1c2f33002a7502a",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": []}"
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:user/tester\"}, \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "96615554c1b9efe3ba3b0a389db11c8d1922a0cd7d29be3adb5a22dd9a72c8d8",
+      "changed": true,
+      "id": "user-resource-boundary-implicit-bypass"
+    },
+    {
+      "after_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:user/tester\"}, \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "after_sha256": "cf839ffd72c90e7d50835d991642bcabf4ac825629a31d6ea709de7b3d33f055",
+      "before_plan": {
+        "format_version": "1.2",
+        "planned_values": {
+          "root_module": {
+            "resources": [
+              {
+                "address": "aws_iam_user.tester",
+                "mode": "managed",
+                "name": "tester",
+                "type": "aws_iam_user",
+                "values": {
+                  "arn": "arn:aws:iam::111122223333:user/tester",
+                  "name": "tester",
+                  "permissions_boundary": "arn:aws:iam::111122223333:policy/limit"
+                }
+              },
+              {
+                "address": "aws_s3_bucket.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket",
+                "values": {
+                  "arn": "arn:aws:s3:::v2-sealed-asset",
+                  "bucket": "v2-sealed-asset",
+                  "tags": {
+                    "DataClassification": "confidential"
+                  }
+                }
+              },
+              {
+                "address": "aws_iam_policy.limit",
+                "mode": "managed",
+                "name": "limit",
+                "type": "aws_iam_policy",
+                "values": {
+                  "name": "limit",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Deny\", \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              },
+              {
+                "address": "aws_s3_bucket_policy.asset",
+                "mode": "managed",
+                "name": "asset",
+                "type": "aws_s3_bucket_policy",
+                "values": {
+                  "bucket": "v2-sealed-asset",
+                  "policy": "{\"Statement\": [{\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::111122223333:user/tester\"}, \"Resource\": \"arn:aws:s3:::v2-sealed-asset/*\"}]}"
+                }
+              }
+            ]
+          }
+        },
+        "terraform_version": "1.16.4"
+      },
+      "before_sha256": "cf839ffd72c90e7d50835d991642bcabf4ac825629a31d6ea709de7b3d33f055",
+      "changed": false,
+      "id": "user-resource-boundary-explicit-deny"
+    }
+  ],
+  "original_protocol_sha256": "e1fb26ab895dac5d9249439c124f444e11f4ca46308d710209193f66226770c6",
+  "original_runner_sha256": "463f1fa6507a1eb99f04bcf6ace8fb5fc67567dbcb974be7b8365920c8fff17a",
+  "primary_reference": "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_grammar.html",
+  "reason": "Empty Statement arrays are malformed. Valid nonmatching boundary Allow exercises implicit deny; a valid service trust replaces an empty role trust. Expected booleans are unchanged.",
+  "runner_sha256": "6624a390dff1d61d11da59dd49e5ffbd7fc5d4e7fb02eb8e826e3b5d64759b11",
+  "schema_version": 1,
+  "sealed_at_utc": "2026-11-03T03:14:25.812366+00:00"
+}

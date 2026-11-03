@@ -13,7 +13,7 @@ from dataclasses import dataclass
 
 from ..graph.build import BuildResult
 from ..graph.model import Graph
-from .engine import AttackPath, PathOptions, find_paths
+from .engine import AttackPath, PathOptions, route_path, verify_reachability
 
 
 @dataclass
@@ -22,11 +22,14 @@ class Remedy:
     hop: int
     edge: str
     change: str
-    effect: str  # breaks_path | downgrades_path | no_effect
+    effect: str  # breaks_path | downgrades_path | no_effect | breaks_path_but_alternative_exists | inconclusive
     before: str
     after: str | None
     remaining_paths_to_target: int
     evidence: list[str]
+    analysis_complete: bool = True
+    target_reachable: bool | None = None
+    remaining_paths_complete: bool = False  # count is a witnessed lower bound, not exhaustive routes
 
     def to_json(self) -> dict:
         return self.__dict__.copy()
@@ -56,6 +59,8 @@ def _describe(result: BuildResult, hop) -> str | None:
 
 def what_if(result: BuildResult, paths: list[AttackPath], opts: PathOptions | None = None) -> list[Remedy]:
     opts = opts or PathOptions()
+    policy_complete = not getattr(result, "unresolved_policies", []) and not any(
+        node.flags.get("iam_uncertainties") for node in result.graph.nodes.values())
     out: list[Remedy] = []
     for p in paths:
         for i, hop in enumerate(p.hops, start=1):
@@ -70,17 +75,23 @@ def what_if(result: BuildResult, paths: list[AttackPath], opts: PathOptions | No
                 g.edges[key] = dataclasses.replace(g.edges[key], precondition="workload_rce")
             else:
                 del g.edges[key]
-            new = [q for q in find_paths(result, opts, graph=g, only_entry=p.entry) if q.target == p.target]
-            same = [q for q in new if q.nodes == p.nodes]
-            if not new:
+            verification = verify_reachability(result, opts, graph=g, only_entry=p.entry, only_target=p.target)
+            pair = next((q for q in verification.pairs if q.target == p.target), None)
+            same = route_path(result, p, opts, graph=g)
+            reachable = pair.reachable if pair else None
+            if reachable is None or not policy_complete:
+                effect, after = "inconclusive", same.priority if same else None
+            elif not reachable:
                 effect, after = "breaks_path", None
-            elif same and same[0].priority != p.priority:
-                effect, after = "downgrades_path", same[0].priority
+            elif same and _rank(same.priority) < _rank(p.priority):
+                effect, after = "downgrades_path", same.priority
             elif same:
-                effect, after = "no_effect", same[0].priority
+                effect, after = "no_effect", same.priority
             else:
-                effect, after = "breaks_path_but_alternative_exists", max((q.priority for q in new), key=_rank)
-            out.append(Remedy(p.id, i, hop.edge, change, effect, p.priority, after, len(new), hop.evidence))
+                effect, after = "breaks_path_but_alternative_exists", pair.witness.priority
+            out.append(Remedy(p.id, i, hop.edge, change, effect, p.priority, after,
+                              1 if reachable else 0, hop.evidence,
+                              verification.complete and policy_complete, reachable, reachable is False))
     return out
 
 

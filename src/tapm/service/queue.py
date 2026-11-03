@@ -349,6 +349,7 @@ class JobQueue:
             level=job.level,
             fail_on=job.options.get("fail_on", "high"),
             file_problems=file_problems,
+            analysis=res.path_analysis or {"complete": False},
         )
 
         draft = draft_exceptions(g, [p.to_json() for p in res.paths]) if g.get("without_decision") else ""

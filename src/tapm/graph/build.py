@@ -190,16 +190,27 @@ def _suppress_blocked_public_access(plan: Plan, g: Graph, ledger: Ledger, tf: di
                 if any(p.values.get("block_public_acls") is True or p.values.get("ignore_public_acls") is True for p in pabs + account_pab):
                     g.nodes[bucket.address].flags["public_access_blocked"] = {"by": "public_access_block", "settings": ["acl"]}
                     continue
-                g.add_node(Node(ANY_PRINCIPAL, "external", "AWS::IAM::AnyPrincipal", "external", "Any AWS principal", synthetic=True))
                 acts = ["s3:ListBucket", "s3:GetObject"] + (["s3:PutObject"] if value == "public-read-write" else [])
+                denied = {action for deny in g.nodes[bucket.address].flags.get("explicit_denies", [])
+                          if deny["principal"] == ANY_PRINCIPAL for action in deny["actions"]}
+                acts = [action for action in acts if action not in denied]
+                if not acts:
+                    continue
+                restrictions = [r.handle for r in ledger.records()
+                                if r.kind == "IAM" and r.data.get("uncertain_restriction")
+                                and r.data.get("principal") == ANY_PRINCIPAL
+                                and r.data.get("target") == bucket.address and r.data.get("action") in acts]
+                classes = sorted({"list" if action == "s3:ListBucket" else
+                                  "write" if action == "s3:PutObject" else "read" for action in acts})
+                g.add_node(Node(ANY_PRINCIPAL, "external", "AWS::IAM::AnyPrincipal", "external", "Any AWS principal", synthetic=True))
                 h = ledger.add("NET", ("public_acl", acl.address), f"{acl.address}: acl = {value}",
                                source=src.locate(acl.base), refs=[tf[acl.address]])
                 g.nodes[bucket.address].flags["public_acl"] = value
                 g.add_edge(Edge("ALLOWS", ANY_PRINCIPAL, bucket.address,
-                                label="list,read" + (",write" if value == "public-read-write" else ""),
-                                data={"actions": acts, "access": sorted({"list", "read"} | ({"write"} if "write" in value else set())),
-                                      "via": "acl", "denied": [], "symbolic": False},
-                                evidence=[h, tf[bucket.address]]))
+                                label=",".join(classes),
+                                data={"actions": acts, "access": classes,
+                                      "via": "acl", "denied": sorted(denied), "symbolic": False},
+                                evidence=[h, tf[bucket.address], *restrictions], conditional=bool(restrictions)))
 
 
 def _derive_dataflows(g: Graph) -> None:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "terraform-attack-paths-pytm"
-version = "0.1.0"
+version = "0.2.0"
 description = "Terraform plan -> typed security graph -> executable PyTM model -> attack paths, with evidence-bound AI enrichment."
 readme = "README.md"
 requires-python = ">=3.11"

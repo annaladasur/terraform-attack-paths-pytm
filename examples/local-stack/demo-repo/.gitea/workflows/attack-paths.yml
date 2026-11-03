@@ -69,10 +69,11 @@ jobs:
               --server "${TAPM_SERVER_URL}" \
               --token "${TAPM_SERVER_TOKEN}" \
               --level "${TAPM_LEVEL}" \
+              --source-dir . \
               --repo "${{ github.repository }}" \
               --pr "${PR_NUM}" \
               --sha "${{ github.sha }}" \
-              --download-artifacts ./artifacts
+              --out ./artifacts
             exit $?
           fi
 
@@ -83,10 +84,11 @@ jobs:
               --server "${TAPM_SERVER_URL}" \
               --token "${TAPM_SERVER_TOKEN}" \
               --level "${TAPM_LEVEL}" \
+              --source-dir . \
               --repo "${{ github.repository }}" \
               --pr "${PR_NUM}" \
               --sha "${{ github.sha }}" \
-              --download-artifacts ./artifacts
+              --out ./artifacts
             exit $?
           fi
 
@@ -134,12 +136,29 @@ jobs:
           with open("/tmp/tapm-run/plan.json", "r", encoding="utf-8") as f:
               plan_data = json.load(f)
 
+          from pathlib import Path
+          source_root = Path(".").resolve()
+          source_files = {}
+          def source_error(error):
+              raise error
+          for folder, dirs, names in os.walk(source_root, followlinks=False, onerror=source_error):
+              directory = Path(folder)
+              dirs[:] = sorted(d for d in dirs if d not in {".git", ".terraform"} and not (directory / d).is_symlink())
+              for name in sorted(names):
+                  if not name.endswith(".tf"):
+                      continue
+                  path = directory / name
+                  if path.is_symlink() or not path.is_file():
+                      raise ValueError("Terraform source must be a regular file")
+                  source_files[path.relative_to(source_root).as_posix()] = path.read_bytes().decode("utf-8")
+
           payload = json.dumps({
               "repo": repo,
               "pr": pr,
               "sha": sha,
               "level": level,
-              "plan_json": plan_data
+              "plan_json": plan_data,
+              "source_files": source_files
           }).encode("utf-8")
 
           req = urllib.request.Request(
