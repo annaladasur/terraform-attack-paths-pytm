@@ -1,0 +1,1046 @@
+{
+  "checks": [
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "identity-allow",
+      "input": {
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Visible identity grant permits the sole modeled S3 object read."
+    },
+    {
+      "expected": {
+        "allowed": false,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "identity-deny-overrides",
+      "input": {
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Matching unconditional identity Deny overrides Allow."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "boundary-intersection-allow",
+      "input": {
+        "boundary": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ],
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Both identity and known boundary allow the action."
+    },
+    {
+      "expected": {
+        "allowed": false,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "boundary-implicit-deny",
+      "input": {
+        "boundary": [],
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "An empty known boundary does not allow the identity grant."
+    },
+    {
+      "expected": {
+        "allowed": false,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "boundary-explicit-deny",
+      "input": {
+        "boundary": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ],
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "A boundary explicit Deny overrides its own Allow."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "boundary-nonmatching-deny",
+      "input": {
+        "boundary": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::unrelated/*"
+          }
+        ],
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Deny on an unrelated object ARN does not deny this bucket."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": true,
+        "public_allowed": false
+      },
+      "id": "boundary-conditional-allow",
+      "input": {
+        "boundary": [
+          {
+            "Action": "s3:GetObject",
+            "Condition": {
+              "StringEquals": {
+                "aws:PrincipalTag/team": "blue"
+              }
+            },
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ],
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Unevaluated boundary Condition requires review rather than unconditional access."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": true,
+        "public_allowed": false,
+        "unknown_visible": true
+      },
+      "id": "unresolved-boundary-arn",
+      "input": {
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ],
+        "unresolved_boundary": true
+      },
+      "kind": "iam",
+      "rationale": "Unknown boundary retains possible access with visible uncertainty."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": true,
+        "public_allowed": false,
+        "unknown_visible": true
+      },
+      "id": "unknown-boundary-after-apply",
+      "input": {
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ],
+        "unknown_boundary": true
+      },
+      "kind": "iam",
+      "rationale": "after_unknown boundary is an unknown restriction even when no literal ARN is available."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": true,
+        "public_allowed": false,
+        "unknown_visible": true
+      },
+      "id": "identity-conditional-deny",
+      "input": {
+        "identity": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Condition": {
+              "StringEquals": {
+                "aws:PrincipalTag/team": "blue"
+              }
+            },
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "An unresolved matching Deny cannot be discarded as if access were unconditional."
+    },
+    {
+      "expected": {
+        "allowed": false,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "public-resource-deny-overrides",
+      "input": {
+        "resource_policy": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Public wildcard Deny blocks the public wildcard grant and known matching principals."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": true,
+        "public_allowed": true,
+        "unknown_visible": true
+      },
+      "id": "public-resource-conditional-deny",
+      "input": {
+        "public_unknown": true,
+        "resource_policy": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Condition": {
+              "StringEquals": {
+                "aws:PrincipalTag/team": "blue"
+              }
+            },
+            "Effect": "Deny",
+            "Principal": "*",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Conditional public Deny is unknown for both known and arbitrary principals."
+    },
+    {
+      "expected": {
+        "allowed": false,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "role-resource-boundary-implicit-deny",
+      "input": {
+        "boundary": [],
+        "principal_type": "aws_iam_role",
+        "resource_policy": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:role/tester"
+            },
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Resource grant to a role ARN remains limited by its permissions boundary."
+    },
+    {
+      "expected": {
+        "allowed": true,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "user-resource-boundary-implicit-bypass",
+      "input": {
+        "boundary": [],
+        "resource_policy": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/tester"
+            },
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "A same-account grant directly to a user ARN bypasses an implicit boundary denial."
+    },
+    {
+      "expected": {
+        "allowed": false,
+        "conditional": false,
+        "public_allowed": false
+      },
+      "id": "user-resource-boundary-explicit-deny",
+      "input": {
+        "boundary": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          },
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Deny",
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ],
+        "resource_policy": [
+          {
+            "Action": "s3:GetObject",
+            "Effect": "Allow",
+            "Principal": {
+              "AWS": "arn:aws:iam::111122223333:user/tester"
+            },
+            "Resource": "arn:aws:s3:::v2-sealed-asset/*"
+          }
+        ]
+      },
+      "kind": "iam",
+      "rationale": "Explicit boundary Deny still constrains direct user-ARN resource grants."
+    },
+    {
+      "expected": {
+        "by_label": {
+          "INVALID": 0,
+          "OUT_OF_SCOPE": 0,
+          "UNKNOWN": 0,
+          "UNLABELED": 1,
+          "VALID": 1
+        },
+        "duplicate_routes": 0,
+        "legacy_counts": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "unadjudicated_pairs": 1,
+        "unique_predicted_pairs": 2,
+        "unlabeled_paths": [
+          "i -> b"
+        ]
+      },
+      "id": "same-entry-new-target",
+      "input": {
+        "gold": [
+          {
+            "entry": "i",
+            "label": "VALID",
+            "target": "a"
+          }
+        ],
+        "predictions": [
+          [
+            "i",
+            "a"
+          ],
+          [
+            "i",
+            "b"
+          ]
+        ]
+      },
+      "kind": "accounting",
+      "rationale": "Exact pair accounting preserves historical gold-row numerators and exposes unmatched predictions."
+    },
+    {
+      "expected": {
+        "by_label": {
+          "INVALID": 0,
+          "OUT_OF_SCOPE": 0,
+          "UNKNOWN": 0,
+          "UNLABELED": 1,
+          "VALID": 1
+        },
+        "duplicate_routes": 1,
+        "legacy_counts": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "unadjudicated_pairs": 1,
+        "unique_predicted_pairs": 2,
+        "unlabeled_paths": [
+          "i -> b"
+        ]
+      },
+      "id": "duplicate-route-counts-once",
+      "input": {
+        "gold": [
+          {
+            "entry": "i",
+            "label": "VALID",
+            "target": "a"
+          }
+        ],
+        "predictions": [
+          [
+            "i",
+            "a"
+          ],
+          [
+            "i",
+            "a"
+          ],
+          [
+            "i",
+            "b"
+          ]
+        ]
+      },
+      "kind": "accounting",
+      "rationale": "Exact pair accounting preserves historical gold-row numerators and exposes unmatched predictions."
+    },
+    {
+      "expected": {
+        "by_label": {
+          "INVALID": 0,
+          "OUT_OF_SCOPE": 1,
+          "UNKNOWN": 0,
+          "UNLABELED": 0,
+          "VALID": 1
+        },
+        "duplicate_routes": 0,
+        "legacy_counts": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "unadjudicated_pairs": 0,
+        "unique_predicted_pairs": 2,
+        "unlabeled_paths": []
+      },
+      "id": "out-of-scope-is-visible",
+      "input": {
+        "gold": [
+          {
+            "entry": "i",
+            "label": "VALID",
+            "target": "a"
+          },
+          {
+            "entry": "i",
+            "label": "OUT_OF_SCOPE",
+            "target": "b"
+          }
+        ],
+        "predictions": [
+          [
+            "i",
+            "a"
+          ],
+          [
+            "i",
+            "b"
+          ]
+        ]
+      },
+      "kind": "accounting",
+      "rationale": "Exact pair accounting preserves historical gold-row numerators and exposes unmatched predictions."
+    },
+    {
+      "expected": {
+        "by_label": {
+          "INVALID": 0,
+          "OUT_OF_SCOPE": 0,
+          "UNKNOWN": 1,
+          "UNLABELED": 0,
+          "VALID": 1
+        },
+        "duplicate_routes": 0,
+        "legacy_counts": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "unadjudicated_pairs": 1,
+        "unique_predicted_pairs": 2,
+        "unlabeled_paths": [
+          "i -> b"
+        ]
+      },
+      "id": "exact-unknown-adjudication",
+      "input": {
+        "adjudications": [
+          {
+            "entry": "i",
+            "label": "UNKNOWN",
+            "reason": "Runtime-only credential contents unavailable.",
+            "target": "b"
+          }
+        ],
+        "gold": [
+          {
+            "entry": "i",
+            "label": "VALID",
+            "target": "a"
+          }
+        ],
+        "predictions": [
+          [
+            "i",
+            "a"
+          ],
+          [
+            "i",
+            "b"
+          ]
+        ]
+      },
+      "kind": "accounting",
+      "rationale": "Exact pair accounting preserves historical gold-row numerators and exposes unmatched predictions."
+    },
+    {
+      "expected": {
+        "by_label": {
+          "INVALID": 0,
+          "OUT_OF_SCOPE": 0,
+          "UNKNOWN": 0,
+          "UNLABELED": 2,
+          "VALID": 1
+        },
+        "duplicate_routes": 0,
+        "legacy_counts": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "unadjudicated_pairs": 2,
+        "unique_predicted_pairs": 3,
+        "unlabeled_paths": [
+          "i -> b-extra",
+          "other-i -> b"
+        ]
+      },
+      "id": "near-match-is-unmatched",
+      "input": {
+        "adjudications": [
+          {
+            "entry": "i",
+            "label": "VALID",
+            "reason": "Exact declaration is intentionally a different pair.",
+            "target": "b"
+          }
+        ],
+        "gold": [
+          {
+            "entry": "i",
+            "label": "VALID",
+            "target": "a"
+          }
+        ],
+        "predictions": [
+          [
+            "i",
+            "a"
+          ],
+          [
+            "i",
+            "b-extra"
+          ],
+          [
+            "other-i",
+            "b"
+          ]
+        ]
+      },
+      "kind": "accounting",
+      "rationale": "Exact pair accounting preserves historical gold-row numerators and exposes unmatched predictions."
+    },
+    {
+      "expected": {
+        "displayed": 1,
+        "reachable_pairs": [
+          [
+            "internet",
+            "a"
+          ],
+          [
+            "internet",
+            "z"
+          ]
+        ],
+        "unknown_pairs": 0,
+        "verification_complete": true
+      },
+      "id": "global-display-cap",
+      "input": {
+        "edges": [
+          [
+            "internet",
+            "a",
+            "EXPOSES"
+          ],
+          [
+            "internet",
+            "z",
+            "EXPOSES"
+          ]
+        ],
+        "options": {
+          "max_paths": 1
+        },
+        "targets": [
+          "a",
+          "z"
+        ],
+        "truth_pairs": [
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "a"
+          },
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "z"
+          }
+        ]
+      },
+      "kind": "paths",
+      "rationale": "Independent reachability must survive display caps; incomplete verification is unknown, never a clearance."
+    },
+    {
+      "expected": {
+        "displayed": 0,
+        "reachable_pairs": [
+          [
+            "internet",
+            "a"
+          ],
+          [
+            "internet",
+            "z"
+          ]
+        ],
+        "unknown_pairs": 0,
+        "verification_complete": true
+      },
+      "id": "zero-pair-display-cap",
+      "input": {
+        "edges": [
+          [
+            "internet",
+            "a",
+            "EXPOSES"
+          ],
+          [
+            "internet",
+            "z",
+            "EXPOSES"
+          ]
+        ],
+        "options": {
+          "max_paths_per_pair": 0
+        },
+        "targets": [
+          "a",
+          "z"
+        ],
+        "truth_pairs": [
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "a"
+          },
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "z"
+          }
+        ]
+      },
+      "kind": "paths",
+      "rationale": "Independent reachability must survive display caps; incomplete verification is unknown, never a clearance."
+    },
+    {
+      "expected": {
+        "displayed": 0,
+        "reachable_pairs": [
+          [
+            "internet",
+            "z"
+          ]
+        ],
+        "unknown_pairs": 0,
+        "verification_complete": true
+      },
+      "id": "display-depth-does-not-limit-verification",
+      "input": {
+        "edges": [
+          [
+            "internet",
+            "mid",
+            "EXPOSES"
+          ],
+          [
+            "mid",
+            "z",
+            "ROUTES_TO"
+          ]
+        ],
+        "options": {
+          "max_depth": 1
+        },
+        "targets": [
+          "z"
+        ],
+        "truth_pairs": [
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "z"
+          }
+        ]
+      },
+      "kind": "paths",
+      "rationale": "Independent reachability must survive display caps; incomplete verification is unknown, never a clearance."
+    },
+    {
+      "expected": {
+        "displayed": 1,
+        "reachable_pairs": [],
+        "unknown_pairs": 1,
+        "verification_complete": false
+      },
+      "id": "verification-budget-is-unknown",
+      "input": {
+        "edges": [
+          [
+            "internet",
+            "mid",
+            "EXPOSES"
+          ],
+          [
+            "mid",
+            "z",
+            "ROUTES_TO"
+          ]
+        ],
+        "options": {
+          "max_verification_steps": 1
+        },
+        "targets": [
+          "z"
+        ],
+        "truth_pairs": [
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "z"
+          }
+        ]
+      },
+      "kind": "paths",
+      "rationale": "Independent reachability must survive display caps; incomplete verification is unknown, never a clearance."
+    },
+    {
+      "expected": {
+        "displayed": 1,
+        "invariant_under_order_and_padding": true,
+        "reachable_pairs": [
+          [
+            "internet",
+            "a"
+          ],
+          [
+            "internet",
+            "z"
+          ]
+        ],
+        "unknown_pairs": 0,
+        "verification_complete": true
+      },
+      "id": "order-and-irrelevant-padding",
+      "input": {
+        "compare_reversed_padding": true,
+        "edges": [
+          [
+            "internet",
+            "mid",
+            "EXPOSES"
+          ],
+          [
+            "mid",
+            "z",
+            "ROUTES_TO"
+          ],
+          [
+            "internet",
+            "a",
+            "EXPOSES"
+          ]
+        ],
+        "options": {
+          "max_paths": 1
+        },
+        "targets": [
+          "a",
+          "z"
+        ],
+        "truth_pairs": [
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "a"
+          },
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "z"
+          }
+        ]
+      },
+      "kind": "paths",
+      "rationale": "Independent reachability must survive display caps; incomplete verification is unknown, never a clearance."
+    },
+    {
+      "expected": {
+        "alternative_preserved": true,
+        "displayed": 1,
+        "reachable_pairs": [
+          [
+            "internet",
+            "a"
+          ],
+          [
+            "internet",
+            "z"
+          ]
+        ],
+        "unknown_pairs": 0,
+        "verification_complete": true
+      },
+      "id": "what-if-keeps-capped-alternative",
+      "input": {
+        "edges": [
+          [
+            "internet",
+            "a",
+            "EXPOSES"
+          ],
+          [
+            "internet",
+            "m1",
+            "EXPOSES"
+          ],
+          [
+            "m1",
+            "z",
+            "ROUTES_TO"
+          ],
+          [
+            "internet",
+            "m2",
+            "EXPOSES"
+          ],
+          [
+            "m2",
+            "z",
+            "ROUTES_TO"
+          ]
+        ],
+        "options": {
+          "max_paths": 1
+        },
+        "targets": [
+          "a",
+          "z"
+        ],
+        "truth_pairs": [
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "a"
+          },
+          {
+            "entry": "internet",
+            "label": "VALID",
+            "target": "z"
+          }
+        ],
+        "what_if_alternative": true
+      },
+      "kind": "paths",
+      "rationale": "Independent reachability must survive display caps; incomplete verification is unknown, never a clearance."
+    },
+    {
+      "expected": {
+        "pairs": [
+          {
+            "entry": "aws_iam_user.cg-solo",
+            "reachable": true,
+            "target": "aws_ssm_parameter.cg-ec2-private-key"
+          },
+          {
+            "entry": "aws_iam_user.cg-solo",
+            "reachable": true,
+            "target": "aws_ssm_parameter.cg-ec2-public-key"
+          }
+        ],
+        "verification_complete": true
+      },
+      "id": "familiar-codebuild-new-parameter-pairs",
+      "input": {
+        "gold": "evaluations/tier2/gold/cloudgoat-codebuild_secrets.yaml",
+        "pairs": [
+          {
+            "entry": "aws_iam_user.cg-solo",
+            "label": "VALID",
+            "reason": "Predeclared from iam.tf: solo has ssm:GetParameter Resource *; target parameter in ssm-parameters.tf.",
+            "target": "aws_ssm_parameter.cg-ec2-private-key"
+          },
+          {
+            "entry": "aws_iam_user.cg-solo",
+            "label": "VALID",
+            "reason": "Predeclared from iam.tf: solo has ssm:GetParameter Resource *; target parameter in ssm-parameters.tf.",
+            "target": "aws_ssm_parameter.cg-ec2-public-key"
+          }
+        ],
+        "plan": "evaluations/tier2/plans/cloudgoat-codebuild_secrets.json.gz",
+        "source": "evaluations/tier2/sources/cloudgoat-codebuild_secrets",
+        "targets": [
+          "aws_ssm_parameter.cg-ec2-private-key",
+          "aws_ssm_parameter.cg-ec2-public-key",
+          "aws_db_instance.cg-psql-rds"
+        ]
+      },
+      "kind": "known_plan",
+      "rationale": "Known committed plan; two novel preselected positive pairs. Frozen RDS labels remain separate."
+    },
+    {
+      "expected": {
+        "pairs": [
+          {
+            "entry": "aws_iam_user.initial_user",
+            "reachable": false,
+            "target": "aws:account-admin"
+          }
+        ],
+        "verification_complete": true
+      },
+      "id": "familiar-vpc-new-admin-negative",
+      "input": {
+        "gold": "evaluations/tier2/gold/cloudgoat-vpc_peering_overexposed.yaml",
+        "pairs": [
+          {
+            "entry": "aws_iam_user.initial_user",
+            "label": "INVALID",
+            "reason": "Predeclared from iam.tf: initial_user only ec2:Describe*; no assume-role or escalation grants.",
+            "target": "aws:account-admin"
+          }
+        ],
+        "plan": "evaluations/tier2/plans/cloudgoat-vpc_peering_overexposed.json.gz",
+        "source": "evaluations/tier2/sources/cloudgoat-vpc_peering_overexposed",
+        "targets": [
+          "aws_db_instance.customer_db",
+          "aws:account-admin"
+        ]
+      },
+      "kind": "known_plan",
+      "rationale": "Known committed plan; new preselected negative pair. Runtime host-credential routes remain out of scope."
+    }
+  ],
+  "evaluation_class": "supplemental regression/known-input evaluation",
+  "schema_version": 2
+}

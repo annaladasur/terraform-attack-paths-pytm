@@ -259,6 +259,8 @@ def _added_relationships(before, after) -> list[str]:
 
 
 def compare(before, after, path) -> dict:
+    from ..paths.engine import PathOptions, analyze_paths, route_path
+
     reasons: list[str] = []
     removed = sorted(set(before.build.plan.resources) - set(after.build.plan.resources))
     if removed:
@@ -266,14 +268,35 @@ def compare(before, after, path) -> dict:
     added = _added_relationships(before, after)
     if added:
         reasons.append("does not only narrow: adds " + "; ".join(added[:3]))
-    bkeys = {tuple(p.nodes) for p in before.paths}
-    new = [p for p in after.paths if tuple(p.nodes) not in bkeys]
+    # Emitted lists can be capped, stale, or empty while graph routes remain.
+    # Recompute bounded analysis and check the original relationships directly.
+    def analysis_for(res):
+        cfg = getattr(res, "cfg", None)
+        bounds = getattr(cfg, "path_options", None) or PathOptions()
+        opts = replace(bounds, user_entries=getattr(cfg, "user_entries", False) or bounds.user_entries,
+                       extra_targets=tuple(dict.fromkeys(tuple(getattr(cfg, "extra_targets", ())) + bounds.extra_targets)))
+        return opts, analyze_paths(res.build, opts)
+
+    _, b_analysis = analysis_for(before)
+    aopts, a_analysis = analysis_for(after)
+    incomplete = [name for name, res, computed in (("before", before, b_analysis), ("after", after, a_analysis))
+                  if not computed.complete or
+                  getattr(res, "path_analysis", None) is not None and res.path_analysis.get("complete") is not True]
+    if incomplete:
+        reasons.append("incomplete attack-path analysis: " + ", ".join(incomplete))
+    bkeys = {tuple(p.nodes) for p in b_analysis.paths}
+    new = [p for p in a_analysis.paths if tuple(p.nodes) not in bkeys]
     if new:
         reasons.append(f"introduces {len(new)} new path(s): " + "; ".join(" -> ".join(p.nodes) for p in new[:3]))
-    same = next((p for p in after.paths if tuple(p.nodes) == tuple(path.nodes)), None)
-    others = [p for p in after.paths if p.target == path.target and tuple(p.nodes) != tuple(path.nodes)]
+    same = route_path(after.build, path, aopts)
+    pair = next((p for p in a_analysis.reachability.pairs if p.entry == path.entry and p.target == path.target), None)
+    others = [p for p in a_analysis.paths if p.entry == path.entry and p.target == path.target
+              and tuple(p.nodes) != tuple(path.nodes)]
+    reachable = pair.reachable if pair else None
     if same is None:
-        effect, prio = ("breaks_path" if not others else "breaks_route"), None
+        effect, prio = ("breaks_path" if reachable is False else "breaks_route" if reachable else "inconclusive"), None
+        if reachable is None:
+            reasons.append("target reachability is unknown")
     elif RANK[same.priority] < RANK[path.priority]:
         effect, prio = "downgrades_path", same.priority
     else:
@@ -285,11 +308,12 @@ def compare(before, after, path) -> dict:
         pytm = {"resolved": sorted(f"{t} on {e}" for t, e in b - a), "new": sorted(f"{t} on {e}" for t, e in a - b)}
         if pytm["new"]:
             reasons.append("pytm: new threats the plan decides: " + ", ".join(pytm["new"]))
-    status = "REJECTED" if reasons else {"breaks_path": "PROVEN_BREAK", "downgrades_path": "PROVEN_DOWNGRADE",
+    status = "UNVERIFIED" if incomplete or reachable is None else "REJECTED" if reasons else {"breaks_path": "PROVEN_BREAK", "downgrades_path": "PROVEN_DOWNGRADE",
                                          "breaks_route": "ROUTE_BROKEN"}[effect]
     return {"status": status, "reasons": reasons, "effect": effect, "priority_before": path.priority,
             "priority_after": prio, "preconditions_after": same.preconditions if same else [],
-            "new_paths": [p.nodes for p in new], "other_paths_to_target": len(others),
+            "new_paths": [p.nodes for p in new], "other_paths_to_target": max(len(others), 1 if same is None and reachable else 0),
+            "target_reachable": reachable, "analysis_complete": not incomplete,
             "resources_removed": removed, "pytm": pytm}
 
 

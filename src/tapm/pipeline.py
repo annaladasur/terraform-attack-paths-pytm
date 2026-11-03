@@ -10,13 +10,13 @@ from __future__ import annotations
 import json
 import shutil
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 from . import PROMPT_VERSION, SCHEMA_VERSION, SCOPE_STATEMENT, __version__
 from .evidence.comments import register_comments
 from .graph.build import BuildOptions, BuildResult, build_graph
-from .paths.engine import AttackPath, PathOptions, find_paths, register_paths
+from .paths.engine import AttackPath, PathOptions, analyze_paths, register_paths
 from .paths.whatif import what_if
 from .pytm_gen.classify import link_paths
 from .pytm_gen.generator import PYTM_VERSION, generate, model_facts, threat_library, with_open_questions
@@ -43,6 +43,7 @@ class RunConfig:
     answers_file: Path | None = None  # default: <tf_dir>/threat-answers.yaml (see pytm_gen/questions.py)
     extra_targets: tuple[str, ...] = ()
     sarif_uri_prefix: str = ""  # path of tf_dir relative to the repository root, for code-scanning locations
+    path_options: PathOptions | None = None  # optional bounded display/verification settings
 
 
 @dataclass
@@ -58,6 +59,7 @@ class RunResult:
     timings_ms: dict[str, int] = field(default_factory=dict)
     ai: dict | None = None
     remediation: dict | None = None
+    path_analysis: dict | None = None
 
 
 def run_deterministic(cfg: RunConfig) -> RunResult:
@@ -77,8 +79,12 @@ def run_deterministic(cfg: RunConfig) -> RunResult:
     lap("parse_plan")
     result = build_graph(plan, cfg.tf_dir, BuildOptions(heuristic_sensitivity=cfg.heuristic_sensitivity))
     lap("graph_iam")
-    popts = PathOptions(user_entries=cfg.user_entries, extra_targets=tuple(cfg.extra_targets))
-    paths = find_paths(result, popts)
+    bounds = cfg.path_options or PathOptions()
+    popts = replace(bounds, user_entries=cfg.user_entries or bounds.user_entries,
+                    extra_targets=tuple(dict.fromkeys(tuple(cfg.extra_targets) + bounds.extra_targets)))
+    analysis = analyze_paths(result, popts)
+    paths = analysis.paths
+    path_analysis = analysis.to_json()
     lap("paths")
     findings: list[Finding] = []
     if cfg.baselines_dir and Path(cfg.baselines_dir).exists():
@@ -133,6 +139,7 @@ def run_deterministic(cfg: RunConfig) -> RunResult:
     h["attack-paths.json"] = dump_json({"schema_version": SCHEMA_VERSION,
                                         "definition": "docs/methodology.md#attack-path",
                                         "scope": SCOPE_STATEMENT,
+                                        "analysis": path_analysis,
                                         "paths": [p.to_json() for p in paths],
                                         "remediation_what_if": [r.to_json() for r in remedies]}, out / "attack-paths.json")
     h["scanner-findings.json"] = dump_json({"findings": [f.to_json() for f in findings]}, out / "scanner-findings.json")
@@ -143,7 +150,7 @@ def run_deterministic(cfg: RunConfig) -> RunResult:
                 shutil.copyfile(p, out / f"baseline-{tool}.json")
     h["evidence.json"] = dump_json({"schema_version": SCHEMA_VERSION, **result.ledger.to_json()}, out / "evidence.json")
     lap("write")
-    return RunResult(cfg, result, paths, findings, comments, remedies, pytm_res, h, t)
+    return RunResult(cfg, result, paths, findings, comments, remedies, pytm_res, h, t, path_analysis=path_analysis)
 
 
 def run(cfg: RunConfig) -> RunResult:
@@ -191,6 +198,7 @@ def run_manifest(res: RunResult) -> dict:
         "tapm": __version__,
         "schema_version": SCHEMA_VERSION,
         "scope": SCOPE_STATEMENT,
+        "path_analysis": res.path_analysis,
         "prompt_version": PROMPT_VERSION,
         "terraform_version_in_plan": res.build.plan.terraform_version,
         "pytm": PYTM_VERSION,

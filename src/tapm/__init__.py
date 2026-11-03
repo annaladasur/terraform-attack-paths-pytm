@@ -5,7 +5,7 @@ subpackage may only *annotate* that truth, and every annotation must pass the
 deterministic validator in ``tapm.ai.validator`` before it is reported.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 SCHEMA_VERSION = "1"
 PROMPT_VERSION = "v1"
 SCOPE_STATEMENT = (

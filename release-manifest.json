@@ -30,7 +30,7 @@
     },
     ".gitleaks.toml": {
       "mode": "0o644",
-      "sha256": "c3e1d9ec34e09ab290bfccdeb3a721843b2c106b88deb6e586da8e6d0c1b3ddc"
+      "sha256": "662fcac2c67caf21ca5fe934d022e666aa63658a9dbf46b34cad94ce0a2555b7"
     },
     "CHALLENGE.md": {
       "mode": "0o644",
@@ -62,7 +62,7 @@
     },
     "README.md": {
       "mode": "0o644",
-      "sha256": "c3b802f135fabe54edf73e8eb879df2ee4514cafe4965774ad0ea2c670260cb7"
+      "sha256": "a5a3f9e8c78ed45705efe653b588651fc5f57cc7134d7f484327f37e9108f01a"
     },
     "SECURITY.md": {
       "mode": "0o644",
@@ -71,6 +71,10 @@
     "THIRD-PARTY-NOTICES.md": {
       "mode": "0o644",
       "sha256": "e979b027617e841ef2b9b63d218bf731c9d4d788eb3caa9f82c89f63a8ae95dd"
+    },
+    "V2-RELEASE.md": {
+      "mode": "0o644",
+      "sha256": "69924f3165533a60787de19ad23b9a932f7055aab205ec34bcdb929ba1f38124"
     },
     "conference-snapshot/ai-annotations.json": {
       "mode": "0o644",
@@ -338,7 +342,7 @@
     },
     "docs/methodology.md": {
       "mode": "0o644",
-      "sha256": "9fd5ac79dfd631d444a537c2e39b6bcbed0284644ef51ddf682fc355520e6114"
+      "sha256": "774c28b9e40ab381521b1fc5e58a36f7a430f47b77c16944b909901dd9eb88c8"
     },
     "docs/prompt-injection.md": {
       "mode": "0o644",
@@ -1356,6 +1360,46 @@
       "mode": "0o644",
       "sha256": "05d1fb7971e32e559b0edc05cbbd8b47e75a931861a2a3957002ccc2d3a5a926"
     },
+    "evaluations/v2/AMENDED-RESULTS.md": {
+      "mode": "0o644",
+      "sha256": "ddfe7ec32f2a0cd87eb7213b03ee15997601b494f0c25ac9daa3152de574784a"
+    },
+    "evaluations/v2/RESULTS.md": {
+      "mode": "0o644",
+      "sha256": "be11175ddb4e0b22ec00dc7be5a0cea7a445a77725f29c03a972120383447fb8"
+    },
+    "evaluations/v2/amended-protocol.json": {
+      "mode": "0o644",
+      "sha256": "733a8f6759a810ce050e91c6be4b2026d069b5f02510034783224142da33699f"
+    },
+    "evaluations/v2/amended-results.json": {
+      "mode": "0o644",
+      "sha256": "88fa47ba350a06b9697f234fa2a06984f27ad2e51be556e801c7d2e80d9d322c"
+    },
+    "evaluations/v2/corpus-results.json": {
+      "mode": "0o644",
+      "sha256": "86ac5fa2b1fd1a502ffac5848a7a5da49538e0f98a763bf12e0eabd6f3940b59"
+    },
+    "evaluations/v2/expected-checks.json": {
+      "mode": "0o644",
+      "sha256": "990b249360a73244a822b91e8ea88942fd1681d97e0a11ca7a2b351c581bc7bc"
+    },
+    "evaluations/v2/original-executions.json": {
+      "mode": "0o644",
+      "sha256": "d984e7f2c3e699d9125dd1c9423a3b352272811b1e4e360bd6c0762a8b87b842"
+    },
+    "evaluations/v2/prediction-adjudications.json": {
+      "mode": "0o644",
+      "sha256": "0b2446fc5f901470e1b4fb1849a7aae39417cf72173dc78f1efe5341e6132aef"
+    },
+    "evaluations/v2/protocol.json": {
+      "mode": "0o644",
+      "sha256": "e1fb26ab895dac5d9249439c124f444e11f4ca46308d710209193f66226770c6"
+    },
+    "evaluations/v2/results.json": {
+      "mode": "0o644",
+      "sha256": "abe108a8e33d11efe475621a7e1d52a077ef76e9986a29679320041851aa440f"
+    },
     "examples/github-actions/nightly-canary.yml": {
       "mode": "0o644",
       "sha256": "bf47842e17c0741f017c192abe10052b36e3adb8adb5adf3d4f8bdb941a13d47"
@@ -1374,7 +1418,7 @@
     },
     "examples/local-cluster/.gitea/workflows/attack-paths.yml": {
       "mode": "0o644",
-      "sha256": "2a0897ab2e50a0748ff7222175821185b2449cb5f333feeb058bd48c4468313c"
+      "sha256": "75060e18bf54b735df49645ccb27d88a2d78d90d1de65f6defce9e8a6094b4b1"
     },
     "examples/local-cluster/README.md": {
       "mode": "0o644",
@@ -1466,11 +1510,11 @@
     },
     "examples/local-stack/.gitea/workflows/attack-paths.yml": {
       "mode": "0o644",
-      "sha256": "511cd382ba9db8ce91b1db6ea32f8ed6c2ae6a8ba08d60ebea84a24a98099d4a"
+      "sha256": "e0b6a0b6e456777bfde819277ee5f84636a29ca1328f84038d8c600d38e4cea0"
     },
     "examples/local-stack/README.md": {
       "mode": "0o644",
-      "sha256": "c7e38c08840953a7857e0932cc8ea39ab5d7a37b841e36796da79bed876f4791"
+      "sha256": "d755fff4205c809c1ecc55f7b7050b667df0156267974bb6f3087e9b2a4de5b9"
     },
     "examples/local-stack/bootstrap.sh": {
       "mode": "0o755",
@@ -1486,11 +1530,11 @@
     },
     "examples/local-stack/demo-repo.bundle": {
       "mode": "0o644",
-      "sha256": "70776bf0f9394294bbe0ad5bc3e55e1fb516af918526fa5f046adfd48919f048"
+      "sha256": "5bf68be30fe79a6d15d4deb4ae51d939ea8a072310b3eb838c278496f13a97bf"
     },
     "examples/local-stack/demo-repo/.gitea/workflows/attack-paths.yml": {
       "mode": "0o644",
-      "sha256": "511cd382ba9db8ce91b1db6ea32f8ed6c2ae6a8ba08d60ebea84a24a98099d4a"
+      "sha256": "e0b6a0b6e456777bfde819277ee5f84636a29ca1328f84038d8c600d38e4cea0"
     },
     "examples/local-stack/demo-repo/.plan-source-key": {
       "mode": "0o644",
@@ -3478,7 +3522,7 @@
     },
     "pyproject.toml": {
       "mode": "0o644",
-      "sha256": "57f344b69803d00c83cc86023ea3c4d5d13095762a0ca6e597cd72c8eccb611d"
+      "sha256": "78baf0dbf1c0d5d39a03e03c619b41bde03cbe0f67e0626e6d994ce601738e0f"
     },
     "schemas/annotation.schema.json": {
       "mode": "0o644",
@@ -3515,6 +3559,18 @@
     "scripts/critic.sh": {
       "mode": "0o755",
       "sha256": "5afc64f6458c021bc2496889d3a90c27ffc2b52eba9bc1d8efb7877dbc2da08e"
+    },
+    "scripts/evaluate-v2-amended.py": {
+      "mode": "0o644",
+      "sha256": "6624a390dff1d61d11da59dd49e5ffbd7fc5d4e7fb02eb8e826e3b5d64759b11"
+    },
+    "scripts/evaluate-v2-corpus.py": {
+      "mode": "0o644",
+      "sha256": "ef8d995ec4e5ef209a692e01cadf06a68cf70b6bfb1efb60921a5b7eda89caba"
+    },
+    "scripts/evaluate-v2.py": {
+      "mode": "0o644",
+      "sha256": "463f1fa6507a1eb99f04bcf6ace8fb5fc67567dbcb974be7b8365920c8fff17a"
     },
     "scripts/export-public.py": {
       "mode": "0o755",
@@ -3566,7 +3622,7 @@
     },
     "src/tapm/__init__.py": {
       "mode": "0o644",
-      "sha256": "060532e14042f765fe31860870faa46d025be84d3fa0166d14f920de28d3f672"
+      "sha256": "8394c364e36537f8c1e06fffe54f3f52975c41484ab10a04496c26e976e4cabb"
     },
     "src/tapm/ai/__init__.py": {
       "mode": "0o644",
@@ -3654,7 +3710,7 @@
     },
     "src/tapm/ai/remediate.py": {
       "mode": "0o644",
-      "sha256": "972f9dc635e0385e23ba5a24b508b151f01f5ac4b46bbb19795e00a1ce68e5d5"
+      "sha256": "530eea1d384094f6c1d4a4e8583de275e2f6708ae8ef6ec61c0b076f3e34cc6f"
     },
     "src/tapm/ai/self_model.py": {
       "mode": "0o644",
@@ -3670,7 +3726,7 @@
     },
     "src/tapm/cli.py": {
       "mode": "0o644",
-      "sha256": "c9ba2d182c8d9c6b0a8fb69bb7cb1bb79faa456805f4f3e8ce10559694d4eee5"
+      "sha256": "8c57eb5a3cd2149ac11bfd8aa0751c9ecb82e622e7903a8e0d93de7d2bc3f4a7"
     },
     "src/tapm/eval/__init__.py": {
       "mode": "0o644",
@@ -3730,7 +3786,7 @@
     },
     "src/tapm/eval/tier2.py": {
       "mode": "0o644",
-      "sha256": "574666413a26847ed3a521fd09068ff16da6921ac9c6172637633ad77929931e"
+      "sha256": "cd5f07792dc0dcc710f0b1cc86525c621edc3c3bb3c5a4c6a95e3576a600824f"
     },
     "src/tapm/eval/variability.py": {
       "mode": "0o644",
@@ -3750,7 +3806,7 @@
     },
     "src/tapm/gate.py": {
       "mode": "0o644",
-      "sha256": "fba5e7760b6bfa65efae4866570c4323aed777a2c9b02c674e5fc67d2fa73a19"
+      "sha256": "31c52dea121b32a8526f5a0adffc734c0089954e8adc8060e824074e87c83dc2"
     },
     "src/tapm/graph/__init__.py": {
       "mode": "0o644",
@@ -3758,7 +3814,7 @@
     },
     "src/tapm/graph/build.py": {
       "mode": "0o644",
-      "sha256": "494e9b67dd8b8905543d81049330b84f5473f349c4a725124f9f73d416c14934"
+      "sha256": "ab30b203f48196783c5a683ad2621b47f6b22c05d62e1118a9ac0169c3c32150"
     },
     "src/tapm/graph/ecs.py": {
       "mode": "0o644",
@@ -3794,11 +3850,11 @@
     },
     "src/tapm/iam/evaluator.py": {
       "mode": "0o644",
-      "sha256": "ee75a3cdb0c37f6c745f6fee8217b7345047fa51cf74f650f320a079d54b736b"
+      "sha256": "15d46f0cb523edef0215037889b082006e5db5ff72a1a05989e61e6f7079c9bb"
     },
     "src/tapm/iam/policy.py": {
       "mode": "0o644",
-      "sha256": "2761d397a4b41212befc09d0662686938cb48c0a5ac3a5ca2155c27a484d8466"
+      "sha256": "9f754732c03598ee39b51545c95064268eb62d62fbaace9918e537dabdb581db"
     },
     "src/tapm/lab.py": {
       "mode": "0o644",
@@ -3814,15 +3870,15 @@
     },
     "src/tapm/paths/engine.py": {
       "mode": "0o644",
-      "sha256": "0cba8cae461ceb97d30a94cb369c586de7bc3c204038002e9a3b6d05d638bcbe"
+      "sha256": "32df1e911028dff642698c238da5bc5544e89e493251787820234f9a15ae9dac"
     },
     "src/tapm/paths/whatif.py": {
       "mode": "0o644",
-      "sha256": "c635ba2d0d56d177f4a6bd1973d84c15539a7817248c858cdc3dd0e2927975de"
+      "sha256": "8259f4a574b12aa25bfe1c891d12daf9a9065b15eddfde20939da07566f6d949"
     },
     "src/tapm/pipeline.py": {
       "mode": "0o644",
-      "sha256": "89c82619fbcd6f4efbdfb11b4072cc102e4af7a272491078d0e0182c9194d07c"
+      "sha256": "4218130f39920ea2b5d53ce68e6e2ae8708e40f464c0e939da3e57ee6e4c290c"
     },
     "src/tapm/pytm_gen/__init__.py": {
       "mode": "0o644",
@@ -3862,7 +3918,7 @@
     },
     "src/tapm/report/developer.py": {
       "mode": "0o644",
-      "sha256": "2c3ee60ebc7088355a52dd9cb1635a6f716742b9498ebdaaf08c8a2246128ee1"
+      "sha256": "ab71a59baf26ea17a23e6df4c28dced73e02e8075f15f1bb5ccaf92447f320d0"
     },
     "src/tapm/report/executive.py": {
       "mode": "0o644",
@@ -3926,7 +3982,7 @@
     },
     "src/tapm/service/client.py": {
       "mode": "0o644",
-      "sha256": "12080e2dbb3cc3040f9109841bc1fe074fa9bb06029db3e6242a2edef597e95f"
+      "sha256": "337326726cb38a49346a8fc01fcc1d3e3f6c10a3aeb66e48db64fd968e381e3f"
     },
     "src/tapm/service/logging.py": {
       "mode": "0o644",
@@ -3942,11 +3998,15 @@
     },
     "src/tapm/service/queue.py": {
       "mode": "0o644",
-      "sha256": "5e5424b81944459b8ff9adb07103fde59aab016a93b62860246673b1133da337"
+      "sha256": "a869efa6ffa6347d900da4463b421ce906d993a00a71fe741c309a60e55122fe"
     },
     "src/tapm/service/server.py": {
       "mode": "0o644",
       "sha256": "228f66b2f7ebccb65481e29aa122dee58020034b40774a4672337f21a93a428b"
+    },
+    "src/tapm/service/sources.py": {
+      "mode": "0o644",
+      "sha256": "2c48b23bd7633bf3548ce1763e807de9ffe13d474f2051619564ac99cff26748"
     },
     "src/tapm/terraform/__init__.py": {
       "mode": "0o644",
@@ -4046,7 +4106,7 @@
     },
     "tests/test_benchmark_plumbing.py": {
       "mode": "0o644",
-      "sha256": "f04fcd532bd9ac1ed5af5c4f887382dfe76a71902eb823b60659f52513ecc8fb"
+      "sha256": "99513d48fecedb67e200df3e573efae191695ca409f0bc89d47dfc91356b1034"
     },
     "tests/test_contract.py": {
       "mode": "0o644",
@@ -4062,7 +4122,7 @@
     },
     "tests/test_developer_comment.py": {
       "mode": "0o644",
-      "sha256": "97df7479307e4296cebc6f9e96d355f55f9b92fba960fbe52f2bd36587d98232"
+      "sha256": "16194a9888ff1653d8f5faad2e9ea7bb5e05a372cc22f7ad1be223d65edc9094"
     },
     "tests/test_engine_coverage.py": {
       "mode": "0o644",
@@ -4098,7 +4158,7 @@
     },
     "tests/test_heldout.py": {
       "mode": "0o644",
-      "sha256": "9d986b0792f8885bf89e1cf10cde01d7edbae0d7e430fa76b6fe2c0e097bfa51"
+      "sha256": "e0c3783c524f553585d6ea78448c0296cc723b12f90e7af0215573547746db28"
     },
     "tests/test_iam.py": {
       "mode": "0o644",
@@ -4130,7 +4190,7 @@
     },
     "tests/test_metrics_sample.py": {
       "mode": "0o644",
-      "sha256": "17bae4aad1268e7eedc73c26fcfeda4e0af7358d56085537a25ba92e67363621"
+      "sha256": "4154808553822dba5630f1ac62823ea2062a3135b474f766953e0c95ddfb8ad9"
     },
     "tests/test_offline_replay.py": {
       "mode": "0o644",
@@ -4138,7 +4198,7 @@
     },
     "tests/test_patch_author_eval.py": {
       "mode": "0o644",
-      "sha256": "9f614bdb237edf067aba722da24c7d66cde9af0f5870dc6efed5ed58024994bd"
+      "sha256": "8db82b6c1ed65c3e407ee80ccf19a8b759c400b150c280fe0a0c10ec62d47fdd"
     },
     "tests/test_paths.py": {
       "mode": "0o644",
@@ -4178,7 +4238,7 @@
     },
     "tests/test_remediate.py": {
       "mode": "0o644",
-      "sha256": "36ed9c7be5f07ea3f4af18dfcb6e0b770bde55093dd4e189902682d315972710"
+      "sha256": "4be7cd4b3003f94647ceb0bca6ee7b472acf31addddc185a25b569325e678fb6"
     },
     "tests/test_replay.py": {
       "mode": "0o644",
@@ -4202,7 +4262,7 @@
     },
     "tests/test_serve.py": {
       "mode": "0o644",
-      "sha256": "be8e159c08117124edc7a8c98d9cc52788f5fd8e205e6834f6b11ac1991e2721"
+      "sha256": "75fe1cd0db1e42cd6d3a2895bdd2f1701ab52aa97aa36300d97b95d5715c8369"
     },
     "tests/test_standalone_repo.py": {
       "mode": "0o644",
@@ -4226,7 +4286,11 @@
     },
     "tests/test_submit.py": {
       "mode": "0o644",
-      "sha256": "4d2d2668127df75e4e4ccc1c4a179f782a425f021247b7fc6c2dde74d118cf2b"
+      "sha256": "ee014de59057a0d3a072cf6edc65678d1e1b2d4b1110dcb9a0abf26cde88bd02"
+    },
+    "tests/test_submit_sources.py": {
+      "mode": "0o644",
+      "sha256": "100e0f4f5e5b5217b5e1c66671f9f133514497782c2c5226f0fd5d44ce20ff86"
     },
     "tests/test_technical_preflight.py": {
       "mode": "0o644",
@@ -4235,6 +4299,18 @@
     "tests/test_terraform.py": {
       "mode": "0o644",
       "sha256": "e45dc431da242fd268e27161b19f30f1c4808aa6cb5dc05b783213d481c44863"
+    },
+    "tests/test_v2_evaluation.py": {
+      "mode": "0o644",
+      "sha256": "36319528bddae8dd39fcb80c8bb2adc4d775a9f4b919431d390306df5cdad724"
+    },
+    "tests/test_v2_iam.py": {
+      "mode": "0o644",
+      "sha256": "88aaad052ecf16bc0181d4fbc812b96206ff5b44e732995db047d12c55fb9e0d"
+    },
+    "tests/test_v2_paths.py": {
+      "mode": "0o644",
+      "sha256": "46a8d8e61f9bd0aa101e1fb5922e2043d89d77037bf45da81e945812dbac2397"
     },
     "tests/test_variability_eval.py": {
       "mode": "0o644",
@@ -4294,5 +4370,5 @@
   "private_history_included": false,
   "schema_version": 1,
   "source_prefix": "OWASP-GLOBAL-AppSec-US-2026/terraform-attack-paths-pytm",
-  "source_revision": "17da45e35352b190ded07704c99deec78066f904"
+  "source_revision": "bd778b9e670e5df396d639d861a1da0c304aabcb"
 }

@@ -222,6 +222,11 @@ def test_verdicts_across_adoption_levels(test_server, plan_cache_006, plan_cache
             "plan_json": plan,
             "auto_enrich": False,
         }
+        # This test isolates adoption-level policy with fully resolved fixture IAM.
+        # Plan-only unknown-policy clearance is covered separately.
+        if plan is plan_cache_006:
+            from tapm.service.sources import collect_source_files
+            payload["source_files"] = collect_source_files(PROJECT_ROOT / "fixtures/006-public-workload-iam-sensitive-bucket")
         if exceptions:
             payload["exceptions"] = exceptions
 

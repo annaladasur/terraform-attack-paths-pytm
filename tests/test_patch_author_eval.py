@@ -57,6 +57,14 @@ class ScriptedPatchAuthorLLM:
                 "confidence": 0.95,
             }
 
+        # Bind each proposal to the actual bounded source block in this bundle.
+        blocks = [b for b in bundle["editable_blocks"] if b["file"] == patch["file"]
+                  and patch["find"] in "\n".join(b["lines"].values())]
+        assert blocks
+        block = min(blocks, key=lambda b: b["end_line"] - b["start_line"])
+        patch["evidence_refs"] = [block["id"]]
+        patch["rationale"] = f"Narrow the cited capability [{block['id']}]."
+
         return LLMResult(
             backend="scripted",
             model="test-qwen-model",

@@ -397,7 +397,8 @@ def test_live_submit_observe_passes_with_paths(live_server, plan_cache_006):
 def test_live_submit_validate_blocks_unaccepted(live_server, plan_cache_006):
     """End-to-end submit on live server at validate exits 3 when unaccepted paths exist."""
     client = SubmitClient(server_url=live_server["url"], token=live_server["token"], poll_interval=0.1)
-    res = client.run(plan=plan_cache_006, level="validate", repo="owner/repo", pr=42)
+    res = client.run(plan=plan_cache_006, source_dir=PROJECT_ROOT / "fixtures/006-public-workload-iam-sensitive-bucket",
+                     level="validate", repo="owner/repo", pr=42)
 
     assert res.blocked
     assert res.exit_code == 3
@@ -426,6 +427,7 @@ exceptions:
         repo="owner/repo",
         pr=42,
         exceptions_yaml=exceptions_yaml,
+        source_dir=PROJECT_ROOT / "fixtures/006-public-workload-iam-sensitive-bucket",
     )
 
     assert res.passed

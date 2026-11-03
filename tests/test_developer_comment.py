@@ -8,7 +8,7 @@ Verifies:
 5. Verdict and 4 ways out (Fix, Accept, Answer, Dispute);
 6. Dispute false path option, link (#dispute-a-false-path), and YAML template (disposition: not_reachable);
 7. Details collapsed in <details><summary> tags;
-8. Hard comment size limit <= 65,535 chars (GitHub & Gitea limit) verified on IAM-Vulnerable (37 test paths / 41 blind eval paths);
+8. Hard comment size limit <= 65,535 chars verified with explicit expanded rows from IAM-Vulnerable;
 9. First screen line budget strictly <= 40 lines before the first <details> tag;
 10. Section boundary truncation never cuts inside code fence, table, or HTML tag;
 11. CLI tapm report --persona developer in markdown, json, and text formats.
@@ -129,7 +129,7 @@ def test_technical_details_collapsed():
 
 
 def test_comment_size_limit_on_iam_vulnerable(tmp_path):
-    """Even on IAM-Vulnerable (265 resources, 37 test paths / 41 blind eval paths), comment is strictly <= 65,535 chars."""
+    """Explicitly expanded report rows force the comment limit without assuming corpus prediction counts."""
     if not (IAM_VULN_PLAN_GZ.exists() and IAM_VULN_BASE.exists()):
         pytest.skip("IAM-Vulnerable evaluation data not found")
 
@@ -149,11 +149,15 @@ def test_comment_size_limit_on_iam_vulnerable(tmp_path):
         extra_targets=("aws:account-admin",),
     )
     res = run_deterministic(cfg)
-    num_paths = len(res.paths)
-    # Validate path count from data: 37 test paths (vs 41 blind in strata evaluation)
-    assert num_paths in (37, 38, 41) or num_paths >= 30, f"Expected 37-41 paths from data, got {num_paths}"
-
+    assert res.paths, "The renderer stress input needs a graph-backed path template"
+    # This is rendering stress data, not new engine predictions or evaluation labels.
+    from dataclasses import replace
+    template = res.paths[0]
+    res.paths = [replace(template, id=f"PATH-STRESS-{i:04d}", key=f"stress-{i}") for i in range(300)]
+    unbounded = render_developer_comment(res, max_chars=10_000_000)
+    assert len(unbounded) > GIT_HOST_COMMENT_LIMIT
     comment = render_developer_comment(res)
+    assert 'technical appendix truncated' in comment
     assert len(comment) <= GIT_HOST_COMMENT_LIMIT, f"Comment length {len(comment)} exceeds git host limit {GIT_HOST_COMMENT_LIMIT}"
     first_screen = count_first_screen_items(comment)
     assert first_screen <= FIRST_SCREEN_MAX_ITEMS, f"First screen items {first_screen} exceeds {FIRST_SCREEN_MAX_ITEMS}"

@@ -120,3 +120,9 @@ Environment variables can be customized in `examples/local-stack/.env`:
 | `TAPM_SERVER_TOKEN` | Bearer token for analysis service API | `demo-secret-token` |
 | `TAPM_LLM` | AI backend for enrichment | `simulated` (or `ollama`) |
 | `OLLAMA_HOST` | Host Ollama URL from within container | `http://host.docker.internal:11434` |
+
+## Source locations in the PR review
+
+The runner submits regular `.tf` files from the same checked-out revision along with the plan. The CLI uses `tapm submit plan.json --source-dir . --out artifacts`; the REST route sends an equivalent `source_files` mapping. Relative names and original line bytes are preserved. `.git`, `.terraform`, symlink directories and non-Terraform files are excluded; a symlinked `.tf` file is rejected. Source text is input to the deterministic analysis service, not directly to an LLM.
+
+Without source files, a plan can still support graph/path analysis, but it does not establish native Terraform file/line locations. The report explicitly labels those locations unavailable. Do not present a plan-only job as source-located review. Prepare dependencies before stage use; recorded playback requires no running service.

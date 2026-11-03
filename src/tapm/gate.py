@@ -122,7 +122,8 @@ def covers(e: dict, path: dict) -> bool:
 
 # ------------------------------------------------------------------ the check
 def evaluate(paths: list[dict], exceptions: list[dict], *, level: str = "observe", fail_on: str = "high",
-             today: dt.date | None = None, file_problems: list[str] | None = None) -> dict:
+             today: dt.date | None = None, file_problems: list[str] | None = None,
+             analysis: dict | None = None) -> dict:
     """Decide every path at or above ``fail_on``: accepted (a valid exception covers it) or not. Whether a path
     without a decision fails the check depends on the level."""
     if level not in LEVELS:
@@ -171,6 +172,12 @@ def evaluate(paths: list[dict], exceptions: list[dict], *, level: str = "observe
             else:
                 st["problems"] = ["covers no path in this plan: the path is fixed, so remove the entry"]
     problems = list(file_problems or [])
+    if analysis is not None and analysis.get("complete") is not True:
+        limits = list(analysis.get("enumeration", {}).get("truncated_by", []))
+        limits += list(analysis.get("reachability", {}).get("truncated_by", []))
+        if analysis.get("policy_complete") is False:
+            limits.append("unresolved IAM policies or restrictions")
+        problems.append("attack-path analysis incomplete: " + ", ".join(dict.fromkeys(limits or ["completeness not established"])))
     blocking = [r for r in rows if r["decision"] == "blocking"]
     fail = level in BLOCKING and (bool(blocking) or bool(problems))
     return {
@@ -180,6 +187,7 @@ def evaluate(paths: list[dict], exceptions: list[dict], *, level: str = "observe
         "not_reachable": sum(r["decision"] == "not_reachable" for r in rows),
         "without_decision": sum(r["decision"] in ("blocking", "would_block") for r in rows),
         "paths": rows, "exceptions": states, "problems": problems,
+        "analysis_complete": analysis.get("complete") is True if analysis is not None else None,
     }
 
 
@@ -211,7 +219,11 @@ def markdown(gate: dict, draft: str = "") -> str:
     """The section a CI job posts on the pull request."""
     head = f"### Attack-path check · level **{gate['level']}** · threshold **{gate['fail_on']}**"
     n = gate["without_decision"]
-    if gate["decision"] == "fail":
+    if gate.get("analysis_complete") is False:
+        verdict = "**Incomplete analysis:** reachability or displayed routes are incomplete; clearance has not been established."
+        if gate["decision"] == "fail":
+            verdict += " Merge is blocked."
+    elif gate["decision"] == "fail":
         verdict = f"**Blocked:** {n} path(s) at or above {gate['fail_on']} need a decision before merge."
     elif n and gate["level"] not in BLOCKING:
         verdict = f"**Would block at validate:** {n} path(s) at or above {gate['fail_on']} have no decision yet."
@@ -277,7 +289,8 @@ def canary(fixture_dirs: list[Path], *, level: str = "prevent", fail_on: str = "
         expect = canary_expectation(fx, fail_on)
         cfg = fixture_config(fx, str(workdir / fx.name), no_dfd=True)
         res = run_deterministic(cfg)
-        g = evaluate([p.to_json() for p in res.paths], [], level=gate_level, fail_on=fail_on)
+        g = evaluate([p.to_json() for p in res.paths], [], level=gate_level, fail_on=fail_on,
+                     analysis=res.path_analysis or {"complete": False})
         got = "block" if g["decision"] == "fail" else "pass"
         rows.append({"canary": fx.name, "expect": expect, "got": got, "paths_in_scope": g["in_scope"],
                      "result": "ok" if expect == got else ("missed" if expect == "block" else "false_block")

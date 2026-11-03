@@ -234,3 +234,12 @@ Implementation: `src/tapm/eval/metrics.py`, `runner.py`, `tier2.py`.
 * Live-model variability at scale. `tapm replay` measures it for the backends you record (`make record`); the
   committed numbers use the `simulated` backend and say so.
 * A second human reviewer for the gold labels (tracked in each gold file).
+
+
+## V2 verification and current-version evaluation
+
+V2 separates bounded display enumeration from per-entry target-reachability verification. Analysis reports completeness and uncertainty. Display truncation, interrupted verification or unresolved restrictions prevent successful application-gate clearance and proven-remediation outcomes. What-if verifies the original relationship route independently of its position in a displayed list.
+
+Evaluation inventories every unique predicted entry-target pair, including extra targets for already labeled entries and verification-reachable pairs absent from displayed output. Legacy frozen gold-row metrics are retained as historical reference-unit measurements. Unmatched or unadjudicated predictions prevent interpreting those metrics as whole-output precision. Structured supplemental adjudication is separate from protected gold labels.
+
+The V2 supplemental protocol seals expected outcomes and input hashes before running the engine. It uses targeted synthetic controls and previously unselected checks on familiar plans, not previously unseen repositories. Harness repairs and first-run failures remain recorded. Original labels and eight disputed proposals are unchanged.

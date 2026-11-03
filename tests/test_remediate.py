@@ -50,13 +50,22 @@ def _bundle(res):
 
 
 GOOD = {"hop": 3, "file": "app.tf", "find": 'http_tokens   = "optional"', "replace": 'http_tokens   = "required"',
-        "rationale": "IMDSv2", "evidence_refs": ["TF-004"], "confidence": 0.8}
+        "rationale": "IMDSv2", "evidence_refs": [], "confidence": 0.8}
+
+
+def _good(res):
+    # Evidence numbers are ledger order, not a stable identity for a source block.
+    blocks = [b for b in _bundle(res)["editable_blocks"] if b["file"] == GOOD["file"]
+              and GOOD["find"] in "\n".join(b["lines"].values())]
+    assert blocks
+    block = min(blocks, key=lambda b: b["end_line"] - b["start_line"])
+    return {**GOOD, "evidence_refs": [block["id"]]}
 
 
 def test_a_good_patch_passes_the_edit_policy(demo_run):
     from tapm.ai.remediate import check_patch
 
-    assert check_patch(dict(GOOD), _bundle(demo_run), DEMO) == []
+    assert check_patch(_good(demo_run), _bundle(demo_run), DEMO) == []
 
 
 @pytest.mark.parametrize("change,reason", [
@@ -77,7 +86,7 @@ def test_a_good_patch_passes_the_edit_policy(demo_run):
 def test_edit_policy_rejects(demo_run, change, reason):
     from tapm.ai.remediate import check_patch
 
-    reasons = check_patch({**GOOD, **change}, _bundle(demo_run), DEMO)
+    reasons = check_patch({**_good(demo_run), **change}, _bundle(demo_run), DEMO)
     assert any(reason in r for r in reasons), reasons
 
 
@@ -115,42 +124,49 @@ def test_no_plan_means_unverified_not_accepted(demo_run, monkeypatch, tmp_path):
     assert v["status"] == "UNVERIFIED"
 
 
-class _Graph:
-    def __init__(self, edges):
-        self.edges = [SimpleNamespace(type=t, src=s, dst=d, data={"access": list(acc)}) for t, s, d, acc in edges]
-
-    def edges_of(self, *types):
-        return [e for e in self.edges if e.type in types]
+BASE_EDGES = [("EXPOSES", "internet", "a", ()), ("ALLOWS", "a", "b", ("read",))]
 
 
-BASE_EDGES = [("EXPOSES", "i", "a", ()), ("ALLOWS", "a", "b", ("read",))]
+def _res(paths, resources=("a", "b"), confirmed=(), edges=BASE_EDGES, pre=None):
+    from tapm.graph.model import Edge, Graph, Node
 
-
-def _res(paths, resources=("a", "b"), confirmed=(), edges=BASE_EDGES):
     cls = {"findings": [{"threat_id": t, "element": e, "class": "confirmed"} for t, e in confirmed]}
+    graph = Graph()
+    names = {n for _, src, dst, _ in edges for n in (src, dst)} | set(resources)
+    for name in sorted(names):
+        data = name in ("b", "c")
+        graph.add_node(Node(name, "test", "Test", "data" if data else "compute", name,
+                            sensitivity={"level": "confidential" if data else "unclassified"}))
+    for i, (kind, src, dst, access) in enumerate(edges):
+        graph.add_edge(Edge(kind, src, dst, data={"access": list(access)}, id=f"GRAPH-{i + 1:03d}",
+                            precondition=pre if kind == "EXPOSES" else None))
     return SimpleNamespace(paths=paths, build=SimpleNamespace(plan=SimpleNamespace(resources={r: None for r in resources}),
-                                                              graph=_Graph(edges)),
+                                                              graph=graph),
                            pytm={"classification": cls})
 
 
-def _path(nodes, priority="high", pre=()):
-    return SimpleNamespace(nodes=list(nodes), priority=priority, target=nodes[-1], preconditions=list(pre), id="PATH-001")
+def _path(nodes=("internet", "a", "b")):
+    from tapm.paths.engine import find_paths
+
+    graph_res = _res([])
+    return next(p for p in find_paths(graph_res.build) if p.nodes == list(nodes))
 
 
 @pytest.mark.parametrize("after,status,why", [
-    (_res([]), "PROVEN_BREAK", None),
-    (_res([_path("iab", "medium", ["workload_rce"])]), "PROVEN_DOWNGRADE", None),
-    (_res([_path("iab")]), "REJECTED", "no effect"),
-    (_res([_path("ixb")]), "REJECTED", "new path"),
+    # An empty emitted list is not absence: the unchanged graph still has the route.
+    (_res([]), "REJECTED", "no effect"),
+    (_res([], edges=BASE_EDGES[:1]), "PROVEN_BREAK", None),
+    (_res([], pre="workload_rce"), "PROVEN_DOWNGRADE", None),
+    (_res([], edges=[("EXPOSES", "internet", "x", ()), ("ALLOWS", "x", "b", ("read",))]), "REJECTED", "new path"),
     (_res([], resources=("a",)), "REJECTED", "removes resources"),
     (_res([], confirmed=[("TAPM-S3-01", "aws_s3_bucket.b")]), "REJECTED", "pytm: new threats"),
     (_res([], edges=BASE_EDGES[:1] + [("ALLOWS", "any", "c", ("read",))]), "REJECTED", "adds ALLOWS any -> c"),
-    (_res([], edges=[("EXPOSES", "i", "a", ()), ("ALLOWS", "a", "b", ("read", "write"))]), "REJECTED", "gains write"),
+    (_res([], edges=[("EXPOSES", "internet", "a", ()), ("ALLOWS", "a", "b", ("read", "write"))]), "REJECTED", "gains write"),
 ])
 def test_compare_accepts_only_proven_effects(after, status, why):
     from tapm.ai.remediate import compare
 
-    path = _path("iab")
+    path = _path()
     before = _res([path])
     out = compare(before, after, path)
     assert out["status"] == status

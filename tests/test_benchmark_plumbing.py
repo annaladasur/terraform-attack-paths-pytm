@@ -633,3 +633,72 @@ def test_critic_ci_workflow_valid_and_actions_pinned():
                     # Strip comments if any
                     uses_ref = uses.split("#")[0].strip()
                     assert sha_regex.match(uses_ref), f"Action '{uses}' in {wf.name} not pinned by 40-char SHA"
+
+
+def test_pipeline_exposes_incomplete_display_and_cli_blocks_empty_output(tmp_path):
+    """Depth zero emits no paths while independent verification still finds the demo target."""
+    from conftest import DEMO, config_for
+    from tapm.cli import main
+    from tapm.paths.engine import PathOptions
+    from tapm.pipeline import run_deterministic, run_manifest
+
+    out = tmp_path / "bounded"
+    res = run_deterministic(config_for(DEMO, out, path_options=PathOptions(max_depth=0)))
+    assert res.paths == []
+    ap = json.loads((out / "attack-paths.json").read_text())
+    assert ap["analysis"] == res.path_analysis == run_manifest(res)["path_analysis"]
+    assert ap["analysis"]["complete"] is False
+    assert any(pair["reachable"] is True for pair in ap["analysis"]["reachability"]["pairs"])
+    with pytest.raises(SystemExit) as exc:
+        main(["gate", str(out), "--level", "validate"])
+    assert exc.value.code == 3
+    gate = json.loads((out / "gate.json").read_text())
+    assert gate["decision"] == "fail" and gate["analysis_complete"] is False
+    assert "Incomplete analysis" in (out / "gate.md").read_text()
+
+
+def test_cli_refuses_clearance_when_legacy_artifact_has_no_completeness(tmp_path):
+    from tapm.cli import main
+
+    (tmp_path / "attack-paths.json").write_text(json.dumps({"paths": []}))
+    with pytest.raises(SystemExit) as exc:
+        main(["gate", str(tmp_path), "--level", "prevent"])
+    assert exc.value.code == 3
+    assert "completeness not established" in (tmp_path / "gate.md").read_text()
+
+
+def test_service_consumes_completeness_when_display_is_empty(tmp_path, monkeypatch):
+    """Exercise the actual queue gate integration without external Git or AI activity."""
+    from types import SimpleNamespace
+    from tapm.service import queue as queue_module
+    from tapm.service.models import GateVerdict, JobStatus
+
+    analysis = {"complete": False, "enumeration": {"truncated_by": ["max_depth"]},
+                "reachability": {"complete": True, "pairs": [{"entry": "internet", "target": "z", "reachable": True}]}}
+    monkeypatch.setattr(queue_module, "run", lambda cfg: SimpleNamespace(
+        paths=[], findings=[], timings_ms={}, path_analysis=analysis))
+    queue = queue_module.JobQueue(data_dir=tmp_path / "queue", workers=1)
+    try:
+        job = queue.submit_job({"plan_json": {}, "level": "prevent", "auto_enrich": False, "render_dfd": False})
+        queue._queue.join()
+        assert job.status == JobStatus.COMPLETED, job.error
+        assert job.verdict == GateVerdict.BLOCKED
+        gate = json.loads((job.artifacts_dir / "gate.json").read_text())
+        assert gate["decision"] == "fail" and gate["analysis_complete"] is False
+    finally:
+        queue.shutdown()
+
+
+def test_optional_path_bounds_preserve_configured_entry_and_target_scope(tmp_path):
+    from conftest import ROOT, config_for
+    from tapm.paths.engine import PathOptions
+    from tapm.pipeline import run_deterministic
+
+    fixture = ROOT / "fixtures" / "004-wildcard-iam"
+    user = "aws_iam_user.ci"
+    cfg = config_for(fixture, tmp_path / "scoped", user_entries=True, extra_targets=(user,),
+                     path_options=PathOptions(max_depth=0))
+    res = run_deterministic(cfg)
+    pairs = res.path_analysis["reachability"]["pairs"]
+    assert any(p["entry"] == user for p in pairs)
+    assert any(p["target"] == user for p in pairs)
